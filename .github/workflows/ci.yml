@@ -20,7 +20,7 @@ jobs:
     - name: run ktlintCheck
       run: |
         cd src
-        .gradlew ktlint --info
+        ./.gradlew ktlint --info
     - name: run danger
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
