@@ -18,7 +18,7 @@ jobs:
     - name: install danger
       run: gem install danger
     - name: run ktlintCheck
-      run: 
+      run: |
         cd src
         .gradlew ktlint --info
     - name: run danger
