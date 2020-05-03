@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
@@ -34,6 +35,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    def nav_version = "2.1.0"
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 }
 
 repositories {
@@ -46,9 +53,6 @@ configurations {
 
 dependencies {
     ktlint "com.pinterest:ktlint:0.35.0"
-    // additional 3rd party ruleset(s) can be specified here
-    // just add them to the classpath (ktlint 'groupId:artifactId:version') and
-    // ktlint will pick them up
 }
 
 task ktlint(type: JavaExec, group: "verification") {
@@ -56,10 +60,8 @@ task ktlint(type: JavaExec, group: "verification") {
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
     args "src/**/*.kt"
-    // to generate report in checkstyle format prepend following args:
-    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
-    // see https://github.com/pinterest/ktlint#usage for more
 }
+
 check.dependsOn ktlint
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
