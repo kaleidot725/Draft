@@ -18,9 +18,7 @@ jobs:
     - name: install danger
       run: gem install danger
     - name: run ktlintCheck
-      run: |
-        cd src
-        ./.gradlew ktlint --info
+      run: ./src/gradlew ktlint
     - name: run danger
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
