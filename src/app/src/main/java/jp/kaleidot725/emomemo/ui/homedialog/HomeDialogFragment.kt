@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.homedialog
+package jp.kaleidot725.emomemo.ui.homedialog
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.top
+package jp.kaleidot725.emomemo.ui.top
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

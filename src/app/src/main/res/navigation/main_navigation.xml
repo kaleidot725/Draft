@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/topFragment"
-        android:name="jp.kaleidot725.emomemo.top.TopFragment"
+        android:name="jp.kaleidot725.emomemo.ui.top.TopFragment"
         android:label="fragment_top"
         tools:layout="@layout/fragment_top" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="jp.kaleidot725.emomemo.home.HomeFragment"
+        android:name="jp.kaleidot725.emomemo.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -28,12 +28,12 @@
     </fragment>
     <fragment
         android:id="@+id/homeDialogFragment"
-        android:name="jp.kaleidot725.emomemo.homedialog.HomeDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.homedialog.HomeDialogFragment"
         android:label="fragment_home_dialog"
         tools:layout="@layout/fragment_home_dialog" />
     <fragment
         android:id="@+id/memoFragment"
-        android:name="jp.kaleidot725.emomemo.memo.MemoFragment"
+        android:name="jp.kaleidot725.emomemo.ui.memo.MemoFragment"
         android:label="fragment_memo"
         tools:layout="@layout/fragment_memo" />
 </navigation>
