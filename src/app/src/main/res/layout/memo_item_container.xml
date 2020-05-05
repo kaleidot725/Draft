@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.AppCompat.DayNight"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="USキーボード配列で日本語入力できるようにする"
+            android:layout_gravity="center"
+            android:text="@{title}"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            tools:text="Title Title Title Title Title Title Title" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>
