@@ -6,24 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import jp.kaleidot725.emomemo.R
+import jp.kaleidot725.emomemo.model.MEMO_LIST
 import jp.kaleidot725.emomemo.model.Memo
 import jp.kaleidot725.emomemo.ui.core.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
-    private val memoList = listOf(
-        Memo("英語", "発音の仕方", ""),
-        Memo("英語", "発音の応用", ""),
-        Memo("数学", "微分・積分の仕方", ""),
-        Memo("数学", "二次方程式についてのまとめ", ""),
-        Memo("ただのメモ", "今日の買い物", ""),
-        Memo("ただのメモ", "明日の買い物", ""),
-        Memo("ごみばこ", "単語を覚えるためのメモ", ""),
-        Memo("ごみばこ", "ラーメンをうまくつくるためのメモ", "")
-    )
+    private val navController : NavController get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +34,9 @@ class HomeFragment : Fragment() {
 
         val headerDatabindingViewController = MemoItemRecyclerViewController(object :
             MemoItemRecyclerViewController.SelectListener {
-            override fun onSelected(item: String) {
-                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+            override fun onSelected(item: Memo) {
+                val action = HomeFragmentDirections.actionHomeFragmentToMemoFragment(item.id)
+                navController.navigate(action)
             }
         })
 
@@ -49,7 +47,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        headerDatabindingViewController.setData(memoList, false)
+        headerDatabindingViewController.setData(MEMO_LIST, false)
     }
 }
 

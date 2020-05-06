@@ -35,5 +35,9 @@
         android:id="@+id/memoFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.MemoFragment"
         android:label="fragment_memo"
-        tools:layout="@layout/fragment_memo" />
+        tools:layout="@layout/fragment_memo" >
+        <argument
+            android:name="memo_id"
+            app:argType="string" />
+    </fragment>
 </navigation>
