@@ -23,6 +23,13 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when(controller.currentDestination?.id) {
+                R.id.topFragment -> supportActionBar?.hide()
+                else -> supportActionBar?.show()
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
