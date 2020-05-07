@@ -12,20 +12,17 @@ import androidx.navigation.ui.navigateUp
 import jp.kaleidot725.emomemo.R
 
 class MainActivity : AppCompatActivity() {
-    private val navController : NavController get() = findNavController(R.id.nav_host_fragment)
-    private val appBarConfiguration : AppBarConfiguration by lazy {
-        AppBarConfiguration(navController.graph)
+    private val navController: NavController get() = findNavController(R.id.nav_host_fragment)
+    private val appBarConfiguration: AppBarConfiguration by lazy {
+        AppBarConfiguration.Builder(setOf(R.id.homeFragment)).build()
     }
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
-
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when(controller.currentDestination?.id) {
+        navController.addOnDestinationChangedListener { controller, _, _ ->
+            when (controller.currentDestination?.id) {
                 R.id.topFragment -> supportActionBar?.hide()
                 else -> supportActionBar?.show()
             }
@@ -33,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration)
     }
 }
