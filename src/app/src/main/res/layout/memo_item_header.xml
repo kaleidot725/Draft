@@ -5,6 +5,7 @@
     tools:ignore="MissingDefaultResource">
 
     <data>
+
         <variable
             name="title"
             type="String" />
@@ -13,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_marginTop="4dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
@@ -21,10 +22,9 @@
             android:text="@{title}"
             tools:text="2020/02/02"
             android:textColor="@color/primaryColor"
-            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

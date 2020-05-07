@@ -5,6 +5,7 @@
     tools:ignore="MissingDefaultResource">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -23,8 +24,6 @@
         android:clickable="true"
         android:focusable="true"
         android:checkable="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         app:setOnClickListener="@{onClickListener}">
 
@@ -37,10 +36,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textSize="18sp"
             tools:text="Title Title Title Title Title Title Title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
