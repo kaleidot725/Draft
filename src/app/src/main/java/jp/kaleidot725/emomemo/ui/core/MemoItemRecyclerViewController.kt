@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.core
 import android.view.View
 import com.airbnb.epoxy.Typed2EpoxyController
 import jp.kaleidot725.emomemo.memoItemContainer
-import jp.kaleidot725.emomemo.memoItemFooter
 import jp.kaleidot725.emomemo.memoItemHeader
 import jp.kaleidot725.emomemo.model.Memo
 
@@ -25,10 +24,6 @@ class MemoItemRecyclerViewController(
                     onClickListener(View.OnClickListener { selectListener.onSelected(item) })
                 }
             }
-        }
-
-        memoItemFooter {
-            id("Footer")
         }
     }
 
