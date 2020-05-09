@@ -11,7 +11,7 @@ class HomeDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogStyle);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogStyle)
     }
 
     override fun onCreateView(
