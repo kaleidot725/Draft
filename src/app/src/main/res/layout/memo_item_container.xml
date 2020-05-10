@@ -41,6 +41,7 @@
             android:paddingEnd="16sp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
+            android:background="@drawable/round_rectangle_background"
             tools:text="Title Title Title Title Title Title Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
