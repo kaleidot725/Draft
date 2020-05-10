@@ -1,21 +1,19 @@
 <resources>
 
-    <style name="ShapeAppearanceOverlay.AppTheme.MaterialCardView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">16dp</item>
-    </style>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="materialCardViewStyle">
-            @style/ShapeAppearanceOverlay.AppTheme.MaterialCardView
-        </item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
     </style>
 
     <style name="DialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
     </style>
