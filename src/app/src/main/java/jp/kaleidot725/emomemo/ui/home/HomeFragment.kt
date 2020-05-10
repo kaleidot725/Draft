@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        add_floating_action_button.setOnClickListener {
+        add_button.setOnClickListener {
             navigateHomeDialogFragment()
         }
         headerDatabindingViewController.setData(MEMO_LIST, false)
