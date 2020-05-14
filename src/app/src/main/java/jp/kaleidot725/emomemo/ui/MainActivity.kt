@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             androidContext(applicationContext)
             modules(appModule)
         }
-        
+
         navController.addOnDestinationChangedListener { controller, _, _ ->
             when (controller.currentDestination?.id) {
                 R.id.topFragment -> supportActionBar?.hide()
