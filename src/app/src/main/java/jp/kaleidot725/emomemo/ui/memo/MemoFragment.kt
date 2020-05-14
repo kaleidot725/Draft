@@ -20,7 +20,8 @@ class MemoFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflateDB<FragmentMemoBinding>(container, R.layout.fragment_memo, false).apply {
-            viewModel = viewModel
+            this.lifecycleOwner = this@MemoFragment.viewLifecycleOwner
+            this.viewModel = this@MemoFragment.viewModel
         }.root
     }
 

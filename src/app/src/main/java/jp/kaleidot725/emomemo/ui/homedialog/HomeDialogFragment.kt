@@ -24,7 +24,7 @@ class HomeDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflateDB<FragmentHomeDialogBinding>(container, R.layout.fragment_home_dialog, false).apply {
-            this.lifecycleOwner = this@HomeDialogFragment
+            this.lifecycleOwner = this@HomeDialogFragment.viewLifecycleOwner
             this.viewModel = this@HomeDialogFragment.viewModel
         }.root
     }
