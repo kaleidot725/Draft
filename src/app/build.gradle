@@ -62,6 +62,15 @@ dependencies {
     implementation "com.airbnb.android:epoxy:$epoxy_version"
     implementation "com.airbnb.android:epoxy-databinding:${epoxy_version}"
     kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
+
+    def live_event_version = "1.2.0"
+    implementation "com.github.hadilq.liveevent:liveevent:$live_event_version"
+
+    def koin_version = "2.1.5"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "org.koin:koin-androidx-ext:$koin_version"
 }
 
 repositories {

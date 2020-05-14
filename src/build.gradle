@@ -11,6 +11,9 @@ buildscript {
 
         def nav_version = "2.1.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+
+        def koin_version = "2.1.5"
+        classpath "org.koin:koin-gradle-plugin:$koin_version"
     }
 }
 
@@ -24,3 +27,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply plugin: 'koin'

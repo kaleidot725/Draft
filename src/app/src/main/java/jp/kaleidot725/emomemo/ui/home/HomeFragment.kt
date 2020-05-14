@@ -9,20 +9,23 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
+import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.model.MEMO_LIST
 import jp.kaleidot725.emomemo.model.Memo
+import jp.kaleidot725.emomemo.ui.common.inflateDB
 import jp.kaleidot725.emomemo.ui.core.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
     private val navController: NavController get() = findNavController()
+    private val viewModel: HomeViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflateDB<FragmentHomeBinding>(container, R.layout.fragment_home, false).apply {
+            this.lifecycleOwner = this@HomeFragment.viewLifecycleOwner
+            this.viewModel = this@HomeFragment.viewModel
+        }.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
