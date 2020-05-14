@@ -8,6 +8,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.navigateUp
 import jp.kaleidot725.emomemo.R
+import jp.kaleidot725.emomemo.model.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity() {
     private val navController: NavController get() = findNavController(R.id.nav_host_fragment)
@@ -19,6 +23,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
+
+        startKoin {
+            androidLogger()
+            androidContext(applicationContext)
+            modules(appModule)
+        }
+        
         navController.addOnDestinationChangedListener { controller, _, _ ->
             when (controller.currentDestination?.id) {
                 R.id.topFragment -> supportActionBar?.hide()

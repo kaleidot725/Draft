@@ -1,70 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.memo.MemoFragment">
+<layout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="jp.kaleidot725.emomemo.ui.memo.MemoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@id/message_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".ui.memo.MemoFragment">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/bottomCardColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@id/message_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/message_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_margin="8dp"
-        android:background="@drawable/round_rectangle_background"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/voice_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/bottomCardColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/voice_button"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:maxHeight="80dp"
-        android:src="@drawable/ic_mic"
-        app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
-        app:layout_constraintEnd_toStartOf="@id/send_button"
-        app:layout_constraintStart_toEndOf="@id/message_edit_text"
-        app:layout_constraintTop_toTopOf="@id/message_edit_text"
-        tools:ignore="ContentDescription" />
+        <EditText
+            android:id="@+id/message_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/round_rectangle_background"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/voice_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
 
-    <ImageButton
-        android:id="@+id/send_button"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_send"
-        app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/voice_button"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view"
-        app:layout_constraintTop_toTopOf="@id/message_edit_text"
-        tools:ignore="ContentDescription" />
+        <ImageButton
+            android:id="@+id/voice_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:maxHeight="80dp"
+            android:src="@drawable/ic_mic"
+            app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
+            app:layout_constraintEnd_toStartOf="@id/send_button"
+            app:layout_constraintStart_toEndOf="@id/message_edit_text"
+            app:layout_constraintTop_toTopOf="@id/message_edit_text"
+            tools:ignore="ContentDescription" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/send_button"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_send"
+            app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/voice_button"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view"
+            app:layout_constraintTop_toTopOf="@id/message_edit_text"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
