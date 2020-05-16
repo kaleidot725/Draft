@@ -1,6 +1,6 @@
 package jp.kaleidot725.emomemo.model.repository
 
-import jp.kaleidot725.emomemo.model.data.Memo
+import jp.kaleidot725.emomemo.model.entity.Memo
 
 val MEMO_LIST = listOf(
     Memo("0000", "英語", "発音の仕方", ""),

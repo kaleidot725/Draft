@@ -4,7 +4,7 @@ import android.view.View
 import com.airbnb.epoxy.Typed2EpoxyController
 import jp.kaleidot725.emomemo.memoItemContainer
 import jp.kaleidot725.emomemo.memoItemHeader
-import jp.kaleidot725.emomemo.model.data.Memo
+import jp.kaleidot725.emomemo.model.entity.Memo
 
 class MemoItemRecyclerViewController(
     private val selectListener: SelectListener

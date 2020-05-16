@@ -4,7 +4,7 @@ import android.view.View
 import com.airbnb.epoxy.Typed2EpoxyController
 import jp.kaleidot725.emomemo.messageItemContainer
 import jp.kaleidot725.emomemo.messageItemHeader
-import jp.kaleidot725.emomemo.model.data.Message
+import jp.kaleidot725.emomemo.model.entity.Message
 
 class MessageItemRecyclerViewController(
     private val selectListener: SelectListener
