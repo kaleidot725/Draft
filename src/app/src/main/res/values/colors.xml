@@ -8,6 +8,6 @@
     <color name="secondaryDarkColor">#008e76</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#c7c7c7</color>
-    <color name="cardStrokeColor">#A0c7c7c7</color>
+    <color name="cardStrokeColor">#80c7c7c7</color>
     <color name="bottomCardColor">#80EEEEEE</color>
 </resources>
