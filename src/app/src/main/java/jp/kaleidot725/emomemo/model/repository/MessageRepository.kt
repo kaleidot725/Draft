@@ -17,27 +17,27 @@ val DUMMY_MESSAGE_LIST = listOf(
 )
 
 class MessageRepository(private val dao: MessageDao) {
-    fun insert(message: Message) {
+    suspend fun insert(message: Message) {
         dao.insert(message)
     }
 
-    fun update(message: Message) {
+    suspend fun update(message: Message) {
         dao.update(message)
     }
 
-    fun delete(message: Message) {
+    suspend fun delete(message: Message) {
         dao.delete(message)
     }
 
-    fun deleteAll() {
+    suspend fun deleteAll() {
         dao.deleteAll()
     }
 
-    fun getAll(): List<Message> {
+    suspend fun getAll(): List<Message> {
         return dao.getAll()
     }
 
-    fun getUser(id: Int): Message {
+    suspend fun getUser(id: Int): Message {
         return dao.getUser(id)
     }
 }

@@ -15,27 +15,27 @@ val DUMMY_MEMO_LIST = listOf(
 )
 
 class MemoRepository(private val dao: MemoDao) {
-    fun insert(memo: Memo) {
+    suspend fun insert(memo: Memo) {
         dao.insert(memo)
     }
 
-    fun update(memo: Memo) {
+    suspend fun update(memo: Memo) {
         dao.update(memo)
     }
 
-    fun delete(memo: Memo) {
+    suspend fun delete(memo: Memo) {
         dao.delete(memo)
     }
 
-    fun deleteAll() {
+    suspend fun deleteAll() {
         dao.deleteAll()
     }
 
-    fun getAll(): List<Memo> {
+    suspend fun getAll(): List<Memo> {
         return dao.getAll()
     }
 
-    fun getUser(id: Int): Memo {
+    suspend fun getUser(id: Int): Memo {
         return dao.getUser(id)
     }
 }

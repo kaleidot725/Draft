@@ -27,9 +27,9 @@ val appModule = module {
         val db: AppDatabase = get()
         MessageRepository(db.messageDao())
     }
-    
+
     viewModel {
-        HomeViewModel()
+        HomeViewModel(get())
     }
 
     viewModel {
