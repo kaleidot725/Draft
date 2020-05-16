@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.model.entity.Message
-import jp.kaleidot725.emomemo.model.repository.MESSAGE_LIST
+import jp.kaleidot725.emomemo.model.repository.DUMMY_MESSAGE_LIST
 import jp.kaleidot725.emomemo.ui.common.inflateDB
 import jp.kaleidot725.emomemo.ui.core.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -40,6 +40,6 @@ class MemoFragment : Fragment() {
             }
         }
 
-        messageItemRecylerViewController.setData(MESSAGE_LIST, false)
+        messageItemRecylerViewController.setData(DUMMY_MESSAGE_LIST, false)
     }
 }
