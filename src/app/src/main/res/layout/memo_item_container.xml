@@ -20,10 +20,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.AppCompat.DayNight"
-        android:clickable="true"
-        android:focusable="true"
-        android:checkable="true"
         android:layout_marginBottom="4dp"
         app:setOnClickListener="@{onClickListener}">
 
@@ -41,7 +37,7 @@
             android:paddingEnd="16sp"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:background="@drawable/round_rectangle_background"
+            android:background="@drawable/round_rectangle_ripple_background"
             tools:text="Title Title Title Title Title Title Title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
