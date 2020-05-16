@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
-import jp.kaleidot725.emomemo.model.MESSAGE_LIST
-import jp.kaleidot725.emomemo.model.Message
+import jp.kaleidot725.emomemo.model.data.Message
+import jp.kaleidot725.emomemo.model.repository.MESSAGE_LIST
 import jp.kaleidot725.emomemo.ui.common.inflateDB
 import jp.kaleidot725.emomemo.ui.core.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*

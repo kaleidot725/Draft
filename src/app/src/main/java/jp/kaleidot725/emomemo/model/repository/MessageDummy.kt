@@ -1,4 +1,6 @@
-package jp.kaleidot725.emomemo.model
+package jp.kaleidot725.emomemo.model.repository
+
+import jp.kaleidot725.emomemo.model.data.Message
 
 val MESSAGE_LIST = listOf(
     Message(0, "Good Message"),
