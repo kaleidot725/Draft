@@ -77,7 +77,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    def livedata_ktx_verision = "2.2.0-alpha01"
+    def livedata_ktx_verision = "2.2.0-alpha02"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_ktx_verision"
 }
 
