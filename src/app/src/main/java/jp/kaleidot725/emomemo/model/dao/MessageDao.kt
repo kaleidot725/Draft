@@ -21,5 +21,5 @@ interface MessageDao {
     fun getAll(): List<Message>
 
     @Query("select * from message where memoId = :id")
-    fun getUser(id: Int): Message
+    fun getMessage(id: Int): List<Message>
 }
