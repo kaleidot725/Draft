@@ -7,7 +7,7 @@ import jp.kaleidot725.emomemo.model.dao.MessageDao
 import jp.kaleidot725.emomemo.model.entity.Memo
 import jp.kaleidot725.emomemo.model.entity.Message
 
-@Database(entities = [Memo::class, Message::class], version = 1)
+@Database(entities = [Memo::class, Message::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun memoDao(): MemoDao
     abstract fun messageDao(): MessageDao

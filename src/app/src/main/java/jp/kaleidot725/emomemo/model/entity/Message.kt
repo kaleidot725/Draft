@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
     foreignKeys = [ForeignKey(entity = Memo::class, parentColumns = arrayOf("id"), childColumns = arrayOf("memoId"))]
 )
 data class Message(
-    @PrimaryKey val memoId: String,
+    @PrimaryKey val memoId: Long,
     val time: Long,
     val value: String
 )

@@ -21,6 +21,6 @@ interface MemoDao {
     fun getAll(): List<Memo>
 
     @Query("select * from memo where id = :id")
-    fun getUser(id: Int): Memo
+    fun getMemo(id: Int): Memo
 }
 

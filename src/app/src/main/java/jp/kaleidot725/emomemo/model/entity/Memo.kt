@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "memo")
 data class Memo(
-    @PrimaryKey(autoGenerate = false) val id: String,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     val tag: String,
-    val title: String,
-    val detail: String
+    val title: String
 )
