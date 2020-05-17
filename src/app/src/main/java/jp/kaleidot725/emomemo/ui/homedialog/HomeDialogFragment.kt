@@ -34,8 +34,18 @@ class HomeDialogFragment : DialogFragment() {
 
         viewModel.event.observe(viewLifecycleOwner, Observer {
             when (it) {
-                HomeDialogViewModel.NavEvent.SUCCESS, HomeDialogViewModel.NavEvent.CANCEL -> navController.popBackStack()
+                HomeDialogViewModel.NavEvent.SUCCESS -> success()
+                HomeDialogViewModel.NavEvent.CANCEL -> cancel()
             }
         })
+    }
+
+    private fun success() {
+        // HomeFragment で更新処理を走らせるために Success のときは PopUp せずに Navigate する
+        navController.navigate(R.id.action_homeDialogFragment_to_homeFragment)
+    }
+
+    private fun cancel() {
+        navController.popBackStack()
     }
 }

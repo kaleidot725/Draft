@@ -15,7 +15,7 @@ val appModule = module {
     single<AppDatabase> {
         Room.databaseBuilder(
             androidContext(), AppDatabase::class.java, "emomemo-database"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     single {
@@ -33,7 +33,7 @@ val appModule = module {
     }
 
     viewModel {
-        HomeDialogViewModel()
+        HomeDialogViewModel(get())
     }
 
     viewModel {

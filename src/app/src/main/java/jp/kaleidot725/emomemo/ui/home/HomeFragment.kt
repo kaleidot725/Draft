@@ -49,9 +49,11 @@ class HomeFragment : Fragment() {
             headerDatabindingViewController.setData(it, false)
         })
 
-        add_button.setOnClickListener {
-            navigateHomeDialogFragment()
-        }
+        viewModel.event.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                HomeViewModel.NavEvent.ADD -> navigateHomeDialogFragment()
+            }
+        })
     }
 
     private fun navigateMemoFragment(memo: Memo) {
