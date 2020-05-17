@@ -13,13 +13,13 @@ class MemoItemRecyclerViewController(
     override fun buildModels(memoList: List<Memo>, loadingMore: Boolean) {
         memoList.groupBy { it.tag }.forEach {
             memoItemHeader {
-                id("Header")
+                id(it.key.toString())
                 title(it.key)
             }
 
             it.value.forEach { item ->
                 memoItemContainer {
-                    id("Content")
+                    id(item.toString())
                     title(item.title)
                     onClickListener(View.OnClickListener { selectListener.onSelected(item) })
                 }
