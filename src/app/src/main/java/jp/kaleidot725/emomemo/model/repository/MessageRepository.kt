@@ -17,6 +17,10 @@ val DUMMY_MESSAGE_LIST = listOf(
 )
 
 class MessageRepository(private val dao: MessageDao) {
+    suspend fun create(id: Int, message: String) {
+        insert(Message(id, System.currentTimeMillis(), message))
+    }
+
     suspend fun insert(message: Message) {
         dao.insert(message)
     }
@@ -37,7 +41,7 @@ class MessageRepository(private val dao: MessageDao) {
         return dao.getAll()
     }
 
-    suspend fun getUser(id: Int): Message {
-        return dao.getUser(id)
+    suspend fun getMessage(id: Int): List<Message> {
+        return dao.getMessage(id)
     }
 }

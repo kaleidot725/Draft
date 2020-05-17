@@ -37,7 +37,7 @@ val appModule = module {
     }
 
     viewModel {
-        MemoViewModel()
+        MemoViewModel(get())
     }
 
     viewModel {
