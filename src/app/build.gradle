@@ -71,6 +71,14 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
     implementation "org.koin:koin-androidx-ext:$koin_version"
+
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    def livedata_ktx_verision = "2.2.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_ktx_verision"
 }
 
 repositories {

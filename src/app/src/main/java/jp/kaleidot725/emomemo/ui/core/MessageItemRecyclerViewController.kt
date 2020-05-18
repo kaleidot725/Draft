@@ -4,7 +4,7 @@ import android.view.View
 import com.airbnb.epoxy.Typed2EpoxyController
 import jp.kaleidot725.emomemo.messageItemContainer
 import jp.kaleidot725.emomemo.messageItemHeader
-import jp.kaleidot725.emomemo.model.Message
+import jp.kaleidot725.emomemo.model.entity.Message
 
 class MessageItemRecyclerViewController(
     private val selectListener: SelectListener
@@ -13,13 +13,13 @@ class MessageItemRecyclerViewController(
     override fun buildModels(memoList: List<Message>, loadingMore: Boolean) {
         memoList.groupBy { it.time }.forEach {
             messageItemHeader {
-                id("Header")
+                id(it.key.toString())
                 title(it.key.toString())
             }
 
             it.value.forEach { item ->
                 messageItemContainer {
-                    id("Content")
+                    id(item.toString())
                     title(item.value)
                     onClickListener(View.OnClickListener { selectListener.onSelected(item) })
                 }

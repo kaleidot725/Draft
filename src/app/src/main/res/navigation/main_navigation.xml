@@ -43,7 +43,13 @@
         android:id="@+id/homeDialogFragment"
         android:name="jp.kaleidot725.emomemo.ui.homedialog.HomeDialogFragment"
         android:label="@string/home_dialog_fragment_title"
-        tools:layout="@layout/fragment_home_dialog" />
+        tools:layout="@layout/fragment_home_dialog">
+        <action
+            android:id="@+id/action_homeDialogFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
     <fragment
         android:id="@+id/memoFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.MemoFragment"
@@ -51,7 +57,7 @@
         tools:layout="@layout/fragment_memo">
         <argument
             android:name="memo_id"
-            app:argType="string" />
+            app:argType="long" />
         <argument
             android:name="title"
             app:argType="string"

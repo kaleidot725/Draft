@@ -34,7 +34,8 @@ class HomeDialogFragment : DialogFragment() {
 
         viewModel.event.observe(viewLifecycleOwner, Observer {
             when (it) {
-                HomeDialogViewModel.NavEvent.SUCCESS, HomeDialogViewModel.NavEvent.CANCEL -> navController.popBackStack()
+                HomeDialogViewModel.NavEvent.SUCCESS -> navController.popBackStack()
+                HomeDialogViewModel.NavEvent.CANCEL -> navController.popBackStack()
             }
         })
     }

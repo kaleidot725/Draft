@@ -5,21 +5,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
-import jp.kaleidot725.emomemo.model.MEMO_LIST
-import jp.kaleidot725.emomemo.model.Memo
+import jp.kaleidot725.emomemo.model.entity.Memo
 import jp.kaleidot725.emomemo.ui.common.inflateDB
 import jp.kaleidot725.emomemo.ui.core.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
-    private val navController: NavController get() = findNavController()
     private val viewModel: HomeViewModel by viewModel()
+    private val navController: NavController get() = findNavController()
+    private val recyclerViewController: MemoItemRecyclerViewController = MemoItemRecyclerViewController(object :
+        MemoItemRecyclerViewController.SelectListener {
+        override fun onSelected(item: Memo) {
+            navigateMemoFragment(item)
+        }
+    })
+
+    private val onDestinationChangedListener: NavController.OnDestinationChangedListener =
+        NavController.OnDestinationChangedListener { controller, destination, arguments ->
+            if (controller.currentDestination?.id == R.id.homeFragment) {
+                viewModel.fetchData()
+            }
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflateDB<FragmentHomeBinding>(container, R.layout.fragment_home, false).apply {
@@ -31,28 +44,34 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val headerDatabindingViewController = MemoItemRecyclerViewController(object :
-            MemoItemRecyclerViewController.SelectListener {
-            override fun onSelected(item: Memo) {
-                navigateMemoFragment(item)
-            }
-        })
-
         recycler_view.apply {
-            this.adapter = headerDatabindingViewController.adapter
+            this.adapter = recyclerViewController.adapter
             this.layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
         }
 
-        add_button.setOnClickListener {
-            navigateHomeDialogFragment()
-        }
-        headerDatabindingViewController.setData(MEMO_LIST, false)
+        viewModel.memoList.observe(viewLifecycleOwner, Observer {
+            recyclerViewController.setData(it, true)
+        })
+
+        viewModel.event.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                HomeViewModel.NavEvent.ADD -> navigateHomeDialogFragment()
+            }
+        })
+
+        viewModel.fetchData()
+        navController.addOnDestinationChangedListener(onDestinationChangedListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        navController.removeOnDestinationChangedListener(onDestinationChangedListener)
     }
 
     private fun navigateMemoFragment(memo: Memo) {
-        val action = HomeFragmentDirections.actionHomeFragmentToMemoFragment(memo.id, memo.title)
+        val action = HomeFragmentDirections.actionHomeFragmentToMemoFragment(memo.id.toLong(), memo.title)
         navController.navigate(action)
     }
 
