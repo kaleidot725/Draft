@@ -1,6 +1,11 @@
 package jp.kaleidot725.emomemo.ui.memo
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.model.entity.Message
 import jp.kaleidot725.emomemo.model.repository.MessageRepository
 import kotlinx.coroutines.Dispatchers

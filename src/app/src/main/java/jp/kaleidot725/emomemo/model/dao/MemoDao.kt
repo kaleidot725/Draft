@@ -1,6 +1,10 @@
 package jp.kaleidot725.emomemo.model.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import jp.kaleidot725.emomemo.model.entity.Memo
 
 @Dao
@@ -23,4 +27,3 @@ interface MemoDao {
     @Query("select * from memo where id = :id")
     fun getMemo(id: Int): Memo
 }
-
