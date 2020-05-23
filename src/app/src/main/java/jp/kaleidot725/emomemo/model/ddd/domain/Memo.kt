@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.model.domain
+package jp.kaleidot725.emomemo.model.ddd.domain
 
 data class Memo(
     val id: Int,
