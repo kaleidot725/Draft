@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.repository.MemoRepository
+import jp.kaleidot725.emomemo.model.ddd.domainService.MemoService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeDialogViewModel(private val memoRepository: MemoRepository) : ViewModel() {
+class HomeDialogViewModel(private val memoService: MemoService) : ViewModel() {
     val title: MutableLiveData<String> = MutableLiveData()
     val tag: MutableLiveData<String> = MutableLiveData()
 
@@ -21,7 +21,7 @@ class HomeDialogViewModel(private val memoRepository: MemoRepository) : ViewMode
         viewModelScope.launch {
             if (title.value != null && tag.value != null) {
                 withContext(Dispatchers.IO) {
-                    memoRepository.create(tag.value ?: "", title.value ?: "")
+                    memoService.create(tag.value ?: "", title.value ?: "")
                 }
 
                 _event.postValue(NavEvent.SUCCESS)

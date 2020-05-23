@@ -6,16 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.entity.Memo
-import jp.kaleidot725.emomemo.model.repository.MemoRepository
+import jp.kaleidot725.emomemo.model.ddd.domain.Memo
+import jp.kaleidot725.emomemo.model.ddd.domainService.MemoService
 import kotlinx.coroutines.Dispatchers
 
-class HomeViewModel(private val memoRepository: MemoRepository) : ViewModel() {
+class HomeViewModel(private val memoService: MemoService) : ViewModel() {
     private val _refresh: MutableLiveData<Unit> = MutableLiveData()
 
     val memoList: LiveData<List<Memo>> = _refresh.switchMap {
         liveData(Dispatchers.IO) {
-            emit(memoRepository.getAll())
+            emit(memoService.getAll())
         }
     }
 
