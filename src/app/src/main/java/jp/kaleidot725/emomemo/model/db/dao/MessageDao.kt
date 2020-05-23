@@ -1,29 +1,29 @@
-package jp.kaleidot725.emomemo.model.dao
+package jp.kaleidot725.emomemo.model.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import jp.kaleidot725.emomemo.model.entity.Message
+import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 
 @Dao
 interface MessageDao {
     @Insert
-    fun insert(message: Message)
+    fun insert(messageEntity: MessageEntity)
 
     @Update
-    fun update(message: Message)
+    fun update(messageEntity: MessageEntity)
 
     @Delete
-    fun delete(message: Message)
+    fun delete(messageEntity: MessageEntity)
 
     @Query("delete from message")
     fun deleteAll()
 
     @Query("select * from message")
-    fun getAll(): List<Message>
+    fun getAll(): List<MessageEntity>
 
     @Query("select * from message where memoId = :id")
-    fun getMessage(id: Int): List<Message>
+    fun getMessage(id: Int): List<MessageEntity>
 }

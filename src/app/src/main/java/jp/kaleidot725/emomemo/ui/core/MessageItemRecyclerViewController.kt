@@ -4,24 +4,25 @@ import android.view.View
 import com.airbnb.epoxy.Typed2EpoxyController
 import jp.kaleidot725.emomemo.messageItemContainer
 import jp.kaleidot725.emomemo.messageItemHeader
-import jp.kaleidot725.emomemo.model.entity.Message
+import jp.kaleidot725.emomemo.model.ddd.domain.Message
 
 class MessageItemRecyclerViewController(
-    private val selectListener: SelectListener
+    private val selectListener: SelectListener? = null
 ) : Typed2EpoxyController<List<Message>, Boolean>() {
 
     override fun buildModels(memoList: List<Message>, loadingMore: Boolean) {
-        memoList.groupBy { it.time }.forEach {
+        memoList.groupBy { it.formattedTime }.forEach { tuple ->
+
             messageItemHeader {
-                id(it.key.toString())
-                title(it.key.toString())
+                id(tuple.key)
+                title(tuple.key)
             }
 
-            it.value.forEach { item ->
+            tuple.value.forEach { message ->
                 messageItemContainer {
-                    id(item.toString())
-                    title(item.value)
-                    onClickListener(View.OnClickListener { selectListener.onSelected(item) })
+                    id(message.toString())
+                    title(message.value)
+                    onClickListener(View.OnClickListener { selectListener?.onSelected(message) })
                 }
             }
         }
