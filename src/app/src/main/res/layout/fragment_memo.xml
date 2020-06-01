@@ -70,7 +70,7 @@
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_send"
-            android:onClick="@{() -> viewModel.add()}"
+            android:onClick="@{() -> viewModel.create()}"
             app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/voice_button"
