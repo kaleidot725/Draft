@@ -35,6 +35,8 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             messageItemRecyclerViewController.setData(it, true)
         })
 
-        viewModel.fetchData(args.memoId.toInt())
+        viewModel.memoId = args.memoId.toInt()
+        
+        viewModel.fetch()
     }
 }
