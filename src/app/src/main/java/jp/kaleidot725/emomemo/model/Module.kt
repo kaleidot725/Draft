@@ -5,6 +5,7 @@ import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.ddd.domainService.MemoService
 import jp.kaleidot725.emomemo.model.ddd.domainService.MessageService
+import jp.kaleidot725.emomemo.ui.audio.AudioRecognizerViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
@@ -52,5 +53,9 @@ val appModule = module {
 
     viewModel {
         TopViewModel()
+    }
+
+    viewModel {
+        AudioRecognizerViewModel()
     }
 }

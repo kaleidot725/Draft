@@ -16,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeDialogFragment : DialogFragment() {
     private val navController: NavController get() = findNavController()
     private val viewModel: HomeDialogViewModel by viewModel()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogStyle)

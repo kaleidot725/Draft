@@ -62,5 +62,12 @@
             android:name="title"
             app:argType="string"
             android:defaultValue="Memo" />
+        <action
+            android:id="@+id/action_memoFragment_to_audioRecognizerFragment"
+            app:destination="@id/audioRecognizerFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/audioRecognizerFragment"
+        android:name="jp.kaleidot725.emomemo.ui.audio.AudioRecognizerFragment"
+        android:label="@string/audio_recognizer_dialog_fragment_title" />
 </navigation>
