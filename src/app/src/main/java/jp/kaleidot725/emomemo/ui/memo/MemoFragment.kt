@@ -38,7 +38,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         voice_button.setOnClickListener {
             navController.navigate(R.id.action_memoFragment_to_audioRecognizerFragment)
         }
-        
+
         viewModel.messageList.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it, true)
         })
