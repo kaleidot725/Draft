@@ -14,4 +14,7 @@
     <string name="home_dialog_fragment_create">作成</string>
     <string name="home_dialog_fragment_cancel">キャンセル</string>
     <string name="memo_fragment_title">メモ</string>
+
+    <!-- AudioRecognizerDialogFragment -->
+    <string name="audio_recognizer_dialog_fragment_title">音声入力</string>
 </resources>
