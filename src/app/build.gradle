@@ -35,7 +35,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 }
 
@@ -83,6 +83,13 @@ dependencies {
     def permission_dispatcher_version = "4.7.0"
     implementation "org.permissionsdispatcher:permissionsdispatcher:${permission_dispatcher_version}"
     kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${permission_dispatcher_version}"
+
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 }
 
 repositories {
