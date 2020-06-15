@@ -15,6 +15,10 @@
     <string name="home_dialog_fragment_cancel">キャンセル</string>
     <string name="memo_fragment_title">メモ</string>
 
+    <!-- MemoFragment -->
+    <string name="memo_fragment_audio_permission_denied">音声入力をする場合は音声録音の権限を許可してください</string>
+    <string name="memo_fragment_audio_permission_never_ask_again">音声入力をする場合は音声録音の権限を許可してください</string>
+
     <!-- AudioRecognizerDialogFragment -->
     <string name="audio_recognizer_dialog_fragment_title">音声入力</string>
 </resources>
