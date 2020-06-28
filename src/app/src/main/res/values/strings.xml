@@ -21,4 +21,7 @@
 
     <!-- AudioRecognizerDialogFragment -->
     <string name="audio_recognizer_dialog_fragment_title">音声入力</string>
+    <string name="audio_recognizer_start">開始します</string>
+    <string name="audio_recognizer_end">終了します</string>
+    <string name="audio_recognizer_error">認識できませんでした</string>
 </resources>

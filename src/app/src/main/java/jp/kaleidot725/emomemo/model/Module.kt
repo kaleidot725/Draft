@@ -1,6 +1,7 @@
 package jp.kaleidot725.emomemo.model
 
 import androidx.room.Room
+import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.ddd.domainService.MemoService
@@ -32,6 +33,10 @@ val appModule = module {
     }
 
     single {
+        AudioRecognizerRepository()
+    }
+
+    single {
         MemoService(get())
     }
 
@@ -48,7 +53,7 @@ val appModule = module {
     }
 
     viewModel {
-        MemoViewModel(get())
+        MemoViewModel(get(), get())
     }
 
     viewModel {
@@ -56,6 +61,6 @@ val appModule = module {
     }
 
     viewModel {
-        AudioRecordViewModel()
+        AudioRecordViewModel(get())
     }
 }
