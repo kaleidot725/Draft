@@ -8,6 +8,8 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import jp.kaleidot725.emomemo.R
+import jp.kaleidot725.emomemo.extension.getSafetyString
 
 class SpeechRecognizerController(
     private val context: Context?,
@@ -49,15 +51,15 @@ class SpeechRecognizerController(
             override fun onBeginningOfSpeech() {}
 
             override fun onReadyForSpeech(params: Bundle) {
-                onEvent(RecognizeEvent.READY_FOR_SPEECH, "音声認識を開始します")
+                onEvent(RecognizeEvent.READY_FOR_SPEECH, context.getSafetyString(R.string.audio_recognizer_start))
             }
 
             override fun onEndOfSpeech() {
-                onEvent(RecognizeEvent.END_OF_SPEECH, "音声認識を終了します")
+                onEvent(RecognizeEvent.END_OF_SPEECH, context.getSafetyString(R.string.audio_recognizer_end))
             }
 
             override fun onError(error: Int) {
-                onEvent(RecognizeEvent.RECOGNITION_FAILED, "音声認識エラーです")
+                onEvent(RecognizeEvent.RECOGNITION_FAILED, context.getSafetyString(R.string.audio_recognizer_error))
             }
 
             override fun onResults(results: Bundle) {

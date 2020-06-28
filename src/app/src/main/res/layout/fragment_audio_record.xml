@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="@{(view) -> viewModel.retry()}"
+                app:elevation="0dp"
                 app:fabCustomSize="128dp"
                 app:imageResource="@{viewModel.fabResId}"
                 app:layout_constraintBottom_toBottomOf="parent"
