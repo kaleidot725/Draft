@@ -31,6 +31,7 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.DialogStyle)
         this.lifecycle.addObserver(speechRecognizerController)
+        this.lifecycle.addObserver(hidingFragmentHandler)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
