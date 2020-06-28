@@ -61,7 +61,7 @@ class SpeechRecognizerController(
             }
 
             override fun onResults(results: Bundle) {
-                val stringArray = results.getStringArrayList(android.speech.SpeechRecognizer.RESULTS_RECOGNITION);
+                val stringArray = results.getStringArrayList(android.speech.SpeechRecognizer.RESULTS_RECOGNITION)
                 onEvent(RecognizeEvent.RECOGNITION_SUCCESS, stringArray?.getOrNull(0).toString())
             }
         }

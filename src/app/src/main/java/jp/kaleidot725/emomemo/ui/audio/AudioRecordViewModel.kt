@@ -37,6 +37,4 @@ class AudioRecordViewModel : ViewModel() {
     private fun SpeechRecognizerController.RecognizeEvent.isRecognizing(): Boolean {
         return (this != SpeechRecognizerController.RecognizeEvent.RECOGNITION_SUCCESS && this != SpeechRecognizerController.RecognizeEvent.RECOGNITION_FAILED)
     }
-
-
 }
