@@ -2,6 +2,7 @@ package jp.kaleidot725.emomemo.ui.memo
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -36,6 +37,12 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.v("TAG", "OnResume")
+        viewModel.fetch()
     }
 
     private fun setupLayout() {

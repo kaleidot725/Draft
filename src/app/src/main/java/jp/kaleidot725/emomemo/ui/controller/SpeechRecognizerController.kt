@@ -73,7 +73,6 @@ class SpeechRecognizerController(
         READY_FOR_SPEECH,
         END_OF_SPEECH,
         RECOGNITION_SUCCESS,
-        RECOGNITION_FAILED,
-        RECOGNITION_RESTART
+        RECOGNITION_FAILED
     }
 }
