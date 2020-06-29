@@ -50,11 +50,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
     private fun setupViewModel() {
         binding.viewModel = viewModel
-        viewModel.messageList.observe(viewLifecycleOwner, Observer {
+        viewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it, true)
         })
-        viewModel.memoId = args.memoId.toInt()
-        viewModel.fetch()
+        viewModel.refresh(args.memoId.toInt())
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
