@@ -26,7 +26,6 @@ import permissions.dispatcher.OnShowRationale
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.RuntimePermissions
 
-
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val viewModel: MemoViewModel by viewModel()
