@@ -19,18 +19,19 @@ class MemoViewModel(
     private val messageService: MessageService,
     private val audioRecognizerRepository: AudioRecognizerRepository
 ) : ViewModel() {
+    private var memoId: Int = 0
+
     private val refresh: MutableLiveData<Unit> = MutableLiveData()
-    var memoId: Int = 0
-    val message: MutableLiveData<String> = MutableLiveData()
-    val messageList: LiveData<List<Message>> = refresh.switchMap {
+    val messages: LiveData<List<Message>> = refresh.switchMap {
         liveData(Dispatchers.IO) {
             emit(messageService.getMessage(memoId))
         }
     }
+    val newMessage: MutableLiveData<String> = MutableLiveData()
 
     val listener: OnChangedRecognizedTextListener = object : OnChangedRecognizedTextListener {
         override fun onChanged(text: String) {
-            message.postValue(text)
+            newMessage.postValue(text)
         }
     }
 
@@ -38,14 +39,18 @@ class MemoViewModel(
         audioRecognizerRepository.addOnChangedRecognizedTextListener(listener)
     }
 
-    fun fetch() {
+    fun refresh(id: Int) {
+        memoId = id
         refresh.value = Unit
+        newMessage.value = ""
     }
 
     fun create() {
         viewModelScope.launch(Dispatchers.IO) {
-            messageService.create(memoId, message.getValueSafety(""))
-            withContext(Dispatchers.Main) { fetch() }
+            messageService.create(memoId, newMessage.getValueSafety(""))
+            withContext(Dispatchers.Main) {
+                refresh(memoId)
+            }
         }
     }
 
