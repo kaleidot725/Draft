@@ -34,11 +34,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupLayout()
-        setupViewModel()
-    }
 
-    private fun setupLayout() {
         recycler_view.adapter = messageItemRecyclerViewController.adapter
         recycler_view.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.VERTICAL
@@ -46,13 +42,9 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         voice_button.setOnClickListener {
             showRecordAudioWithPermissionCheck()
         }
-    }
 
-    private fun setupViewModel() {
         binding.viewModel = viewModel
-        viewModel.messages.observe(viewLifecycleOwner, Observer {
-            messageItemRecyclerViewController.setData(it, true)
-        })
+        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it, true) })
         viewModel.refresh(args.memoId.toInt())
     }
 
