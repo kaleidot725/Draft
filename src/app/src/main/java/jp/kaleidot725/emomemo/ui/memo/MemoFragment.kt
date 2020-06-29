@@ -1,8 +1,10 @@
 package jp.kaleidot725.emomemo.ui.memo
 
 import android.Manifest.permission.RECORD_AUDIO
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,30 +36,22 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupLayout()
-        setupViewModel()
-    }
 
-    private fun setupLayout() {
         recycler_view.adapter = messageItemRecyclerViewController.adapter
-        recycler_view.layoutManager = LinearLayoutManager(context).apply {
-            orientation = LinearLayoutManager.VERTICAL
-        }
-        voice_button.setOnClickListener {
-            showRecordAudioWithPermissionCheck()
-        }
-    }
+        recycler_view.layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
+        voice_button.setOnClickListener { showRecordAudioWithPermissionCheck() }
 
-    private fun setupViewModel() {
         binding.viewModel = viewModel
-        viewModel.messages.observe(viewLifecycleOwner, Observer {
-            messageItemRecyclerViewController.setData(it, true)
-        })
+        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it, true) })
         viewModel.refresh(args.memoId.toInt())
     }
 
+    override fun onDestroyView() {
+        hideSoftKeyBoard()
+        super.onDestroyView()
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
@@ -79,5 +73,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     @OnNeverAskAgain(RECORD_AUDIO)
     fun onRecordAudioNeverAskAgain() {
         Toast.makeText(context, R.string.memo_fragment_audio_permission_never_ask_again, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun hideSoftKeyBoard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
     }
 }
