@@ -49,7 +49,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         }
 
         binding.viewModel = viewModel
-        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it, true) })
+        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it) })
         viewModel.refresh(args.memoId.toInt())
     }
 

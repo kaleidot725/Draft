@@ -1,28 +1,20 @@
 package jp.kaleidot725.emomemo.ui.controller
 
 import android.view.View
-import com.airbnb.epoxy.Typed2EpoxyController
+import com.airbnb.epoxy.TypedEpoxyController
 import jp.kaleidot725.emomemo.memoItemContainer
-import jp.kaleidot725.emomemo.memoItemHeader
 import jp.kaleidot725.emomemo.model.ddd.domain.Memo
 
 class MemoItemRecyclerViewController(
     private val selectListener: SelectListener? = null
-) : Typed2EpoxyController<List<Memo>, Boolean>() {
+) : TypedEpoxyController<List<Memo>>() {
 
-    override fun buildModels(memoList: List<Memo>, loadingMore: Boolean) {
-        memoList.groupBy { it.tag }.forEach {
-            memoItemHeader {
-                id(it.key)
-                title(it.key)
-            }
-
-            it.value.forEach { item ->
-                memoItemContainer {
-                    id(item.toString())
-                    title(item.title)
-                    onClickListener(View.OnClickListener { selectListener?.onSelected(item) })
-                }
+    override fun buildModels(memoList: List<Memo>) {
+        memoList.forEach { item ->
+            memoItemContainer {
+                id(item.id)
+                title(item.title)
+                onClickListener(View.OnClickListener { selectListener?.onSelected(item) })
             }
         }
     }

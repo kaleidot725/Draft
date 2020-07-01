@@ -52,7 +52,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         viewModel.memoList.observe(viewLifecycleOwner, Observer {
-            recyclerViewController.setData(it, true)
+            recyclerViewController.setData(it)
         })
 
         viewModel.event.observe(viewLifecycleOwner, Observer {
