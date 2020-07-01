@@ -7,5 +7,5 @@ data class Message(
     val time: Long,
     val value: String
 ) {
-    val formattedTime = DateFormat.format("yyyy年 MM月 dd日", time).toString()
+    val formattedTime = DateFormat.format("yyyy/MM/dd hh:mm:ss", time).toString()
 }

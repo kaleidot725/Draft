@@ -7,7 +7,8 @@
     <color name="secondaryLightColor">#5df2d6</color>
     <color name="secondaryDarkColor">#008e76</color>
     <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#c7c7c7</color>
-    <color name="cardStrokeColor">#80c7c7c7</color>
+    <color name="darkPrimaryTextColor">#111111</color>
+    <color name="darkSecondaryTextColor">#404040</color>
+    <color name="strokeColor">#80c7c7c7</color>
     <color name="bottomCardColor">#80EEEEEE</color>
 </resources>

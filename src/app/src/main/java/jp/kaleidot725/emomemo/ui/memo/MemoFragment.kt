@@ -11,11 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.core.MessageItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.recycler_view
 import kotlinx.android.synthetic.main.fragment_memo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,12 +38,18 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recycler_view.adapter = messageItemRecyclerViewController.adapter
-        recycler_view.layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
-        voice_button.setOnClickListener { showRecordAudioWithPermissionCheck() }
+        recycler_view.apply {
+            this.adapter = messageItemRecyclerViewController.adapter
+            this.layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.VERTICAL
+            }
+            this.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
+                setDrawable(resources.getDrawable(R.drawable.divider, context.theme))
+            })
+        }
 
         binding.viewModel = viewModel
-        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it, true) })
+        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it) })
         viewModel.refresh(args.memoId.toInt())
     }
 

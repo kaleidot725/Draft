@@ -15,11 +15,10 @@
         android:layout_height="match_parent"
         tools:context=".ui.memo.MemoFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
             android:overScrollMode="never"
             app:layout_constraintBottom_toTopOf="@id/message_edit_text"
             app:layout_constraintEnd_toEndOf="parent"

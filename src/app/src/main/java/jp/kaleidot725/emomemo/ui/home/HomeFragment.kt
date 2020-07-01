@@ -6,12 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.model.ddd.domain.Memo
-import jp.kaleidot725.emomemo.ui.core.MemoItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.controller.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,12 +21,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
 
-    private val recyclerViewController: MemoItemRecyclerViewController = MemoItemRecyclerViewController(object :
-        MemoItemRecyclerViewController.SelectListener {
-        override fun onSelected(item: Memo) {
-            navigateMemoFragment(item)
-        }
-    })
+    private val recyclerViewController: MemoItemRecyclerViewController =
+        MemoItemRecyclerViewController(object :
+            MemoItemRecyclerViewController.SelectListener {
+            override fun onSelected(item: Memo) {
+                navigateMemoFragment(item)
+            }
+        })
 
     private val onDestinationChangedListener: NavController.OnDestinationChangedListener =
         NavController.OnDestinationChangedListener { controller, _, _ ->
@@ -44,10 +46,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             this.layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
+            this.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
+                setDrawable(resources.getDrawable(R.drawable.divider, context.theme))
+            })
         }
 
         viewModel.memoList.observe(viewLifecycleOwner, Observer {
-            recyclerViewController.setData(it, true)
+            recyclerViewController.setData(it)
         })
 
         viewModel.event.observe(viewLifecycleOwner, Observer {
