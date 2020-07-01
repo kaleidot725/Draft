@@ -21,13 +21,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
 
-    private val recyclerViewController: MemoItemRecyclerViewController =
-        MemoItemRecyclerViewController(object :
+    private val recyclerViewController: MemoItemRecyclerViewController by lazy {
+        MemoItemRecyclerViewController(requireContext(), object :
             MemoItemRecyclerViewController.SelectListener {
             override fun onSelected(item: Memo) {
                 navigateMemoFragment(item)
             }
         })
+    }
 
     private val onDestinationChangedListener: NavController.OnDestinationChangedListener =
         NavController.OnDestinationChangedListener { controller, _, _ ->
