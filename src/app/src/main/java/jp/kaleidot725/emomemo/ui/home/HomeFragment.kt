@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
@@ -45,6 +46,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             this.layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
+            this.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
+                setDrawable(resources.getDrawable(R.drawable.divider, context.theme))
+            })
         }
 
         viewModel.memoList.observe(viewLifecycleOwner, Observer {
