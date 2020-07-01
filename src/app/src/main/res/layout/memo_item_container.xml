@@ -13,6 +13,14 @@
             type="String" />
 
         <variable
+            name="latestTime"
+            type="String" />
+
+        <variable
+            name="latestMessage"
+            type="String" />
+
+        <variable
             name="onClickListener"
             type="View.OnClickListener" />
     </data>
@@ -44,17 +52,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:text="6 months"
+            android:text="@{latestTime}"
             android:textColor="@color/darkSecondaryTextColor"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="6 months" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST"
+            android:text="@{latestMessage}"
             android:textColor="@color/darkSecondaryTextColor"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST" />
 
     </LinearLayout>
 </layout>
