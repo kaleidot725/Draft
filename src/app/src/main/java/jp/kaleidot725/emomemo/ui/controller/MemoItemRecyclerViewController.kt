@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.ui.core
+package jp.kaleidot725.emomemo.ui.controller
 
 import android.view.View
 import com.airbnb.epoxy.Typed2EpoxyController

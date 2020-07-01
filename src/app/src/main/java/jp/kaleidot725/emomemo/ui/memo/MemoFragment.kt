@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.core.MessageItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.recycler_view
 import kotlinx.android.synthetic.main.fragment_memo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
