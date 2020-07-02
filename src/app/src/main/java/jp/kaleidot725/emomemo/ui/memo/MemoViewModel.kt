@@ -56,7 +56,6 @@ class MemoViewModel(
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
         audioRecognizerRepository.removeOnChangedRecognizedTextListener(onChangedRecognizedTextListener)
