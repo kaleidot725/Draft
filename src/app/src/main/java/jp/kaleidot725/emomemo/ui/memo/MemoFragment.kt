@@ -17,7 +17,6 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.controller.MessageItemRecyclerViewController
-import kotlinx.android.synthetic.main.fragment_home.recycler_view
 import kotlinx.android.synthetic.main.fragment_memo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
@@ -38,7 +37,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recycler_view.apply {
+        binding.recyclerView.apply {
             this.adapter = messageItemRecyclerViewController.adapter
             this.layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.VERTICAL
@@ -46,6 +45,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             this.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
                 setDrawable(resources.getDrawable(R.drawable.divider, context.theme))
             })
+        }
+
+        binding.voiceButton.setOnClickListener {
+            showRecordAudioWithPermissionCheck()
         }
 
         binding.viewModel = viewModel
