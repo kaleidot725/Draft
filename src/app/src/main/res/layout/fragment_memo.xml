@@ -45,7 +45,7 @@
                 android:minWidth="40dp"
                 android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="8dp"
-                android:text="@={viewModel.newMessage}"
+                android:text="@={viewModel.inputMessage}"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/voice_button"

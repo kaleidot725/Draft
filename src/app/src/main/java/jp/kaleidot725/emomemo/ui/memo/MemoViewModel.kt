@@ -26,11 +26,11 @@ class MemoViewModel(
             emit(messageService.getMessage(memoId))
         }
     }
-    val newMessage: MutableLiveData<String> = MutableLiveData()
+    val inputMessage: MutableLiveData<String> = MutableLiveData()
 
     private val onChangedRecognizedTextListener: OnChangedRecognizedTextListener = object : OnChangedRecognizedTextListener {
         override fun onChanged(text: String) {
-            newMessage.postValue(text)
+            inputMessage.postValue(inputMessage.value + text)
         }
     }
 
@@ -41,14 +41,14 @@ class MemoViewModel(
     fun refresh(id: Int) {
         memoId = id
         refresh.value = Unit
-        newMessage.value = ""
+        inputMessage.value = ""
     }
 
     fun create() {
         viewModelScope.launch(Dispatchers.IO) {
-            val message = newMessage.getValueSafety("")
+            val message = inputMessage.getValueSafety("")
             if (message.isNotEmpty()) {
-                messageService.create(memoId, newMessage.getValueSafety(""))
+                messageService.create(memoId, inputMessage.getValueSafety(""))
                 withContext(Dispatchers.Main) {
                     refresh(memoId)
                 }
