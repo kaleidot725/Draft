@@ -18,10 +18,10 @@
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@id/message_layout"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
+            android:layout_alignParentTop="true"
             android:overScrollMode="never" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
