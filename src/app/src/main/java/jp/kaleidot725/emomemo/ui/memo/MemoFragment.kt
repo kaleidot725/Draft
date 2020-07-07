@@ -40,7 +40,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             orientation = RecyclerView.VERTICAL
         }
     }
-    
+
     private val messageItemDecoration by lazy {
         DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
             setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
