@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
@@ -31,27 +32,36 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val viewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
     private val args: MemoFragmentArgs by navArgs()
-    private val messageItemRecyclerViewController = MessageItemRecyclerViewController()
     private val navController: NavController get() = findNavController()
+
+    private val messageItemRecyclerViewController = MessageItemRecyclerViewController()
+    private val messageItemLayoutManager by lazy {
+        LinearLayoutManager(requireContext()).apply {
+            orientation = RecyclerView.VERTICAL
+            stackFromEnd = true
+        }
+    }
+    private val messageItemDecoration by lazy {
+        DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
+            setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+
         binding.recyclerView.apply {
-            this.adapter = messageItemRecyclerViewController.adapter
-            this.layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-            this.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
-                setDrawable(resources.getDrawable(R.drawable.divider, context.theme))
-            })
+            adapter = messageItemRecyclerViewController.adapter
+            layoutManager = messageItemLayoutManager
+            addItemDecoration(messageItemDecoration)
         }
 
         binding.voiceButton.setOnClickListener {
             showRecordAudioWithPermissionCheck()
         }
 
-        binding.viewModel = viewModel
         viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it) })
         viewModel.refresh(args.memoId.toInt())
     }
