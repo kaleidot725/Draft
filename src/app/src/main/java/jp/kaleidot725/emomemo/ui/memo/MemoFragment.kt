@@ -62,7 +62,11 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             showRecordAudioWithPermissionCheck()
         }
 
-        viewModel.messages.observe(viewLifecycleOwner, Observer { messageItemRecyclerViewController.setData(it) })
+        viewModel.messages.observe(viewLifecycleOwner, Observer {
+            messageItemRecyclerViewController.setData(it)
+            binding.recyclerView.smoothScrollToPosition(it.count())
+        })
+
         viewModel.refresh(args.memoId.toInt())
     }
 
