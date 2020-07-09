@@ -17,36 +17,52 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
     private val viewModel: AudioRecordViewModel by viewModel()
     private val binding: FragmentAudioRecordBinding by viewBinding()
     private val navController: NavController get() = findNavController()
-    private val hidingFragmentHandler: SafetyHandler =
-        SafetyHandler(Runnable {
-            navController.popBackStack()
-        })
-
-    private val speechRecognizerController: SpeechRecognizerController by lazy {
-        SpeechRecognizerController(this.context) { event, text ->
-            viewModel.update(event, text)
-        }
-    }
+    private lateinit var hidingFragmentHandler: SafetyHandler
+    private lateinit var speechRecognizerController: SpeechRecognizerController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.DialogStyle)
-        this.lifecycle.addObserver(speechRecognizerController)
-        this.lifecycle.addObserver(hidingFragmentHandler)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = this.viewModel
-        binding.floatingActionButton.setOnClickListener {
-            speechRecognizerController.retry()
-        }
 
-        this.viewModel.shouldHide.observe(viewLifecycleOwner, Observer {
-            hidingFragmentHandler.postDelayed(HIDE_DELAY_DURATION)
+        hidingFragmentHandler = SafetyHandler(Runnable {
+            navController.popBackStack()
         })
 
+        speechRecognizerController = SpeechRecognizerController(this.context) { event, text ->
+            viewModel.update(event, text)
+        }
+
+        binding.let {
+            it.viewModel = viewModel
+            it.floatingActionButton.setOnClickListener { speechRecognizerController.retry() }
+        }
+
+        lifecycle.addObserver(speechRecognizerController)
+        lifecycle.addObserver(hidingFragmentHandler)
+
+        viewModel.shouldHide.observe(viewLifecycleOwner, Observer {
+            hidingFragmentHandler.postDelayed(HIDE_DELAY_DURATION)
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
         speechRecognizerController.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        speechRecognizerController.cancel()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        lifecycle.removeObserver(speechRecognizerController)
+        lifecycle.removeObserver(hidingFragmentHandler)
     }
 
     companion object {
