@@ -9,17 +9,18 @@ import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentAudioRecordBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.controller.SafetyHandler
 import jp.kaleidot725.emomemo.ui.controller.SpeechRecognizerController
+import jp.kaleidot725.emomemo.ui.handler.SafetyHandler
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
     private val viewModel: AudioRecordViewModel by viewModel()
     private val binding: FragmentAudioRecordBinding by viewBinding()
     private val navController: NavController get() = findNavController()
-    private val hidingFragmentHandler: SafetyHandler = SafetyHandler(Runnable {
-        navController.popBackStack()
-    })
+    private val hidingFragmentHandler: SafetyHandler =
+        SafetyHandler(Runnable {
+            navController.popBackStack()
+        })
 
     private val speechRecognizerController: SpeechRecognizerController by lazy {
         SpeechRecognizerController(this.context) { event, text ->

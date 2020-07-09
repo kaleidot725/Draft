@@ -3,9 +3,8 @@ package jp.kaleidot725.emomemo.model
 import androidx.room.Room
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
+import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
-import jp.kaleidot725.emomemo.model.ddd.domainService.MemoService
-import jp.kaleidot725.emomemo.model.ddd.domainService.MessageService
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
@@ -33,15 +32,12 @@ val appModule = module {
     }
 
     single {
+        val db: AppDatabase = get()
+        MemoStatusRepository(db.memoStatusDao())
+    }
+
+    single {
         AudioRecognizerRepository()
-    }
-
-    single {
-        MemoService(get())
-    }
-
-    single {
-        MessageService(get())
     }
 
     viewModel {
