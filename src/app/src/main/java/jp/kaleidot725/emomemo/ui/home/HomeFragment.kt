@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.model.ddd.domain.Memo
+import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 import jp.kaleidot725.emomemo.ui.controller.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,7 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val recyclerViewController: MemoItemRecyclerViewController by lazy {
         MemoItemRecyclerViewController(requireContext(), object :
             MemoItemRecyclerViewController.SelectListener {
-            override fun onSelected(item: Memo) {
+            override fun onSelected(item: MemoEntity) {
                 navigateMemoFragment(item)
             }
         })
@@ -71,7 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         navController.removeOnDestinationChangedListener(onDestinationChangedListener)
     }
 
-    private fun navigateMemoFragment(memo: Memo) {
+    private fun navigateMemoFragment(memo: MemoEntity) {
         val action = HomeFragmentDirections.actionHomeFragmentToMemoFragment(memo.id.toLong(), memo.title)
         navController.navigate(action)
     }

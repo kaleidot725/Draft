@@ -5,14 +5,14 @@ import android.view.View
 import com.airbnb.epoxy.TypedEpoxyController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.memoItemContainer
-import jp.kaleidot725.emomemo.model.ddd.domain.Memo
+import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 
 class MemoItemRecyclerViewController(
     private val context: Context,
     private val selectListener: SelectListener? = null
-) : TypedEpoxyController<List<Memo>>() {
+) : TypedEpoxyController<List<MemoEntity>>() {
 
-    override fun buildModels(memoList: List<Memo>) {
+    override fun buildModels(memoList: List<MemoEntity>) {
         memoList.forEach { item ->
             memoItemContainer {
                 id(item.id)
@@ -25,6 +25,6 @@ class MemoItemRecyclerViewController(
     }
 
     interface SelectListener {
-        fun onSelected(item: Memo)
+        fun onSelected(item: MemoEntity)
     }
 }
