@@ -20,54 +20,43 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModel()
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
-
-    private val recyclerViewController: MemoItemRecyclerViewController by lazy {
-        MemoItemRecyclerViewController(requireContext(), object :
-            MemoItemRecyclerViewController.SelectListener {
-            override fun onSelected(item: MemoStatusView) {
-                navigateMemoFragment(item)
-            }
-        })
-    }
-
-    private val onDestinationChangedListener: NavController.OnDestinationChangedListener =
-        NavController.OnDestinationChangedListener { controller, _, _ ->
-            if (controller.currentDestination?.id == R.id.homeFragment) {
-                viewModel.fetchData()
-            }
-        }
+    private lateinit var memoItemListController: MemoItemRecyclerViewController
+    private lateinit var onDestinationChangedListener: NavController.OnDestinationChangedListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewModel = viewModel
-
-        recycler_view.apply {
-            this.adapter = recyclerViewController.adapter
-            this.layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
+        memoItemListController = MemoItemRecyclerViewController(object : MemoItemRecyclerViewController.SelectListener {
+            override fun onSelected(item: MemoStatusView) {
+                navigateMemoFragment(item)
             }
-            this.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
-                setDrawable(resources.getDrawable(R.drawable.divider, context.theme))
-            })
+        })
+
+        onDestinationChangedListener = NavController.OnDestinationChangedListener { controller, _, _ ->
+            if (controller.currentDestination?.id == R.id.homeFragment) {
+                viewModel.refresh()
+            }
+        }
+        
+        navController.addOnDestinationChangedListener(onDestinationChangedListener)
+
+        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        decoration.setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
+        recycler_view.addItemDecoration(decoration)
+        recycler_view.adapter = memoItemListController.adapter
+
+        binding.viewModel = viewModel
+        binding.addButton.setOnClickListener {
+            navigateHomeDialogFragment()
         }
 
         viewModel.memoList.observe(viewLifecycleOwner, Observer {
-            recyclerViewController.setData(it)
+            memoItemListController.setData(it)
         })
-
-        viewModel.event.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                HomeViewModel.NavEvent.ADD -> navigateHomeDialogFragment()
-            }
-        })
-
-        viewModel.fetchData()
-        navController.addOnDestinationChangedListener(onDestinationChangedListener)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         navController.removeOnDestinationChangedListener(onDestinationChangedListener)
     }
 
