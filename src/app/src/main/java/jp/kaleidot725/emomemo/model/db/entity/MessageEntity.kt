@@ -17,4 +17,3 @@ data class MessageEntity(
     val time: Long,
     val value: String
 )
-
