@@ -1,6 +1,5 @@
 package jp.kaleidot725.emomemo.ui.controller
 
-import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
 import com.airbnb.epoxy.TypedEpoxyController
@@ -8,7 +7,6 @@ import jp.kaleidot725.emomemo.memoItemContainer
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 
 class MemoItemRecyclerViewController(
-    private val context: Context,
     private val selectListener: SelectListener? = null
 ) : TypedEpoxyController<List<MemoStatusView>>() {
 

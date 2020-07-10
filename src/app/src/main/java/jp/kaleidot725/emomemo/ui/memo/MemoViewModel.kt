@@ -14,16 +14,17 @@ import jp.kaleidot725.emomemo.model.db.repository.OnChangedRecognizedTextListene
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 
 class MemoViewModel(
-    private val messsageRepository: MessageRepository,
+    private val messageRepository: MessageRepository,
     private val audioRecognizerRepository: AudioRecognizerRepository
 ) : ViewModel() {
     private var memoId: Int = 0
     private val refresh: MutableLiveData<Unit> = MutableLiveData()
     val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
         liveData(Dispatchers.IO) {
-            emit(messsageRepository.getMessage(memoId))
+            emit(messageRepository.getMessage(memoId))
         }
     }
     val inputMessage: MutableLiveData<String> = MutableLiveData()
@@ -48,7 +49,7 @@ class MemoViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val message = inputMessage.getValueSafety("")
             if (message.isNotEmpty()) {
-                messsageRepository.insert(MessageEntity(memoId, Date().time, inputMessage.getValueSafety("")))
+                messageRepository.insert(MessageEntity(memoId, Date().time, inputMessage.getValueSafety("")))
                 withContext(Dispatchers.Main) {
                     refresh(memoId)
                 }

@@ -39,7 +39,6 @@
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:onClick="@{() -> viewModel.add()}"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="@id/menu_background"
             app:layout_constraintEnd_toEndOf="parent"

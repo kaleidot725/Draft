@@ -12,19 +12,20 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeDialogViewModel(private val memoRepository: MemoRepository) : ViewModel() {
-    val title: MutableLiveData<String> = MutableLiveData()
-    val tag: MutableLiveData<String> = MutableLiveData()
-
     private val _event: LiveEvent<NavEvent> = LiveEvent()
     val event: LiveData<NavEvent> = _event
 
-    fun success() {
-        viewModelScope.launch {
-            if (title.value != null && tag.value != null) {
-                withContext(Dispatchers.IO) {
-                    memoRepository.insert(MemoEntity(0, title.value ?: "", tag.value ?: ""))
-                }
+    val title: MutableLiveData<String> = MutableLiveData()
+    val tag: MutableLiveData<String> = MutableLiveData()
 
+    fun success() {
+        if (title.value == null || tag.value == null) {
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            memoRepository.insert(MemoEntity(0, title.value ?: "", tag.value ?: ""))
+            withContext(Dispatchers.Main) {
                 _event.postValue(NavEvent.SUCCESS)
             }
         }
