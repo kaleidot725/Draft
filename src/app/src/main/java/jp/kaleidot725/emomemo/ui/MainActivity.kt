@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupActionBarWithNavController(this, navController, appBarConfiguration)
 
-
         navController.addOnDestinationChangedListener { controller, _, _ ->
             when (controller.currentDestination?.id) {
                 R.id.topFragment -> supportActionBar?.hide()
