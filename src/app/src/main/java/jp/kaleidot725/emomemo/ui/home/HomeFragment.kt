@@ -37,7 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 viewModel.refresh()
             }
         }
-        
+
         navController.addOnDestinationChangedListener(onDestinationChangedListener)
 
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
