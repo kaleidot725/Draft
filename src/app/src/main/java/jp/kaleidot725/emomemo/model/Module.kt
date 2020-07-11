@@ -16,9 +16,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     single<AppDatabase> {
-        Room.databaseBuilder(
-            androidContext(), AppDatabase::class.java, "emomemo-database"
-        ).fallbackToDestructiveMigration().build()
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
 
     single {
