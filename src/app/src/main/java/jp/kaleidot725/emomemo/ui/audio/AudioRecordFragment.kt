@@ -48,7 +48,9 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
         lifecycle.addObserver(hidingFragmentHandler)
 
         viewModel.shouldHide.observe(viewLifecycleOwner, Observer {
-            hidingFragmentHandler.postDelayed(HIDE_DELAY_DURATION)
+            if (it) {
+                hidingFragmentHandler.postDelayed(HIDE_DELAY_DURATION)
+            }
         })
     }
 
