@@ -1,11 +1,12 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:textColorSecondary">@color/darkSecondaryTextColor</item>
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
     <style name="DialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
