@@ -22,7 +22,7 @@ class HomeDialogViewModel(private val memoRepository: MemoRepository) : ViewMode
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            memoRepository.insert(MemoEntity(0, "", title.value ?: ""))
+            memoRepository.insert(MemoEntity(0, 0, title.value ?: ""))
             withContext(Dispatchers.Main) {
                 _event.postValue(NavEvent.SUCCESS)
             }

@@ -6,7 +6,12 @@ import androidx.room.ForeignKey
 @Entity(
     tableName = "message",
     primaryKeys = ["memoId", "time"],
-    foreignKeys = [ForeignKey(entity = MemoEntity::class, parentColumns = arrayOf("id"), childColumns = arrayOf("memoId"))]
+    foreignKeys = [ForeignKey(
+        entity = MemoEntity::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("memoId"),
+        onDelete = ForeignKey.CASCADE
+    )]
 )
 data class MessageEntity(
     val memoId: Int,
