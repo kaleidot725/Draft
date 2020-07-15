@@ -5,6 +5,7 @@ import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
+import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
@@ -23,6 +24,11 @@ val appModule = module {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
 
+    single {
+        val db: AppDatabase = get()
+        NotebookRepository(db.notebookDao())
+    }
+    
     single {
         val db: AppDatabase = get()
         MemoRepository(db.memoDao())
@@ -55,7 +61,7 @@ val appModule = module {
     }
 
     viewModel {
-        TopViewModel()
+        TopViewModel(get(), get())
     }
 
     viewModel {

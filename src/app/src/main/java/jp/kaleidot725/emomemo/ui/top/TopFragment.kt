@@ -17,8 +17,8 @@ class TopFragment : Fragment(R.layout.fragment_top) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.viewModel = viewModel
+        viewModel.initialize()
         view.postDelayed(Runnable {
             navController.navigate(R.id.action_topFragment_to_homeFragment)
         }, DELAY_TIME)
