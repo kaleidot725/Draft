@@ -11,15 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.model.AppStatus
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.controller.MemoItemRecyclerViewController
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.recycler_view
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModel()
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
+    private val appStatus: AppStatus by inject()
     private lateinit var memoItemListController: MemoItemRecyclerViewController
     private lateinit var onDestinationChangedListener: NavController.OnDestinationChangedListener
 
@@ -28,6 +31,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         memoItemListController = MemoItemRecyclerViewController(object : MemoItemRecyclerViewController.SelectListener {
             override fun onSelected(item: MemoStatusView) {
+                appStatus.memoId = item.id
                 navigateMemoFragment(item)
             }
         })

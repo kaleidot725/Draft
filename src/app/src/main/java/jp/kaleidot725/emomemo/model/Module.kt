@@ -15,6 +15,10 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+    single {
+        AppStatus()
+    }
+
     single<AppDatabase> {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
@@ -43,11 +47,11 @@ val appModule = module {
     }
 
     viewModel {
-        HomeDialogViewModel(get())
+        HomeDialogViewModel(get(), get())
     }
 
     viewModel {
-        MemoViewModel(get(), get())
+        MemoViewModel(get(), get(), get())
     }
 
     viewModel {
