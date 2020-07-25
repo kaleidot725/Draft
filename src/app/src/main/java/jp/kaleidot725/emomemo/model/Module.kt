@@ -6,6 +6,7 @@ import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
@@ -52,7 +53,7 @@ val appModule = module {
     single {
         DatabaseInitializeUsecase(get(), get())
     }
-    
+
     viewModel {
         HomeViewModel(get())
     }
@@ -71,5 +72,9 @@ val appModule = module {
 
     viewModel {
         AudioRecordViewModel(get())
+    }
+
+    viewModel {
+        MainViewModel(get())
     }
 }
