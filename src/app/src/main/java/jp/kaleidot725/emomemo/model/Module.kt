@@ -11,6 +11,7 @@ import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.top.TopViewModel
+import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -28,7 +29,7 @@ val appModule = module {
         val db: AppDatabase = get()
         NotebookRepository(db.notebookDao())
     }
-    
+
     single {
         val db: AppDatabase = get()
         MemoRepository(db.memoDao())
@@ -48,6 +49,10 @@ val appModule = module {
         AudioRecognizerRepository()
     }
 
+    single {
+        DatabaseInitializeUsecase(get(), get())
+    }
+    
     viewModel {
         HomeViewModel(get())
     }
@@ -61,7 +66,7 @@ val appModule = module {
     }
 
     viewModel {
-        TopViewModel(get(), get())
+        TopViewModel(get())
     }
 
     viewModel {

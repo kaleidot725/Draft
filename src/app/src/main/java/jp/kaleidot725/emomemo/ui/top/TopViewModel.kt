@@ -1,30 +1,28 @@
 package jp.kaleidot725.emomemo.ui.top
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import jp.kaleidot725.emomemo.model.AppStatus
-import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class TopViewModel(
-    private val appStatus: AppStatus,
-    private val notebookRepository: NotebookRepository
+    private val databaseInitializeUsecase: DatabaseInitializeUsecase
 ) : ViewModel() {
-    fun initialize() {
-        // FIXME なにもなければ作成するようにしている
-        runBlocking {
-            viewModelScope.launch(Dispatchers.IO) {
-                var notebooks = notebookRepository.getAll()
-                if (notebooks.count() <= 0) {
-                    notebookRepository.insert(NotebookEntity(0, "Default"))
-                }
+    private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
+    val isCompleted: LiveData<Boolean> = _isCompleted
 
-                notebooks = notebookRepository.getAll()
-                appStatus.notebookId = notebooks.first().id
-            }.join()
+    fun initialize() {
+        viewModelScope.launch(Dispatchers.IO) {
+            databaseInitializeUsecase.execute()
+            delay(1000)
+            withContext(Dispatchers.Main) {
+                _isCompleted.value = true
+            }
         }
     }
 }

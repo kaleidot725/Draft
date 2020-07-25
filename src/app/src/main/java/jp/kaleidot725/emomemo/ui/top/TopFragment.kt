@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo.ui.top
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
@@ -17,14 +18,16 @@ class TopFragment : Fragment(R.layout.fragment_top) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = viewModel
-        viewModel.initialize()
-        view.postDelayed(Runnable {
-            navController.navigate(R.id.action_topFragment_to_homeFragment)
-        }, DELAY_TIME)
-    }
 
-    companion object {
-        private const val DELAY_TIME = 3000L
+        // Setup DataBinding
+        binding.viewModel = viewModel
+
+        // Observe ViewModel
+        viewModel.isCompleted.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                navController.navigate(R.id.action_topFragment_to_homeFragment)
+            }
+        })
+        viewModel.initialize()
     }
 }
