@@ -9,7 +9,7 @@ import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
-import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
+import jp.kaleidot725.emomemo.ui.memo.AddMemoViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import org.koin.android.ext.koin.androidContext
@@ -58,7 +58,7 @@ val appModule = module {
     }
 
     viewModel {
-        HomeDialogViewModel(get(), get())
+        AddMemoViewModel(get(), get())
     }
 
     viewModel {

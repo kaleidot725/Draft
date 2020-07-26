@@ -41,9 +41,9 @@
     </fragment>
     <dialog
         android:id="@+id/homeDialogFragment"
-        android:name="jp.kaleidot725.emomemo.ui.homedialog.HomeDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.memo.AddMemoDialogFragment"
         android:label="@string/home_dialog_fragment_title"
-        tools:layout="@layout/fragment_home_dialog">
+        tools:layout="@layout/fragment_add_memo">
         <action
             android:id="@+id/action_homeDialogFragment_to_homeFragment"
             app:destination="@id/homeFragment"
