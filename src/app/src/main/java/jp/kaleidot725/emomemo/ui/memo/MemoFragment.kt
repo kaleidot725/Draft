@@ -17,7 +17,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.MainViewModel
-import jp.kaleidot725.emomemo.ui.controller.MessageItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,6 +72,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         mainViewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it)
             binding.recyclerView.smoothScrollToPosition(it.count())
+        })
+
+        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
         })
 
         memoViewModel.reset()

@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.ui.handler
+package jp.kaleidot725.emomemo.ui.common.handler
 
 import android.os.Handler
 import androidx.lifecycle.DefaultLifecycleObserver

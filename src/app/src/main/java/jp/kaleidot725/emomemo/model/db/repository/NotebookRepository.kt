@@ -24,7 +24,7 @@ class NotebookRepository(private val dao: NotebookDao) {
         return dao.getAll()
     }
 
-    suspend fun geeNoteBook(id: Int): NotebookEntity {
+    suspend fun getNoteBook(id: Int): NotebookEntity {
         return dao.getNotebook(id)
     }
 }

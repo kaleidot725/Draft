@@ -15,8 +15,7 @@ class DatabaseInitializeUsecase(
 
     private suspend fun createDefaultNotebook() {
         if (notebookRepository.getAll().count() <= 0) {
-            notebookRepository.insert(DEFAULT1_NOTEBOOK)
-            notebookRepository.insert(DEFAULT2_NOTEBOOK)
+            notebookRepository.insert(DEFAULT_NOTEBOOK)
         }
     }
 
@@ -25,7 +24,6 @@ class DatabaseInitializeUsecase(
     }
 
     companion object {
-        private val DEFAULT1_NOTEBOOK = NotebookEntity.create("デフォルト1")
-        private val DEFAULT2_NOTEBOOK = NotebookEntity.create("デフォルト2")
+        private val DEFAULT_NOTEBOOK = NotebookEntity.create("デフォルト")
     }
 }
