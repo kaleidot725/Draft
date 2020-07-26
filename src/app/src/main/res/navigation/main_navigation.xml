@@ -48,7 +48,11 @@
             android:id="@+id/action_homeDialogFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </dialog>
     <fragment
         android:id="@+id/memoFragment"
@@ -60,14 +64,29 @@
             app:argType="long" />
         <argument
             android:name="title"
-            app:argType="string"
-            android:defaultValue="Memo" />
+            android:defaultValue="Memo"
+            app:argType="string" />
         <action
             android:id="@+id/action_memoFragment_to_audioRecognizerFragment"
-            app:destination="@id/audioRecognizerFragment" />
+            app:destination="@id/audioRecognizerFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <dialog
         android:id="@+id/audioRecognizerFragment"
         android:name="jp.kaleidot725.emomemo.ui.audio.AudioRecordFragment"
         android:label="@string/audio_recognizer_dialog_fragment_title" />
+    <dialog
+        android:id="@+id/addNotebookDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.notebook.AddNotebookDialogFragment"
+        android:label="AddNotebookDialogFragment" />
+    <action
+        android:id="@+id/action_global_addNotebookDialogFragment"
+        app:destination="@id/addNotebookDialogFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>
