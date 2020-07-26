@@ -4,7 +4,11 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="mainViewModel"
+            type="jp.kaleidot725.emomemo.ui.MainViewModel" />
+
+        <variable
+            name="homeViewModel"
             type="jp.kaleidot725.emomemo.ui.home.HomeViewModel" />
     </data>
 

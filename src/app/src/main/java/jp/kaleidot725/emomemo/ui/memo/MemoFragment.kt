@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
@@ -28,7 +30,8 @@ import permissions.dispatcher.RuntimePermissions
 
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
-    private val viewModel: MemoViewModel by viewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val memoViewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
 
@@ -48,7 +51,8 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.viewModel = viewModel
+        binding.mainViewModel = mainViewModel
+        binding.memoViewModel = memoViewModel
 
         binding.recyclerView.apply {
             adapter = messageItemRecyclerViewController.adapter
@@ -60,12 +64,17 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             showRecordAudioWithPermissionCheck()
         }
 
-        viewModel.messages.observe(viewLifecycleOwner, Observer {
+        binding.sendButton.setOnClickListener {
+            mainViewModel.createMessage(memoViewModel.inputMessage.value ?: "")
+            memoViewModel.reset()
+        }
+
+        mainViewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it)
             binding.recyclerView.smoothScrollToPosition(it.count())
         })
 
-        viewModel.refresh()
+        memoViewModel.reset()
     }
 
     override fun onDestroyView() {

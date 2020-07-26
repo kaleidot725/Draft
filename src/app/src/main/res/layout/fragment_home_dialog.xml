@@ -4,7 +4,11 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="mainViewModel"
+            type="jp.kaleidot725.emomemo.ui.MainViewModel" />
+
+        <variable
+            name="homeDialogViewModel"
             type="jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel" />
     </data>
 
@@ -38,7 +42,7 @@
                 android:gravity="start|top"
                 android:hint="@string/home_dialog_fragment_memo_title_hint"
                 android:lines="2"
-                android:text="@={viewModel.title}"
+                android:text="@={homeDialogViewModel.title}"
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@id/title_text_view" />
 
@@ -48,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/primaryColor"
-                android:onClick="@{() -> viewModel.success()}"
+                android:onClick="@{() -> homeDialogViewModel.success()}"
                 android:text="@string/home_dialog_fragment_create"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toStartOf="@id/cancel_button"
@@ -61,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/primaryColor"
-                android:onClick="@{() -> viewModel.cancel()}"
+                android:onClick="@{() -> homeDialogViewModel.cancel()}"
                 android:text="@string/home_dialog_fragment_cancel"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toEndOf="parent"
