@@ -74,6 +74,27 @@ class MainViewModel(
         _memoId.value = memoId
     }
 
+    fun createNotebook(title: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newNotebook = NotebookEntity.create(title)
+            notebookRepository.insert(newNotebook)
+        }
+    }
+
+    fun createMemo(title: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newMemo = MemoEntity.create(requireNotNull(notebookId.value), title)
+            memoRepository.insert(newMemo)
+        }
+    }
+
+    fun createMesage(message: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val newMessage = MessageEntity.create(requireNotNull(memoId.value), message)
+            messageRepository.insert(newMessage)
+        }
+    }
+
     companion object {
         val UNKNOWN_MEMO_ID = -1
         val UNKNOWN_NOTEBOOK_ID = -1

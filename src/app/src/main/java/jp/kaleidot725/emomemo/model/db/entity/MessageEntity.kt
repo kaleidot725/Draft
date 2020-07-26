@@ -2,6 +2,7 @@ package jp.kaleidot725.emomemo.model.db.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import java.util.Date
 
 @Entity(
     tableName = "message",
@@ -17,4 +18,10 @@ data class MessageEntity(
     val memoId: Int,
     val time: Long,
     val value: String
-)
+) {
+    companion object {
+        fun create(memoId: Int, value: String): MessageEntity {
+            return MessageEntity(memoId, Date().time, value)
+        }
+    }
+}
