@@ -51,7 +51,7 @@ class MainViewModel(
             emit(memoStatusRepository.getMemo(memoId))
         }
     }
-    
+
     val memoStatusList: LiveData<List<MemoStatusView>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })

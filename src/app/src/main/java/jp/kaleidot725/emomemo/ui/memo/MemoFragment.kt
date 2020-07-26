@@ -77,7 +77,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
             requireActivity().title = it.title
         })
-        
+
         memoViewModel.reset()
     }
 

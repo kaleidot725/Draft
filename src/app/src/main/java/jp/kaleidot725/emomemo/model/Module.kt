@@ -61,7 +61,7 @@ val appModule = module {
     viewModel {
         AddNotebookViewModel()
     }
-    
+
     viewModel {
         AddMemoViewModel()
     }
