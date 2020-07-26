@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavDrawer(notebooks: List<NotebookEntity>) {
         val menu = binding.navView.menu
         menu.clear()
-        
+
         menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_action)).apply {
             this.add(getString(R.string.navigation_drawer_item_add_notebook)).apply {
                 this.setOnMenuItemClickListener { true }
