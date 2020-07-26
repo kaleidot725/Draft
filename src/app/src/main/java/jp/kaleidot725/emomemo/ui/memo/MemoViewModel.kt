@@ -3,32 +3,15 @@ package jp.kaleidot725.emomemo.ui.memo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
-import jp.kaleidot725.emomemo.extension.getValueSafety
-import jp.kaleidot725.emomemo.model.AppStatus
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
+import androidx.lifecycle.map
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
-import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.OnChangedRecognizedTextListener
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.Date
 
 class MemoViewModel(
-    private val appStatus: AppStatus,
-    private val messageRepository: MessageRepository,
     private val audioRecognizerRepository: AudioRecognizerRepository
 ) : ViewModel() {
-    private val refresh: MutableLiveData<Unit> = MutableLiveData()
-    val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
-        liveData(Dispatchers.IO) {
-            emit(messageRepository.getMessage(appStatus.memoId))
-        }
-    }
     val inputMessage: MutableLiveData<String> = MutableLiveData()
+    val isNotEmptyMessage: LiveData<Boolean> = inputMessage.map { it.isNotEmpty() }
 
     private val onChangedRecognizedTextListener: OnChangedRecognizedTextListener = object : OnChangedRecognizedTextListener {
         override fun onChanged(text: String) {
@@ -40,21 +23,8 @@ class MemoViewModel(
         audioRecognizerRepository.addOnChangedRecognizedTextListener(onChangedRecognizedTextListener)
     }
 
-    fun refresh() {
-        refresh.value = Unit
+    fun reset() {
         inputMessage.value = ""
-    }
-
-    fun create() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val message = inputMessage.getValueSafety("")
-            if (message.isNotEmpty()) {
-                messageRepository.insert(MessageEntity(appStatus.memoId, Date().time, inputMessage.getValueSafety("")))
-                withContext(Dispatchers.Main) {
-                    refresh()
-                }
-            }
-        }
     }
 
     override fun onCleared() {

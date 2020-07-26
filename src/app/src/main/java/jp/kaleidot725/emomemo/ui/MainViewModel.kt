@@ -24,79 +24,89 @@ class MainViewModel(
     private val notebookRepository: NotebookRepository,
     private val databaseInitializeUsecase: DatabaseInitializeUsecase
 ) : ViewModel() {
+    private var memoId: Int = UNKNOWN_MEMO_ID
+    private var noteBookId: Int = UNKNOWN_NOTEBOOK_ID
+    private val refresh: MutableLiveData<Unit> = MutableLiveData()
+
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
 
-    private val _memoId: MutableLiveData<Int> = MutableLiveData(UNKNOWN_MEMO_ID)
-    val memoId: LiveData<Int> = _memoId
-
-    private val _notebookId: MutableLiveData<Int> = MutableLiveData(UNKNOWN_NOTEBOOK_ID)
-    val notebookId: LiveData<Int> = _notebookId
-
-    val notebooks: LiveData<List<NotebookEntity>> = isCompleted.switchMap {
+    val notebooks: LiveData<List<NotebookEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(notebookRepository.getAll())
         }
     }
 
-    val memos: LiveData<List<MemoEntity>> = notebookId.switchMap {
+    val memos: LiveData<List<MemoEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(memoRepository.getAll())
+            emit(memoRepository.getAll().filter { it.notebookId == noteBookId })
         }
     }
 
-    val messages: LiveData<List<MessageEntity>> = memoId.switchMap { memoId ->
+    val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(messageRepository.getMessage(memoId))
+            emit(messageRepository.getAll().filter { it.memoId == memoId })
         }
     }
 
     fun init() {
         viewModelScope.launch(Dispatchers.IO) {
             databaseInitializeUsecase.execute()
-
-            val notebookId = notebookRepository.getAll().firstOrNull()?.id ?: UNKNOWN_NOTEBOOK_ID
-            val memoId = memoRepository.getAll().filter { it.notebookId == notebookId }.firstOrNull()?.id ?: UNKNOWN_MEMO_ID
+            this@MainViewModel.noteBookId = notebookRepository.getAll().firstOrNull()?.id ?: UNKNOWN_NOTEBOOK_ID
+            this@MainViewModel.memoId = memoRepository.getAll().filter { it.notebookId == noteBookId }.firstOrNull()?.id ?: UNKNOWN_MEMO_ID
 
             withContext(Dispatchers.Main) {
-                _notebookId.value = notebookId
-                _memoId.value = memoId
                 _isCompleted.value = true
+                refresh.value = Unit
             }
         }
     }
 
-    fun selectNotebook(notebookId: Int) {
-        _notebookId.value = notebookId
+    fun selectNotebook(id: Int) {
+        noteBookId = id
+        refresh.value = Unit
     }
 
-    fun selectMemo(memoId: Int) {
-        _memoId.value = memoId
+    fun selectMemo(id: Int) {
+        memoId = id
+        refresh.value = Unit
     }
 
     fun createNotebook(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val newNotebook = NotebookEntity.create(title)
             notebookRepository.insert(newNotebook)
+
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
         }
     }
 
     fun createMemo(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newMemo = MemoEntity.create(requireNotNull(notebookId.value), title)
+            val newMemo = MemoEntity.create(noteBookId, title)
             memoRepository.insert(newMemo)
+
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
         }
     }
 
-    fun createMesage(message: String) {
+    fun createMessage(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newMessage = MessageEntity.create(requireNotNull(memoId.value), message)
+            val newMessage = MessageEntity.create(memoId, message)
             messageRepository.insert(newMessage)
+
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
         }
     }
 
     companion object {
-        val UNKNOWN_MEMO_ID = -1
-        val UNKNOWN_NOTEBOOK_ID = -1
+        private val UNKNOWN_MEMO_ID = -1
+        private val UNKNOWN_NOTEBOOK_ID = -1
     }
 }

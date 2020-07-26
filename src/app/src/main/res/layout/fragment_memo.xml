@@ -6,7 +6,11 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="mainViewModel"
+            type="jp.kaleidot725.emomemo.ui.MainViewModel" />
+
+        <variable
+            name="memoViewModel"
             type="jp.kaleidot725.emomemo.ui.memo.MemoViewModel" />
     </data>
 
@@ -41,7 +45,7 @@
                 android:minWidth="40dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
-                android:text="@={viewModel.inputMessage}"
+                android:text="@={memoViewModel.inputMessage}"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/voice_button"
@@ -66,7 +70,7 @@
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:onClick="@{() -> viewModel.create()}"
+                android:clickable="@{memoViewModel.isNotEmptyMessage()}"
                 android:src="@drawable/ic_send"
                 app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
                 app:layout_constraintEnd_toEndOf="parent"
