@@ -74,10 +74,6 @@ class MainViewModel(
         _memoId.value = memoId
     }
 
-    fun createMemo(title: String) {
-
-    }
-
     companion object {
         val UNKNOWN_MEMO_ID = -1
         val UNKNOWN_NOTEBOOK_ID = -1
