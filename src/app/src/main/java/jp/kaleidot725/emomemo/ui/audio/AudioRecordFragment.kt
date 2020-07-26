@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentAudioRecordBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.controller.SpeechRecognizerController
-import jp.kaleidot725.emomemo.ui.handler.SafetyHandler
+import jp.kaleidot725.emomemo.ui.common.controller.SpeechRecognizerController
+import jp.kaleidot725.emomemo.ui.common.handler.SafetyHandler
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {

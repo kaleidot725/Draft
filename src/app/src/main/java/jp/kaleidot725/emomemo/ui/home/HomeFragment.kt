@@ -13,7 +13,7 @@ import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.MainViewModel
-import jp.kaleidot725.emomemo.ui.controller.MemoItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.recycler_view
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

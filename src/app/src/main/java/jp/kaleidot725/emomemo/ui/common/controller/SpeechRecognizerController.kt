@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.ui.controller
+package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.content.Context
 import android.content.Intent
