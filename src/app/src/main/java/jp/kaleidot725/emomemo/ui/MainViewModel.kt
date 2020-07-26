@@ -11,8 +11,10 @@ import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
+import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +22,7 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel(
     private val memoRepository: MemoRepository,
+    private val memoStatusRepository: MemoStatusRepository,
     private val messageRepository: MessageRepository,
     private val notebookRepository: NotebookRepository,
     private val databaseInitializeUsecase: DatabaseInitializeUsecase
@@ -37,9 +40,9 @@ class MainViewModel(
         }
     }
 
-    val memos: LiveData<List<MemoEntity>> = refresh.switchMap {
+    val memoStatusList: LiveData<List<MemoStatusView>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(memoRepository.getAll().filter { it.notebookId == noteBookId })
+            emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })
         }
     }
 
@@ -53,7 +56,7 @@ class MainViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             databaseInitializeUsecase.execute()
             this@MainViewModel.noteBookId = notebookRepository.getAll().firstOrNull()?.id ?: UNKNOWN_NOTEBOOK_ID
-            this@MainViewModel.memoId = memoRepository.getAll().filter { it.notebookId == noteBookId }.firstOrNull()?.id ?: UNKNOWN_MEMO_ID
+            this@MainViewModel.memoId = memoStatusRepository.getAll().firstOrNull { it.notebookId == noteBookId }?.id ?: UNKNOWN_MEMO_ID
 
             withContext(Dispatchers.Main) {
                 _isCompleted.value = true
