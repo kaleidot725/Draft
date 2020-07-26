@@ -11,7 +11,6 @@ import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.homedialog.HomeDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
-import jp.kaleidot725.emomemo.ui.top.TopViewModel
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -67,14 +66,10 @@ val appModule = module {
     }
 
     viewModel {
-        TopViewModel(get())
-    }
-
-    viewModel {
         AudioRecordViewModel(get())
     }
 
     viewModel {
-        MainViewModel(get())
+        MainViewModel(get(), get(), get(), get())
     }
 }

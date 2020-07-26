@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.ActivityMainBinding
+import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val appBarConfiguration: AppBarConfiguration by lazy {
         AppBarConfiguration.Builder(setOf(R.id.homeFragment)).setDrawerLayout(drawer_layout).build()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,28 +44,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.notebooks.observe(this, Observer { notebooks ->
-            val menu = binding.navView.menu
-
-            menu.addSubMenu("Action").apply {
-                this.add("Add Notebook").apply {
-                    this.setOnMenuItemClickListener { true }
-                }
-                this.add("Remove Notebook").apply {
-                    this.setOnMenuItemClickListener { true }
-                }
-            }
-
-            menu.addSubMenu("Notebooks").apply {
-                notebooks.forEach {
-                    val notebookMenu = this.add(it.title)
-                    notebookMenu.setOnMenuItemClickListener {
-                        Toast.makeText(applicationContext, "${it.title}", Toast.LENGTH_SHORT).show()
-                        false
-                    }
-                }
-            }
-        })
+        viewModel.notebooks.observe(this, Observer { notebooks -> setupNavDrawer(notebooks) })
+        viewModel.init()
     }
 
     private fun setupNavController() {
@@ -75,6 +54,30 @@ class MainActivity : AppCompatActivity() {
             when (controller.currentDestination?.id) {
                 R.id.topFragment -> supportActionBar?.hide()
                 else -> supportActionBar?.show()
+            }
+        }
+    }
+
+    private fun setupNavDrawer(notebooks: List<NotebookEntity>) {
+        val menu = binding.navView.menu
+
+        menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_action)).apply {
+            this.add(getString(R.string.navigation_drawer_item_add_notebook)).apply {
+                this.setOnMenuItemClickListener { true }
+            }
+            this.add(getString(R.string.navigation_drawer_item_remove_notebook)).apply {
+                this.setOnMenuItemClickListener { true }
+            }
+        }
+
+        menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_notebooks)).also { subMenu ->
+            notebooks.forEach { notebook ->
+                subMenu.add(notebook.title).also { menuItem ->
+                    menuItem.setOnMenuItemClickListener {
+                        viewModel.selectNotebook(notebook.id)
+                        false
+                    }
+                }
             }
         }
     }
