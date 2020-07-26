@@ -5,13 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.model.AppStatus
 import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeDialogViewModel(private val memoRepository: MemoRepository) : ViewModel() {
+class HomeDialogViewModel(
+    private val appStatus: AppStatus,
+    private val memoRepository: MemoRepository
+) : ViewModel() {
     private val _event: LiveEvent<NavEvent> = LiveEvent()
     val event: LiveData<NavEvent> = _event
     val title: MutableLiveData<String> = MutableLiveData()
@@ -22,7 +26,7 @@ class HomeDialogViewModel(private val memoRepository: MemoRepository) : ViewMode
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            memoRepository.insert(MemoEntity(0, "", title.value ?: ""))
+            memoRepository.insert(MemoEntity.create(appStatus.notebookId, title.value ?: ""))
             withContext(Dispatchers.Main) {
                 _event.postValue(NavEvent.SUCCESS)
             }

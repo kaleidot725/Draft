@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +17,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.controller.MessageItemRecyclerViewController
-import kotlinx.android.synthetic.main.fragment_memo.*
+import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
@@ -31,7 +30,6 @@ import permissions.dispatcher.RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val viewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
-    private val args: MemoFragmentArgs by navArgs()
     private val navController: NavController get() = findNavController()
 
     private val messageItemRecyclerViewController = MessageItemRecyclerViewController()
@@ -67,7 +65,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             binding.recyclerView.smoothScrollToPosition(it.count())
         })
 
-        viewModel.refresh(args.memoId.toInt())
+        viewModel.refresh()
     }
 
     override fun onDestroyView() {

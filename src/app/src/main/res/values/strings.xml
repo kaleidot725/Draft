@@ -26,4 +26,10 @@
     <string name="audio_recognizer_start">開始します</string>
     <string name="audio_recognizer_end">終了します</string>
     <string name="audio_recognizer_error">認識できませんでした</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_sub_menu_action">編集</string>
+    <string name="navigation_drawer_item_add_notebook">ノートブックを追加する</string>
+    <string name="navigation_drawer_item_remove_notebook">ノートブックを削除する</string>
+    <string name="navigation_drawer_sub_menu_notebooks">一覧</string>
 </resources>

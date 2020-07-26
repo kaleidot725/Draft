@@ -7,6 +7,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.extension.getValueSafety
+import jp.kaleidot725.emomemo.model.AppStatus
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
@@ -17,14 +18,14 @@ import kotlinx.coroutines.withContext
 import java.util.Date
 
 class MemoViewModel(
+    private val appStatus: AppStatus,
     private val messageRepository: MessageRepository,
     private val audioRecognizerRepository: AudioRecognizerRepository
 ) : ViewModel() {
-    private var memoId: Int = 0
     private val refresh: MutableLiveData<Unit> = MutableLiveData()
     val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
         liveData(Dispatchers.IO) {
-            emit(messageRepository.getMessage(memoId))
+            emit(messageRepository.getMessage(appStatus.memoId))
         }
     }
     val inputMessage: MutableLiveData<String> = MutableLiveData()
@@ -39,8 +40,7 @@ class MemoViewModel(
         audioRecognizerRepository.addOnChangedRecognizedTextListener(onChangedRecognizedTextListener)
     }
 
-    fun refresh(id: Int) {
-        memoId = id
+    fun refresh() {
         refresh.value = Unit
         inputMessage.value = ""
     }
@@ -49,9 +49,9 @@ class MemoViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val message = inputMessage.getValueSafety("")
             if (message.isNotEmpty()) {
-                messageRepository.insert(MessageEntity(memoId, Date().time, inputMessage.getValueSafety("")))
+                messageRepository.insert(MessageEntity(appStatus.memoId, Date().time, inputMessage.getValueSafety("")))
                 withContext(Dispatchers.Main) {
-                    refresh(memoId)
+                    refresh()
                 }
             }
         }
