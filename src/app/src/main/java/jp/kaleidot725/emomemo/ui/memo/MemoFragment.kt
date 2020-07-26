@@ -74,6 +74,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             binding.recyclerView.smoothScrollToPosition(it.count())
         })
 
+        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
+        })
+        
         memoViewModel.reset()
     }
 

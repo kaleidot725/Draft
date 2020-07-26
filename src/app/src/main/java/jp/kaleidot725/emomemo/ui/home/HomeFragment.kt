@@ -31,7 +31,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         memoItemListController = MemoItemRecyclerViewController(object : MemoItemRecyclerViewController.SelectListener {
             override fun onSelected(item: MemoStatusView) {
                 mainViewModel.selectMemo(item.id)
-                navigateMemoFragment(item)
+                navigateMemoFragment()
             }
         })
 
@@ -49,15 +49,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         mainViewModel.memoStatusList.observe(viewLifecycleOwner, Observer {
             memoItemListController.setData(it)
         })
+
+        mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
+        })
     }
 
-    private fun navigateMemoFragment(memo: MemoStatusView) {
-        val action = HomeFragmentDirections.actionHomeFragmentToMemoFragment(memo.id.toLong(), memo.title)
-        navController.navigate(action)
+    private fun navigateMemoFragment() {
+        navController.navigate(R.id.action_homeFragment_to_memoFragment)
     }
 
     private fun navigateHomeDialogFragment() {
-        val action = HomeFragmentDirections.actionHomeFragmentToHomeDialogFragment()
-        navController.navigate(action)
+        navController.navigate(R.id.action_homeFragment_to_homeDialogFragment)
     }
 }

@@ -22,7 +22,6 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="jp.kaleidot725.emomemo.ui.home.HomeFragment"
-        android:label="@string/home_fragment_title"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_memoFragment"
@@ -57,15 +56,7 @@
     <fragment
         android:id="@+id/memoFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.MemoFragment"
-        android:label="{title}"
         tools:layout="@layout/fragment_memo">
-        <argument
-            android:name="memo_id"
-            app:argType="long" />
-        <argument
-            android:name="title"
-            android:defaultValue="Memo"
-            app:argType="string" />
         <action
             android:id="@+id/action_memoFragment_to_audioRecognizerFragment"
             app:destination="@id/audioRecognizerFragment"

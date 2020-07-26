@@ -34,12 +34,24 @@ class MainViewModel(
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
 
+    val selectedNotebook: LiveData<NotebookEntity> = refresh.switchMap {
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            emit(notebookRepository.getNoteBook(noteBookId))
+        }
+    }
+
     val notebooks: LiveData<List<NotebookEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(notebookRepository.getAll())
         }
     }
 
+    val selectedMemo: LiveData<MemoStatusView> = refresh.switchMap {
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            emit(memoStatusRepository.getMemo(memoId))
+        }
+    }
+    
     val memoStatusList: LiveData<List<MemoStatusView>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })
