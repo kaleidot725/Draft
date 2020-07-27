@@ -23,7 +23,7 @@
 
     <!-- DeleteNotebookDialogFragment -->
     <string name="delete_notebook_fragment_notebook_title">タイトル</string>
-    <string name="delete_notebook_fragment_create">作成</string>
+    <string name="delete_notebook_fragment_delete">削除</string>
     <string name="delete_notebook_fragment_cancel">キャンセル</string>
 
     <!-- MemoFragment -->
