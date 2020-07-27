@@ -70,7 +70,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             this.add(getString(R.string.navigation_drawer_item_remove_notebook)).apply {
-                this.setOnMenuItemClickListener { true }
+                this.setOnMenuItemClickListener {
+                    navController.navigate(R.id.action_global_deleteNotebookDialogFragment)
+                    true
+                }
             }
         }
 

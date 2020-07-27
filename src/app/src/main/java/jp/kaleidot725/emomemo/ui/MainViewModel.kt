@@ -120,6 +120,33 @@ class MainViewModel(
         }
     }
 
+    fun deleteNotebook(notebook: NotebookEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            notebookRepository.delete(notebook)
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
+        }
+    }
+
+    fun deleteMemo(memo: MemoEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            memoRepository.delete(memo)
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
+        }
+    }
+
+    fun deleteMessage(message: MessageEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            messageRepository.delete(message)
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
+        }
+    }
+
     companion object {
         private val UNKNOWN_MEMO_ID = -1
         private val UNKNOWN_NOTEBOOK_ID = -1
