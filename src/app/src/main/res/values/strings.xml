@@ -15,6 +15,17 @@
     <string name="home_dialog_fragment_cancel">キャンセル</string>
     <string name="memo_fragment_title">メモ</string>
 
+    <!-- AddNotebookDialogFragment -->
+    <string name="add_notebook_fragment_notebook_title">タイトル</string>
+    <string name="add_notebook_fragment_notebook_title_hint">タイトルを入力してください</string>
+    <string name="add_notebook_fragment_create">作成</string>
+    <string name="add_notebook_fragment_cancel">キャンセル</string>
+
+    <!-- DeleteNotebookDialogFragment -->
+    <string name="delete_notebook_fragment_notebook_title">タイトル</string>
+    <string name="delete_notebook_fragment_create">作成</string>
+    <string name="delete_notebook_fragment_cancel">キャンセル</string>
+
     <!-- MemoFragment -->
     <string name="memo_fragment_audio_permission_denied">音声入力をする場合は音声録音の権限を許可してください</string>
     <string name="memo_fragment_audio_permission_never_ask_again">音声入力をする場合は音声録音の権限を許可してください</string>
