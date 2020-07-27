@@ -17,6 +17,7 @@ class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository
     val event: LiveData<NavEvent> = _event
 
     private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
+    private var selectedNotebook: NotebookEntity? = null
     val notebookTitles: LiveData<List<String>> = _notebooks.map { notebooks ->
         notebooks.map { it.title }
     }
@@ -31,7 +32,9 @@ class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository
     }
 
     fun success() {
-        _event.postValue(NavEvent.Success(_notebooks.value!!.first()))
+        if (selectedNotebook != null) {
+            _event.postValue(NavEvent.Success(selectedNotebook!!))
+        }
     }
 
     fun cancel() {
@@ -39,7 +42,7 @@ class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository
     }
 
     fun onNotebookSelected(position: Int) {
-
+        selectedNotebook = _notebooks.value?.getOrNull(position)
     }
 
     sealed class NavEvent {
