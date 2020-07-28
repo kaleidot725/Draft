@@ -165,4 +165,3 @@ class MainViewModel(
         private val ERROR_MEMO = MemoStatusView(0, UNKNOWN_NOTEBOOK_ID, "", 0, 0, "")
     }
 }
-
