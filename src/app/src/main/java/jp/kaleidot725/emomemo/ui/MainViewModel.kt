@@ -89,6 +89,9 @@ class MainViewModel(
     fun createNotebook(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
             notebookRepository.insert(NotebookEntity.create(title))
+            if (noteBookId == UNKNOWN_NOTEBOOK_ID) {
+                initializeSelectedNotebook()
+            }
             withContext(Dispatchers.Main) {
                 refresh.value = Unit
             }
