@@ -36,21 +36,23 @@ class MainViewModel(
 
     val selectedNotebook: LiveData<NotebookEntity> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            if (noteBookId != UNKNOWN_NOTEBOOK_ID) {
-                emit(notebookRepository.getNoteBook(noteBookId))
+            val notebook = if (noteBookId != UNKNOWN_NOTEBOOK_ID) {
+                notebookRepository.getNoteBook(noteBookId)
             } else {
-                emit(NotebookEntity.create(""))
+                ERROR_NOTEBOOK
             }
+            emit(notebook)
         }
     }
 
     val selectedMemo: LiveData<MemoStatusView> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            if (memoId != UNKNOWN_MEMO_ID) {
-                emit(memoStatusRepository.getMemo(memoId))
+            val memo = if (memoId != UNKNOWN_MEMO_ID) {
+                memoStatusRepository.getMemo(memoId)
             } else {
-                emit(MemoStatusView(0, UNKNOWN_NOTEBOOK_ID, "", 0, 0, ""))
+                ERROR_MEMO
             }
+            emit(memo)
         }
     }
 
@@ -159,6 +161,8 @@ class MainViewModel(
     companion object {
         private const val UNKNOWN_MEMO_ID = -1
         private const val UNKNOWN_NOTEBOOK_ID = -1
+        private val ERROR_NOTEBOOK = NotebookEntity.create("")
+        private val ERROR_MEMO = MemoStatusView(0, UNKNOWN_NOTEBOOK_ID, "", 0, 0, "")
     }
 }
 
