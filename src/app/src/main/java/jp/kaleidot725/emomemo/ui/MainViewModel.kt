@@ -36,19 +36,29 @@ class MainViewModel(
 
     val selectedNotebook: LiveData<NotebookEntity> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(notebookRepository.getNoteBook(noteBookId))
+            val notebook = if (noteBookId != UNKNOWN_NOTEBOOK_ID) {
+                notebookRepository.getNoteBook(noteBookId)
+            } else {
+                ERROR_NOTEBOOK
+            }
+            emit(notebook)
+        }
+    }
+
+    val selectedMemo: LiveData<MemoStatusView> = refresh.switchMap {
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            val memo = if (memoId != UNKNOWN_MEMO_ID) {
+                memoStatusRepository.getMemo(memoId)
+            } else {
+                ERROR_MEMO
+            }
+            emit(memo)
         }
     }
 
     val notebooks: LiveData<List<NotebookEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(notebookRepository.getAll())
-        }
-    }
-
-    val selectedMemo: LiveData<MemoStatusView> = refresh.switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(memoStatusRepository.getMemo(memoId))
         }
     }
 
@@ -64,14 +74,22 @@ class MainViewModel(
         }
     }
 
-    fun init() {
+    init {
         viewModelScope.launch(Dispatchers.IO) {
             databaseInitializeUsecase.execute()
-            this@MainViewModel.noteBookId = notebookRepository.getAll().firstOrNull()?.id ?: UNKNOWN_NOTEBOOK_ID
-            this@MainViewModel.memoId = memoStatusRepository.getAll().firstOrNull { it.notebookId == noteBookId }?.id ?: UNKNOWN_MEMO_ID
+            initializeSelectedNotebook()
 
             withContext(Dispatchers.Main) {
                 _isCompleted.value = true
+                refresh.value = Unit
+            }
+        }
+    }
+
+    fun createNotebook(title: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            notebookRepository.insert(NotebookEntity.create(title))
+            withContext(Dispatchers.Main) {
                 refresh.value = Unit
             }
         }
@@ -82,16 +100,12 @@ class MainViewModel(
         refresh.value = Unit
     }
 
-    fun selectMemo(id: Int) {
-        memoId = id
-        refresh.value = Unit
-    }
-
-    fun createNotebook(title: String) {
+    fun deleteNotebook(notebook: NotebookEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newNotebook = NotebookEntity.create(title)
-            notebookRepository.insert(newNotebook)
-
+            notebookRepository.delete(notebook)
+            if (noteBookId == notebook.id) {
+                initializeSelectedNotebook()
+            }
             withContext(Dispatchers.Main) {
                 refresh.value = Unit
             }
@@ -100,9 +114,21 @@ class MainViewModel(
 
     fun createMemo(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newMemo = MemoEntity.create(noteBookId, title)
-            memoRepository.insert(newMemo)
+            memoRepository.insert(MemoEntity.create(noteBookId, title))
+            withContext(Dispatchers.Main) {
+                refresh.value = Unit
+            }
+        }
+    }
 
+    fun selectMemo(id: Int) {
+        memoId = id
+        refresh.value = Unit
+    }
+
+    fun deleteMemo(memo: MemoEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            memoRepository.delete(memo)
             withContext(Dispatchers.Main) {
                 refresh.value = Unit
             }
@@ -111,27 +137,7 @@ class MainViewModel(
 
     fun createMessage(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val newMessage = MessageEntity.create(memoId, message)
-            messageRepository.insert(newMessage)
-
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
-        }
-    }
-
-    fun deleteNotebook(notebook: NotebookEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            notebookRepository.delete(notebook)
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
-        }
-    }
-
-    fun deleteMemo(memo: MemoEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            memoRepository.delete(memo)
+            messageRepository.insert(MessageEntity.create(memoId, message))
             withContext(Dispatchers.Main) {
                 refresh.value = Unit
             }
@@ -147,8 +153,15 @@ class MainViewModel(
         }
     }
 
+    private suspend fun initializeSelectedNotebook() {
+        this@MainViewModel.noteBookId = notebookRepository.getAll().firstOrNull()?.id ?: UNKNOWN_NOTEBOOK_ID
+        this@MainViewModel.memoId = memoStatusRepository.getAll().firstOrNull { it.notebookId == noteBookId }?.id ?: UNKNOWN_MEMO_ID
+    }
+
     companion object {
-        private val UNKNOWN_MEMO_ID = -1
-        private val UNKNOWN_NOTEBOOK_ID = -1
+        private const val UNKNOWN_MEMO_ID = -1
+        private const val UNKNOWN_NOTEBOOK_ID = -1
+        private val ERROR_NOTEBOOK = NotebookEntity.create("")
+        private val ERROR_MEMO = MemoStatusView(0, UNKNOWN_NOTEBOOK_ID, "", 0, 0, "")
     }
 }

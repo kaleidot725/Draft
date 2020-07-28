@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         viewModel.notebooks.observe(this, Observer { notebooks -> setupNavDrawer(notebooks) })
-        viewModel.init()
     }
 
     private fun setupNavController() {
