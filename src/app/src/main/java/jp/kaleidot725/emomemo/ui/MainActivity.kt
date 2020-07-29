@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.notebooks.observe(this, Observer { notebooks -> setupNavDrawer(notebooks) })
+        viewModel.notebooks.observe(this, Observer { notebooks -> setupNavDrawer(notebooks, viewModel.selectedNotebook.value) })
+        viewModel.selectedNotebook.observe(this, Observer { notebook -> setupNavDrawer(viewModel.notebooks.value, notebook) })
     }
 
     private fun setupNavController() {
@@ -57,32 +58,34 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupNavDrawer(notebooks: List<NotebookEntity>) {
+    private fun setupNavDrawer(notebooks: List<NotebookEntity>?, selectedNotebook: NotebookEntity?) {
+        // Initialize
         val menu = binding.navView.menu
         menu.clear()
 
-        menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_action)).apply {
-            this.add(getString(R.string.navigation_drawer_item_add_notebook)).apply {
-                this.setOnMenuItemClickListener {
-                    navController.navigate(R.id.action_global_addNotebookDialogFragment)
-                    true
-                }
+        // Edit SubMenu
+        val editSubMenu = menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_action))
+        editSubMenu.add(getString(R.string.navigation_drawer_item_add_notebook)).apply {
+            this.setOnMenuItemClickListener {
+                navController.navigate(R.id.action_global_addNotebookDialogFragment)
+                true
             }
-            this.add(getString(R.string.navigation_drawer_item_remove_notebook)).apply {
-                this.setOnMenuItemClickListener {
-                    navController.navigate(R.id.action_global_deleteNotebookDialogFragment)
-                    true
-                }
+        }
+        editSubMenu.add(getString(R.string.navigation_drawer_item_remove_notebook)).apply {
+            this.setOnMenuItemClickListener {
+                navController.navigate(R.id.action_global_deleteNotebookDialogFragment)
+                true
             }
         }
 
-        menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_notebooks)).also { subMenu ->
-            notebooks.forEach { notebook ->
-                subMenu.add(notebook.title).also { menuItem ->
-                    menuItem.setOnMenuItemClickListener {
-                        viewModel.selectNotebook(notebook.id)
-                        false
-                    }
+        // Notebook SubMenu
+        val notebookSubMenu = menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_notebooks))
+        notebooks?.map { notebook ->
+            notebookSubMenu.add(notebook.title).also { menuItem ->
+                menuItem.isChecked = notebook == selectedNotebook
+                menuItem.setOnMenuItemClickListener {
+                    viewModel.selectNotebook(notebook.id)
+                    false
                 }
             }
         }
