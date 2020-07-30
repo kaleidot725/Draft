@@ -12,6 +12,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.ui.EmptyStatus
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_home.recycler_view
@@ -54,6 +55,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             requireActivity().title = it.title
         })
 
+        mainViewModel.emptyStatus.observe(viewLifecycleOwner, Observer {
+            binding.emptyMessageTextView.text = when (it) {
+                EmptyStatus.NOTEBOOK -> getString(R.string.home_notebook_is_not_found)
+                EmptyStatus.MEMO -> getString(R.string.home_memo_is_not_found)
+                else -> ""
+            }
+            
+            binding.emptyMessageTextView.visibility = when (it) {
+                EmptyStatus.NOTEBOOK -> View.VISIBLE
+                EmptyStatus.MEMO -> View.VISIBLE
+                else -> View.GONE
+            }
+        })
     }
 
     private fun navigateMemoFragment() {

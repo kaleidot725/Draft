@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
@@ -90,28 +89,26 @@ class MainViewModel(
     }
 
     val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
-        addSource(notebooks, Observer {
+        fun getEmptyStatus() {
             if (notebooks.value.isNullOrEmpty()) {
                 this.value = EmptyStatus.NOTEBOOK
+                return
             }
             if (memos.value.isNullOrEmpty()) {
                 this.value = EmptyStatus.MEMO
+                return
             }
             if (messages.value.isNullOrEmpty()) {
                 this.value = EmptyStatus.MESSAGE
+                return
             }
-        })
-        addSource(memos, Observer {
-            if (notebooks.value.isNullOrEmpty()) {
-                this.value = EmptyStatus.NOTEBOOK
-            }
-            if (memos.value.isNullOrEmpty()) {
-                this.value = EmptyStatus.MEMO
-            }
-            if (messages.value.isNullOrEmpty()) {
-                this.value = EmptyStatus.MESSAGE
-            }
-        })
+
+            this.value = EmptyStatus.NO_ERROR
+            return
+        }
+
+        addSource(notebooks) { getEmptyStatus() }
+        addSource(memos) { getEmptyStatus() }
     }
 
     fun createNotebook(title: String) {
