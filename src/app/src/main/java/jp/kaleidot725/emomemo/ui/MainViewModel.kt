@@ -1,10 +1,11 @@
 package jp.kaleidot725.emomemo.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
@@ -63,19 +64,12 @@ class MainViewModel(
         }
     }
 
-    val notebookIsNotFound: LiveData<Boolean> = notebooks.map {
-        it.isEmpty()
-    }
-
     val memos: LiveData<List<MemoStatusView>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })
         }
     }
 
-    val memoIsNotFound: LiveData<Boolean> = memos.map {
-        it.isEmpty()
-    }
 
     val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -93,6 +87,31 @@ class MainViewModel(
                 refresh.value = Unit
             }
         }
+    }
+
+    val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
+        addSource(notebooks, Observer {
+            if (notebooks.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.NOTEBOOK
+            }
+            if (memos.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.MEMO
+            }
+            if (messages.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.MESSAGE
+            }
+        })
+        addSource(memos, Observer {
+            if (notebooks.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.NOTEBOOK
+            }
+            if (memos.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.MEMO
+            }
+            if (messages.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.MESSAGE
+            }
+        })
     }
 
     fun createNotebook(title: String) {

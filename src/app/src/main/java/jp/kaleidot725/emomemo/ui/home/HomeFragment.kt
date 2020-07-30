@@ -53,6 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
             requireActivity().title = it.title
         })
+
     }
 
     private fun navigateMemoFragment() {
