@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         editSubMenu.add(getString(R.string.navigation_drawer_item_remove_notebook)).apply {
+            this.isEnabled = notebooks?.isNotEmpty() ?: true
             this.setOnMenuItemClickListener {
                 navController.navigate(R.id.action_global_deleteNotebookDialogFragment)
                 true

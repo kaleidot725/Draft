@@ -1,6 +1,7 @@
 package jp.kaleidot725.emomemo.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -31,8 +32,8 @@ class MainViewModel(
     private var noteBookId: Int = UNKNOWN_NOTEBOOK_ID
     private val refresh: MutableLiveData<Unit> = MutableLiveData()
 
-    private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
-    val isCompleted: LiveData<Boolean> = _isCompleted
+    private val _initialized: LiveEvent<Boolean> = LiveEvent()
+    val initialized: LiveData<Boolean> = _initialized
 
     val selectedNotebook: LiveData<NotebookEntity> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -62,7 +63,7 @@ class MainViewModel(
         }
     }
 
-    val memoStatusList: LiveData<List<MemoStatusView>> = refresh.switchMap {
+    val memos: LiveData<List<MemoStatusView>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })
         }
@@ -80,10 +81,33 @@ class MainViewModel(
             initializeSelectedNotebook()
 
             withContext(Dispatchers.Main) {
-                _isCompleted.value = true
+                _initialized.value = true
                 refresh.value = Unit
             }
         }
+    }
+
+    val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
+        fun getEmptyStatus() {
+            if (notebooks.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.NOTEBOOK
+                return
+            }
+            if (memos.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.MEMO
+                return
+            }
+            if (messages.value.isNullOrEmpty()) {
+                this.value = EmptyStatus.MESSAGE
+                return
+            }
+
+            this.value = EmptyStatus.NO_ERROR
+            return
+        }
+
+        addSource(notebooks) { getEmptyStatus() }
+        addSource(memos) { getEmptyStatus() }
     }
 
     fun createNotebook(title: String) {
