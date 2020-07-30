@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
@@ -31,8 +32,8 @@ class MainViewModel(
     private var noteBookId: Int = UNKNOWN_NOTEBOOK_ID
     private val refresh: MutableLiveData<Unit> = MutableLiveData()
 
-    private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
-    val isCompleted: LiveData<Boolean> = _isCompleted
+    private val _initialized: LiveEvent<Boolean> = LiveEvent()
+    val initialized: LiveData<Boolean> = _initialized
 
     val selectedNotebook: LiveData<NotebookEntity> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
@@ -62,10 +63,18 @@ class MainViewModel(
         }
     }
 
-    val memoStatusList: LiveData<List<MemoStatusView>> = refresh.switchMap {
+    val notebookIsNotFound: LiveData<Boolean> = notebooks.map {
+        it.isEmpty()
+    }
+
+    val memos: LiveData<List<MemoStatusView>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })
         }
+    }
+
+    val memoIsNotFound: LiveData<Boolean> = memos.map {
+        it.isEmpty()
     }
 
     val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
@@ -80,7 +89,7 @@ class MainViewModel(
             initializeSelectedNotebook()
 
             withContext(Dispatchers.Main) {
-                _isCompleted.value = true
+                _initialized.value = true
                 refresh.value = Unit
             }
         }

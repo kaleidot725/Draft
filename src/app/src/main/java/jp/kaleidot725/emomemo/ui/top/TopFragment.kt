@@ -26,7 +26,7 @@ class TopFragment : Fragment(R.layout.fragment_top) {
         binding.viewModel = viewModel
 
         // Setup View Model
-        viewModel.isCompleted.observe(viewLifecycleOwner, Observer { isCompleted ->
+        viewModel.initialized.observe(viewLifecycleOwner, Observer { isCompleted ->
             if (isCompleted) {
                 runBlocking { delay(1000L) }
                 navController.navigate(R.id.action_topFragment_to_homeFragment)

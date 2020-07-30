@@ -46,7 +46,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             navigateHomeDialogFragment()
         }
 
-        mainViewModel.memoStatusList.observe(viewLifecycleOwner, Observer {
+        mainViewModel.memos.observe(viewLifecycleOwner, Observer {
             memoItemListController.setData(it)
         })
 
