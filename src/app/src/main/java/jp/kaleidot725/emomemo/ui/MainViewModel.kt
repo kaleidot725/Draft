@@ -69,7 +69,6 @@ class MainViewModel(
         }
     }
 
-
     val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(messageRepository.getAll().filter { it.memoId == memoId })
