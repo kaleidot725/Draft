@@ -88,7 +88,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             binding.emptyMessageTextView.visibility = when (it) {
                 EmptyStatus.MESSAGE -> View.VISIBLE
                 else -> View.GONE
-
             }
         })
 
