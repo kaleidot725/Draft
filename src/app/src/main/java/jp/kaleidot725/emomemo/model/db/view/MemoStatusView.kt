@@ -6,10 +6,13 @@ import androidx.room.PrimaryKey
 @DatabaseView(
     viewName = "memo_status",
     value = """
-        SELECT memo.id, memo.notebookId, memo.title, count.value as count, lastMessage.time as lastTime, lastMessage.value as lastMessage
-        FROM memo
-            LEFT OUTER JOIN (SELECT COUNT(*) as value FROM memo, message WHERE memo.id == message.memoId) as count
-            LEFT OUTER JOIN (SELECT * FROM message ORDER BY message.time DESC LIMIT 1) as lastMessage
+        SELECT memo.id, memo.notebookId, memo.title, lm.count as count,  lm.time as lastTime, lm.value as lastMessage
+        FROM memo LEFT JOIN (
+            SELECT message.memoId, COUNT(*) as count, message.time, message.value
+            FROM message 
+            GROUP BY message.memoId 
+            HAVING MAX(message.time)
+        ) as lm ON memo.id == lm.memoId
     """
 )
 data class MemoStatusView(
