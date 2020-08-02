@@ -108,6 +108,7 @@ class MainViewModel(
 
         addSource(notebooks) { getEmptyStatus() }
         addSource(memos) { getEmptyStatus() }
+        addSource(messages) { getEmptyStatus() }
     }
 
     fun createNotebook(title: String) {
