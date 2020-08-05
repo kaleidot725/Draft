@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -36,25 +37,23 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
 
-    private val messageItemRecyclerViewController = MessageItemRecyclerViewController()
-    private val messageItemLayoutManager by lazy {
-        LinearLayoutManager(requireContext()).apply {
-            orientation = RecyclerView.VERTICAL
-        }
-    }
-
-    private val messageItemDecoration by lazy {
-        DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
-            setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
-        }
-    }
+    private lateinit var messageItemRecyclerViewController: MessageItemRecyclerViewController
+    private lateinit var messageItemLayoutManager: LinearLayoutManager
+    private lateinit var messageItemDecoration: DividerItemDecoration
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        messageItemRecyclerViewController = MessageItemRecyclerViewController()
+        messageItemLayoutManager = LinearLayoutManager(requireContext()).apply {
+            orientation = RecyclerView.VERTICAL
+        }
+        messageItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
+            setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
+        }
+
         binding.mainViewModel = mainViewModel
         binding.memoViewModel = memoViewModel
-
         binding.recyclerView.apply {
             adapter = messageItemRecyclerViewController.adapter
             layoutManager = messageItemLayoutManager
@@ -72,6 +71,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
         mainViewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it)
+            Log.v("TAG", "$it")
             binding.recyclerView.smoothScrollToPosition(it.count())
         })
 
