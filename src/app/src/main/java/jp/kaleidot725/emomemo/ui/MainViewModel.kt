@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
@@ -30,60 +28,34 @@ class MainViewModel(
 ) : ViewModel() {
     private var memoId: Int = UNKNOWN_MEMO_ID
     private var noteBookId: Int = UNKNOWN_NOTEBOOK_ID
-    private val refresh: MutableLiveData<Unit> = MutableLiveData()
 
     private val _initialized: LiveEvent<Boolean> = LiveEvent()
     val initialized: LiveData<Boolean> = _initialized
 
-    val selectedNotebook: LiveData<NotebookEntity> = refresh.switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            val notebook = if (noteBookId != UNKNOWN_NOTEBOOK_ID) {
-                notebookRepository.getNoteBook(noteBookId)
-            } else {
-                ERROR_NOTEBOOK
-            }
-            emit(notebook)
-        }
-    }
+    private val _selectedNotebook: MutableLiveData<NotebookEntity> = MutableLiveData()
+    val selectedNotebook: LiveData<NotebookEntity> = _selectedNotebook
 
-    val selectedMemo: LiveData<MemoStatusView> = refresh.switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            val memo = if (memoId != UNKNOWN_MEMO_ID) {
-                memoStatusRepository.getMemo(memoId)
-            } else {
-                ERROR_MEMO
-            }
-            emit(memo)
-        }
-    }
+    private val _selectedMemo: MutableLiveData<MemoStatusView> = MutableLiveData()
+    val selectedMemo: LiveData<MemoStatusView> = _selectedMemo
 
-    val notebooks: LiveData<List<NotebookEntity>> = refresh.switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(notebookRepository.getAll())
-        }
-    }
+    private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
+    val notebooks: LiveData<List<NotebookEntity>> = _notebooks
 
-    val memos: LiveData<List<MemoStatusView>> = refresh.switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(memoStatusRepository.getAll().filter { it.notebookId == noteBookId })
-        }
-    }
+    private val _memos: MutableLiveData<List<MemoStatusView>> = MutableLiveData()
+    val memos: LiveData<List<MemoStatusView>> = _memos
 
-    val messages: LiveData<List<MessageEntity>> = refresh.switchMap {
-        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            emit(messageRepository.getAll().filter { it.memoId == memoId })
-        }
-    }
+    private val _messages: MutableLiveData<List<MessageEntity>> = MutableLiveData()
+    val messages: LiveData<List<MessageEntity>> = _messages
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             databaseInitializeUsecase.execute()
             initializeSelectedNotebook()
-
             withContext(Dispatchers.Main) {
                 _initialized.value = true
-                refresh.value = Unit
             }
+
+            fetchData()
         }
     }
 
@@ -93,10 +65,12 @@ class MainViewModel(
                 this.value = EmptyStatus.NOTEBOOK
                 return
             }
+
             if (memos.value.isNullOrEmpty()) {
                 this.value = EmptyStatus.MEMO
                 return
             }
+
             if (messages.value.isNullOrEmpty()) {
                 this.value = EmptyStatus.MESSAGE
                 return
@@ -117,15 +91,18 @@ class MainViewModel(
             if (noteBookId == UNKNOWN_NOTEBOOK_ID) {
                 initializeSelectedNotebook()
             }
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
+            fetchData()
         }
     }
 
     fun selectNotebook(id: Int) {
-        noteBookId = id
-        refresh.value = Unit
+        _memos.value = emptyList()
+        _messages.value = emptyList()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            noteBookId = id
+            fetchData()
+        }
     }
 
     fun deleteNotebook(notebook: NotebookEntity) {
@@ -134,50 +111,84 @@ class MainViewModel(
             if (noteBookId == notebook.id) {
                 initializeSelectedNotebook()
             }
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
+            fetchData()
         }
     }
 
     fun createMemo(title: String) {
         viewModelScope.launch(Dispatchers.IO) {
             memoRepository.insert(MemoEntity.create(noteBookId, title))
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
+            fetchData()
         }
     }
 
     fun selectMemo(id: Int) {
-        memoId = id
-        refresh.value = Unit
+        _messages.value = emptyList()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            memoId = id
+            fetchData()
+        }
     }
 
     fun deleteMemo(memo: MemoEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             memoRepository.delete(memo)
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
+            fetchData()
         }
     }
 
     fun createMessage(message: String) {
         viewModelScope.launch(Dispatchers.IO) {
             messageRepository.insert(MessageEntity.create(memoId, message))
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
+            fetchData()
         }
     }
 
     fun deleteMessage(message: MessageEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             messageRepository.delete(message)
-            withContext(Dispatchers.Main) {
-                refresh.value = Unit
-            }
+            fetchData()
+        }
+    }
+
+    private suspend fun fetchData() {
+        val selectedNotebook = try {
+            notebookRepository.getNoteBook(noteBookId)
+        } catch (e: Exception) {
+            ERROR_NOTEBOOK
+        }
+
+        val selectedMemo = try {
+            memoStatusRepository.getMemo(memoId)
+        } catch (e: Exception) {
+            ERROR_MEMO
+        }
+
+        val notebooks = try {
+            notebookRepository.getAll()
+        } catch (e: Exception) {
+            emptyList<NotebookEntity>()
+        }
+
+        val memos = try {
+            memoStatusRepository.getAll().filter { it.notebookId == noteBookId }
+        } catch (e: Exception) {
+            emptyList<MemoStatusView>()
+        }
+
+        val messages = try {
+            messageRepository.getAll().filter { it.memoId == memoId }
+        } catch (e: Exception) {
+            emptyList<MessageEntity>()
+        }
+
+        withContext(Dispatchers.Main) {
+            _selectedNotebook.value = selectedNotebook
+            _selectedMemo.value = selectedMemo
+            _notebooks.value = notebooks
+            _memos.value = memos
+            _messages.value = messages
         }
     }
 
