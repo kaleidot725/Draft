@@ -24,9 +24,9 @@ class MemoItemRecyclerViewController(
 
     private fun getLatestTimeString(time: Long?): String {
         return if (time != null) {
-            DateFormat.format("yyyy/MM/dd hh:mm:ss", time ?: 0)
+            DateFormat.format("yyyy/MM/dd aa hh:mm:ss", time ?: 0)
         } else {
-            "0000/00/00 00:00:00"
+            "0000/00/00 AM 00:00:00"
         }.toString()
     }
 

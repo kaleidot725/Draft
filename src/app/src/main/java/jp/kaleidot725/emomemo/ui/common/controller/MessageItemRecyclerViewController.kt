@@ -14,7 +14,7 @@ class MessageItemRecyclerViewController(
         memoList.forEach { message ->
             messageItemContainer {
                 id(message.time)
-                time(DateFormat.format("yyyy/MM/dd hh:mm:ss", message.time).toString())
+                time(DateFormat.format("yyyy/MM/dd aa hh:mm:ss", message.time).toString())
                 title(message.value)
                 onClickListener(View.OnClickListener { selectListener?.onSelected(message) })
             }
