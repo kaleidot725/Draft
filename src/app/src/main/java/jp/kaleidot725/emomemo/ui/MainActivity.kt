@@ -14,6 +14,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.ActivityMainBinding
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
+import kotlinx.android.synthetic.main.navigation_drawer_header.view.setting_image_button
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -38,8 +39,13 @@ class MainActivity : AppCompatActivity() {
     private fun setupDataBinding() {
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).also { binding ->
             setSupportActionBar(binding.actionBar)
-            binding.viewModel = viewModel
             binding.navView.setupWithNavController(navController)
+            binding.navView.inflateHeaderView(R.layout.navigation_drawer_header).apply {
+                setting_image_button.setOnClickListener {
+                    navController.navigate(R.id.action_global_settingFragment)
+                }
+            }
+            binding.viewModel = viewModel
         }
     }
 
