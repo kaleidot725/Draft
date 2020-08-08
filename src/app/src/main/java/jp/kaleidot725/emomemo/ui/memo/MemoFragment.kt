@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -71,12 +70,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
         mainViewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it)
-            Log.v("TAG", "$it")
             binding.recyclerView.smoothScrollToPosition(it.count())
-        })
-
-        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
-            requireActivity().title = it.title
         })
 
         mainViewModel.emptyStatus.observe(viewLifecycleOwner, Observer {
@@ -89,6 +83,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
                 EmptyStatus.MESSAGE -> View.VISIBLE
                 else -> View.GONE
             }
+        })
+
+        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
         })
 
         memoViewModel.reset()

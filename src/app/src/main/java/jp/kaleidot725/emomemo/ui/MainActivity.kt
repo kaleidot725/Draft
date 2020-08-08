@@ -12,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.ActivityMainBinding
+import jp.kaleidot725.emomemo.extension.setActionBarVisibility
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.setting_image_button
@@ -40,9 +41,10 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).also { binding ->
             setSupportActionBar(binding.actionBar)
             binding.navView.setupWithNavController(navController)
-            binding.navView.inflateHeaderView(R.layout.navigation_drawer_header).apply {
-                setting_image_button.setOnClickListener {
+            binding.navView.inflateHeaderView(R.layout.navigation_drawer_header).also { drawerHeader ->
+                drawerHeader.setting_image_button.setOnClickListener {
                     navController.navigate(R.id.action_global_settingFragment)
+                    binding.drawerLayout.closeDrawers()
                 }
             }
             binding.viewModel = viewModel
@@ -50,24 +52,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.notebooks.observe(this, Observer { notebooks -> setupNavDrawer(notebooks, viewModel.selectedNotebook.value) })
-        viewModel.selectedNotebook.observe(this, Observer { notebook -> setupNavDrawer(viewModel.notebooks.value, notebook) })
+        viewModel.notebooks.observe(this, Observer { notebooks ->
+            setupNavDrawer(notebooks, viewModel.selectedNotebook.value)
+        })
+
+        viewModel.selectedNotebook.observe(this, Observer { notebook ->
+            setupNavDrawer(viewModel.notebooks.value, notebook)
+        })
     }
 
     private fun setupNavController() {
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, _, _ ->
-            when (controller.currentDestination?.id) {
-                R.id.topFragment -> supportActionBar?.hide()
-                else -> supportActionBar?.show()
-            }
+            val currentId = controller.currentDestination?.id ?: 0
+            setActionBarVisibility((R.id.topFragment != currentId))
         }
     }
 
     private fun setupNavDrawer(notebooks: List<NotebookEntity>?, selectedNotebook: NotebookEntity?) {
         // Initialize
-        val menu = binding.navView.menu
-        menu.clear()
+        val menu = binding.navView.menu.apply { clear() }
 
         // Edit SubMenu
         val editSubMenu = menu.addSubMenu(getString(R.string.navigation_drawer_sub_menu_action))
@@ -77,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
+
         editSubMenu.add(getString(R.string.navigation_drawer_item_remove_notebook)).apply {
             this.isEnabled = notebooks?.isNotEmpty() ?: true
             this.setOnMenuItemClickListener {

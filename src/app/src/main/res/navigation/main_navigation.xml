@@ -41,7 +41,6 @@
     <dialog
         android:id="@+id/homeDialogFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.AddMemoDialogFragment"
-        android:label="@string/home_dialog_fragment_title"
         tools:layout="@layout/fragment_add_memo">
         <action
             android:id="@+id/action_homeDialogFragment_to_homeFragment"
@@ -67,12 +66,10 @@
     </fragment>
     <dialog
         android:id="@+id/audioRecognizerFragment"
-        android:name="jp.kaleidot725.emomemo.ui.audio.AudioRecordFragment"
-        android:label="@string/audio_recognizer_dialog_fragment_title" />
+        android:name="jp.kaleidot725.emomemo.ui.audio.AudioRecordFragment" />
     <dialog
         android:id="@+id/addNotebookDialogFragment"
-        android:name="jp.kaleidot725.emomemo.ui.notebook.AddNotebookDialogFragment"
-        android:label="AddNotebookDialogFragment" />
+        android:name="jp.kaleidot725.emomemo.ui.notebook.AddNotebookDialogFragment" />
     <action
         android:id="@+id/action_global_addNotebookDialogFragment"
         app:destination="@id/addNotebookDialogFragment"
@@ -82,8 +79,7 @@
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <dialog
         android:id="@+id/deleteNotebookDialogFragment"
-        android:name="jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookDialogFragment"
-        android:label="DeleteNotebookDialogFragment" />
+        android:name="jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookDialogFragment" />
     <action
         android:id="@+id/action_global_deleteNotebookDialogFragment"
         app:destination="@id/deleteNotebookDialogFragment"
@@ -94,7 +90,6 @@
     <fragment
         android:id="@+id/settingFragment"
         android:name="jp.kaleidot725.emomemo.ui.setting.SettingFragment"
-        android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
     <action
         android:id="@+id/action_global_settingFragment"

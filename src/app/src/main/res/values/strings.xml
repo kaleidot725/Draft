@@ -2,6 +2,9 @@
     <string name="app_name">EMOMEMO</string>
     <string name="top_title">EMOMEMO</string>
 
+    <!-- SettingFragment-->
+    <string name="setting_fragment_title">設定</string>
+
     <!-- HomeFragment -->
     <string name="home_fragment_title">ホーム</string>
     <string name="home_notebook_is_not_found">ノートブックがありません</string>
