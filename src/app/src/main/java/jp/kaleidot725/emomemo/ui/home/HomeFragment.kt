@@ -51,10 +51,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             memoItemListController.setData(it)
         })
 
-        mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
-            requireActivity().title = it.title
-        })
-
         mainViewModel.emptyStatus.observe(viewLifecycleOwner, Observer {
             binding.emptyMessageTextView.text = when (it) {
                 EmptyStatus.NOTEBOOK -> getString(R.string.home_notebook_is_not_found)
@@ -67,6 +63,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 EmptyStatus.MEMO -> View.VISIBLE
                 else -> View.GONE
             }
+        })
+
+        mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
         })
     }
 

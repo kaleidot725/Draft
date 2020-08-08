@@ -75,10 +75,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             binding.recyclerView.smoothScrollToPosition(it.count())
         })
 
-        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
-            requireActivity().title = it.title
-        })
-
         mainViewModel.emptyStatus.observe(viewLifecycleOwner, Observer {
             binding.emptyMessageTextView.text = when (it) {
                 EmptyStatus.MESSAGE -> getString(R.string.memo_no_message_text)
@@ -91,7 +87,9 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             }
         })
 
-        memoViewModel.reset()
+        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
+        })
     }
 
     override fun onDestroyView() {
