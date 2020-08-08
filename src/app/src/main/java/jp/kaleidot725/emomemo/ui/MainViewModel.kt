@@ -92,7 +92,10 @@ class MainViewModel(
     }
 
     fun selectNotebook(id: Int) {
+        _notebooks.value = emptyList()
+        _selectedNotebook.value = ERROR_NOTEBOOK
         _memos.value = emptyList()
+        _selectedMemo.value = ERROR_MEMO
         _messages.value = emptyList()
         viewModelScope.launch(Dispatchers.IO) {
             noteBookId = id
@@ -116,6 +119,7 @@ class MainViewModel(
 
     fun selectMemo(id: Int) {
         _messages.value = emptyList()
+        _selectedMemo.value = ERROR_MEMO
         viewModelScope.launch(Dispatchers.IO) {
             memoId = id
             fetchData(false)
@@ -148,7 +152,7 @@ class MainViewModel(
             this@MainViewModel.noteBookId = notebookRepository.getAll().firstOrNull()?.id ?: UNKNOWN_NOTEBOOK_ID
             this@MainViewModel.memoId = memoStatusRepository.getAll().firstOrNull { it.notebookId == noteBookId }?.id ?: UNKNOWN_MEMO_ID
         }
-        
+
         val selectedNotebook = try {
             notebookRepository.getNoteBook(noteBookId)
         } catch (e: Exception) {
