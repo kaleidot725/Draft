@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -65,7 +66,12 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, _, _ ->
             val currentId = controller.currentDestination?.id ?: 0
-            setActionBarVisibility((R.id.topFragment != currentId))
+            val isNotTopFragment = R.id.topFragment != currentId
+            setActionBarVisibility(isNotTopFragment)
+
+            val isHomeFragment = R.id.homeFragment != currentId
+            val lockMode = if (isHomeFragment) DrawerLayout.LOCK_MODE_LOCKED_CLOSED else DrawerLayout.LOCK_MODE_UNLOCKED
+            binding.drawerLayout.setDrawerLockMode(lockMode)
         }
     }
 
