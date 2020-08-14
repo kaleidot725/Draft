@@ -123,25 +123,31 @@ configurations {
     ktlint
 }
 
+def outputDir = "${project.buildDir}/reports/ktlint/"
+
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     ktlint "com.pinterest:ktlint:0.33.0"
 }
 
 task ktlint(type: JavaExec, group: "verification") {
+    outputs.dir(outputDir)
+
     description = "Check Kotlin code style."
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
-    args "src/**/*.kt"
+    args "--reporter=checkstyle,output=${buildDir}/reports/ktlintMainSourceSetCheck.xml", "src/**/*.kt"
     ignoreExitValue true
 }
 
 check.dependsOn ktlint
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
+    outputs.dir(outputDir)
+
     description = "Fix Kotlin code style deviations."
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
-    args "-F", "src/**/*.kt"
+    args "-F", "--reporter=checkstyle,output=${buildDir}/reports/ktlintMainSourceSetCheck.xml", "src/**/*.kt"
     ignoreExitValue true
 }
