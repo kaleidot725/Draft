@@ -25,3 +25,7 @@ jobs:
       run: |
         cd src
         ./gradlew lint
+    - name: run danger
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: danger # dangerはgithub actionsに対応しているため実行するだけでOK！
