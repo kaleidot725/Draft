@@ -26,7 +26,6 @@ jobs:
     - name: run danger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          JOB_STATUS: ${{ job.status }}
         run: |
           gem install danger
           danger 
