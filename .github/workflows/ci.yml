@@ -15,8 +15,6 @@ jobs:
     - uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6' # Version range or exact version of a Ruby version to use, using semvers version range syntax.
-    - name: install danger
-      run: gem install danger
     - name: run ktlintCheck
       run: |
         cd src
@@ -26,5 +24,9 @@ jobs:
         cd src
         ./gradlew lint
     - name: run danger
-        env: ${{ secrets.GITHUB_TOKEN }}
-        run: danger 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          gem install danger
+          danger 
