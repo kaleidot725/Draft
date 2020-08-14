@@ -133,6 +133,7 @@ task ktlint(type: JavaExec, group: "verification") {
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
     args "src/**/*.kt"
+    ignoreExitValue true
 }
 
 check.dependsOn ktlint
@@ -142,4 +143,5 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
     args "-F", "src/**/*.kt"
+    ignoreExitValue true
 }
