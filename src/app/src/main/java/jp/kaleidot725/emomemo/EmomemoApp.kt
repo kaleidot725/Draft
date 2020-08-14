@@ -11,7 +11,7 @@ class EmomemoApp : Application() {
         super.onCreate()
         setupDI()
     }
-
+            
     private fun setupDI() {
         startKoin {
             androidLogger()
