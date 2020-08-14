@@ -44,70 +44,70 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // AppCompat
-    implementation "androidx.appcompat:appcompat:${versions.appcompat_version}"
+    implementation "androidx.appcompat:appcompat:${versions.appcompat}"
 
     // Core Ktx
-    implementation "androidx.core:core-ktx:${versions.core_ktx_version}"
+    implementation "androidx.core:core-ktx:${versions.core_ktx}"
 
     // Constraint Layout
-    implementation "androidx.constraintlayout:constraintlayout:${versions.constraint_layout_version}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment:${versions.nav_version}"
-    implementation "androidx.navigation:navigation-ui:${versions.nav_version}"
-    implementation "androidx.navigation:navigation-fragment-ktx:${versions.nav_version}"
-    implementation "androidx.navigation:navigation-ui-ktx:${versions.nav_version}"
+    implementation "androidx.navigation:navigation-fragment:${versions.nav}"
+    implementation "androidx.navigation:navigation-ui:${versions.nav}"
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.nav}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.nav}"
 
     // Material
-    implementation "com.google.android.material:material:${versions.material_version}"
+    implementation "com.google.android.material:material:${versions.material}"
 
     // Epoxy
-    implementation "com.airbnb.android:epoxy:${versions.epoxy_version}"
-    implementation "com.airbnb.android:epoxy-databinding:${versions.epoxy_version}"
-    kapt "com.airbnb.android:epoxy-processor:${versions.epoxy_version}"
+    implementation "com.airbnb.android:epoxy:${versions.epoxy}"
+    implementation "com.airbnb.android:epoxy-databinding:${versions.epoxy}"
+    kapt "com.airbnb.android:epoxy-processor:${versions.epoxy}"
 
     // LiveEvent
-    implementation "com.github.hadilq.liveevent:liveevent:${versions.live_event_version}"
+    implementation "com.github.hadilq.liveevent:liveevent:${versions.live_event}"
 
     // Koin
-    implementation "org.koin:koin-androidx-scope:${versions.koin_version}"
-    implementation "org.koin:koin-androidx-viewmodel:${versions.koin_version}"
-    implementation "org.koin:koin-androidx-fragment:${versions.koin_version}"
-    implementation "org.koin:koin-androidx-ext:${versions.koin_version}"
+    implementation "org.koin:koin-androidx-scope:${versions.koin}"
+    implementation "org.koin:koin-androidx-viewmodel:${versions.koin}"
+    implementation "org.koin:koin-androidx-fragment:${versions.koin}"
+    implementation "org.koin:koin-androidx-ext:${versions.koin}"
 
     // Room
-    implementation "androidx.room:room-runtime:${versions.room_version}"
-    implementation "androidx.room:room-ktx:${versions.room_version}"
-    kapt "androidx.room:room-compiler:${versions.room_version}"
+    implementation "androidx.room:room-runtime:${versions.room}"
+    implementation "androidx.room:room-ktx:${versions.room}"
+    kapt "androidx.room:room-compiler:${versions.room}"
 
     // LiveData Ktx
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx_version}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
 
     // Permission Dispatcher
-    implementation "org.permissionsdispatcher:permissionsdispatcher:${versions.permission_dispatcher_version}"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permission_dispatcher_version}"
+    implementation "org.permissionsdispatcher:permissionsdispatcher:${versions.permission_dispatcher}"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permission_dispatcher}"
 
     // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle_version}"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle_version}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle_version}"
-    implementation "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle_version}"
-    kapt "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle_version}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
+    kapt "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}"
 
     // Fragment Ktx
-    implementation "androidx.fragment:fragment-ktx:${versions.fragment_version}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
 
     // Junit
-    testImplementation "junit:junit:${versions.junit_version}"
-    androidTestImplementation "androidx.test.ext:junit:${versions.junit_ext_version}"
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.junit_ext}"
 
     // Esporesso
     androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso_core}"
 
     // Flipper
-    debugImplementation "com.facebook.flipper:flipper:${versions.flipper_version}"
-    debugImplementation "com.facebook.soloader:soloader:${versions.soloader_version}"
-    releaseImplementation "com.facebook.flipper:flipper-noop:${versions.flipper_version}"
+    debugImplementation "com.facebook.flipper:flipper:${versions.flipper}"
+    debugImplementation "com.facebook.soloader:soloader:${versions.soloader}"
+    releaseImplementation "com.facebook.flipper:flipper-noop:${versions.flipper}"
 
 }
 
