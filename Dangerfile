@@ -14,4 +14,4 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
 # ktlint
 checkstyle_format.base_path = Dir.pwd
-checkstyle_format.report 'app/build/reports/ktlint/ktlintMainSourceSetCheck.xml'
+checkstyle_format.report 'src/app/build/reports/ktlint/ktlintMainSourceSetCheck.xml'
