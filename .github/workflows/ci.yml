@@ -23,5 +23,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        if: success() || failure()
         gem install danger
         danger 
