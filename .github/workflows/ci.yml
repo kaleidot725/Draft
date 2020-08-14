@@ -23,5 +23,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        gem install danger
+        gem install danger danger-checkstyle_format danger-android_lint danger-junit
         danger 
