@@ -1,6 +1,6 @@
 # EMOMEMO
 
-EMOMEMO(Emotional Memo) is Simple Notebook Application for Android.
+EMOMEMO is simple notebook app for Android.
 
 |        NAVIGATION DRAWER         |            NOTEBOOK            |            MEMO            |
 | :------------------------------: | :----------------------------: | :------------------------: |
