@@ -20,6 +20,10 @@ class NotebookRepository(private val dao: NotebookDao) {
         dao.deleteAll()
     }
 
+    suspend fun first(): NotebookEntity? {
+        return dao.first()
+    }
+
     suspend fun getAll(): List<NotebookEntity> {
         return dao.getAll()
     }

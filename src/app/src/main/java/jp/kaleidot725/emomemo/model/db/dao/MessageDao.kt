@@ -25,5 +25,5 @@ interface MessageDao {
     fun getAll(): List<MessageEntity>
 
     @Query("select * from message where memoId = :id")
-    fun getMessage(id: Int): List<MessageEntity>
+    fun getMessagesByMemoId(id: Int): List<MessageEntity>
 }

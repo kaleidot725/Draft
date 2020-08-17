@@ -31,7 +31,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         memoItemListController = MemoItemRecyclerViewController(object : MemoItemRecyclerViewController.SelectListener {
             override fun onSelected(item: MemoStatusView) {
-                mainViewModel.selectMemo(item.id)
+                mainViewModel.selectMemo(item)
                 navigateMemoFragment()
             }
         })
