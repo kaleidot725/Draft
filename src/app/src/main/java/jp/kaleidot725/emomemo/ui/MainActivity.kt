@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
     private val navController: NavController get() = findNavController(R.id.nav_host_fragment)
     private val appBarConfiguration: AppBarConfiguration by lazy {
-        AppBarConfiguration.Builder(setOf(R.id.homeFragment)).setDrawerLayout(drawer_layout).build()
+        AppBarConfiguration.Builder(setOf(R.id.homeFragment)).setOpenableLayout(drawer_layout).build()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
