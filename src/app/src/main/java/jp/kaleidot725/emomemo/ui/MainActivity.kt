@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             notebookSubMenu.add(notebook.title).also { menuItem ->
                 menuItem.isChecked = notebook == selectedNotebook
                 menuItem.setOnMenuItemClickListener {
-                    viewModel.selectNotebook(notebook.id)
+                    viewModel.selectNotebook(notebook)
                     false
                 }
             }

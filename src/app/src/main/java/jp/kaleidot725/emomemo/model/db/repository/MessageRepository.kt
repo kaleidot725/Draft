@@ -24,7 +24,7 @@ class MessageRepository(private val dao: MessageDao) {
         return dao.getAll()
     }
 
-    suspend fun getMessage(id: Int): List<MessageEntity> {
-        return dao.getMessage(id)
+    suspend fun getMessagesByMemoId(id: Int): List<MessageEntity> {
+        return dao.getMessagesByMemoId(id)
     }
 }

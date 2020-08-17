@@ -21,6 +21,9 @@ interface NotebookDao {
     @Query("delete from notebook")
     fun deleteAll()
 
+    @Query("select * from notebook ORDER BY notebook.id DESC LIMIT 1")
+    fun first(): NotebookEntity?
+
     @Query("select * from notebook")
     fun getAll(): List<NotebookEntity>
 

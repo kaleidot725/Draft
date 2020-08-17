@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="mainViewModel"
             type="jp.kaleidot725.emomemo.ui.MainViewModel" />
@@ -35,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:src="@drawable/ic_create"
+            android:visibility="@{mainViewModel.notFoundNotebook ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@android:color/white"
