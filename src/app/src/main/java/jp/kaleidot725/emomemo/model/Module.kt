@@ -20,10 +20,6 @@ import org.koin.dsl.module
 
 val appModule = module {
     single {
-        AppStatus()
-    }
-
-    single<AppDatabase> {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
 
@@ -52,7 +48,7 @@ val appModule = module {
     }
 
     single {
-        DatabaseInitializeUsecase(get(), get())
+        DatabaseInitializeUsecase(get())
     }
 
     viewModel {
