@@ -12,7 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryColor"
+        android:background="@drawable/gradient_background"
         tools:context=".ui.top.TopFragment">
 
         <com.google.android.material.textview.MaterialTextView
