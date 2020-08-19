@@ -33,6 +33,9 @@ class MainViewModel(
     private val _initialized: LiveEvent<Boolean> = LiveEvent()
     val initialized: LiveData<Boolean> = _initialized
 
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loading: LiveData<Boolean> = _loading
+
     private val _selectedNotebook: MutableLiveData<NotebookEntity> = MutableLiveData()
     val selectedNotebook: LiveData<NotebookEntity> = _selectedNotebook
 
@@ -144,6 +147,10 @@ class MainViewModel(
     }
 
     private suspend fun fetchData(reselect: Boolean) {
+        withContext(Dispatchers.Main) {
+            _loading.value = true
+        }
+
         if (reselect) {
             this.noteBook = try {
                 notebookRepository.first() ?: ERROR_NOTEBOOK
@@ -182,6 +189,7 @@ class MainViewModel(
             _notebooks.value = notebooks
             _memos.value = memos
             _messages.value = messages
+            _loading.value = false
         }
     }
 
