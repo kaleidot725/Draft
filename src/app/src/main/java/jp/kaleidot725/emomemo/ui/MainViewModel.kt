@@ -51,7 +51,15 @@ class MainViewModel(
     private val _messages: MutableLiveData<List<MessageEntity>> = MutableLiveData()
     val messages: LiveData<List<MessageEntity>> = _messages
 
-    val notFoundNotebook: LiveData<Boolean> = selectedNotebook.map { it == ERROR_NOTEBOOK }
+    private val notFoundNotebook: LiveData<Boolean> = selectedNotebook.map { it == ERROR_NOTEBOOK }
+    val isNotebookReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(loading) { loading ->
+            this.value = (loading == false && notFoundNotebook.value == false)
+        }
+        addSource(notFoundNotebook) { notFoundNotebook ->
+            this.value = (loading.value == false && notFoundNotebook == false)
+        }
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -149,6 +157,9 @@ class MainViewModel(
     private suspend fun fetchData(reselect: Boolean) {
         withContext(Dispatchers.Main) {
             _loading.value = true
+            _notebooks.value = emptyList()
+            _memos.value = emptyList()
+            _messages.value = emptyList()
         }
 
         if (reselect) {
