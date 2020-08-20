@@ -57,12 +57,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 EmptyStatus.MEMO -> getString(R.string.home_memo_is_not_found)
                 else -> ""
             }
-
-            binding.emptyMessageTextView.visibility = when (it) {
-                EmptyStatus.NOTEBOOK -> View.VISIBLE
-                EmptyStatus.MEMO -> View.VISIBLE
-                else -> View.GONE
-            }
         })
 
         mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
