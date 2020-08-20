@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
@@ -51,13 +50,21 @@ class MainViewModel(
     private val _messages: MutableLiveData<List<MessageEntity>> = MutableLiveData()
     val messages: LiveData<List<MessageEntity>> = _messages
 
-    private val notFoundNotebook: LiveData<Boolean> = selectedNotebook.map { it == ERROR_NOTEBOOK }
     val isNotebookReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(loading) { loading ->
-            this.value = (loading == false && notFoundNotebook.value == false)
+            this.value = (loading == false && selectedNotebook.value != null)
         }
-        addSource(notFoundNotebook) { notFoundNotebook ->
-            this.value = (loading.value == false && notFoundNotebook == false)
+        addSource(selectedNotebook) { selectedNotebook ->
+            this.value = (loading.value == false && selectedNotebook != null)
+        }
+    }
+
+    val isMemoReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(loading) { loading ->
+            this.value = (loading == false && selectedMemo.value != null)
+        }
+        addSource(selectedMemo) { selectedMemo ->
+            this.value = (loading.value == false && selectedMemo != null)
         }
     }
 

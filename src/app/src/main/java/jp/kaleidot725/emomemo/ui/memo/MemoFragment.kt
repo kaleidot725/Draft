@@ -78,11 +78,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
                 EmptyStatus.MESSAGE -> getString(R.string.memo_no_message_text)
                 else -> ""
             }
-
-            binding.emptyMessageTextView.visibility = when (it) {
-                EmptyStatus.MESSAGE -> View.VISIBLE
-                else -> View.GONE
-            }
         })
 
         mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
