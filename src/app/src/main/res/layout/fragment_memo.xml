@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="jp.kaleidot725.emomemo.R" />
-
         <import type="jp.kaleidot725.emomemo.ui.EmptyStatus" />
 
         <import type="jp.kaleidot725.emomemo.extension.EmptyStatusExtKt" />

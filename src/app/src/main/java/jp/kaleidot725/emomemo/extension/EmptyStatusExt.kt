@@ -11,3 +11,12 @@ fun EmptyStatus.getMemoErrorMessage(): Int {
         else -> R.string.empty
     }
 }
+
+@StringRes
+fun EmptyStatus.getHomeErrorMessage(): Int {
+    return when (this) {
+        EmptyStatus.NOTEBOOK -> R.string.home_notebook_is_not_found
+        EmptyStatus.MEMO -> R.string.home_memo_is_not_found
+        else -> R.string.empty
+    }
+}

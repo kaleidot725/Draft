@@ -3,6 +3,10 @@
 
     <data>
 
+        <import type="jp.kaleidot725.emomemo.ui.EmptyStatus" />
+
+        <import type="jp.kaleidot725.emomemo.extension.EmptyStatusExtKt" />
+
         <import type="android.view.View" />
 
         <variable
@@ -36,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@{context.getString(EmptyStatusExtKt.getHomeErrorMessage(mainViewModel.emptyStatus))}"
             android:textSize="20sp"
             android:visibility="@{mainViewModel.isNotebookReady ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
