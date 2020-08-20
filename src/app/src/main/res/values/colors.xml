@@ -12,4 +12,7 @@
     <color name="darkSecondaryTextColor">#404040</color>
     <color name="strokeColor">#80c7c7c7</color>
     <color name="bottomCardColor">#80EEEEEE</color>
+
+    <!-- palette-->
+    <color name="black">#000000</color>
 </resources>
