@@ -15,22 +15,21 @@ class MemoItemRecyclerViewController(
             memoItemContainer {
                 id(item.id)
                 title(item.title)
-                latestTime(getLatestTimeString(item.lastTime))
-                latestMessage(getLastestMessage(item.lastMessage))
+                detail(getDetailString(item))
                 onClickListener(View.OnClickListener { selectListener?.onSelected(item) })
             }
         }
     }
 
-    private fun getLatestTimeString(time: Long?): String {
-        return if (time != null) {
-            DateFormat.format("yyyy/MM/dd aa hh:mm:ss", time ?: 0)
-        } else {
-            "0000/00/00 AM 00:00:00"
-        }.toString()
+    private fun getDetailString(memoStatusView: MemoStatusView): String {
+        return getLatestTimeString(memoStatusView.lastTime) + getLatestMessage(memoStatusView.lastMessage)
     }
 
-    private fun getLastestMessage(message: String?): String {
+    private fun getLatestTimeString(time: Long?): String {
+        return if (time != null) DateFormat.format("yyyy/MM/dd aa hh:mm:ss", time).toString() + "\n" else ""
+    }
+
+    private fun getLatestMessage(message: String?): String {
         return message ?: "No Message"
     }
 
