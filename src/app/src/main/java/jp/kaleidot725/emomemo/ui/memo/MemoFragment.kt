@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.EmptyStatus
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
@@ -71,13 +70,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         mainViewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.setData(it)
             binding.recyclerView.smoothScrollToPosition(it.count())
-        })
-
-        mainViewModel.emptyStatus.observe(viewLifecycleOwner, Observer {
-            binding.emptyMessageTextView.text = when (it) {
-                EmptyStatus.MESSAGE -> getString(R.string.memo_no_message_text)
-                else -> ""
-            }
         })
 
         mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {

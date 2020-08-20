@@ -68,17 +68,6 @@ class MainViewModel(
         }
     }
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            databaseInitializeUsecase.execute()
-            fetchData(true)
-
-            withContext(Dispatchers.Main) {
-                _initialized.value = true
-            }
-        }
-    }
-
     val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
         fun getEmptyStatus() {
             if (notebooks.value.isNullOrEmpty()) {
@@ -103,6 +92,17 @@ class MainViewModel(
         addSource(notebooks) { getEmptyStatus() }
         addSource(memos) { getEmptyStatus() }
         addSource(messages) { getEmptyStatus() }
+    }
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            databaseInitializeUsecase.execute()
+            fetchData(true)
+
+            withContext(Dispatchers.Main) {
+                _initialized.value = true
+            }
+        }
     }
 
     fun createNotebook(title: String) {
