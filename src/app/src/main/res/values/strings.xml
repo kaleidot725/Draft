@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EmoMemo</string>
     <string name="top_title">EmoMemo</string>
+    <string name="empty" />
 
     <!-- SettingFragment-->
     <string name="setting_fragment_title">設定</string>
