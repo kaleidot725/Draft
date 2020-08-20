@@ -49,7 +49,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         messageItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
             setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
         }
-        
+
         binding.mainViewModel = mainViewModel
         binding.memoViewModel = memoViewModel
         binding.recyclerView.apply {
