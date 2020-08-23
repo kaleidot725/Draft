@@ -4,8 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.model.db.datasource.MemoStatusDataNullSourceFactory
+import jp.kaleidot725.emomemo.model.db.datasource.MemoStatusDataSourceFactory
+import jp.kaleidot725.emomemo.model.db.datasource.MessageDataNullSourceFactory
+import jp.kaleidot725.emomemo.model.db.datasource.MessageDataSourceFactory
 import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
@@ -16,6 +23,7 @@ import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -44,32 +52,25 @@ class MainViewModel(
     private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
     val notebooks: LiveData<List<NotebookEntity>> = _notebooks
 
-    private val _memos: MutableLiveData<List<MemoStatusView>> = MutableLiveData()
-    val memos: LiveData<List<MemoStatusView>> = _memos
-
-    private val _messages: MutableLiveData<List<MessageEntity>> = MutableLiveData()
-    val messages: LiveData<List<MessageEntity>> = _messages
-
-    val isNotebookReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        addSource(loading) { loading ->
-            this.value = (loading == false && selectedNotebook.value != null)
-        }
-        addSource(selectedNotebook) { selectedNotebook ->
-            this.value = (loading.value == false && selectedNotebook != null)
-        }
+    val memos: LiveData<PagedList<MemoStatusView>> = _selectedNotebook.switchMap {
+        val factory = if (it == ERROR_NOTEBOOK) MemoStatusDataNullSourceFactory() else MemoStatusDataSourceFactory(it.id, memoStatusRepository)
+        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+        LivePagedListBuilder(factory, config).build()
     }
 
-    val isMemoReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
-        addSource(loading) { loading ->
-            this.value = (loading == false && selectedMemo.value != null)
-        }
-        addSource(selectedMemo) { selectedMemo ->
-            this.value = (loading.value == false && selectedMemo != null)
-        }
+    val messages: LiveData<PagedList<MessageEntity>?> = _selectedMemo.switchMap {
+        val factory = if (it == ERROR_MEMO) MessageDataNullSourceFactory() else MessageDataSourceFactory(it.id, messageRepository)
+        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+        LivePagedListBuilder(factory, config).build()
     }
 
     val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
         fun getEmptyStatus() {
+            if (loading.value == true) {
+                this.value = EmptyStatus.NO_ERROR
+                return
+            }
+
             if (notebooks.value.isNullOrEmpty()) {
                 this.value = EmptyStatus.NOTEBOOK
                 return
@@ -165,8 +166,8 @@ class MainViewModel(
         withContext(Dispatchers.Main) {
             _loading.value = true
             _notebooks.value = emptyList()
-            _memos.value = emptyList()
-            _messages.value = emptyList()
+            _selectedNotebook.value = ERROR_NOTEBOOK
+            _selectedMemo.value = ERROR_MEMO
         }
 
         if (reselect) {
@@ -189,24 +190,13 @@ class MainViewModel(
             emptyList<NotebookEntity>()
         }
 
-        val memos = try {
-            memoStatusRepository.getMemoListByNotebookId(this.noteBook.id)
-        } catch (e: Exception) {
-            emptyList<MemoStatusView>()
-        }
-
-        val messages = try {
-            messageRepository.getMessagesByMemoId(this.memo.id)
-        } catch (e: Exception) {
-            emptyList<MessageEntity>()
-        }
+        // FIXME なんとか処理を直列にしてこの delay をなくす
+        delay(300)
 
         withContext(Dispatchers.Main) {
+            _notebooks.value = notebooks
             _selectedNotebook.value = this@MainViewModel.noteBook
             _selectedMemo.value = this@MainViewModel.memo
-            _notebooks.value = notebooks
-            _memos.value = memos
-            _messages.value = messages
             _loading.value = false
         }
     }

@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.model
+package jp.kaleidot725.emomemo.model.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

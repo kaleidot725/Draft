@@ -1,6 +1,7 @@
-package jp.kaleidot725.emomemo.model
+package jp.kaleidot725.emomemo
 
 import androidx.room.Room
+import jp.kaleidot725.emomemo.model.db.AppDatabase
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository

@@ -2,22 +2,25 @@ package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.text.format.DateFormat
 import android.view.View
-import com.airbnb.epoxy.TypedEpoxyController
-import jp.kaleidot725.emomemo.memoItemContainer
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging.PagedListEpoxyController
+import jp.kaleidot725.emomemo.MemoItemContainerBindingModel_
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 
 class MemoItemRecyclerViewController(
     private val selectListener: SelectListener? = null
-) : TypedEpoxyController<List<MemoStatusView>>() {
+) : PagedListEpoxyController<MemoStatusView>() {
 
-    override fun buildModels(memoList: List<MemoStatusView>) {
-        memoList.forEach { item ->
-            memoItemContainer {
+    override fun buildItemModel(currentPosition: Int, item: MemoStatusView?): EpoxyModel<*> {
+        return if (item != null) {
+            MemoItemContainerBindingModel_().apply {
                 id(item.id)
                 title(item.title)
                 detail(getDetailString(item))
                 onClickListener(View.OnClickListener { selectListener?.onSelected(item) })
             }
+        } else {
+            MemoItemContainerBindingModel_()
         }
     }
 
