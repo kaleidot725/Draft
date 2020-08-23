@@ -5,7 +5,11 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.model.db.datasource.MemoStatusDataSourceFactory
+import jp.kaleidot725.emomemo.model.db.datasource.MessageDataSourceFactory
 import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
@@ -44,11 +48,11 @@ class MainViewModel(
     private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
     val notebooks: LiveData<List<NotebookEntity>> = _notebooks
 
-    private val _memos: MutableLiveData<List<MemoStatusView>> = MutableLiveData()
-    val memos: LiveData<List<MemoStatusView>> = _memos
+    var memos: LiveData<PagedList<MemoStatusView>> = MutableLiveData()
+        private set
 
-    private val _messages: MutableLiveData<List<MessageEntity>> = MutableLiveData()
-    val messages: LiveData<List<MessageEntity>> = _messages
+    var messages: LiveData<PagedList<MessageEntity>> = MutableLiveData()
+        private set
 
     val isNotebookReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(loading) { loading ->
@@ -165,8 +169,6 @@ class MainViewModel(
         withContext(Dispatchers.Main) {
             _loading.value = true
             _notebooks.value = emptyList()
-            _memos.value = emptyList()
-            _messages.value = emptyList()
         }
 
         if (reselect) {
@@ -189,24 +191,17 @@ class MainViewModel(
             emptyList<NotebookEntity>()
         }
 
-        val memos = try {
-            memoStatusRepository.getMemoListByNotebookId(this.noteBook.id)
-        } catch (e: Exception) {
-            emptyList<MemoStatusView>()
-        }
-
-        val messages = try {
-            messageRepository.getMessagesByMemoId(this.memo.id)
-        } catch (e: Exception) {
-            emptyList<MessageEntity>()
-        }
-
         withContext(Dispatchers.Main) {
             _selectedNotebook.value = this@MainViewModel.noteBook
             _selectedMemo.value = this@MainViewModel.memo
             _notebooks.value = notebooks
-            _memos.value = memos
-            _messages.value = messages
+
+            val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+            val memoStatusDataSourceFactory = MemoStatusDataSourceFactory(this@MainViewModel.noteBook.id, memoStatusRepository)
+            this@MainViewModel.memos = LivePagedListBuilder(memoStatusDataSourceFactory, config).build()
+            val messageStatusDataSourceFactory = MessageDataSourceFactory(this@MainViewModel.memo.id, messageRepository)
+            this@MainViewModel.messages = LivePagedListBuilder(messageStatusDataSourceFactory, config).build()
+
             _loading.value = false
         }
     }

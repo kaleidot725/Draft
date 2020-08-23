@@ -47,7 +47,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         mainViewModel.memos.observe(viewLifecycleOwner, Observer {
-            memoItemListController.setData(it)
+            memoItemListController.submitList(it)
         })
 
         mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {

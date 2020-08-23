@@ -4,8 +4,8 @@ import androidx.paging.DataSource
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 
-class MemoStatusDataSourceFactory(repository: MemoStatusRepository) : DataSource.Factory<Int, MemoStatusView>() {
-    private val source = MemoStatusDataSource(repository)
+class MemoStatusDataSourceFactory(notebookId: Int, repository: MemoStatusRepository) : DataSource.Factory<Int, MemoStatusView>() {
+    private val source = MemoStatusDataSource(notebookId, repository)
 
     override fun create(): DataSource<Int, MemoStatusView> {
         return source

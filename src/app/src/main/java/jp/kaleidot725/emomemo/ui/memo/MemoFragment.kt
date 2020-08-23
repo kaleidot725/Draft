@@ -68,7 +68,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         }
 
         mainViewModel.messages.observe(viewLifecycleOwner, Observer {
-            messageItemRecyclerViewController.setData(it)
+            messageItemRecyclerViewController.submitList(it)
             binding.recyclerView.smoothScrollToPosition(it.count())
         })
 
