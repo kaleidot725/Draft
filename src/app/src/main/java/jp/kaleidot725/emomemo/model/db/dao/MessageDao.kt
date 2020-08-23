@@ -24,6 +24,9 @@ interface MessageDao {
     @Query("select * from message")
     fun getAll(): List<MessageEntity>
 
+    @Query("select * from message LIMIT :limit OFFSET :no")
+    fun getPage(no: Int, limit: Int): List<MessageEntity>
+
     @Query("select * from message where memoId = :id")
     fun getMessagesByMemoId(id: Int): List<MessageEntity>
 }
