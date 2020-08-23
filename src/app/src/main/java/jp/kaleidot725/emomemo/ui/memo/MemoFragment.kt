@@ -49,19 +49,14 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             memoViewModel.reset()
         }
 
-        mainViewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
-            if (!loading) {
-                mainViewModel.messages.observe(viewLifecycleOwner, Observer {
-                    messageItemRecyclerViewController.submitList(it)
-                    binding.recyclerView.smoothScrollToPosition(it.count())
-                })
-                mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
-                    requireActivity().title = it.title
-                })
-            } else {
-                mainViewModel.messages.removeObservers(viewLifecycleOwner)
-                mainViewModel.selectedMemo.removeObservers(viewLifecycleOwner)
-            }
+        mainViewModel.messages.observe(viewLifecycleOwner, Observer {
+            messageItemRecyclerViewController.submitList(it)
+            messageItemRecyclerViewController.requestModelBuild()
+            binding.recyclerView.smoothScrollToPosition(it.count())
+        })
+
+        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
         })
     }
 

@@ -9,7 +9,7 @@ class MemoStatusRepository(private val dao: MemoStatusDao) {
     }
 
     fun getPage(id: Int, no: Int, limit: Int): List<MemoStatusView> {
-        return dao.getPage(id, no, limit)
+        return dao.getPage(id, (no - 1) * limit, limit)
     }
 
     fun getMemoByMemoId(id: Int): MemoStatusView {

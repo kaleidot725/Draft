@@ -5,7 +5,7 @@ import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 
 class MessageDataSource(
-    private val id: Int,
+    private val memoId: Int,
     private val repository: MessageRepository
 ) : PageKeyedDataSource<Int, MessageEntity>() {
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MessageEntity>) {}
@@ -19,7 +19,7 @@ class MessageDataSource(
         val perPage = params.requestedLoadSize
 
         // ページに表示するデータを取得する
-        val items = repository.getPage(id, page, perPage)
+        val items = repository.getPage(memoId, page, perPage)
 
         // 次に表示するページの番号を計算する
         val nextPage = page + 1
@@ -36,7 +36,7 @@ class MessageDataSource(
         val perPage = params.requestedLoadSize
 
         // ページに表示するデータを取得する
-        val items = repository.getPage(id, page, perPage)
+        val items = repository.getPage(memoId, page, perPage)
 
         // 次に表示するページの番号を計算する
         val nextPage = page + 1

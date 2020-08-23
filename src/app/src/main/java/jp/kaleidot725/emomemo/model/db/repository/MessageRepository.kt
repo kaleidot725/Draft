@@ -25,7 +25,7 @@ class MessageRepository(private val dao: MessageDao) {
     }
 
     fun getPage(id: Int, no: Int, limit: Int): List<MessageEntity> {
-        return dao.getPage(id, no, limit)
+        return dao.getPage(id, (no - 1) * limit, limit)
     }
 
     fun getMessagesByMemoId(id: Int): List<MessageEntity> {

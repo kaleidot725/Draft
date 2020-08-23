@@ -16,8 +16,8 @@ interface MemoStatusDao {
     @Query("select * from memo_status where notebookId = :notebookId order by id DESC")
     fun getMemoListByNotebookId(notebookId: Int): List<MemoStatusView>
 
-    @Query("select * from memo_status where notebookId = :notebookId LIMIT :limit OFFSET :no")
-    fun getPage(notebookId: Int, no: Int, limit: Int): List<MemoStatusView>
+    @Query("select * from memo_status where notebookId = :notebookId LIMIT :limit OFFSET :offset")
+    fun getPage(notebookId: Int, offset: Int, limit: Int): List<MemoStatusView>
 
     @Query("select * from memo_status where notebookId = :notebookId order by id ASC LIMIT 1")
     fun firstByNotebookId(notebookId: Int): MemoStatusView?

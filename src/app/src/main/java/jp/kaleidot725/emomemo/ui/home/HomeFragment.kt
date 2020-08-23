@@ -23,7 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
-    private lateinit var memoItemListController: MemoItemRecyclerViewController
+    private lateinit var epoxyController: MemoItemRecyclerViewController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,18 +33,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.recyclerView.setup()
         binding.addButton.setOnClickListener { navigateHomeDialogFragment() }
 
-        mainViewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
-            if (!loading) {
-                mainViewModel.memos.observe(viewLifecycleOwner, Observer {
-                    memoItemListController.submitList(it)
-                })
-                mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
-                    requireActivity().title = it.title
-                })
-            } else {
-                mainViewModel.memos.removeObservers(viewLifecycleOwner)
-                mainViewModel.selectedNotebook.removeObservers(viewLifecycleOwner)
-            }
+        mainViewModel.memos.observe(viewLifecycleOwner, Observer {
+            epoxyController.submitList(it)
+            epoxyController.requestModelBuild()
+        })
+
+        mainViewModel.selectedNotebook.observe(viewLifecycleOwner, Observer {
+            requireActivity().title = it.title
         })
     }
 
@@ -57,17 +52,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun EpoxyRecyclerView.setup() {
-        memoItemListController = MemoItemRecyclerViewController(object : MemoItemRecyclerViewController.SelectListener {
+        epoxyController = MemoItemRecyclerViewController(object : MemoItemRecyclerViewController.SelectListener {
             override fun onSelected(item: MemoStatusView) {
                 mainViewModel.selectMemo(item)
                 navigateMemoFragment()
             }
         })
+        this.setController(epoxyController)
 
         val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
-
         this.addItemDecoration(decoration)
-        this.adapter = memoItemListController.adapter
     }
 }

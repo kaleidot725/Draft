@@ -4,7 +4,10 @@ import androidx.paging.PageKeyedDataSource
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 
-class MemoStatusDataSource(private val notebookId: Int, private val repository: MemoStatusRepository) : PageKeyedDataSource<Int, MemoStatusView>() {
+class MemoStatusDataSource(
+    private val notebookId: Int,
+    private val repository: MemoStatusRepository
+) : PageKeyedDataSource<Int, MemoStatusView>() {
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MemoStatusView>) {}
 
     // API呼び出しをしているので、本来であればここで例外の対処を記述する必要がありますが省略しています。

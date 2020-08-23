@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -48,11 +49,17 @@ class MainViewModel(
     private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
     val notebooks: LiveData<List<NotebookEntity>> = _notebooks
 
-    var memos: LiveData<PagedList<MemoStatusView>> = MutableLiveData()
-        private set
+    val memos: LiveData<PagedList<MemoStatusView>> = _selectedNotebook.switchMap {
+        val factory = MemoStatusDataSourceFactory(it.id, memoStatusRepository)
+        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+        LivePagedListBuilder(factory, config).build()
+    }
 
-    var messages: LiveData<PagedList<MessageEntity>> = MutableLiveData()
-        private set
+    val messages: LiveData<PagedList<MessageEntity>> = _selectedMemo.switchMap {
+        val factory = MessageDataSourceFactory(it.id, messageRepository)
+        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+        LivePagedListBuilder(factory, config).build()
+    }
 
     val isNotebookReady: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(loading) { loading ->
@@ -195,13 +202,6 @@ class MainViewModel(
             _selectedNotebook.value = this@MainViewModel.noteBook
             _selectedMemo.value = this@MainViewModel.memo
             _notebooks.value = notebooks
-
-            val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
-            val memoStatusDataSourceFactory = MemoStatusDataSourceFactory(this@MainViewModel.noteBook.id, memoStatusRepository)
-            this@MainViewModel.memos = LivePagedListBuilder(memoStatusDataSourceFactory, config).build()
-            val messageStatusDataSourceFactory = MessageDataSourceFactory(this@MainViewModel.memo.id, messageRepository)
-            this@MainViewModel.messages = LivePagedListBuilder(messageStatusDataSourceFactory, config).build()
-
             _loading.value = false
         }
     }
