@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
@@ -34,46 +34,34 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val memoViewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
-
     private lateinit var messageItemRecyclerViewController: MessageItemRecyclerViewController
-    private lateinit var messageItemLayoutManager: LinearLayoutManager
-    private lateinit var messageItemDecoration: DividerItemDecoration
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        messageItemRecyclerViewController = MessageItemRecyclerViewController()
-        messageItemLayoutManager = LinearLayoutManager(requireContext()).apply {
-            orientation = RecyclerView.VERTICAL
-        }
-        messageItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply {
-            setDrawable(resources.getDrawable(R.drawable.divider, requireContext().theme))
-        }
-
         binding.mainViewModel = mainViewModel
         binding.memoViewModel = memoViewModel
-        binding.recyclerView.apply {
-            adapter = messageItemRecyclerViewController.adapter
-            layoutManager = messageItemLayoutManager
-            addItemDecoration(messageItemDecoration)
-        }
 
-        binding.voiceButton.setOnClickListener {
-            showRecordAudioWithPermissionCheck()
-        }
-
+        binding.recyclerView.setup()
+        binding.voiceButton.setOnClickListener { showRecordAudioWithPermissionCheck() }
         binding.sendButton.setOnClickListener {
             mainViewModel.createMessage(memoViewModel.inputMessage.value ?: "")
             memoViewModel.reset()
         }
 
-        mainViewModel.messages.observe(viewLifecycleOwner, Observer {
-            messageItemRecyclerViewController.submitList(it)
-            binding.recyclerView.smoothScrollToPosition(it.count())
-        })
-
-        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
-            requireActivity().title = it.title
+        mainViewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
+            if (!loading) {
+                mainViewModel.messages.observe(viewLifecycleOwner, Observer {
+                    messageItemRecyclerViewController.submitList(it)
+                    binding.recyclerView.smoothScrollToPosition(it.count())
+                })
+                mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
+                    requireActivity().title = it.title
+                })
+            } else {
+                mainViewModel.messages.removeObservers(viewLifecycleOwner)
+                mainViewModel.selectedMemo.removeObservers(viewLifecycleOwner)
+            }
         })
     }
 
@@ -109,5 +97,15 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private fun hideSoftKeyBoard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
+    }
+
+    private fun EpoxyRecyclerView.setup() {
+        messageItemRecyclerViewController = MessageItemRecyclerViewController()
+
+        val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)
+        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
+
+        this.adapter = messageItemRecyclerViewController.adapter
+        this.addItemDecoration(decoration)
     }
 }
