@@ -30,6 +30,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.mainViewModel = mainViewModel
         binding.homeViewModel = homeViewModel
+
         binding.recyclerView.setup()
         binding.addButton.setOnClickListener { navigateHomeDialogFragment() }
 
