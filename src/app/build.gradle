@@ -68,6 +68,7 @@ dependencies {
     // Epoxy
     implementation "com.airbnb.android:epoxy:${versions.epoxy}"
     implementation "com.airbnb.android:epoxy-databinding:${versions.epoxy}"
+    implementation "com.airbnb.android:epoxy-paging:${versions.epoxy}"
     kapt "com.airbnb.android:epoxy-processor:${versions.epoxy}"
 
     // LiveEvent
