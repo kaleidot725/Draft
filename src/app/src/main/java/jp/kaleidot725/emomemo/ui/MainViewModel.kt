@@ -23,7 +23,6 @@ import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -188,9 +187,6 @@ class MainViewModel(
             } catch (e: Exception) {
                 emptyList<NotebookEntity>()
             }
-
-            // FIXME なんとか処理を直列にしてこの delay をなくす
-            delay(300)
 
             _notebooks.value = notebooks
             _selectedNotebook.value = this@MainViewModel.noteBook
