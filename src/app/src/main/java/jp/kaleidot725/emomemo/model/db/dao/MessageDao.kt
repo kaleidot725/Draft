@@ -10,23 +10,23 @@ import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 @Dao
 interface MessageDao {
     @Insert
-    fun insert(messageEntity: MessageEntity)
+    suspend fun insert(messageEntity: MessageEntity)
 
     @Update
-    fun update(messageEntity: MessageEntity)
+    suspend fun update(messageEntity: MessageEntity)
 
     @Delete
-    fun delete(messageEntity: MessageEntity)
+    suspend fun delete(messageEntity: MessageEntity)
 
     @Query("delete from message")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("select * from message")
-    fun getAll(): List<MessageEntity>
+    suspend fun getAll(): List<MessageEntity>
 
     @Query("select * from message where memoId = :id LIMIT :limit OFFSET :offset")
-    fun getPage(id: Int, offset: Int, limit: Int): List<MessageEntity>
+    suspend fun getPage(id: Int, offset: Int, limit: Int): List<MessageEntity>
 
     @Query("select * from message where memoId = :id")
-    fun getMessagesByMemoId(id: Int): List<MessageEntity>
+    suspend fun getMessagesByMemoId(id: Int): List<MessageEntity>
 }

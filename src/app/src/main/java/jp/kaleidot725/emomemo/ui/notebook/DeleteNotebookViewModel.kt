@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository) : ViewModel() {
     private val _event: LiveEvent<NavEvent> = LiveEvent()
@@ -23,11 +21,8 @@ class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository
     }
 
     fun fetch() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val notebooks = notebookRepository.getAll()
-            withContext(Dispatchers.Main) {
-                _notebooks.value = notebooks
-            }
+        viewModelScope.launch {
+            _notebooks.value = notebookRepository.getAll()
         }
     }
 

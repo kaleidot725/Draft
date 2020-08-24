@@ -10,23 +10,23 @@ import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 @Dao
 interface NotebookDao {
     @Insert
-    fun insert(memoEntity: NotebookEntity)
+    suspend fun insert(memoEntity: NotebookEntity)
 
     @Update
-    fun update(memoEntity: NotebookEntity)
+    suspend fun update(memoEntity: NotebookEntity)
 
     @Delete
-    fun delete(memoEntity: NotebookEntity)
+    suspend fun delete(memoEntity: NotebookEntity)
 
     @Query("delete from notebook")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("select * from notebook ORDER BY notebook.id ASC LIMIT 1")
-    fun first(): NotebookEntity?
+    suspend fun first(): NotebookEntity?
 
     @Query("select * from notebook")
-    fun getAll(): List<NotebookEntity>
+    suspend fun getAll(): List<NotebookEntity>
 
     @Query("select * from notebook where id = :id")
-    fun getNotebook(id: Int): NotebookEntity
+    suspend fun getNotebook(id: Int): NotebookEntity
 }

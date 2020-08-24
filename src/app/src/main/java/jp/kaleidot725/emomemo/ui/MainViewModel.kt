@@ -23,7 +23,6 @@ import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -163,37 +162,32 @@ class MainViewModel(
     }
 
     private suspend fun fetchData(reselect: Boolean) {
-        withContext(Dispatchers.Main) {
+        viewModelScope.launch {
             _loading.value = true
             _notebooks.value = emptyList()
             _selectedNotebook.value = ERROR_NOTEBOOK
             _selectedMemo.value = ERROR_MEMO
-        }
 
-        if (reselect) {
-            this.noteBook = try {
-                notebookRepository.first() ?: ERROR_NOTEBOOK
-            } catch (e: Exception) {
-                ERROR_NOTEBOOK
+            if (reselect) {
+                this@MainViewModel.noteBook = try {
+                    notebookRepository.first() ?: ERROR_NOTEBOOK
+                } catch (e: Exception) {
+                    ERROR_NOTEBOOK
+                }
+
+                this@MainViewModel.memo = try {
+                    memoStatusRepository.firstByNotebookId(this@MainViewModel.noteBook.id) ?: ERROR_MEMO
+                } catch (e: Exception) {
+                    ERROR_MEMO
+                }
             }
 
-            this.memo = try {
-                memoStatusRepository.firstByNotebookId(this.noteBook.id) ?: ERROR_MEMO
+            val notebooks = try {
+                notebookRepository.getAll()
             } catch (e: Exception) {
-                ERROR_MEMO
+                emptyList<NotebookEntity>()
             }
-        }
 
-        val notebooks = try {
-            notebookRepository.getAll()
-        } catch (e: Exception) {
-            emptyList<NotebookEntity>()
-        }
-
-        // FIXME なんとか処理を直列にしてこの delay をなくす
-        delay(300)
-
-        withContext(Dispatchers.Main) {
             _notebooks.value = notebooks
             _selectedNotebook.value = this@MainViewModel.noteBook
             _selectedMemo.value = this@MainViewModel.memo
