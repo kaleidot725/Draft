@@ -38,7 +38,7 @@ class MemoStatusDataSource(
 
         // ページに表示するデータを取得する
         val items = runBlocking { repository.getPage(notebookId, page, perPage) }
-        
+
         // 次に表示するページの番号を計算する
         val nextPage = page + 1
 
