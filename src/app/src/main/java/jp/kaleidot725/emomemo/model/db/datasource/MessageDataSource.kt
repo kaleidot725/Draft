@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo.model.db.datasource
 import androidx.paging.PageKeyedDataSource
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
+import kotlinx.coroutines.runBlocking
 
 class MessageDataSource(
     private val memoId: Int,
@@ -19,7 +20,7 @@ class MessageDataSource(
         val perPage = params.requestedLoadSize
 
         // ページに表示するデータを取得する
-        val items = repository.getPage(memoId, page, perPage)
+        val items = runBlocking { repository.getPage(memoId, page, perPage) }
 
         // 次に表示するページの番号を計算する
         val nextPage = page + 1
@@ -36,7 +37,7 @@ class MessageDataSource(
         val perPage = params.requestedLoadSize
 
         // ページに表示するデータを取得する
-        val items = repository.getPage(memoId, page, perPage)
+        val items = runBlocking { repository.getPage(memoId, page, perPage) }
 
         // 次に表示するページの番号を計算する
         val nextPage = page + 1
