@@ -11,10 +11,11 @@ import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
-import jp.kaleidot725.emomemo.ui.memo.AddMemoViewModel
+import jp.kaleidot725.emomemo.ui.memo.AddMemoDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
+import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
@@ -67,7 +68,11 @@ val appModule = module {
     single {
         ObserveMessageCountUseCase(get())
     }
-    
+
+    single {
+        CreateMemoUseCase(get(), get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get())
     }
@@ -81,7 +86,7 @@ val appModule = module {
     }
 
     viewModel {
-        AddMemoViewModel()
+        AddMemoDialogViewModel(get())
     }
 
     viewModel {

@@ -9,15 +9,12 @@ import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentAddMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddMemoDialogFragment : DialogFragment(R.layout.fragment_add_memo) {
     private val navController: NavController get() = findNavController()
     private val binding: FragmentAddMemoBinding by viewBinding()
-    private val mainViewModel: MainViewModel by sharedViewModel()
-    private val addMemoViewModel: AddMemoViewModel by viewModel()
+    private val addMemoDialogViewModel: AddMemoDialogViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,21 +23,7 @@ class AddMemoDialogFragment : DialogFragment(R.layout.fragment_add_memo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mainViewModel = mainViewModel
-        binding.addMemoViewModel = addMemoViewModel
-        addMemoViewModel.event.observe(viewLifecycleOwner, Observer { event ->
-            when (event) {
-                AddMemoViewModel.NavEvent.SUCCESS -> {
-                    mainViewModel.createMemo(addMemoViewModel.title.value ?: "")
-                    navController.popBackStack()
-                }
-                AddMemoViewModel.NavEvent.CANCEL -> {
-                    navController.popBackStack()
-                }
-                else -> {
-                    navController.popBackStack()
-                }
-            }
-        })
+        binding.addMemoDialogViewModel = addMemoDialogViewModel
+        addMemoDialogViewModel.isCompleted.observe(viewLifecycleOwner, Observer { navController.popBackStack() })
     }
 }
