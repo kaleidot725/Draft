@@ -21,9 +21,6 @@ interface NotebookDao {
     @Query("delete from notebook")
     suspend fun deleteAll()
 
-    @Query("select * from notebook ORDER BY notebook.id ASC LIMIT 1")
-    suspend fun first(): NotebookEntity?
-
     @Query("select * from notebook")
     suspend fun getAll(): List<NotebookEntity>
 

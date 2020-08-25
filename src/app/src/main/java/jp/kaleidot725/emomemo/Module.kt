@@ -7,6 +7,7 @@ import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
@@ -45,6 +46,11 @@ val appModule = module {
     }
 
     single {
+        val db: AppDatabase = get()
+        StatusRepository(db.statusDao())
+    }
+
+    single {
         AudioRecognizerRepository()
     }
 
@@ -77,6 +83,6 @@ val appModule = module {
     }
 
     viewModel {
-        MainViewModel(get(), get(), get(), get(), get())
+        MainViewModel(get(), get(), get(), get(), get(), get())
     }
 }

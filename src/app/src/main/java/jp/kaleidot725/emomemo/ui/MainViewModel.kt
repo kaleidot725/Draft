@@ -1,9 +1,12 @@
 package jp.kaleidot725.emomemo.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
@@ -16,74 +19,106 @@ import jp.kaleidot725.emomemo.model.db.datasource.MessageDataSourceFactory
 import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
+import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainViewModel(
     private val memoRepository: MemoRepository,
     private val memoStatusRepository: MemoStatusRepository,
     private val messageRepository: MessageRepository,
     private val notebookRepository: NotebookRepository,
+    private val statusRepository: StatusRepository,
     private val databaseInitializeUsecase: DatabaseInitializeUsecase
 ) : ViewModel() {
-    private var memo: MemoStatusView = ERROR_MEMO
-    private var noteBook: NotebookEntity = ERROR_NOTEBOOK
-
     private val _initialized: LiveEvent<Boolean> = LiveEvent()
     val initialized: LiveData<Boolean> = _initialized
 
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    private val _selectedNotebook: MutableLiveData<NotebookEntity> = MutableLiveData()
-    val selectedNotebook: LiveData<NotebookEntity> = _selectedNotebook
+    private val status: LiveData<StatusEntity> = statusRepository.get()
+    private var selectedNotebookId = ERROR_NOTEBOOK.id
+    private var selectedMemoId = ERROR_MEMO.id
 
-    private val _selectedMemo: MutableLiveData<MemoStatusView> = MutableLiveData()
-    val selectedMemo: LiveData<MemoStatusView> = _selectedMemo
-
-    private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
-    val notebooks: LiveData<List<NotebookEntity>> = _notebooks
-
-    val memos: LiveData<PagedList<MemoStatusView>> = _selectedNotebook.switchMap {
-        val factory = if (it == ERROR_NOTEBOOK) MemoStatusDataNullSourceFactory() else MemoStatusDataSourceFactory(it.id, memoStatusRepository)
-        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
-        LivePagedListBuilder(factory, config).build()
+    val selectedNotebook: LiveData<NotebookEntity> = status.switchMap {
+        liveData(viewModelScope.coroutineContext) {
+            try {
+                emit(notebookRepository.getNoteBook(it.notebookId))
+            } catch (e: Exception) {
+                emit(ERROR_NOTEBOOK)
+            }
+        }
     }
 
-    val messages: LiveData<PagedList<MessageEntity>?> = _selectedMemo.switchMap {
-        val factory = if (it == ERROR_MEMO) MessageDataNullSourceFactory() else MessageDataSourceFactory(it.id, messageRepository)
+    val selectedMemo: LiveData<MemoStatusView> = status.switchMap {
+        liveData {
+            try {
+                emit(memoStatusRepository.getMemoByMemoId(it.memoId))
+            } catch (e: Exception) {
+                emit(ERROR_MEMO)
+            }
+        }
+    }
+
+    private val refreshNotebooks: MutableLiveData<Unit> = MutableLiveData()
+    val notebooks: LiveData<List<NotebookEntity>> = refreshNotebooks.switchMap {
+        liveData(viewModelScope.coroutineContext) {
+            emit(notebookRepository.getAll())
+        }
+    }
+
+    private val refreshMemos: MutableLiveData<Unit> = MutableLiveData()
+    val memos: LiveData<PagedList<MemoStatusView>> = refreshMemos.switchMap {
+        val factory = if (selectedNotebookId == ERROR_NOTEBOOK.id) {
+            MemoStatusDataNullSourceFactory()
+        } else {
+            MemoStatusDataSourceFactory(selectedNotebookId, memoStatusRepository)
+        }
         val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
         LivePagedListBuilder(factory, config).build()
-    }
+    }.distinctUntilChanged()
+
+    private val refreshMessages: MutableLiveData<Unit> = MutableLiveData()
+    val messages: LiveData<PagedList<MessageEntity>?> = refreshMessages.switchMap {
+        val factory = if (selectedMemoId == ERROR_NOTEBOOK.id) {
+            MessageDataNullSourceFactory()
+        } else {
+            MessageDataSourceFactory(selectedMemoId, messageRepository)
+        }
+
+        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+        LivePagedListBuilder(factory, config).build()
+    }.distinctUntilChanged()
 
     val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
         fun getEmptyStatus() {
-            if (loading.value == true) {
-                this.value = EmptyStatus.NO_ERROR
-                return
-            }
-
-            if (notebooks.value.isNullOrEmpty()) {
-                this.value = EmptyStatus.NOTEBOOK
-                return
-            }
-
-            if (memos.value.isNullOrEmpty()) {
-                this.value = EmptyStatus.MEMO
-                return
-            }
-
-            if (messages.value.isNullOrEmpty()) {
-                this.value = EmptyStatus.MESSAGE
-                return
-            }
+//            if (loading.value == true) {
+//                this.value = EmptyStatus.NO_ERROR
+//                return
+//            }
+//
+//            if (notebooks.value.isNullOrEmpty()) {
+//                this.value = EmptyStatus.NOTEBOOK
+//                return
+//            }
+//
+//            if (memos.value.isNullOrEmpty()) {
+//                this.value = EmptyStatus.MEMO
+//                return
+//            }
+//
+//            if (messages.value.isNullOrEmpty()) {
+//                this.value = EmptyStatus.MESSAGE
+//                return
+//            }
 
             this.value = EmptyStatus.NO_ERROR
             return
@@ -95,104 +130,80 @@ class MainViewModel(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             databaseInitializeUsecase.execute()
-            fetchData(true)
-
-            withContext(Dispatchers.Main) {
-                _initialized.value = true
-            }
+            status.observeForever { refresh() }
+            refresh()
+            _initialized.value = true
         }
     }
 
     fun createNotebook(title: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             notebookRepository.insert(NotebookEntity.create(title))
-            fetchData(noteBook.id == ERROR_NOTEBOOK.id)
+            refresh()
         }
     }
 
     fun selectNotebook(notebook: NotebookEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            this@MainViewModel.noteBook = notebook
-            fetchData(false)
+        viewModelScope.launch {
+            statusRepository.update(notebook.id, ERROR_MEMO.id)
         }
     }
 
     fun deleteNotebook(notebook: NotebookEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             notebookRepository.delete(notebook)
-            fetchData(this@MainViewModel.noteBook.id == notebook.id)
+            if (notebook.id == status.value?.notebookId) {
+                statusRepository.update(ERROR_NOTEBOOK.id, ERROR_MEMO.id)
+            }
         }
     }
 
     fun createMemo(title: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            memoRepository.insert(MemoEntity.create(noteBook.id, title))
-            fetchData(false)
+        viewModelScope.launch {
+            memoRepository.insert(MemoEntity.create(selectedNotebookId, title))
+            refresh()
         }
     }
 
     fun selectMemo(memo: MemoStatusView) {
-        viewModelScope.launch(Dispatchers.IO) {
-            this@MainViewModel.memo = memo
-            fetchData(false)
+        viewModelScope.launch {
+            statusRepository.update(selectedNotebookId, memo.id)
         }
     }
 
     fun deleteMemo(memo: MemoEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             memoRepository.delete(memo)
-            fetchData(this@MainViewModel.memo.id == memo.id)
+            if (memo.id == status.value?.memoId) {
+                statusRepository.update(selectedNotebookId, ERROR_MEMO.id)
+            }
         }
     }
 
     fun createMessage(message: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            messageRepository.insert(MessageEntity.create(memo.id, message))
-            fetchData(false)
+        viewModelScope.launch {
+            messageRepository.insert(MessageEntity.create(selectedMemoId, message))
+            refresh()
         }
     }
 
     fun deleteMessage(message: MessageEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             messageRepository.delete(message)
-            fetchData(false)
+            refreshMemos.value = Unit
         }
     }
 
-    private suspend fun fetchData(reselect: Boolean) {
-        viewModelScope.launch {
-            _loading.value = true
-            _notebooks.value = emptyList()
-            _selectedNotebook.value = ERROR_NOTEBOOK
-            _selectedMemo.value = ERROR_MEMO
+    private fun refresh() {
+        selectedNotebookId = status.value?.notebookId ?: ERROR_NOTEBOOK.id
+        selectedMemoId = status.value?.memoId ?: ERROR_MEMO.id
+        Log.v("TAG", "observe note $selectedNotebookId memo $selectedMemoId")
 
-            if (reselect) {
-                this@MainViewModel.noteBook = try {
-                    notebookRepository.first() ?: ERROR_NOTEBOOK
-                } catch (e: Exception) {
-                    ERROR_NOTEBOOK
-                }
-
-                this@MainViewModel.memo = try {
-                    memoStatusRepository.firstByNotebookId(this@MainViewModel.noteBook.id) ?: ERROR_MEMO
-                } catch (e: Exception) {
-                    ERROR_MEMO
-                }
-            }
-
-            val notebooks = try {
-                notebookRepository.getAll()
-            } catch (e: Exception) {
-                emptyList<NotebookEntity>()
-            }
-
-            _notebooks.value = notebooks
-            _selectedNotebook.value = this@MainViewModel.noteBook
-            _selectedMemo.value = this@MainViewModel.memo
-            _loading.value = false
-        }
+        refreshNotebooks.postValue(Unit)
+        refreshMemos.postValue(Unit)
+        refreshMessages.postValue(Unit)
     }
 
     companion object {
