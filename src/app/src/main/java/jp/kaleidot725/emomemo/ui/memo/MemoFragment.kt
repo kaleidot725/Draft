@@ -16,10 +16,8 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
@@ -30,7 +28,6 @@ import permissions.dispatcher.RuntimePermissions
 
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
-    private val mainViewModel: MainViewModel by sharedViewModel()
     private val memoViewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
@@ -39,23 +36,14 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.mainViewModel = mainViewModel
         binding.memoViewModel = memoViewModel
-
         binding.recyclerView.setup()
         binding.voiceButton.setOnClickListener { showRecordAudioWithPermissionCheck() }
-        binding.sendButton.setOnClickListener {
-            mainViewModel.createMessage(memoViewModel.inputMessage.value ?: "")
-            memoViewModel.reset()
-        }
+        binding.sendButton.setOnClickListener { memoViewModel.create() }
 
-        mainViewModel.messages.observe(viewLifecycleOwner, Observer {
+        memoViewModel.messages.observe(viewLifecycleOwner, Observer {
             messageItemRecyclerViewController.submitList(it)
             messageItemRecyclerViewController.requestModelBuild()
-        })
-
-        mainViewModel.selectedMemo.observe(viewLifecycleOwner, Observer {
-            requireActivity().title = it.title
         })
     }
 

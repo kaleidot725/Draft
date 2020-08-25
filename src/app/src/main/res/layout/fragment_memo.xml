@@ -12,10 +12,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="mainViewModel"
-            type="jp.kaleidot725.emomemo.ui.MainViewModel" />
-
-        <variable
             name="memoViewModel"
             type="jp.kaleidot725.emomemo.ui.memo.MemoViewModel" />
     </data>
@@ -37,20 +33,20 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:visibility="@{mainViewModel.loading ? View.VISIBLE : View.INVISIBLE}" />
+                android:visibility="@{memoViewModel.loading ? View.VISIBLE : View.INVISIBLE}" />
 
             <com.airbnb.epoxy.EpoxyRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{mainViewModel.loading ? View.INVISIBLE : View.VISIBLE}" />
+                android:visibility="@{memoViewModel.loading ? View.INVISIBLE : View.VISIBLE}" />
 
+            <!-- TODO 未実装 -->
             <TextView
                 android:id="@+id/empty_message_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{context.getString(EmptyStatusExtKt.getMemoErrorMessage(mainViewModel.emptyStatus))}"
                 android:textSize="20sp"
                 tools:text="TEST TEST TEST" />
         </FrameLayout>

@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.model.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -24,9 +25,9 @@ interface MessageDao {
     @Query("select * from message")
     suspend fun getAll(): List<MessageEntity>
 
-    @Query("select * from message where memoId = :id LIMIT :limit OFFSET :offset")
-    suspend fun getPage(id: Int, offset: Int, limit: Int): List<MessageEntity>
+    @Query("select * from message where memoId = :memoId LIMIT :limit OFFSET :offset")
+    suspend fun getPage(memoId: Int, offset: Int, limit: Int): List<MessageEntity>
 
-    @Query("select * from message where memoId = :id")
-    suspend fun getMessagesByMemoId(id: Int): List<MessageEntity>
+    @Query("select COUNT(*) from message where memoId = :memoId")
+    fun getMessageCount(memoId: Int): LiveData<Int>
 }

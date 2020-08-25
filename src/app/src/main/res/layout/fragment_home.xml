@@ -31,6 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- TODO 未実装 -->
         <TextView
             android:id="@+id/empty_message_text_view"
             android:layout_width="wrap_content"

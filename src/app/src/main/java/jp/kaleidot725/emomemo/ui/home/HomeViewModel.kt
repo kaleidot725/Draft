@@ -47,6 +47,10 @@ class HomeViewModel(
         status.observeForever(statusObserver)
     }
 
+    override fun onCleared() {
+        status.removeObserver(statusObserver)
+    }
+
     fun select(memo: MemoStatusView) {
         viewModelScope.launch {
             statusRepository.update(selectedNotebookId, memo.id)
@@ -58,9 +62,4 @@ class HomeViewModel(
         val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
         return LivePagedListBuilder(factory, config).build()
     }
-
-    override fun onCleared() {
-        status.removeObserver(statusObserver)
-    }
-
 }
