@@ -18,11 +18,13 @@ import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
+import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
+import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -92,9 +94,17 @@ val appModule = module {
     single {
         GetMessageUseCase(get())
     }
-    
+
+    single {
+        GetMemoUseCase(get())
+    }
+
+    single {
+        SelectMemoUseCase(get())
+    }
+
     viewModel {
-        HomeViewModel(get(), get(), get())
+        HomeViewModel(get(), get(), get(), get())
     }
 
     viewModel {

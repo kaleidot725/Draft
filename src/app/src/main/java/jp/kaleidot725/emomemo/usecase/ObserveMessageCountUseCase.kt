@@ -2,6 +2,7 @@ package jp.kaleidot725.emomemo.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.distinctUntilChanged
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 
 class ObserveMessageCountUseCase(
@@ -12,7 +13,7 @@ class ObserveMessageCountUseCase(
 
     fun execute(memoId: Int, block: (Int) -> Unit) {
         observer = Observer { block.invoke(it ?: 0) }
-        liveData = messageRepository.getMessageCount(memoId)
+        liveData = messageRepository.getMessageCount(memoId).distinctUntilChanged()
         liveData?.observeForever(block)
     }
 
