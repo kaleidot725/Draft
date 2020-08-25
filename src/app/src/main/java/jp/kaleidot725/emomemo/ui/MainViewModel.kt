@@ -2,7 +2,6 @@ package jp.kaleidot725.emomemo.ui
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.distinctUntilChanged
@@ -44,7 +43,7 @@ class MainViewModel(
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    private val status: LiveData<StatusEntity> = statusRepository.get()
+    private val status: LiveData<StatusEntity> = statusRepository.getLiveData()
     private var selectedNotebookId = ERROR_NOTEBOOK.id
     private var selectedMemoId = ERROR_MEMO.id
 
@@ -98,37 +97,6 @@ class MainViewModel(
         LivePagedListBuilder(factory, config).build()
     }.distinctUntilChanged()
 
-    val emptyStatus: LiveData<EmptyStatus> = MediatorLiveData<EmptyStatus>().apply {
-        fun getEmptyStatus() {
-//            if (loading.value == true) {
-//                this.value = EmptyStatus.NO_ERROR
-//                return
-//            }
-//
-//            if (notebooks.value.isNullOrEmpty()) {
-//                this.value = EmptyStatus.NOTEBOOK
-//                return
-//            }
-//
-//            if (memos.value.isNullOrEmpty()) {
-//                this.value = EmptyStatus.MEMO
-//                return
-//            }
-//
-//            if (messages.value.isNullOrEmpty()) {
-//                this.value = EmptyStatus.MESSAGE
-//                return
-//            }
-
-            this.value = EmptyStatus.NO_ERROR
-            return
-        }
-
-        addSource(notebooks) { getEmptyStatus() }
-        addSource(memos) { getEmptyStatus() }
-        addSource(messages) { getEmptyStatus() }
-    }
-
     init {
         viewModelScope.launch {
             databaseInitializeUsecase.execute()
@@ -164,12 +132,6 @@ class MainViewModel(
         viewModelScope.launch {
             memoRepository.insert(MemoEntity.create(selectedNotebookId, title))
             refresh()
-        }
-    }
-
-    fun selectMemo(memo: MemoStatusView) {
-        viewModelScope.launch {
-            statusRepository.update(selectedNotebookId, memo.id)
         }
     }
 

@@ -16,9 +16,13 @@ import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
+import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
+import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -70,9 +74,25 @@ val appModule = module {
     }
 
     single {
+        ObserveRecognizedTextUseCase(get())
+    }
+
+    single {
+        ObserveStatusUseCase(get())
+    }
+
+    single {
         CreateMemoUseCase(get(), get())
     }
 
+    single {
+        CreateMessageUseCase(get(), get())
+    }
+
+    single {
+        GetMessageUseCase(get())
+    }
+    
     viewModel {
         HomeViewModel(get(), get(), get())
     }
@@ -90,7 +110,7 @@ val appModule = module {
     }
 
     viewModel {
-        MemoViewModel(get(), get(), get(), get())
+        MemoViewModel(get(), get(), get(), get(), get())
     }
 
     viewModel {

@@ -11,7 +11,7 @@ class ObserveMemoCountUseCase(
     private var observer: Observer<Int>? = null
 
     fun execute(notebookId: Int, block: (Int) -> Unit) {
-        observer = Observer<Int> { block.invoke(it ?: 0) }
+        observer = Observer { block.invoke(it ?: 0) }
         liveData = memoRepository.getMemoCount(notebookId)
         liveData?.observeForever(block)
     }

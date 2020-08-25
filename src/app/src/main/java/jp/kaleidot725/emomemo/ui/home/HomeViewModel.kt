@@ -30,7 +30,7 @@ class HomeViewModel(
     private val _canAddNotebook: MutableLiveData<Boolean> = MutableLiveData(true)
     val canAddNotebook: LiveData<Boolean> = _canAddNotebook
 
-    private val status: LiveData<StatusEntity> = statusRepository.get()
+    private val status: LiveData<StatusEntity> = statusRepository.getLiveData()
     private val statusObserver: Observer<StatusEntity> = Observer { status ->
         observeMemoCountUseCase.dispose()
         observeMemoCountUseCase.execute(status.notebookId) { count.value = it }
