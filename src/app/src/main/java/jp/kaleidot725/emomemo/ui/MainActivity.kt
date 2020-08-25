@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.selectedNotebook.observe(this, Observer { notebook ->
             setupNavDrawer(viewModel.notebooks.value, notebook)
+            this.title = notebook.title
         })
     }
 

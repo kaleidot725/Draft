@@ -16,6 +16,7 @@ import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
+import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -58,8 +59,12 @@ val appModule = module {
         DatabaseInitializeUsecase(get())
     }
 
+    single {
+        ObserveMemoCountUseCase(get())
+    }
+    
     viewModel {
-        HomeViewModel()
+        HomeViewModel(get(), get(), get())
     }
 
     viewModel {
