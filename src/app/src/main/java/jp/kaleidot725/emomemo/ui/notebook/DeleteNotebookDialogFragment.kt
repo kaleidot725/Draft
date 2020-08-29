@@ -11,14 +11,11 @@ import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentDeleteNotebookBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeleteNotebookDialogFragment : DialogFragment(R.layout.fragment_delete_notebook) {
     private val navController: NavController get() = findNavController()
     private val binding: FragmentDeleteNotebookBinding by viewBinding()
-    private val mainViewModel: MainViewModel by sharedViewModel()
     private val deleteNotebookViewModel: DeleteNotebookViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +25,10 @@ class DeleteNotebookDialogFragment : DialogFragment(R.layout.fragment_delete_not
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mainViewModel = mainViewModel
         binding.deleteNotebookViewModel = deleteNotebookViewModel
         binding.notebookSpinner.adapter = createSpinnerAdapter(null)
 
-        deleteNotebookViewModel.notebookTitles.observe(viewLifecycleOwner, Observer {
+        deleteNotebookViewModel.notebook.observe(viewLifecycleOwner, Observer {
             binding.notebookSpinner.adapter = createSpinnerAdapter(it)
             binding.notebookSpinner.onItemSelectedListener = createSpinnerOnItemSelectListener()
         })
@@ -40,7 +36,6 @@ class DeleteNotebookDialogFragment : DialogFragment(R.layout.fragment_delete_not
         deleteNotebookViewModel.event.observe(viewLifecycleOwner, Observer { event ->
             when (event) {
                 is DeleteNotebookViewModel.NavEvent.Success -> {
-                    mainViewModel.deleteNotebook(event.notebook)
                     navController.popBackStack()
                 }
                 is DeleteNotebookViewModel.NavEvent.Cancel -> {
@@ -51,7 +46,6 @@ class DeleteNotebookDialogFragment : DialogFragment(R.layout.fragment_delete_not
                 }
             }
         })
-        deleteNotebookViewModel.fetch()
     }
 
     private fun createSpinnerAdapter(data: List<String>?): ArrayAdapter<String> {

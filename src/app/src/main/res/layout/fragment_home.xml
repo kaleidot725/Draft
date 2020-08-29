@@ -10,10 +10,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="mainViewModel"
-            type="jp.kaleidot725.emomemo.ui.MainViewModel" />
-
-        <variable
             name="homeViewModel"
             type="jp.kaleidot725.emomemo.ui.home.HomeViewModel" />
     </data>
@@ -29,18 +25,18 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:visibility="@{mainViewModel.loading ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{homeViewModel.loading ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- TODO 未実装 -->
         <TextView
             android:id="@+id/empty_message_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{context.getString(EmptyStatusExtKt.getHomeErrorMessage(mainViewModel.emptyStatus))}"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +48,7 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{mainViewModel.loading ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{homeViewModel.loading ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:src="@drawable/ic_create"
-            android:visibility="@{(mainViewModel.emptyStatus != EmptyStatus.NOTEBOOK) ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{homeViewModel.canAddNotebook ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@android:color/white"

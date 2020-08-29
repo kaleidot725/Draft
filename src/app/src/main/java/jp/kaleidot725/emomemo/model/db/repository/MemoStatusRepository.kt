@@ -16,10 +16,6 @@ class MemoStatusRepository(private val dao: MemoStatusDao) {
         return dao.getMemoByMemoId(id)
     }
 
-    suspend fun firstByNotebookId(id: Int): MemoStatusView? {
-        return dao.firstByNotebookId(id)
-    }
-
     suspend fun getMemoListByNotebookId(id: Int): List<MemoStatusView> {
         return dao.getMemoListByNotebookId(id)
     }

@@ -7,14 +7,29 @@ import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
-import jp.kaleidot725.emomemo.ui.memo.AddMemoViewModel
+import jp.kaleidot725.emomemo.ui.memo.AddMemoDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
-import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
+import jp.kaleidot725.emomemo.ui.top.TopViewModel
+import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
+import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
+import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.InitializeDataBaseUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
+import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -45,31 +60,92 @@ val appModule = module {
     }
 
     single {
+        val db: AppDatabase = get()
+        StatusRepository(db.statusDao())
+    }
+
+    single {
         AudioRecognizerRepository()
     }
 
     single {
-        DatabaseInitializeUsecase(get())
+        InitializeDataBaseUseCase(get(), get())
+    }
+
+    single {
+        ObserveMemoCountUseCase(get())
+    }
+
+    single {
+        ObserveMessageCountUseCase(get())
+    }
+
+    single {
+        ObserveRecognizedTextUseCase(get())
+    }
+
+    single {
+        ObserveStatusUseCase(get())
+    }
+
+    single {
+        CreateMemoUseCase(get(), get())
+    }
+
+    single {
+        CreateMessageUseCase(get(), get())
+    }
+
+    single {
+        GetMessageUseCase(get())
+    }
+
+    single {
+        GetMemoUseCase(get())
+    }
+
+    single {
+        SelectMemoUseCase(get())
+    }
+
+    single {
+        CreateNotebookUseCase(get())
+    }
+
+    single {
+        DeleteNotebookUseCase(get())
+    }
+
+    single {
+        GetNotebookUseCase(get())
+    }
+
+    single {
+        SelectNotebookUseCase(get())
     }
 
     viewModel {
-        HomeViewModel()
+        HomeViewModel(get(), get(), get(), get())
     }
 
     viewModel {
-        AddNotebookViewModel()
+        TopViewModel(get())
     }
 
     viewModel {
-        DeleteNotebookViewModel(get())
+        AddNotebookViewModel(get())
     }
 
     viewModel {
-        AddMemoViewModel()
+        DeleteNotebookViewModel(get(), get())
     }
 
     viewModel {
-        MemoViewModel(get())
+        AddMemoDialogViewModel(get())
+    }
+
+    viewModel {
+        MemoViewModel(get(), get(), get(), get(), get())
     }
 
     viewModel {
@@ -77,6 +153,6 @@ val appModule = module {
     }
 
     viewModel {
-        MainViewModel(get(), get(), get(), get(), get())
+        MainViewModel(get(), get(), get())
     }
 }

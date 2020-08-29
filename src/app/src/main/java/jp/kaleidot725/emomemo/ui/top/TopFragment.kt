@@ -9,26 +9,19 @@ import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentTopBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.MainViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TopFragment : Fragment(R.layout.fragment_top) {
     private val navController: NavController get() = findNavController()
-    private val viewModel: MainViewModel by sharedViewModel()
+    private val topViewModel: TopViewModel by viewModel()
     private val binding: FragmentTopBinding by viewBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setup DataBinding
-        binding.viewModel = viewModel
-
-        // Setup View Model
-        viewModel.initialized.observe(viewLifecycleOwner, Observer { isCompleted ->
-            if (isCompleted) {
-                runBlocking { delay(1000L) }
+        binding.viewModel = topViewModel
+        topViewModel.initialized.observe(viewLifecycleOwner, Observer {
+            if (it) {
                 navController.navigate(R.id.action_topFragment_to_homeFragment)
             }
         })
