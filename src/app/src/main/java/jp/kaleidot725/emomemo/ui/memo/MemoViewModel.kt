@@ -41,7 +41,7 @@ class MemoViewModel(
 
         observeStatusUseCase.execute { newStatus ->
             observeMessageCountUseCase.dispose()
-            observeMessageCountUseCase.execute(newStatus.notebookId) { count -> status.value = Pair(newStatus, count) }
+            observeMessageCountUseCase.execute(newStatus.memoId) { count -> status.value = Pair(newStatus, count) }
         }
     }
 
