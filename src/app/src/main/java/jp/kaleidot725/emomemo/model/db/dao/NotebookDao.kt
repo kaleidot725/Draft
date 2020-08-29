@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.model.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -23,6 +24,9 @@ interface NotebookDao {
 
     @Query("select * from notebook")
     suspend fun getAll(): List<NotebookEntity>
+
+    @Query("select * from notebook")
+    fun getAllLiveData(): LiveData<List<NotebookEntity>>
 
     @Query("select * from notebook where id = :id")
     suspend fun getNotebook(id: Int): NotebookEntity

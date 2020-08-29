@@ -67,12 +67,7 @@ class MainViewModel(
         }
     }
 
-    private val refreshNotebooks: MutableLiveData<Unit> = MutableLiveData()
-    val notebooks: LiveData<List<NotebookEntity>> = refreshNotebooks.switchMap {
-        liveData(viewModelScope.coroutineContext) {
-            emit(notebookRepository.getAll())
-        }
-    }
+    val notebooks: LiveData<List<NotebookEntity>> = notebookRepository.getAllLiveData()
 
     private val refreshMemos: MutableLiveData<Unit> = MutableLiveData()
     val memos: LiveData<PagedList<MemoStatusView>> = refreshMemos.switchMap {
@@ -163,7 +158,6 @@ class MainViewModel(
         selectedMemoId = status.value?.memoId ?: ERROR_MEMO.id
         Log.v("TAG", "observe note $selectedNotebookId memo $selectedMemoId")
 
-        refreshNotebooks.postValue(Unit)
         refreshMemos.postValue(Unit)
         refreshMessages.postValue(Unit)
     }

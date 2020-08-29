@@ -1,39 +1,38 @@
 package jp.kaleidot725.emomemo.ui.notebook
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
+import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
 import kotlinx.coroutines.launch
 
-class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository) : ViewModel() {
+class DeleteNotebookViewModel(
+    private val getNotebookUseCase: GetNotebookUseCase,
+    private val deleteNotebookUseCase: DeleteNotebookUseCase
+) :
+    ViewModel() {
     private val _event: LiveEvent<NavEvent> = LiveEvent()
     val event: LiveData<NavEvent> = _event
 
-    private val _notebooks: MutableLiveData<List<NotebookEntity>> = MutableLiveData()
+    private val _notebooks: LiveData<List<NotebookEntity>> = getNotebookUseCase.execute()
+    val notebook: LiveData<List<String>> = _notebooks.map { list -> list.map { note -> note.title } }
     private var selectedNotebook: NotebookEntity? = null
-    val notebookTitles: LiveData<List<String>> = _notebooks.map { notebooks ->
-        notebooks.map { it.title }
-    }
-
-    fun fetch() {
-        viewModelScope.launch {
-            _notebooks.value = notebookRepository.getAll()
-        }
-    }
 
     fun success() {
-        if (selectedNotebook != null) {
-            _event.postValue(NavEvent.Success(selectedNotebook!!))
+        viewModelScope.launch {
+            if (selectedNotebook != null) {
+                deleteNotebookUseCase.execute(selectedNotebook!!)
+                _event.value = NavEvent.Success
+            }
         }
     }
 
     fun cancel() {
-        _event.postValue(NavEvent.Cancel)
+        _event.value = NavEvent.Cancel
     }
 
     fun onNotebookSelected(position: Int) {
@@ -41,7 +40,7 @@ class DeleteNotebookViewModel(private val notebookRepository: NotebookRepository
     }
 
     sealed class NavEvent {
-        data class Success(val notebook: NotebookEntity) : NavEvent()
+        object Success : NavEvent()
         object Cancel : NavEvent()
     }
 }

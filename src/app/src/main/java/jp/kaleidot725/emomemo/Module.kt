@@ -19,8 +19,10 @@ import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
+import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
+import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
@@ -108,6 +110,14 @@ val appModule = module {
         CreateNotebookUseCase(get())
     }
 
+    single {
+        DeleteNotebookUseCase(get())
+    }
+
+    single {
+        GetNotebookUseCase(get())
+    }
+    
     viewModel {
         HomeViewModel(get(), get(), get(), get())
     }
@@ -117,7 +127,7 @@ val appModule = module {
     }
 
     viewModel {
-        DeleteNotebookViewModel(get())
+        DeleteNotebookViewModel(get(), get())
     }
 
     viewModel {

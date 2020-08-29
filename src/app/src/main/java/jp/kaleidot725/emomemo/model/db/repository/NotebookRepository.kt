@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.model.db.repository
 
+import androidx.lifecycle.LiveData
 import jp.kaleidot725.emomemo.model.db.dao.NotebookDao
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 
@@ -22,6 +23,10 @@ class NotebookRepository(private val dao: NotebookDao) {
 
     suspend fun getAll(): List<NotebookEntity> {
         return dao.getAll()
+    }
+
+    fun getAllLiveData(): LiveData<List<NotebookEntity>> {
+        return dao.getAllLiveData()
     }
 
     suspend fun getNoteBook(id: Int): NotebookEntity {
