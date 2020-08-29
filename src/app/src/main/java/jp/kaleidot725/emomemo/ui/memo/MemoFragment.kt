@@ -16,7 +16,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.common.controller.epoxy.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
