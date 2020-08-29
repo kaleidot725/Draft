@@ -13,7 +13,7 @@ interface StatusDao {
     suspend fun insert(statusEntity: StatusEntity)
 
     @Query("select * from status where id = :id")
-    suspend fun get(id: Int): StatusEntity
+    suspend fun get(id: Int): StatusEntity?
 
     @Query("select * from status where id = :id")
     fun getLiveData(id: Int): LiveData<StatusEntity>

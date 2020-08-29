@@ -9,7 +9,7 @@ class CreateMessageUseCase(
     private val messageRepository: MessageRepository
 ) {
     suspend fun execute(title: String) {
-        val status = statusRepository.get()
+        val status = statusRepository.get() ?: return
         messageRepository.insert(MessageEntity.create(status.memoId, title))
     }
 }

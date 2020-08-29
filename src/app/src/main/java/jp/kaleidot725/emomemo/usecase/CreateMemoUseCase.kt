@@ -9,7 +9,7 @@ class CreateMemoUseCase(
     private val memoRepository: MemoRepository
 ) {
     suspend fun execute(title: String) {
-        val status = statusRepository.get()
+        val status = statusRepository.get() ?: return
         memoRepository.insert(MemoEntity.create(status.notebookId, title))
     }
 }

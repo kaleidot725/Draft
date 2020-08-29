@@ -9,7 +9,7 @@ class StatusRepository(private val dao: StatusDao) {
         dao.insert(StatusEntity(DEFAULT_ID, notebookId, memoID))
     }
 
-    suspend fun get(): StatusEntity {
+    suspend fun get(): StatusEntity? {
         return dao.get(DEFAULT_ID)
     }
 

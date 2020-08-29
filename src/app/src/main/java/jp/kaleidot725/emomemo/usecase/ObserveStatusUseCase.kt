@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.usecase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.distinctUntilChanged
@@ -13,7 +14,15 @@ class ObserveStatusUseCase(
     private var observer: Observer<StatusEntity>? = null
 
     fun execute(block: (StatusEntity) -> Unit) {
-        observer = Observer { block.invoke(it ?: StatusEntity(0, 0, 0)) }
+        observer = Observer {
+            try {
+                block.invoke(it ?: StatusEntity(0, 0, 0))
+
+            } catch (e: Exception) {
+                // FIXME
+                Log.w("ObserveStatusUseCase", e.toString())
+            }
+        }
         liveData = statusRepository.getLiveData().distinctUntilChanged()
         liveData?.observeForever(block)
     }
