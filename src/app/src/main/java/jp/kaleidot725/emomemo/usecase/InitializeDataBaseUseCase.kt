@@ -4,7 +4,7 @@ import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 
-class DatabaseInitializeUsecase(
+class InitializeDataBaseUseCase(
     private val statusRepository: StatusRepository,
     private val notebookRepository: NotebookRepository
 ) {

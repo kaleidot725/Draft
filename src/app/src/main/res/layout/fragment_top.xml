@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="jp.kaleidot725.emomemo.ui.MainViewModel" />
+            type="jp.kaleidot725.emomemo.ui.top.TopViewModel" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

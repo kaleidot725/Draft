@@ -15,14 +15,15 @@ import jp.kaleidot725.emomemo.ui.memo.AddMemoDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
+import jp.kaleidot725.emomemo.ui.top.TopViewModel
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.InitializeDataBaseUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
@@ -67,7 +68,7 @@ val appModule = module {
     }
 
     single {
-        DatabaseInitializeUsecase(get(), get())
+        InitializeDataBaseUseCase(get(), get())
     }
 
     single {
@@ -117,11 +118,15 @@ val appModule = module {
     single {
         GetNotebookUseCase(get())
     }
-    
+
     viewModel {
         HomeViewModel(get(), get(), get(), get())
     }
 
+    viewModel {
+        TopViewModel(get())
+    }
+    
     viewModel {
         AddNotebookViewModel(get())
     }

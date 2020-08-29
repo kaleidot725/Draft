@@ -25,7 +25,7 @@ import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.DatabaseInitializeUsecase
+import jp.kaleidot725.emomemo.usecase.InitializeDataBaseUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,7 @@ class MainViewModel(
     private val messageRepository: MessageRepository,
     private val notebookRepository: NotebookRepository,
     private val statusRepository: StatusRepository,
-    private val databaseInitializeUsecase: DatabaseInitializeUsecase
+    private val initializeDataBaseUseCase: InitializeDataBaseUseCase
 ) : ViewModel() {
     private val _initialized: LiveEvent<Boolean> = LiveEvent()
     val initialized: LiveData<Boolean> = _initialized
@@ -94,7 +94,7 @@ class MainViewModel(
 
     init {
         viewModelScope.launch {
-            databaseInitializeUsecase.execute()
+            initializeDataBaseUseCase.execute()
             status.observeForever { refresh() }
             refresh()
             _initialized.value = true
