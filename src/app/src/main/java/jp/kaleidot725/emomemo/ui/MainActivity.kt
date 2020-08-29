@@ -61,10 +61,6 @@ class MainActivity : AppCompatActivity() {
             setupNavDrawer(viewModel.notebooks.value, notebook)
             this.title = notebook.title
         })
-
-        viewModel.selectedMemo.observe(this, Observer { memo ->
-            this.title = memo.title
-        })
     }
 
     private fun setupNavController() {

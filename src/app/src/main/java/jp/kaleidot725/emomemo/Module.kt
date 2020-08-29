@@ -29,6 +29,7 @@ import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -119,6 +120,10 @@ val appModule = module {
         GetNotebookUseCase(get())
     }
 
+    single {
+        SelectNotebookUseCase(get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get())
     }
@@ -126,7 +131,7 @@ val appModule = module {
     viewModel {
         TopViewModel(get())
     }
-    
+
     viewModel {
         AddNotebookViewModel(get())
     }
@@ -148,6 +153,6 @@ val appModule = module {
     }
 
     viewModel {
-        MainViewModel(get(), get(), get(), get(), get(), get())
+        MainViewModel(get(), get(), get())
     }
 }
