@@ -35,7 +35,6 @@ class HomeViewModel(
     init {
         observeStatusUseCase.execute { newStatus ->
             newStatus ?: return@execute
-            
             observeMemoCountUseCase.dispose()
             observeMemoCountUseCase.execute(newStatus.notebookId) { count ->
                 status.value = Pair(newStatus, count)

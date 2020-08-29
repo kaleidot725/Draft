@@ -11,5 +11,4 @@ class SelectNotebookUseCase(
     suspend fun execute(notebookId: Int) {
         statusRepository.update(notebookId, StatusEntity.UNSELECTED_NOTEBOOK)
     }
-
 }
