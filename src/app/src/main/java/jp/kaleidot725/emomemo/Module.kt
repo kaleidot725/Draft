@@ -109,7 +109,7 @@ val appModule = module {
     }
 
     single {
-        CreateNotebookUseCase(get())
+        CreateNotebookUseCase(get(), get())
     }
 
     single {
@@ -121,7 +121,7 @@ val appModule = module {
     }
 
     single {
-        SelectNotebookUseCase(get())
+        SelectNotebookUseCase(get(), get())
     }
 
     viewModel {

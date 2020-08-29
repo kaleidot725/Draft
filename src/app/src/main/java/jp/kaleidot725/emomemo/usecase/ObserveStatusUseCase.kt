@@ -10,13 +10,13 @@ import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 class ObserveStatusUseCase(
     private val statusRepository: StatusRepository
 ) {
-    private var liveData: LiveData<StatusEntity>? = null
-    private var observer: Observer<StatusEntity>? = null
+    private var liveData: LiveData<StatusEntity?>? = null
+    private var observer: Observer<StatusEntity?>? = null
 
-    fun execute(block: (StatusEntity) -> Unit) {
+    fun execute(block: (StatusEntity?) -> Unit) {
         observer = Observer {
             try {
-                block.invoke(it ?: StatusEntity(0, 0, 0))
+                block.invoke(it ?: StatusEntity())
             } catch (e: Exception) {
                 // FIXME
                 Log.w("ObserveStatusUseCase", e.toString())

@@ -13,7 +13,7 @@ class StatusRepository(private val dao: StatusDao) {
         return dao.get(DEFAULT_ID)
     }
 
-    fun getLiveData(): LiveData<StatusEntity> {
+    fun getLiveData(): LiveData<StatusEntity?> {
         return dao.getLiveData(DEFAULT_ID)
     }
 

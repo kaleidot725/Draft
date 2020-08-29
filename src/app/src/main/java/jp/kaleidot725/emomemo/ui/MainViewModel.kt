@@ -37,7 +37,8 @@ class MainViewModel(
         }
     }
 
-    private fun updateSelectedNotebook(status: StatusEntity) {
+    private fun updateSelectedNotebook(status: StatusEntity?) {
+        status ?: return
         viewModelScope.launch {
             _selectedNotebook.value = getNotebookUseCase.execute(status.notebookId)
         }
