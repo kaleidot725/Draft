@@ -17,7 +17,6 @@ class ObserveStatusUseCase(
         observer = Observer {
             try {
                 block.invoke(it ?: StatusEntity(0, 0, 0))
-
             } catch (e: Exception) {
                 // FIXME
                 Log.w("ObserveStatusUseCase", e.toString())

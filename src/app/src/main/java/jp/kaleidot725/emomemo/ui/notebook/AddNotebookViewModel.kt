@@ -21,7 +21,6 @@ class AddNotebookViewModel(private val createNotebookUseCase: CreateNotebookUseC
                 _event.postValue(NavEvent.SUCCESS)
             }
         }
-
     }
 
     fun cancel() {

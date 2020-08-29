@@ -3,10 +3,7 @@ package jp.kaleidot725.emomemo.usecase
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.OnChangedRecognizedTextListener
 
-
-class ObserveRecognizedTextUseCase(
-    private val audioRecognizerRepository: AudioRecognizerRepository
-) {
+class ObserveRecognizedTextUseCase(private val audioRecognizerRepository: AudioRecognizerRepository) {
     private var listener: OnChangedRecognizedTextListener? = null
 
     fun execute(block: (String) -> Unit) {
