@@ -1,4 +1,5 @@
 # EMOMEMO
+![CI](https://github.com/kaleidot725/emomemo/workflows/CI/badge.svg)
 
 EMOMEMO is simple notebook app for Android.
 
