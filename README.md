@@ -1,5 +1,6 @@
 # EMOMEMO
-![CI](https://github.com/kaleidot725/emomemo/workflows/CI/badge.svg)
+
+![CI](https://github.com/kaleidot725/emomemo/workflows/CI/badge.svg?event=check_run)
 
 EMOMEMO is simple notebook app for Android.
 
