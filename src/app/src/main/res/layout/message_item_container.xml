@@ -17,8 +17,8 @@
             type="String" />
 
         <variable
-            name="onClickListener"
-            type="View.OnClickListener" />
+            name="onLongClickListener"
+            type="View.OnLongClickListener" />
     </data>
 
     <LinearLayout
@@ -27,7 +27,7 @@
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="8dp"
-        app:setOnClickListener="@{onClickListener}">
+        app:setOnLongClickListener="@{onLongClickListener}">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time_text_view"
@@ -43,10 +43,10 @@
             android:id="@+id/title_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="all"
             android:text="@{title}"
             android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:autoLink="all"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

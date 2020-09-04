@@ -19,6 +19,10 @@
         <variable
             name="onClickListener"
             type="View.OnClickListener" />
+
+        <variable
+            name="onLongClickListener"
+            type="View.OnLongClickListener" />
     </data>
 
     <LinearLayout
@@ -27,7 +31,8 @@
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="8dp"
-        app:setOnClickListener="@{onClickListener}">
+        app:setOnClickListener="@{onClickListener}"
+        app:setOnLongClickListener="@{onLongClickListener}">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title_text_view"

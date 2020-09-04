@@ -7,6 +7,8 @@
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:textColorSecondary">@color/darkSecondaryTextColor</item>
         <item name="colorControlNormal">@android:color/white</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionModeBackground">@color/primaryColor</item>
     </style>
 
     <style name="DialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">

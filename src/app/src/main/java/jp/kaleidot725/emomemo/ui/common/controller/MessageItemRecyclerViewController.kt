@@ -7,8 +7,10 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MessageItemContainerBindingModel_
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 
+typealias OnLongTapMessage = (item: MessageEntity) -> Unit
+
 class MessageItemRecyclerViewController(
-    private val selectListener: SelectListener? = null
+    private val OnLongTapMessage: OnLongTapMessage? = null
 ) : PagedListEpoxyController<MessageEntity>() {
 
     override fun buildItemModel(currentPosition: Int, item: MessageEntity?): EpoxyModel<*> {
@@ -17,7 +19,10 @@ class MessageItemRecyclerViewController(
                 id(item.time)
                 time(DateFormat.format("yyyy/MM/dd aa hh:mm:ss", item.time).toString())
                 title(item.value)
-                onClickListener(View.OnClickListener { selectListener?.onSelected(item) })
+                onLongClickListener(View.OnLongClickListener {
+                    OnLongTapMessage?.invoke(item)
+                    true
+                })
             }
         } else {
             MessageItemContainerBindingModel_()
@@ -25,6 +30,3 @@ class MessageItemRecyclerViewController(
     }
 }
 
-interface SelectListener {
-    fun onSelected(item: MessageEntity)
-}

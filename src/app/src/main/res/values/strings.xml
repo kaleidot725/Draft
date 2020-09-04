@@ -2,6 +2,7 @@
     <string name="app_name">EmoMemo</string>
     <string name="top_title">EmoMemo</string>
     <string name="empty" />
+    <string name="delete">削除</string>
 
     <!-- SettingFragment-->
     <string name="setting_fragment_title">設定</string>
@@ -49,7 +50,4 @@
     <string name="navigation_drawer_item_add_notebook">ノートブックを追加する</string>
     <string name="navigation_drawer_item_remove_notebook">ノートブックを削除する</string>
     <string name="navigation_drawer_sub_menu_notebooks">一覧</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="setting_fragment_text">GOOD FRAGMNET</string>
 </resources>
