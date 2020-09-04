@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.ui.common.controller.epoxy
+package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.text.format.DateFormat
 import android.view.View
