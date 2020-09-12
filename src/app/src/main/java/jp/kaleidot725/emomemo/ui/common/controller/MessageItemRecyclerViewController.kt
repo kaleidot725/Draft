@@ -19,6 +19,7 @@ class MessageItemRecyclerViewController(
                 id(item.time)
                 time(DateFormat.format("yyyy/MM/dd aa hh:mm:ss", item.time).toString())
                 title(item.value)
+                selected(true)
                 onLongClickListener(View.OnLongClickListener {
                     OnLongTapMessage?.invoke(item)
                     true

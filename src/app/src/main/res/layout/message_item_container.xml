@@ -17,6 +17,10 @@
             type="String" />
 
         <variable
+            name="selected"
+            type="Boolean" />
+
+        <variable
             name="onLongClickListener"
             type="View.OnLongClickListener" />
     </data>
@@ -24,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="@{selected ? @color/selected : @android:color/white}"
         android:orientation="vertical"
         android:padding="8dp"
         app:setOnLongClickListener="@{onLongClickListener}">
