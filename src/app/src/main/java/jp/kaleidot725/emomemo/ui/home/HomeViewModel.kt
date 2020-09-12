@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
+import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
@@ -19,7 +22,8 @@ class HomeViewModel(
     private val observeStatusUseCase: ObserveStatusUseCase,
     private val observeMemoCountUseCase: ObserveMemoCountUseCase,
     private val getMemoUseCase: GetMemoUseCase,
-    private val selectMemoUseCase: SelectMemoUseCase
+    private val selectMemoUseCase: SelectMemoUseCase,
+    private val deleteMemoUseCase: DeleteMemosUseCase
 ) : ViewModel() {
     // TODO 未実装
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -32,26 +36,102 @@ class HomeViewModel(
     private val status: MutableLiveData<Pair<StatusEntity, Int>> = MutableLiveData()
     val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.first.notebookId) }.distinctUntilChanged()
 
+    private val selectedSet: MutableSet<MemoStatusView> = mutableSetOf()
+    private val onSelected: MutableLiveData<Unit> = MutableLiveData()
+    val selected: LiveData<Set<MemoStatusView>> = onSelected.map { selectedSet }
+
+    private val _actionEvent: LiveEvent<ActionEvent> = LiveEvent<ActionEvent>().apply { value = ActionEvent.OFF }
+    val actionEvent: LiveData<ActionEvent> = _actionEvent
+
+    private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
+    val navEvent: LiveData<NavEvent> = _navEvent
+
     init {
         observeStatusUseCase.execute { newStatus ->
             newStatus ?: return@execute
             observeMemoCountUseCase.dispose()
             observeMemoCountUseCase.execute(newStatus.notebookId) { count ->
                 status.value = Pair(newStatus, count)
+                cancelAction()
             }
         }
     }
 
-    fun select(memo: MemoStatusView) {
-        viewModelScope.launch {
-            selectMemoUseCase.execute(memo.id)
-        }
+    fun startAction(memo: MemoStatusView) {
+        updateSelectedMemoForAction(memo)
     }
 
-    fun action() {}
+    fun deleteAction() {
+        deleteSelectedMemos()
+    }
+
+    fun cancelAction() {
+        clearSelectedMemos()
+    }
+
+    fun select(memo: MemoStatusView) {
+        when (actionEvent.value) {
+            ActionEvent.ON -> updateSelectedMemoForAction(memo)
+            ActionEvent.OFF -> navigateMemoDetails(memo)
+        }
+    }
 
     override fun onCleared() {
         observeStatusUseCase.dispose()
         observeMemoCountUseCase.dispose()
+    }
+
+    private fun navigateMemoDetails(memo: MemoStatusView) {
+        viewModelScope.launch {
+            selectMemoUseCase.execute(memo.id)
+            notifyActionEvent(ActionEvent.OFF)
+            notifyNavEvent(NavEvent.NAVIGATE_MEMO)
+        }
+    }
+
+    private fun updateSelectedMemoForAction(memo: MemoStatusView) {
+        viewModelScope.launch {
+            if (selectedSet.contains(memo)) selectedSet.remove(memo) else selectedSet.add(memo)
+            notifyActionEvent(ActionEvent.ON)
+            notifyChangedSelectedMemos()
+        }
+    }
+
+    private fun deleteSelectedMemos() {
+        viewModelScope.launch {
+            deleteMemoUseCase.execute(selectedSet.toList())
+            notifyActionEvent(ActionEvent.OFF)
+        }
+    }
+
+    private fun clearSelectedMemos() {
+        viewModelScope.launch {
+            selectedSet.clear()
+            notifyChangedSelectedMemos()
+            notifyActionEvent(ActionEvent.OFF)
+        }
+    }
+
+    private fun notifyChangedSelectedMemos() {
+        onSelected.value = Unit
+    }
+
+    private fun notifyNavEvent(event: NavEvent) {
+        _navEvent.value = event
+    }
+
+    private fun notifyActionEvent(event: ActionEvent) {
+        if (_actionEvent.value != event) {
+            _actionEvent.value = event
+        }
+    }
+
+    enum class ActionEvent {
+        OFF,
+        ON
+    }
+
+    enum class NavEvent {
+        NAVIGATE_MEMO
     }
 }

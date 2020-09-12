@@ -39,11 +39,16 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        actionModeController = ActionModeController(R.menu.memo_action_menu, ActionMode.TYPE_PRIMARY) {
-            if (it.itemId == R.id.delete) {
-                memoViewModel.action()
-            }
-        }
+        actionModeController = ActionModeController(
+            R.menu.memo_action_menu,
+            ActionMode.TYPE_PRIMARY,
+            onAction = {
+                if (it.itemId == R.id.delete) {
+                    memoViewModel.action()
+                }
+            },
+            onDestroy = {}
+        )
 
         messageItemRecyclerViewController = MessageItemRecyclerViewController {
             actionModeController.startActionMode(binding.recyclerView)
