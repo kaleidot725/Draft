@@ -1,6 +1,7 @@
 package jp.kaleidot725.emomemo.ui.home
 
 import android.os.Bundle
+import android.view.ActionMode
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,8 +13,8 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.ui.common.controller.epoxy.MemoItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
+import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -21,6 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
     private lateinit var epoxyController: MemoItemRecyclerViewController
+    private lateinit var actionModeController: ActionModeController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,14 +45,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun EpoxyRecyclerView.setup() {
-        val listener = object : MemoItemRecyclerViewController.SelectListener {
-            override fun onSelected(item: MemoStatusView) {
-                viewModel.select(item)
-                navigateMemoFragment()
+        actionModeController = ActionModeController(R.menu.memo_action_menu, ActionMode.TYPE_PRIMARY) {
+            if (it.itemId == R.id.delete) {
+                viewModel.action()
             }
         }
 
-        epoxyController = MemoItemRecyclerViewController(listener)
+        epoxyController = MemoItemRecyclerViewController(
+            onClickMemo = { item ->
+                viewModel.select(item)
+                navigateMemoFragment()
+            },
+            onLongTapMemo = {
+                actionModeController.startActionMode(requireActivity())
+            })
+
         this.setController(epoxyController)
 
         val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)

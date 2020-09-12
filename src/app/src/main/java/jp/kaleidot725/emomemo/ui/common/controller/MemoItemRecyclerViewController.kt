@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.ui.common.controller.epoxy
+package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.text.format.DateFormat
 import android.view.View
@@ -7,8 +7,12 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MemoItemContainerBindingModel_
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 
+typealias OnClickMemo = (item: MemoStatusView) -> Unit
+typealias OnLongTapMemo = (item: MemoStatusView) -> Unit
+
 class MemoItemRecyclerViewController(
-    private val selectListener: SelectListener? = null
+    private val onClickMemo: OnClickMemo? = null,
+    private val onLongTapMemo: OnLongTapMemo? = null
 ) : PagedListEpoxyController<MemoStatusView>() {
 
     override fun buildItemModel(currentPosition: Int, item: MemoStatusView?): EpoxyModel<*> {
@@ -17,7 +21,11 @@ class MemoItemRecyclerViewController(
                 id(item.id)
                 title(item.title)
                 detail(getDetailString(item))
-                onClickListener(View.OnClickListener { selectListener?.onSelected(item) })
+                onClickListener(View.OnClickListener { onClickMemo?.invoke(item) })
+                onLongClickListener(View.OnLongClickListener {
+                    onLongTapMemo?.invoke(item)
+                    true
+                })
             }
         } else {
             MemoItemContainerBindingModel_()
@@ -34,9 +42,5 @@ class MemoItemRecyclerViewController(
 
     private fun getLatestMessage(message: String?): String {
         return message ?: "No Message"
-    }
-
-    interface SelectListener {
-        fun onSelected(item: MemoStatusView)
     }
 }

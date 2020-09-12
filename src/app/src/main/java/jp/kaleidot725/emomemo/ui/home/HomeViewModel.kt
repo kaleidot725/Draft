@@ -48,6 +48,8 @@ class HomeViewModel(
         }
     }
 
+    fun action() {}
+
     override fun onCleared() {
         observeStatusUseCase.dispose()
         observeMemoCountUseCase.dispose()

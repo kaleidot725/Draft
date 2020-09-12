@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
+import android.view.ActionMode
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -16,7 +17,8 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.ui.common.controller.epoxy.MessageItemRecyclerViewController
+import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
+import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
@@ -32,12 +34,23 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
     private lateinit var messageItemRecyclerViewController: MessageItemRecyclerViewController
+    private lateinit var actionModeController: ActionModeController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        actionModeController = ActionModeController(R.menu.memo_action_menu, ActionMode.TYPE_PRIMARY) {
+            if (it.itemId == R.id.delete) {
+                memoViewModel.action()
+            }
+        }
+
+        messageItemRecyclerViewController = MessageItemRecyclerViewController {
+            actionModeController.startActionMode(binding.recyclerView)
+        }
+
         binding.memoViewModel = memoViewModel
-        binding.recyclerView.setup()
+        binding.recyclerView.setup(messageItemRecyclerViewController)
         binding.voiceButton.setOnClickListener { showRecordAudioWithPermissionCheck() }
         binding.sendButton.setOnClickListener { memoViewModel.create() }
 
@@ -81,13 +94,11 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
     }
 
-    private fun EpoxyRecyclerView.setup() {
-        messageItemRecyclerViewController = MessageItemRecyclerViewController()
-
+    private fun EpoxyRecyclerView.setup(controller: MessageItemRecyclerViewController) {
         val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
 
-        this.adapter = messageItemRecyclerViewController.adapter
+        this.setController(controller)
         this.addItemDecoration(decoration)
     }
 }
