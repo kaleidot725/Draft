@@ -21,6 +21,10 @@
             type="Boolean" />
 
         <variable
+            name="onClickListener"
+            type="View.OnClickListener" />
+
+        <variable
             name="onLongClickListener"
             type="View.OnLongClickListener" />
     </data>
@@ -31,6 +35,7 @@
         android:background="@{selected ? @color/selected : @android:color/white}"
         android:orientation="vertical"
         android:padding="8dp"
+        app:setOnClickListener="@{onClickListener}"
         app:setOnLongClickListener="@{onLongClickListener}">
 
         <com.google.android.material.textview.MaterialTextView

@@ -23,7 +23,9 @@ class MemoItemRecyclerViewController(
                 title(item.title)
                 detail(getDetailString(item))
                 selected(selected.contains(item))
-                onClickListener(View.OnClickListener { onClickMemo?.invoke(item) })
+                onClickListener(View.OnClickListener {
+                    onClickMemo?.invoke(item)
+                })
                 onLongClickListener(View.OnLongClickListener {
                     onLongTapMemo?.invoke(item)
                     true

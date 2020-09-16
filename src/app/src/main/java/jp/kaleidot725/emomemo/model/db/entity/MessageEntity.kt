@@ -2,11 +2,11 @@ package jp.kaleidot725.emomemo.model.db.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import java.util.Date
 
 @Entity(
     tableName = "message",
-    primaryKeys = ["memoId", "time"],
     foreignKeys = [ForeignKey(
         entity = MemoEntity::class,
         parentColumns = arrayOf("id"),
@@ -15,13 +15,15 @@ import java.util.Date
     )]
 )
 data class MessageEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val memoId: Int,
     val time: Long,
     val value: String
 ) {
     companion object {
         fun create(memoId: Int, value: String): MessageEntity {
-            return MessageEntity(memoId, Date().time, value)
+            return MessageEntity(0, memoId, Date().time, value)
         }
     }
 }

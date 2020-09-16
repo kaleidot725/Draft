@@ -14,6 +14,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,10 +44,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             epoxyController.requestForcedModelBuild()
         })
 
-        viewModel.actionEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.actionMode.observe(viewLifecycleOwner, Observer {
             when (it) {
-                HomeViewModel.ActionEvent.ON -> actionModeController.startActionMode(requireActivity())
-                HomeViewModel.ActionEvent.OFF -> actionModeController.cancelActionMode()
+                ActionModeEvent.ON -> actionModeController.startActionMode(requireActivity())
+                ActionModeEvent.OFF -> actionModeController.cancelActionMode()
                 else -> Log.w("HomeFragment", "invalid actionEvent")
             }
         })

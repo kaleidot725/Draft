@@ -11,6 +11,7 @@ import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
@@ -40,8 +41,8 @@ class HomeViewModel(
     private val onSelected: MutableLiveData<Unit> = MutableLiveData()
     val selected: LiveData<Set<MemoStatusView>> = onSelected.map { selectedSet }
 
-    private val _actionEvent: LiveEvent<ActionEvent> = LiveEvent<ActionEvent>().apply { value = ActionEvent.OFF }
-    val actionEvent: LiveData<ActionEvent> = _actionEvent
+    private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
+    val actionMode: LiveData<ActionModeEvent> = _actionMode
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
@@ -70,9 +71,9 @@ class HomeViewModel(
     }
 
     fun select(memo: MemoStatusView) {
-        when (actionEvent.value) {
-            ActionEvent.ON -> updateSelectedMemoForAction(memo)
-            ActionEvent.OFF -> navigateMemoDetails(memo)
+        when (actionMode.value) {
+            ActionModeEvent.ON -> updateSelectedMemoForAction(memo)
+            ActionModeEvent.OFF -> navigateMemoDetails(memo)
         }
     }
 
@@ -84,7 +85,7 @@ class HomeViewModel(
     private fun navigateMemoDetails(memo: MemoStatusView) {
         viewModelScope.launch {
             selectMemoUseCase.execute(memo.id)
-            notifyActionEvent(ActionEvent.OFF)
+            notifyActionEvent(ActionModeEvent.OFF)
             notifyNavEvent(NavEvent.NAVIGATE_MEMO)
         }
     }
@@ -92,7 +93,7 @@ class HomeViewModel(
     private fun updateSelectedMemoForAction(memo: MemoStatusView) {
         viewModelScope.launch {
             if (selectedSet.contains(memo)) selectedSet.remove(memo) else selectedSet.add(memo)
-            notifyActionEvent(ActionEvent.ON)
+            notifyActionEvent(ActionModeEvent.ON)
             notifyChangedSelectedMemos()
         }
     }
@@ -100,7 +101,7 @@ class HomeViewModel(
     private fun deleteSelectedMemos() {
         viewModelScope.launch {
             deleteMemoUseCase.execute(selectedSet.toList())
-            notifyActionEvent(ActionEvent.OFF)
+            notifyActionEvent(ActionModeEvent.OFF)
         }
     }
 
@@ -108,7 +109,7 @@ class HomeViewModel(
         viewModelScope.launch {
             selectedSet.clear()
             notifyChangedSelectedMemos()
-            notifyActionEvent(ActionEvent.OFF)
+            notifyActionEvent(ActionModeEvent.OFF)
         }
     }
 
@@ -120,15 +121,10 @@ class HomeViewModel(
         _navEvent.value = event
     }
 
-    private fun notifyActionEvent(event: ActionEvent) {
-        if (_actionEvent.value != event) {
-            _actionEvent.value = event
+    private fun notifyActionEvent(event: ActionModeEvent) {
+        if (_actionMode.value != event) {
+            _actionMode.value = event
         }
-    }
-
-    enum class ActionEvent {
-        OFF,
-        ON
     }
 
     enum class NavEvent {
