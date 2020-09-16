@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.ActionMode
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +18,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
@@ -30,33 +32,36 @@ import permissions.dispatcher.RuntimePermissions
 
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
-    private val memoViewModel: MemoViewModel by viewModel()
+    private val viewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
-    private lateinit var messageItemRecyclerViewController: MessageItemRecyclerViewController
+    private lateinit var epoxyController: MessageItemRecyclerViewController
     private lateinit var actionModeController: ActionModeController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        actionModeController = ActionModeController(R.menu.memo_action_menu, ActionMode.TYPE_PRIMARY) {
-            if (it.itemId == R.id.delete) {
-                memoViewModel.action()
-            }
-        }
-
-        messageItemRecyclerViewController = MessageItemRecyclerViewController {
-            actionModeController.startActionMode(binding.recyclerView)
-        }
-
-        binding.memoViewModel = memoViewModel
-        binding.recyclerView.setup(messageItemRecyclerViewController)
+        binding.memoViewModel = viewModel
+        binding.recyclerView.setup()
         binding.voiceButton.setOnClickListener { showRecordAudioWithPermissionCheck() }
-        binding.sendButton.setOnClickListener { memoViewModel.create() }
+        binding.sendButton.setOnClickListener { viewModel.create() }
 
-        memoViewModel.messages.observe(viewLifecycleOwner, Observer {
-            messageItemRecyclerViewController.submitList(it)
-            messageItemRecyclerViewController.requestModelBuild()
+        viewModel.messages.observe(viewLifecycleOwner, Observer {
+            epoxyController.submitList(it)
+            epoxyController.requestModelBuild()
+        })
+
+        viewModel.selected.observe(viewLifecycleOwner, Observer {
+            epoxyController.submitSelectedList(it.toList())
+            epoxyController.requestForcedModelBuild()
+        })
+
+        viewModel.actionMode.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                ActionModeEvent.ON -> actionModeController.startActionMode(requireActivity())
+                ActionModeEvent.OFF -> actionModeController.cancelActionMode()
+                else -> Log.w("HomeFragment", "invalid actionEvent")
+            }
         })
     }
 
@@ -94,11 +99,23 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
     }
 
-    private fun EpoxyRecyclerView.setup(controller: MessageItemRecyclerViewController) {
+    private fun EpoxyRecyclerView.setup() {
+        actionModeController = ActionModeController(
+            R.menu.memo_action_menu,
+            ActionMode.TYPE_PRIMARY,
+            onAction = { viewModel.deleteAction() },
+            onDestroy = { viewModel.cancelAction() }
+        )
+
+        epoxyController = MessageItemRecyclerViewController(
+            onClickMessage = { viewModel.select(it) },
+            onLongTapMessage = { viewModel.startAction(it) }
+        )
+
         val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
 
-        this.setController(controller)
+        this.setController(epoxyController)
         this.addItemDecoration(decoration)
     }
 }

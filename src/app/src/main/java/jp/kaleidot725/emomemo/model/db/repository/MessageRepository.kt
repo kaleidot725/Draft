@@ -13,6 +13,10 @@ class MessageRepository(private val dao: MessageDao) {
         dao.delete(message)
     }
 
+    suspend fun delete(messageIds: List<Int>) {
+        dao.delete(messageIds)
+    }
+
     suspend fun getPage(memoId: Int, no: Int, limit: Int): List<MessageEntity> {
         return dao.getPage(memoId, (no - 1) * limit, limit)
     }

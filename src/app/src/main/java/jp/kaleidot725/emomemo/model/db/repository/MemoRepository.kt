@@ -13,6 +13,10 @@ class MemoRepository(private val dao: MemoDao) {
         dao.delete(memoEntity)
     }
 
+    suspend fun delete(memoIds: List<Int>) {
+        dao.delete(memoIds)
+    }
+
     suspend fun getMemo(id: Int): MemoEntity {
         return dao.getMemo(id)
     }

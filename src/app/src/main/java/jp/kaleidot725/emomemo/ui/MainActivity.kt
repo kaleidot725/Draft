@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             setupNavDrawer(notebooks, viewModel.selectedNotebook.value)
         })
 
+        // FIXME メモタイトルが表示されないバグを修正する
         viewModel.selectedNotebook.observe(this, Observer { notebook ->
             setupNavDrawer(viewModel.notebooks.value, notebook)
             this.title = notebook.title
