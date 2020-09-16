@@ -90,7 +90,8 @@ class MemoViewModel(
 
     private fun updateSelectedMessage(message: MessageEntity) {
         viewModelScope.launch {
-            if (selectedSet.contains(message)) selectedSet.remove(message) else selectedSet.add(message)
+            selectedSet.clear()
+            selectedSet.add(message)
             notifyActionEvent(ActionModeEvent.ON)
             notifyChangedSelectedMemos()
         }

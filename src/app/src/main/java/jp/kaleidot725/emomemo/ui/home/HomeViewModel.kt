@@ -92,7 +92,8 @@ class HomeViewModel(
 
     private fun updateSelectedMemoForAction(memo: MemoStatusView) {
         viewModelScope.launch {
-            if (selectedSet.contains(memo)) selectedSet.remove(memo) else selectedSet.add(memo)
+            selectedSet.clear()
+            selectedSet.add(memo)
             notifyActionEvent(ActionModeEvent.ON)
             notifyChangedSelectedMemos()
         }
