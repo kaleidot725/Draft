@@ -63,7 +63,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
                 else -> Log.w("HomeFragment", "invalid actionEvent")
             }
         })
-
     }
 
     override fun onDestroyView() {
