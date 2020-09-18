@@ -63,6 +63,12 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
                 else -> Log.w("HomeFragment", "invalid actionEvent")
             }
         })
+
+        viewModel.navEvent.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is MemoViewModel.NavEvent.NavigateEditMessage -> Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -103,7 +109,12 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         actionModeController = ActionModeController(
             R.menu.memo_action_menu,
             ActionMode.TYPE_PRIMARY,
-            onAction = { viewModel.deleteAction() },
+            onAction = {
+                when (it.itemId) {
+                    R.id.delete -> viewModel.deleteAction()
+                    R.id.edit -> viewModel.editAction()
+                }
+            },
             onDestroy = { viewModel.cancelAction() }
         )
 

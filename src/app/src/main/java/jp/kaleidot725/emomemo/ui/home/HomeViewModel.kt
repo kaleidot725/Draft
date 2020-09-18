@@ -66,6 +66,10 @@ class HomeViewModel(
         deleteSelectedMemos()
     }
 
+    fun editAction() {
+        editSelectedMemoForAction(selectedSet.first())
+    }
+
     fun cancelAction() {
         clearSelectedMemos()
     }
@@ -86,7 +90,7 @@ class HomeViewModel(
         viewModelScope.launch {
             selectMemoUseCase.execute(memo.id)
             notifyActionEvent(ActionModeEvent.OFF)
-            notifyNavEvent(NavEvent.NAVIGATE_MEMO)
+            notifyNavEvent(NavEvent.NavigateMemo)
         }
     }
 
@@ -97,6 +101,10 @@ class HomeViewModel(
             notifyActionEvent(ActionModeEvent.ON)
             notifyChangedSelectedMemos()
         }
+    }
+
+    private fun editSelectedMemoForAction(memo: MemoStatusView) {
+        _navEvent.value = NavEvent.EditMemo(memo)
     }
 
     private fun deleteSelectedMemos() {
@@ -128,7 +136,8 @@ class HomeViewModel(
         }
     }
 
-    enum class NavEvent {
-        NAVIGATE_MEMO
+    sealed class NavEvent {
+        object NavigateMemo : NavEvent()
+        data class EditMemo(val memo: MemoStatusView) : NavEvent()
     }
 }

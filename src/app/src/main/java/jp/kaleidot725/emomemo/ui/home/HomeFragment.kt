@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ActionMode
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -54,7 +55,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.navEvent.observe(viewLifecycleOwner, Observer {
             when (it) {
-                HomeViewModel.NavEvent.NAVIGATE_MEMO -> navigateMemoFragment()
+                HomeViewModel.NavEvent.NavigateMemo -> navigateMemoFragment()
+                is HomeViewModel.NavEvent.EditMemo -> Toast.makeText(context, "TEST", Toast.LENGTH_SHORT).show()
                 else -> Log.w("HomeFragment", "invalid navEvent")
             }
         })
@@ -64,7 +66,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         actionModeController = ActionModeController(
             R.menu.memo_action_menu,
             ActionMode.TYPE_PRIMARY,
-            onAction = { viewModel.deleteAction() },
+            onAction = {
+                when (it.itemId) {
+                    R.id.delete -> viewModel.deleteAction()
+                    R.id.edit -> viewModel.editAction()
+                }
+            },
             onDestroy = { viewModel.cancelAction() }
         )
 
