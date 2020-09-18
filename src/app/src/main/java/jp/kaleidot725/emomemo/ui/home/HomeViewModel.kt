@@ -48,6 +48,11 @@ class HomeViewModel(
     val navEvent: LiveData<NavEvent> = _navEvent
 
     init {
+        refresh()
+    }
+
+    fun refresh() {
+        observeMemoCountUseCase.dispose()
         observeStatusUseCase.execute { newStatus ->
             newStatus ?: return@execute
             observeMemoCountUseCase.dispose()

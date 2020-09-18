@@ -8,10 +8,12 @@ import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
+import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.memo.AddMemoDialogViewModel
+import jp.kaleidot725.emomemo.ui.memo.EditMemoDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
@@ -32,6 +34,7 @@ import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -134,6 +137,10 @@ val appModule = module {
         DeleteMessagesUseCase(get())
     }
 
+    single {
+        UpdateMemoUseCase(get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get())
     }
@@ -164,5 +171,9 @@ val appModule = module {
 
     viewModel {
         MainViewModel(get(), get(), get())
+    }
+
+    viewModel { (memo: MemoStatusView) ->
+        EditMemoDialogViewModel(memo, get())
     }
 }

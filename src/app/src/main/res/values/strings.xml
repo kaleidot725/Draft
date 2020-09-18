@@ -12,14 +12,14 @@
     <string name="home_notebook_is_not_found">ノートブックがありません\nノートブックを作成してください。</string>
     <string name="home_memo_is_not_found">メモがありません</string>
 
-    <!-- HomeDialogFragment -->
-    <string name="home_dialog_fragment_title">追加</string>
-    <string name="home_dialog_fragment_memo_title">タイトル</string>
-    <string name="home_dialog_fragment_memo_title_hint">タイトルを入力してください</string>
-    <string name="home_dialog_fragment_memo_tag">タグ</string>
-    <string name="home_dialog_fragment_memo_tag_hint">タグを入力してください</string>
-    <string name="home_dialog_fragment_create">作成</string>
-    <string name="home_dialog_fragment_cancel">キャンセル</string>
+    <!-- MemoDialogFragment -->
+    <string name="memo_dialog_fragment_title">追加</string>
+    <string name="memo_dialog_fragment_memo_title">タイトル</string>
+    <string name="memo_dialog_fragment_memo_title_hint">タイトルを入力してください</string>
+    <string name="memo_dialog_fragment_memo_tag">タグ</string>
+    <string name="memo_dialog_fragment_memo_tag_hint">タグを入力してください</string>
+    <string name="memo_dialog_fragment_create">作成</string>
+    <string name="memo_dialog_fragment_cancel">キャンセル</string>
     <string name="memo_fragment_title">メモ</string>
 
     <!-- AddNotebookDialogFragment -->
