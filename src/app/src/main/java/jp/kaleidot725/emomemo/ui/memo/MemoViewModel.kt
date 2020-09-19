@@ -49,6 +49,10 @@ class MemoViewModel(
     val navEvent: LiveData<NavEvent> = _navEvent
 
     init {
+        refresh()
+    }
+    
+    fun refresh() {
         observeRecognizedTextUseCase.execute { recognizedMessage ->
             inputMessage.value = recognizedMessage
         }

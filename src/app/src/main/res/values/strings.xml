@@ -19,8 +19,15 @@
     <string name="memo_dialog_fragment_memo_tag">タグ</string>
     <string name="memo_dialog_fragment_memo_tag_hint">タグを入力してください</string>
     <string name="memo_dialog_fragment_create">作成</string>
+    <string name="memo_dialog_fragment_update">更新</string>
     <string name="memo_dialog_fragment_cancel">キャンセル</string>
     <string name="memo_fragment_title">メモ</string>
+
+    <!-- MessageDialogFragment -->
+    <string name="message_dialog_fragment_message_title">メッセージ</string>
+    <string name="message_dialog_fragment_message_title_hint">メッセージを入力してください</string>
+    <string name="message_dialog_fragment_update">更新</string>
+    <string name="message_dialog_Fragment_cancel">キャンセル</string>
 
     <!-- AddNotebookDialogFragment -->
     <string name="add_notebook_fragment_notebook_title">タイトル</string>
