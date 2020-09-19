@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo
 import androidx.room.Room
 import jp.kaleidot725.emomemo.model.db.AppDatabase
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
+import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
@@ -19,6 +20,7 @@ import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.message.EditMessageDialogViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
+import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogViewModel
 import jp.kaleidot725.emomemo.ui.top.TopViewModel
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
@@ -38,6 +40,7 @@ import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.UpdateNotebookUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -148,6 +151,10 @@ val appModule = module {
         UpdateMessageUseCase(get())
     }
 
+    single {
+        UpdateNotebookUseCase(get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get())
     }
@@ -186,5 +193,9 @@ val appModule = module {
 
     viewModel { (message: MessageEntity) ->
         EditMessageDialogViewModel(message, get())
+    }
+
+    viewModel { (notebook: NotebookEntity) ->
+        EditNotebookDialogViewModel(notebook, get())
     }
 }
