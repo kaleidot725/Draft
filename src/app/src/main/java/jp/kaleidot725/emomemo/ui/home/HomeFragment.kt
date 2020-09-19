@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.ActionMode
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -22,6 +21,7 @@ import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModel()
@@ -55,7 +55,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when (it) {
                 ActionModeEvent.ON -> actionModeController.startActionMode(requireActivity())
                 ActionModeEvent.OFF -> actionModeController.cancelActionMode()
-                else -> Log.w("HomeFragment", "invalid actionEvent")
+                else -> Timber.w("invalid actionEvent")
             }
         })
 
@@ -63,7 +63,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             when (it) {
                 HomeViewModel.NavEvent.NavigateMemo -> navigateMemoFragment()
                 is HomeViewModel.NavEvent.EditMemo -> navigateEditMemoFragment(it.memo)
-                else -> Log.w("HomeFragment", "invalid navEvent")
+                else -> Timber.w("invalid navEvent")
             }
         })
 

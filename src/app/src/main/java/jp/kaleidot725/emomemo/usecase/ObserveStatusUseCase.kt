@@ -1,11 +1,11 @@
 package jp.kaleidot725.emomemo.usecase
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.distinctUntilChanged
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
+import timber.log.Timber
 
 class ObserveStatusUseCase(
     private val statusRepository: StatusRepository
@@ -18,8 +18,7 @@ class ObserveStatusUseCase(
             try {
                 block.invoke(it ?: StatusEntity())
             } catch (e: Exception) {
-                // FIXME
-                Log.w("ObserveStatusUseCase", e.toString())
+                Timber.w(e)
             }
         }
         liveData = statusRepository.getLiveData().distinctUntilChanged()
