@@ -29,6 +29,13 @@
     <string name="message_dialog_fragment_update">更新</string>
     <string name="message_dialog_Fragment_cancel">キャンセル</string>
 
+    <!-- NotebookDialogFragment -->
+    <string name="notebook_dialog_fragment_message_title">ノートブック</string>
+    <string name="notebook_dialog_fragment_message_title_hint">ノートブックを入力してください</string>
+    <string name="notebook_dialog_fragment_update">更新</string>
+    <string name="notebook_dialog_Fragment_cancel">キャンセル</string>
+
+
     <!-- AddNotebookDialogFragment -->
     <string name="add_notebook_fragment_notebook_title">タイトル</string>
     <string name="add_notebook_fragment_notebook_title_hint">タイトルを入力してください</string>
@@ -56,6 +63,7 @@
     <string name="navigation_drawer_sub_menu_action">編集</string>
     <string name="navigation_drawer_item_add_notebook">ノートブックを追加する</string>
     <string name="navigation_drawer_item_remove_notebook">ノートブックを削除する</string>
+    <string name="navigation_drawer_item_edit_notebook">選択中のノートブックを編集する</string>
     <string name="navigation_drawer_sub_menu_notebooks">一覧</string>
     <string name="edit">編集</string>
 </resources>

@@ -15,6 +15,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.ActivityMainBinding
 import jp.kaleidot725.emomemo.extension.setActionBarVisibility
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
+import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.setting_image_button
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -94,6 +95,17 @@ class MainActivity : AppCompatActivity() {
             this.isEnabled = notebooks?.isNotEmpty() ?: true
             this.setOnMenuItemClickListener {
                 navController.navigate(R.id.action_global_deleteNotebookDialogFragment)
+                true
+            }
+        }
+
+        editSubMenu.add(getString(R.string.navigation_drawer_item_edit_notebook)).apply {
+            this.isEnabled = notebooks?.isNotEmpty() ?: true
+            this.setOnMenuItemClickListener {
+                selectedNotebook?.let {
+                    val action = EditNotebookDialogFragmentDirections.actionGlobalEditNotebookDialogFragment(it)
+                    navController.navigate(action)
+                }
                 true
             }
         }

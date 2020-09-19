@@ -120,4 +120,15 @@
             android:name="message"
             app:argType="jp.kaleidot725.emomemo.model.db.entity.MessageEntity" />
     </dialog>
+    <dialog
+        android:id="@+id/editNotebookDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogFragment"
+        android:label="EditNotebookDialogFragment">
+        <argument
+            android:name="notebook"
+            app:argType="jp.kaleidot725.emomemo.model.db.entity.NotebookEntity" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_editNotebookDialogFragment"
+        app:destination="@id/editNotebookDialogFragment" />
 </navigation>
