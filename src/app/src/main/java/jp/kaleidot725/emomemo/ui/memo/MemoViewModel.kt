@@ -51,7 +51,7 @@ class MemoViewModel(
     init {
         refresh()
     }
-    
+
     fun refresh() {
         observeRecognizedTextUseCase.execute { recognizedMessage ->
             inputMessage.value = recognizedMessage

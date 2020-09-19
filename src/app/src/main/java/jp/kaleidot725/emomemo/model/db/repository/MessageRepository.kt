@@ -12,7 +12,7 @@ class MessageRepository(private val dao: MessageDao) {
     suspend fun update(message: MessageEntity) {
         dao.update(message)
     }
-    
+
     suspend fun delete(message: MessageEntity) {
         dao.delete(message)
     }

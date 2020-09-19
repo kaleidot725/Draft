@@ -147,7 +147,7 @@ val appModule = module {
     single {
         UpdateMessageUseCase(get())
     }
-    
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get())
     }
