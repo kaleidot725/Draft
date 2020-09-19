@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.ui.audio
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -12,6 +11,7 @@ import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.common.controller.SpeechRecognizerController
 import jp.kaleidot725.emomemo.ui.common.handler.SafetyHandler
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
     private val viewModel: AudioRecordViewModel by viewModel()
@@ -31,7 +31,7 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
             try {
                 findNavController().popBackStack()
             } catch (e: Exception) {
-                Log.e("AudioRecordFragment", e.toString())
+                Timber.e(e)
             }
         })
 

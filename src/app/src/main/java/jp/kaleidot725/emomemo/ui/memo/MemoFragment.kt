@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.ActionMode
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -33,6 +32,7 @@ import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.RuntimePermissions
+import timber.log.Timber
 
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
@@ -67,7 +67,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             when (it) {
                 ActionModeEvent.ON -> actionModeController.startActionMode(requireActivity())
                 ActionModeEvent.OFF -> actionModeController.cancelActionMode()
-                else -> Log.w("HomeFragment", "invalid actionEvent")
+                else -> Timber.w("invalid actionEvent")
             }
         })
 
