@@ -49,7 +49,7 @@
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/primaryColor"
                 android:onClick="@{() -> viewModel.success()}"
-                android:text="@string/memo_dialog_fragment_create"
+                android:text="@string/memo_dialog_fragment_update"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toStartOf="@id/cancel_button"
                 app:layout_constraintStart_toStartOf="parent"
