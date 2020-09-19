@@ -37,6 +37,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_editMemoDialogFragment"
+            app:destination="@id/editMemoDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/homeDialogFragment"
@@ -63,6 +66,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_memoFragment_to_editMessageDialogFragment"
+            app:destination="@id/editMessageDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/audioRecognizerFragment"
@@ -98,4 +104,20 @@
         app:exitAnim="@anim/nav_default_exit_anim"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <dialog
+        android:id="@+id/editMemoDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.memo.EditMemoDialogFragment"
+        android:label="EditMemoDialogFragment">
+        <argument
+            android:name="memo"
+            app:argType="jp.kaleidot725.emomemo.model.db.view.MemoStatusView" />
+    </dialog>
+    <dialog
+        android:id="@+id/editMessageDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.message.EditMessageDialogFragment"
+        android:label="EditMessageDialogFragment">
+        <argument
+            android:name="message"
+            app:argType="jp.kaleidot725.emomemo.model.db.entity.MessageEntity" />
+    </dialog>
 </navigation>

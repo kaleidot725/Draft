@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="addMemoDialogViewModel"
-            type="jp.kaleidot725.emomemo.ui.memo.AddMemoDialogViewModel" />
+            name="viewModel"
+            type="jp.kaleidot725.emomemo.ui.message.EditMessageDialogViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,7 +25,7 @@
                 android:id="@+id/title_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/memo_dialog_fragment_memo_title"
+                android:text="@string/message_dialog_fragment_message_title"
                 android:textColor="@color/darkSecondaryTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +36,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/primaryColor"
                 android:gravity="start|top"
-                android:hint="@string/memo_dialog_fragment_memo_title_hint"
+                android:hint="@string/message_dialog_fragment_message_title_hint"
                 android:lines="2"
-                android:text="@={addMemoDialogViewModel.inputTitle}"
+                android:text="@={viewModel.inputTitle}"
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@id/title_text_view" />
 
@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/primaryColor"
-                android:onClick="@{() -> addMemoDialogViewModel.success()}"
-                android:text="@string/memo_dialog_fragment_create"
+                android:onClick="@{() -> viewModel.success()}"
+                android:text="@string/message_dialog_fragment_update"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toStartOf="@id/cancel_button"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:backgroundTint="@color/primaryColor"
-                android:onClick="@{() -> addMemoDialogViewModel.cancel()}"
-                android:text="@string/memo_dialog_fragment_cancel"
+                android:onClick="@{() -> viewModel.cancel()}"
+                android:text="@string/message_dialog_Fragment_cancel"
                 android:textColor="@color/primaryTextColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/success_button"

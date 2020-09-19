@@ -9,6 +9,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -18,6 +21,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
@@ -37,6 +41,9 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val navController: NavController get() = findNavController()
     private lateinit var epoxyController: MessageItemRecyclerViewController
     private lateinit var actionModeController: ActionModeController
+    private val refreshObserver: LifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onResume(owner: LifecycleOwner) = viewModel.refresh()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,10 +70,19 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
                 else -> Log.w("HomeFragment", "invalid actionEvent")
             }
         })
+
+        viewModel.navEvent.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is MemoViewModel.NavEvent.NavigateEditMessage -> navigateEditMessage(it.message)
+            }
+        })
+
+        navController.getBackStackEntry(R.id.memoFragment).lifecycle.addObserver(refreshObserver)
     }
 
     override fun onDestroyView() {
         hideSoftKeyBoard()
+        navController.getBackStackEntry(R.id.homeFragment).lifecycle.removeObserver(refreshObserver)
         super.onDestroyView()
     }
 
@@ -99,11 +115,21 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
     }
 
+    private fun navigateEditMessage(message: MessageEntity) {
+        val action = MemoFragmentDirections.actionMemoFragmentToEditMessageDialogFragment(message)
+        navController.navigate(action)
+    }
+
     private fun EpoxyRecyclerView.setup() {
         actionModeController = ActionModeController(
             R.menu.memo_action_menu,
             ActionMode.TYPE_PRIMARY,
-            onAction = { viewModel.deleteAction() },
+            onAction = {
+                when (it.itemId) {
+                    R.id.delete -> viewModel.deleteAction()
+                    R.id.edit -> viewModel.editAction()
+                }
+            },
             onDestroy = { viewModel.cancelAction() }
         )
 

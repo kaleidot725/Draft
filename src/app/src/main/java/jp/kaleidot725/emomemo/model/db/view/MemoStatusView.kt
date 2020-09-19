@@ -2,6 +2,7 @@ package jp.kaleidot725.emomemo.model.db.view
 
 import androidx.room.DatabaseView
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @DatabaseView(
     viewName = "memo_status",
@@ -22,4 +23,4 @@ data class MemoStatusView(
     val count: Long?,
     val lastTime: Long?,
     val lastMessage: String?
-)
+) : Serializable

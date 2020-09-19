@@ -9,6 +9,10 @@ class MemoRepository(private val dao: MemoDao) {
         dao.insert(memo)
     }
 
+    suspend fun update(memoEntity: MemoEntity) {
+        dao.update(memoEntity)
+    }
+
     suspend fun delete(memoEntity: MemoEntity) {
         dao.delete(memoEntity)
     }

@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.ActionMode
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -14,6 +17,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
@@ -23,6 +27,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModel()
     private val binding: FragmentHomeBinding by viewBinding()
     private val navController: NavController get() = findNavController()
+    private val refreshObserver: LifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onResume(owner: LifecycleOwner) = viewModel.refresh()
+    }
 
     private lateinit var epoxyController: MemoItemRecyclerViewController
     private lateinit var actionModeController: ActionModeController
@@ -54,17 +61,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.navEvent.observe(viewLifecycleOwner, Observer {
             when (it) {
-                HomeViewModel.NavEvent.NAVIGATE_MEMO -> navigateMemoFragment()
+                HomeViewModel.NavEvent.NavigateMemo -> navigateMemoFragment()
+                is HomeViewModel.NavEvent.EditMemo -> navigateEditMemoFragment(it.memo)
                 else -> Log.w("HomeFragment", "invalid navEvent")
             }
         })
+
+        navController.getBackStackEntry(R.id.homeFragment).lifecycle.addObserver(refreshObserver)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        navController.getBackStackEntry(R.id.homeFragment).lifecycle.removeObserver(refreshObserver)
     }
 
     private fun EpoxyRecyclerView.setup() {
         actionModeController = ActionModeController(
             R.menu.memo_action_menu,
             ActionMode.TYPE_PRIMARY,
-            onAction = { viewModel.deleteAction() },
+            onAction = {
+                when (it.itemId) {
+                    R.id.delete -> viewModel.deleteAction()
+                    R.id.edit -> viewModel.editAction()
+                }
+            },
             onDestroy = { viewModel.cancelAction() }
         )
 
@@ -82,6 +102,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun navigateMemoFragment() {
         navController.navigate(R.id.action_homeFragment_to_memoFragment)
+    }
+
+    private fun navigateEditMemoFragment(memo: MemoStatusView) {
+        val action = HomeFragmentDirections.actionHomeFragmentToEditMemoDialogFragment(memo)
+        navController.navigate(action)
     }
 
     private fun navigateHomeDialogFragment() {

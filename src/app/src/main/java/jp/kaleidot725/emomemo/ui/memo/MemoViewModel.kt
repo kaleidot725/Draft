@@ -45,7 +45,14 @@ class MemoViewModel(
     private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
     val actionMode: LiveData<ActionModeEvent> = _actionMode
 
+    private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
+    val navEvent: LiveData<NavEvent> = _navEvent
+
     init {
+        refresh()
+    }
+
+    fun refresh() {
         observeRecognizedTextUseCase.execute { recognizedMessage ->
             inputMessage.value = recognizedMessage
         }
@@ -63,6 +70,10 @@ class MemoViewModel(
 
     fun deleteAction() {
         deleteSelectedMessages()
+    }
+
+    fun editAction() {
+        editSelectedMessages()
     }
 
     fun cancelAction() {
@@ -104,6 +115,10 @@ class MemoViewModel(
         }
     }
 
+    private fun editSelectedMessages() {
+        _navEvent.value = NavEvent.NavigateEditMessage(selectedSet.first())
+    }
+
     private fun clearSelectedMessages() {
         viewModelScope.launch {
             selectedSet.clear()
@@ -120,5 +135,9 @@ class MemoViewModel(
         if (_actionMode.value != event) {
             _actionMode.value = event
         }
+    }
+
+    sealed class NavEvent {
+        data class NavigateEditMessage(val message: MessageEntity) : NavEvent()
     }
 }

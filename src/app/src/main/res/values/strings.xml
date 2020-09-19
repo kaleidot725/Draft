@@ -12,15 +12,22 @@
     <string name="home_notebook_is_not_found">ノートブックがありません\nノートブックを作成してください。</string>
     <string name="home_memo_is_not_found">メモがありません</string>
 
-    <!-- HomeDialogFragment -->
-    <string name="home_dialog_fragment_title">追加</string>
-    <string name="home_dialog_fragment_memo_title">タイトル</string>
-    <string name="home_dialog_fragment_memo_title_hint">タイトルを入力してください</string>
-    <string name="home_dialog_fragment_memo_tag">タグ</string>
-    <string name="home_dialog_fragment_memo_tag_hint">タグを入力してください</string>
-    <string name="home_dialog_fragment_create">作成</string>
-    <string name="home_dialog_fragment_cancel">キャンセル</string>
+    <!-- MemoDialogFragment -->
+    <string name="memo_dialog_fragment_title">追加</string>
+    <string name="memo_dialog_fragment_memo_title">タイトル</string>
+    <string name="memo_dialog_fragment_memo_title_hint">タイトルを入力してください</string>
+    <string name="memo_dialog_fragment_memo_tag">タグ</string>
+    <string name="memo_dialog_fragment_memo_tag_hint">タグを入力してください</string>
+    <string name="memo_dialog_fragment_create">作成</string>
+    <string name="memo_dialog_fragment_update">更新</string>
+    <string name="memo_dialog_fragment_cancel">キャンセル</string>
     <string name="memo_fragment_title">メモ</string>
+
+    <!-- MessageDialogFragment -->
+    <string name="message_dialog_fragment_message_title">メッセージ</string>
+    <string name="message_dialog_fragment_message_title_hint">メッセージを入力してください</string>
+    <string name="message_dialog_fragment_update">更新</string>
+    <string name="message_dialog_Fragment_cancel">キャンセル</string>
 
     <!-- AddNotebookDialogFragment -->
     <string name="add_notebook_fragment_notebook_title">タイトル</string>
@@ -50,4 +57,5 @@
     <string name="navigation_drawer_item_add_notebook">ノートブックを追加する</string>
     <string name="navigation_drawer_item_remove_notebook">ノートブックを削除する</string>
     <string name="navigation_drawer_sub_menu_notebooks">一覧</string>
+    <string name="edit">編集</string>
 </resources>
