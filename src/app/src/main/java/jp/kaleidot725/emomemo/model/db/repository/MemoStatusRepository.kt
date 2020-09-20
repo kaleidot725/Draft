@@ -12,7 +12,7 @@ class MemoStatusRepository(private val dao: MemoStatusDao) {
         return dao.getPage(id, (no - 1) * limit, limit)
     }
 
-    suspend fun getMemoByMemoId(id: Int): MemoStatusView {
+    suspend fun getMemoByMemoId(id: Int): MemoStatusView? {
         return dao.getMemoByMemoId(id)
     }
 

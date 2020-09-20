@@ -54,27 +54,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.notebooks.observe(this, Observer { notebooks ->
-            setupNavDrawer(notebooks, viewModel.selectedNotebook.value)
-        })
-
-        // FIXME メモタイトルが表示されないバグを修正する
-        viewModel.selectedNotebook.observe(this, Observer { notebook ->
-            setupNavDrawer(viewModel.notebooks.value, notebook)
-            this.title = notebook.title
+        viewModel.notebooksWithStatus.observe(this, Observer {
+            setupNavDrawer(it.notebooks, it.selectedNotebook)
+            setupTitle(it)
         })
     }
 
     private fun setupNavController() {
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, _, _ ->
+            // Change ActionBar Visibility
             val currentId = controller.currentDestination?.id ?: 0
             val isNotTopFragment = R.id.topFragment != currentId
             setActionBarVisibility(isNotTopFragment)
 
+            // Change DrawerLayout Lock Status
             val isHomeFragment = R.id.homeFragment != currentId
             val lockMode = if (isHomeFragment) DrawerLayout.LOCK_MODE_LOCKED_CLOSED else DrawerLayout.LOCK_MODE_UNLOCKED
             binding.drawerLayout.setDrawerLockMode(lockMode)
+
+            // Refresh MainActivity Status
+            viewModel.refresh()
         }
     }
 
@@ -117,9 +117,19 @@ class MainActivity : AppCompatActivity() {
                 menuItem.isChecked = notebook == selectedNotebook
                 menuItem.setOnMenuItemClickListener {
                     viewModel.selectNotebook(notebook)
+                    navController.popBackStack()
+                    navController.navigate(R.id.homeFragment)
                     false
                 }
             }
+        }
+    }
+
+    private fun setupTitle(data: NotebookWithStatus) {
+        if (navController.currentDestination?.id == R.id.homeFragment) {
+            this.title = data.selectedNotebook?.title
+        } else if (navController.currentDestination?.id == R.id.memoFragment) {
+            this.title = data.selectedMemo?.title
         }
     }
 }

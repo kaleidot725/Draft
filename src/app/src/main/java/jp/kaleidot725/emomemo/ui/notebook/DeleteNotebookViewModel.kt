@@ -7,18 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
 import kotlinx.coroutines.launch
 
 class DeleteNotebookViewModel(
-    private val getNotebookUseCase: GetNotebookUseCase,
+    private val getNotebooksUseCase: GetNotebooksUseCase,
     private val deleteNotebookUseCase: DeleteNotebookUseCase
 ) :
     ViewModel() {
     private val _event: LiveEvent<NavEvent> = LiveEvent()
     val event: LiveData<NavEvent> = _event
 
-    private val _notebooks: LiveData<List<NotebookEntity>> = getNotebookUseCase.execute()
+    private val _notebooks: LiveData<List<NotebookEntity>> = getNotebooksUseCase.executeLiveData()
     val notebook: LiveData<List<String>> = _notebooks.map { list -> list.map { note -> note.title } }
     private var selectedNotebook: NotebookEntity? = null
 

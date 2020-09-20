@@ -12,7 +12,7 @@ import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
-import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ class SingleSelectList<T> {
 
 class HomeViewModel(
     private val getStatusUseCase: GetStatusUseCase,
-    private val getMemoUseCase: GetMemoUseCase,
+    private val getMemosUseCase: GetMemosUseCase,
     private val selectMemoUseCase: SelectMemoUseCase,
     private val deleteMemoUseCase: DeleteMemosUseCase
 ) : ViewModel() {
@@ -66,7 +66,7 @@ class HomeViewModel(
     val navEvent: LiveData<NavEvent> = _navEvent
 
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
-    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.notebookId) }
+    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.execute(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
 
     fun refresh() {

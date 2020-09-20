@@ -29,5 +29,5 @@ interface NotebookDao {
     fun getAllLiveData(): LiveData<List<NotebookEntity>>
 
     @Query("select * from notebook where id = :id")
-    suspend fun getNotebook(id: Int): NotebookEntity
+    suspend fun getNotebook(id: Int): NotebookEntity?
 }
