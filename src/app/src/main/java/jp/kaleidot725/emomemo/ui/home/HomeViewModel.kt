@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
+import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
@@ -16,6 +17,7 @@ import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 data class MemosWithSelectedSet(
     val memos: PagedList<MemoStatusView>,
@@ -49,14 +51,6 @@ class HomeViewModel(
     private val selectMemoUseCase: SelectMemoUseCase,
     private val deleteMemoUseCase: DeleteMemosUseCase
 ) : ViewModel() {
-    // TODO 未実装
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
-    val loading: LiveData<Boolean> = _loading
-
-    // TODO 未実装
-    private val _canAddNotebook: MutableLiveData<Boolean> = MutableLiveData(true)
-    val canAddNotebook: LiveData<Boolean> = _canAddNotebook
-
     private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
 
     private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
@@ -66,6 +60,11 @@ class HomeViewModel(
     val navEvent: LiveData<NavEvent> = _navEvent
 
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
+    val canAddNotebook: LiveData<Boolean> = status.map {
+        Timber.w("status ${it}")
+        it.notebookId != UNSELECTED_NOTEBOOK
+    }
+
     private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.execute(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
 

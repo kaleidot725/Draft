@@ -34,17 +34,8 @@ class DeleteNotebookDialogFragment : DialogFragment(R.layout.fragment_delete_not
         })
 
         deleteNotebookViewModel.event.observe(viewLifecycleOwner, Observer { event ->
-            when (event) {
-                is DeleteNotebookViewModel.NavEvent.Success -> {
-                    navController.popBackStack()
-                }
-                is DeleteNotebookViewModel.NavEvent.Cancel -> {
-                    navController.popBackStack()
-                }
-                else -> {
-                    navController.popBackStack()
-                }
-            }
+            navController.popBackStack(R.id.homeFragment, true)
+            navController.navigate(R.id.homeFragment)
         })
     }
 

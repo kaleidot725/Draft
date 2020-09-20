@@ -8,8 +8,8 @@ import java.io.Serializable
 data class StatusEntity(
     @PrimaryKey
     val id: Int = 0,
-    val notebookId: Int = 0,
-    val memoId: Int = 0
+    val notebookId: Int = UNSELECTED_NOTEBOOK,
+    val memoId: Int = UNSELECTED_MEMO
 ) : Serializable {
     companion object {
         const val UNSELECTED_NOTEBOOK = -1

@@ -24,8 +24,8 @@ class DeleteNotebookViewModel(
 
     fun success() {
         viewModelScope.launch {
-            if (selectedNotebook != null) {
-                deleteNotebookUseCase.execute(selectedNotebook!!)
+            selectedNotebook?.let {
+                deleteNotebookUseCase.execute(it)
                 _event.value = NavEvent.Success
             }
         }

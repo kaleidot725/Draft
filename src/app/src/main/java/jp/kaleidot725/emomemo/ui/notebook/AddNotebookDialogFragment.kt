@@ -25,17 +25,8 @@ class AddNotebookDialogFragment : DialogFragment(R.layout.fragment_add_notebook)
         super.onViewCreated(view, savedInstanceState)
         binding.addNotebookViewModel = addNotebookViewModel
         addNotebookViewModel.event.observe(viewLifecycleOwner, Observer { event ->
-            when (event) {
-                AddNotebookViewModel.NavEvent.SUCCESS -> {
-                    navController.popBackStack()
-                }
-                AddNotebookViewModel.NavEvent.CANCEL -> {
-                    navController.popBackStack()
-                }
-                else -> {
-                    navController.popBackStack()
-                }
-            }
+            navController.popBackStack(R.id.homeFragment, true)
+            navController.navigate(R.id.homeFragment)
         })
     }
 }

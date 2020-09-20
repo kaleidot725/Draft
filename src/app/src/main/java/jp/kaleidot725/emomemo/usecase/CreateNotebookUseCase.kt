@@ -11,10 +11,15 @@ class CreateNotebookUseCase(
 ) {
     suspend fun execute(title: String) {
         notebookRepository.insert(NotebookEntity.create(title))
-        statusRepository.get().apply {
-            if (this?.notebookId != StatusEntity.UNSELECTED_NOTEBOOK) {
-                val notebook = notebookRepository.getAll().first()
-                statusRepository.update(notebook.id, StatusEntity.UNSELECTED_MEMO)
+        reselectNotebook()
+    }
+
+    private suspend fun reselectNotebook() {
+        val oldStatus = statusRepository.get()
+        if (oldStatus?.notebookId == StatusEntity.UNSELECTED_NOTEBOOK) {
+            val notebooks = notebookRepository.getAll()
+            if (notebooks.isNotEmpty()) {
+                statusRepository.update(notebooks.first().id, StatusEntity.UNSELECTED_MEMO)
             }
         }
     }

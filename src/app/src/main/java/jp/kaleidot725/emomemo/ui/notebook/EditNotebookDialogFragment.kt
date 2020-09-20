@@ -27,6 +27,9 @@ class EditNotebookDialogFragment : DialogFragment(R.layout.fragment_edit_noteboo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        viewModel.isCompleted.observe(viewLifecycleOwner, Observer { navController.popBackStack() })
+        viewModel.isCompleted.observe(viewLifecycleOwner, Observer {
+            navController.popBackStack(R.id.homeFragment, true)
+            navController.navigate(R.id.homeFragment)
+        })
     }
 }
