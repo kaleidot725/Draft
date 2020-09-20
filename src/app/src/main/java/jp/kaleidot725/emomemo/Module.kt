@@ -159,7 +159,7 @@ val appModule = module {
     factory {
         GetStatusUseCase(get())
     }
-    
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get())
     }
