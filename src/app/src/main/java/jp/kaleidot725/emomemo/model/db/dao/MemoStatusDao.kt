@@ -11,7 +11,7 @@ interface MemoStatusDao {
     suspend fun getAll(): List<MemoStatusView>
 
     @Query("select * from memo_status where id = :id")
-    suspend fun getMemoByMemoId(id: Int): MemoStatusView
+    suspend fun getMemoByMemoId(id: Int): MemoStatusView?
 
     @Query("select * from memo_status where notebookId = :notebookId order by id DESC")
     suspend fun getMemoListByNotebookId(notebookId: Int): List<MemoStatusView>
