@@ -41,13 +41,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.recyclerView.setup()
         binding.addButton.setOnClickListener { navigateHomeDialogFragment() }
 
-        viewModel.memos.observe(viewLifecycleOwner, Observer {
-            epoxyController.submitList(it)
-            epoxyController.requestModelBuild()
-        })
-
-        viewModel.selected.observe(viewLifecycleOwner, Observer {
-            epoxyController.submitSelectedList(it.toList())
+        viewModel.memosWithSelectedSet.observe(viewLifecycleOwner, Observer {
+            epoxyController.submitList(it.memos)
+            epoxyController.submitSelectedList(it.selectedMemos)
             epoxyController.requestForcedModelBuild()
         })
 

@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
@@ -14,14 +13,38 @@ import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
+import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import kotlinx.coroutines.launch
 
+data class MemosWithSelectedSet(
+    val memos: PagedList<MemoStatusView>,
+    val selectedMemos: List<MemoStatusView>
+)
+
+class SingleSelectList<T> {
+    private val set: MutableSet<T> = mutableSetOf()
+
+    fun add(item: T) {
+        set.clear()
+        set.add(item)
+    }
+
+    fun clear() {
+        set.clear()
+    }
+
+    fun get(): T {
+        return set.first()
+    }
+
+    fun getList(): List<T> {
+        return set.toList()
+    }
+}
+
 class HomeViewModel(
-    private val observeStatusUseCase: ObserveStatusUseCase,
-    private val observeMemoCountUseCase: ObserveMemoCountUseCase,
+    private val getStatusUseCase: GetStatusUseCase,
     private val getMemoUseCase: GetMemoUseCase,
     private val selectMemoUseCase: SelectMemoUseCase,
     private val deleteMemoUseCase: DeleteMemosUseCase
@@ -34,12 +57,7 @@ class HomeViewModel(
     private val _canAddNotebook: MutableLiveData<Boolean> = MutableLiveData(true)
     val canAddNotebook: LiveData<Boolean> = _canAddNotebook
 
-    private val status: MutableLiveData<Pair<StatusEntity, Int>> = MutableLiveData()
-    val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.first.notebookId) }.distinctUntilChanged()
-
-    private val selectedSet: MutableSet<MemoStatusView> = mutableSetOf()
-    private val onSelected: MutableLiveData<Unit> = MutableLiveData()
-    val selected: LiveData<Set<MemoStatusView>> = onSelected.map { selectedSet }
+    private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
 
     private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
     val actionMode: LiveData<ActionModeEvent> = _actionMode
@@ -47,98 +65,59 @@ class HomeViewModel(
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
-    init {
-        refresh()
-    }
+    private val status: MutableLiveData<StatusEntity> = MutableLiveData()
+    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.notebookId) }
+    val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
 
     fun refresh() {
-        observeMemoCountUseCase.dispose()
-        observeStatusUseCase.execute { newStatus ->
-            newStatus ?: return@execute
-            observeMemoCountUseCase.dispose()
-            observeMemoCountUseCase.execute(newStatus.notebookId) { count ->
-                status.value = Pair(newStatus, count)
-                cancelAction()
+        viewModelScope.launch {
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.OFF
+        }
+    }
+
+    fun select(memo: MemoStatusView) {
+        viewModelScope.launch {
+            when (actionMode.value) {
+                ActionModeEvent.ON -> {
+                    selectedMemos.add(memo)
+                    status.value = getStatusUseCase.execute()
+                }
+                ActionModeEvent.OFF -> {
+                    selectMemoUseCase.execute(memo.id)
+                    _navEvent.value = NavEvent.NavigateMemo
+                }
             }
         }
     }
 
     fun startAction(memo: MemoStatusView) {
-        updateSelectedMemoForAction(memo)
+        viewModelScope.launch {
+            selectedMemos.add(memo)
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.ON
+        }
     }
 
     fun deleteAction() {
-        deleteSelectedMemos()
-    }
-
-    fun editAction() {
-        editSelectedMemoForAction(selectedSet.first())
+        viewModelScope.launch {
+            deleteMemoUseCase.execute(selectedMemos.getList())
+            selectedMemos.clear()
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.OFF
+        }
     }
 
     fun cancelAction() {
-        clearSelectedMemos()
-    }
-
-    fun select(memo: MemoStatusView) {
-        when (actionMode.value) {
-            ActionModeEvent.ON -> updateSelectedMemoForAction(memo)
-            ActionModeEvent.OFF -> navigateMemoDetails(memo)
-        }
-    }
-
-    override fun onCleared() {
-        observeStatusUseCase.dispose()
-        observeMemoCountUseCase.dispose()
-    }
-
-    private fun navigateMemoDetails(memo: MemoStatusView) {
         viewModelScope.launch {
-            selectMemoUseCase.execute(memo.id)
-            notifyActionEvent(ActionModeEvent.OFF)
-            notifyNavEvent(NavEvent.NavigateMemo)
+            selectedMemos.clear()
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.OFF
         }
     }
 
-    private fun updateSelectedMemoForAction(memo: MemoStatusView) {
-        viewModelScope.launch {
-            selectedSet.clear()
-            selectedSet.add(memo)
-            notifyActionEvent(ActionModeEvent.ON)
-            notifyChangedSelectedMemos()
-        }
-    }
-
-    private fun editSelectedMemoForAction(memo: MemoStatusView) {
-        _navEvent.value = NavEvent.EditMemo(memo)
-    }
-
-    private fun deleteSelectedMemos() {
-        viewModelScope.launch {
-            deleteMemoUseCase.execute(selectedSet.toList())
-            notifyActionEvent(ActionModeEvent.OFF)
-        }
-    }
-
-    private fun clearSelectedMemos() {
-        viewModelScope.launch {
-            selectedSet.clear()
-            notifyChangedSelectedMemos()
-            notifyActionEvent(ActionModeEvent.OFF)
-        }
-    }
-
-    private fun notifyChangedSelectedMemos() {
-        onSelected.value = Unit
-    }
-
-    private fun notifyNavEvent(event: NavEvent) {
-        _navEvent.value = event
-    }
-
-    private fun notifyActionEvent(event: ActionModeEvent) {
-        if (_actionMode.value != event) {
-            _actionMode.value = event
-        }
+    fun editAction() {
+        _navEvent.value = NavEvent.EditMemo(selectedMemos.get())
     }
 
     sealed class NavEvent {

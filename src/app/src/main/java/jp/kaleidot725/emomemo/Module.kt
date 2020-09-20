@@ -31,6 +31,7 @@ import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.InitializeDataBaseUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
@@ -46,117 +47,121 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    single {
+    factory {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
 
-    single {
+    factory {
         val db: AppDatabase = get()
         NotebookRepository(db.notebookDao())
     }
 
-    single {
+    factory {
         val db: AppDatabase = get()
         MemoRepository(db.memoDao())
     }
 
-    single {
+    factory {
         val db: AppDatabase = get()
         MessageRepository(db.messageDao())
     }
 
-    single {
+    factory {
         val db: AppDatabase = get()
         MemoStatusRepository(db.memoStatusDao())
     }
 
-    single {
+    factory {
         val db: AppDatabase = get()
         StatusRepository(db.statusDao())
     }
 
-    single {
+    factory {
         AudioRecognizerRepository()
     }
 
-    single {
+    factory {
         InitializeDataBaseUseCase(get(), get())
     }
 
-    single {
+    factory {
         ObserveMemoCountUseCase(get())
     }
 
-    single {
+    factory {
         ObserveMessageCountUseCase(get())
     }
 
-    single {
+    factory {
         ObserveRecognizedTextUseCase(get())
     }
 
-    single {
+    factory {
         ObserveStatusUseCase(get())
     }
 
-    single {
+    factory {
         CreateMemoUseCase(get(), get())
     }
 
-    single {
+    factory {
         CreateMessageUseCase(get(), get())
     }
 
-    single {
+    factory {
         GetMessageUseCase(get())
     }
 
-    single {
+    factory {
         GetMemoUseCase(get())
     }
 
-    single {
+    factory {
         SelectMemoUseCase(get())
     }
 
-    single {
+    factory {
         CreateNotebookUseCase(get(), get())
     }
 
-    single {
+    factory {
         DeleteNotebookUseCase(get())
     }
 
-    single {
+    factory {
         GetNotebookUseCase(get())
     }
 
-    single {
+    factory {
         SelectNotebookUseCase(get(), get())
     }
 
-    single {
+    factory {
         DeleteMemosUseCase(get())
     }
 
-    single {
+    factory {
         DeleteMessagesUseCase(get())
     }
 
-    single {
+    factory {
         UpdateMemoUseCase(get())
     }
 
-    single {
+    factory {
         UpdateMessageUseCase(get())
     }
 
-    single {
+    factory {
         UpdateNotebookUseCase(get())
     }
 
+    factory {
+        GetStatusUseCase(get())
+    }
+
     viewModel {
-        HomeViewModel(get(), get(), get(), get(), get())
+        HomeViewModel(get(), get(), get(), get())
     }
 
     viewModel {
