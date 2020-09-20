@@ -1,11 +1,11 @@
 package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.text.format.DateFormat
-import android.view.View
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MemoItemContainerBindingModel_
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import kotlinx.android.synthetic.main.memo_item_container.view.container
 
 typealias OnClickMemo = (item: MemoStatusView) -> Unit
 typealias OnLongTapMemo = (item: MemoStatusView) -> Unit
@@ -23,13 +23,17 @@ class MemoItemRecyclerViewController(
                 title(item.title)
                 detail(getDetailString(item))
                 selected(selected.contains(item))
-                onClickListener(View.OnClickListener {
-                    onClickMemo?.invoke(item)
-                })
-                onLongClickListener(View.OnLongClickListener {
-                    onLongTapMemo?.invoke(item)
-                    true
-                })
+                onBind { _, view, _ ->
+                    view.dataBinding.root.container.apply {
+                        setOnClickListener {
+                            onClickMemo?.invoke(item)
+                        }
+                        setOnLongClickListener {
+                            onLongTapMemo?.invoke(item)
+                            true
+                        }
+                    }
+                }
             }
         } else {
             MemoItemContainerBindingModel_()
