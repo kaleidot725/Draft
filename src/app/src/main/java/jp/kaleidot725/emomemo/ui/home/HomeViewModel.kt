@@ -14,7 +14,6 @@ import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import kotlinx.coroutines.launch
 
@@ -45,7 +44,6 @@ class SingleSelectList<T> {
 }
 
 class HomeViewModel(
-    private val observeStatusUseCase: ObserveStatusUseCase,
     private val getStatusUseCase: GetStatusUseCase,
     private val getMemoUseCase: GetMemoUseCase,
     private val selectMemoUseCase: SelectMemoUseCase,
@@ -59,6 +57,8 @@ class HomeViewModel(
     private val _canAddNotebook: MutableLiveData<Boolean> = MutableLiveData(true)
     val canAddNotebook: LiveData<Boolean> = _canAddNotebook
 
+    private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
+
     private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
     val actionMode: LiveData<ActionModeEvent> = _actionMode
 
@@ -67,17 +67,7 @@ class HomeViewModel(
 
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
     private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.notebookId) }
-    private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
-
-    init {
-        observeStatusUseCase.dispose()
-        observeStatusUseCase.execute { status.value = it ?: StatusEntity() }
-    }
-
-    override fun onCleared() {
-        observeStatusUseCase.dispose()
-    }
 
     fun refresh() {
         viewModelScope.launch {
@@ -87,15 +77,13 @@ class HomeViewModel(
     }
 
     fun select(memo: MemoStatusView) {
-        when (actionMode.value) {
-            ActionModeEvent.ON -> {
-                viewModelScope.launch {
+        viewModelScope.launch {
+            when (actionMode.value) {
+                ActionModeEvent.ON -> {
                     selectedMemos.add(memo)
                     status.value = getStatusUseCase.execute()
                 }
-            }
-            ActionModeEvent.OFF -> {
-                viewModelScope.launch {
+                ActionModeEvent.OFF -> {
                     selectMemoUseCase.execute(memo.id)
                     _navEvent.value = NavEvent.NavigateMemo
                 }
