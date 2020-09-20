@@ -1,6 +1,7 @@
 package jp.kaleidot725.emomemo.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ActionMode
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -41,13 +42,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.recyclerView.setup()
         binding.addButton.setOnClickListener { navigateHomeDialogFragment() }
 
-        viewModel.memos.observe(viewLifecycleOwner, Observer {
-            epoxyController.submitList(it)
-            epoxyController.requestModelBuild()
-        })
-
-        viewModel.selected.observe(viewLifecycleOwner, Observer {
-            epoxyController.submitSelectedList(it.toList())
+        viewModel.memosWithSelected.observe(viewLifecycleOwner, Observer {
+            Log.v("TAG", "xxxxxxxxxxxxx ${it.memos}")
+            Log.v("TAG", "yyyyyyyyyyyyy ${it.selected}")
+            epoxyController.submitList(it.memos)
+            epoxyController.submitSelectedList(it.selected.toList())
             epoxyController.requestForcedModelBuild()
         })
 
