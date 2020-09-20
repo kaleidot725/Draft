@@ -19,24 +19,15 @@
         <variable
             name="selected"
             type="Boolean" />
-
-        <variable
-            name="onClickListener"
-            type="View.OnClickListener" />
-
-        <variable
-            name="onLongClickListener"
-            type="View.OnLongClickListener" />
     </data>
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@{selected ? @color/selected : @android:color/white}"
         android:orientation="vertical"
-        android:padding="8dp"
-        app:setOnClickListener="@{onClickListener}"
-        app:setOnLongClickListener="@{onLongClickListener}">
+        android:padding="8dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time_text_view"

@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.memo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
@@ -12,18 +11,20 @@ import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
+import jp.kaleidot725.emomemo.ui.home.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveMessageCountUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveStatusUseCase
+import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import kotlinx.coroutines.launch
 
+data class MessageWithSelectedSet(
+    val messages: PagedList<MessageEntity>,
+    val selectedMessages: List<MessageEntity>
+)
+
 class MemoViewModel(
-    private val observeStatusUseCase: ObserveStatusUseCase,
-    private val observeMessageCountUseCase: ObserveMessageCountUseCase,
-    private val observeRecognizedTextUseCase: ObserveRecognizedTextUseCase,
+    private val getStatusUseCase: GetStatusUseCase,
     private val createMessageUseCase: CreateMessageUseCase,
     private val getMessageUseCase: GetMessageUseCase,
     private val deleteMessagesUseCase: DeleteMessagesUseCase
@@ -32,57 +33,34 @@ class MemoViewModel(
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    val inputMessage: MutableLiveData<String> = MutableLiveData()
-    val isNotEmptyMessage: LiveData<Boolean> = inputMessage.map { it.isNotEmpty() }
-
-    private val selectedSet: MutableSet<MessageEntity> = mutableSetOf()
-    private val onSelected: MutableLiveData<Unit> = MutableLiveData()
-    val selected: LiveData<Set<MessageEntity>> = onSelected.map { selectedSet }
-
-    private val status: MutableLiveData<Pair<StatusEntity, Int>> = MutableLiveData()
-    val messages: LiveData<PagedList<MessageEntity>> = status.switchMap { getMessageUseCase.execute(it.first.memoId) }.distinctUntilChanged()
-
     private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
     val actionMode: LiveData<ActionModeEvent> = _actionMode
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
-    init {
-        refresh()
-    }
+    private val selectedMessages: SingleSelectList<MessageEntity> = SingleSelectList()
+
+    private val status: MutableLiveData<StatusEntity> = MutableLiveData()
+    private val messages: LiveData<PagedList<MessageEntity>> = status.switchMap { getMessageUseCase.execute(it.memoId) }
+    val messagesWithSelectedSet: LiveData<MessageWithSelectedSet> = messages.map { MessageWithSelectedSet(it, selectedMessages.getList()) }
+
+    val inputMessage: MutableLiveData<String> = MutableLiveData()
+    val isNotEmptyMessage: LiveData<Boolean> = inputMessage.map { it.isNotEmpty() }
 
     fun refresh() {
-        observeRecognizedTextUseCase.execute { recognizedMessage ->
-            inputMessage.value = recognizedMessage
+        viewModelScope.launch {
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.OFF
         }
-
-        observeStatusUseCase.execute { newStatus ->
-            newStatus ?: return@execute
-            observeMessageCountUseCase.dispose()
-            observeMessageCountUseCase.execute(newStatus.memoId) { count -> status.value = Pair(newStatus, count) }
-        }
-    }
-
-    fun startAction(message: MessageEntity) {
-        updateSelectedMessage(message)
-    }
-
-    fun deleteAction() {
-        deleteSelectedMessages()
-    }
-
-    fun editAction() {
-        editSelectedMessages()
-    }
-
-    fun cancelAction() {
-        clearSelectedMessages()
     }
 
     fun select(message: MessageEntity) {
-        when (actionMode.value) {
-            ActionModeEvent.ON -> updateSelectedMessage(message)
+        viewModelScope.launch {
+            if (actionMode.value == ActionModeEvent.ON) {
+                selectedMessages.add(message)
+                status.value = getStatusUseCase.execute()
+            }
         }
     }
 
@@ -90,51 +68,37 @@ class MemoViewModel(
         viewModelScope.launch {
             createMessageUseCase.execute(inputMessage.value ?: "")
             inputMessage.value = ""
+            status.value = getStatusUseCase.execute()
         }
     }
 
-    override fun onCleared() {
-        observeRecognizedTextUseCase.dispose()
-        observeStatusUseCase.dispose()
-        observeMessageCountUseCase.dispose()
-    }
-
-    private fun updateSelectedMessage(message: MessageEntity) {
+    fun startAction(message: MessageEntity) {
         viewModelScope.launch {
-            selectedSet.clear()
-            selectedSet.add(message)
-            notifyActionEvent(ActionModeEvent.ON)
-            notifyChangedSelectedMemos()
+            selectedMessages.add(message)
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.ON
         }
     }
 
-    private fun deleteSelectedMessages() {
+    fun deleteAction() {
         viewModelScope.launch {
-            deleteMessagesUseCase.execute(selectedSet.toList())
-            notifyActionEvent(ActionModeEvent.OFF)
+            deleteMessagesUseCase.execute(selectedMessages.getList())
+            selectedMessages.clear()
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.OFF
         }
     }
 
-    private fun editSelectedMessages() {
-        _navEvent.value = NavEvent.NavigateEditMessage(selectedSet.first())
-    }
-
-    private fun clearSelectedMessages() {
+    fun cancelAction() {
         viewModelScope.launch {
-            selectedSet.clear()
-            notifyChangedSelectedMemos()
-            notifyActionEvent(ActionModeEvent.OFF)
+            selectedMessages.clear()
+            status.value = getStatusUseCase.execute()
+            _actionMode.value = ActionModeEvent.OFF
         }
     }
 
-    private fun notifyChangedSelectedMemos() {
-        onSelected.value = Unit
-    }
-
-    private fun notifyActionEvent(event: ActionModeEvent) {
-        if (_actionMode.value != event) {
-            _actionMode.value = event
-        }
+    fun editAction() {
+        _navEvent.value = NavEvent.NavigateEditMessage(selectedMessages.get())
     }
 
     sealed class NavEvent {
