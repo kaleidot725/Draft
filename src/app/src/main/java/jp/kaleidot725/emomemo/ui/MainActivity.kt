@@ -117,6 +117,8 @@ class MainActivity : AppCompatActivity() {
                 menuItem.isChecked = notebook == selectedNotebook
                 menuItem.setOnMenuItemClickListener {
                     viewModel.selectNotebook(notebook)
+                    navController.popBackStack()
+                    navController.navigate(R.id.homeFragment)
                     false
                 }
             }
