@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.ActionMode
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -55,7 +54,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         binding.sendButton.setOnClickListener { viewModel.create() }
 
         viewModel.messagesWithSelectedSet.observe(viewLifecycleOwner, Observer {
-            Log.v("TEST", "${it.toString()}")
             epoxyController.submitList(it.messages)
             epoxyController.submitSelectedList(it.selectedMessages)
             epoxyController.requestForcedModelBuild()

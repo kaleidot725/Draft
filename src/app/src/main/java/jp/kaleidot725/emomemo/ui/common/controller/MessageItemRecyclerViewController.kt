@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.text.format.DateFormat
-import android.util.Log
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MessageItemContainerBindingModel_
@@ -20,7 +19,6 @@ class MessageItemRecyclerViewController(
     override fun buildItemModel(currentPosition: Int, item: MessageEntity?): EpoxyModel<*> {
         return if (item != null) {
             MessageItemContainerBindingModel_().apply {
-                Log.v("TAG", "selected ${selected.firstOrNull()} item ${item}")
                 id(item.time)
                 time(DateFormat.format("yyyy/MM/dd aa hh:mm:ss", item.time).toString())
                 title(item.value)
