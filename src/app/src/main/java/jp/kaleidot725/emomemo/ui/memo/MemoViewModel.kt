@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.memo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
@@ -43,7 +42,7 @@ class MemoViewModel(
     private val selectedMessages: SingleSelectList<MessageEntity> = SingleSelectList()
 
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
-    private val messages: LiveData<PagedList<MessageEntity>> = status.switchMap { getMessageUseCase.execute(it.memoId) }.distinctUntilChanged()
+    private val messages: LiveData<PagedList<MessageEntity>> = status.switchMap { getMessageUseCase.execute(it.memoId) }
     val messagesWithSelectedSet: LiveData<MessageWithSelectedSet> = messages.map { MessageWithSelectedSet(it, selectedMessages.getList()) }
 
     val inputMessage: MutableLiveData<String> = MutableLiveData()
@@ -84,13 +83,10 @@ class MemoViewModel(
     fun deleteAction() {
         viewModelScope.launch {
             deleteMessagesUseCase.execute(selectedMessages.getList())
+            selectedMessages.clear()
             status.value = getStatusUseCase.execute()
             _actionMode.value = ActionModeEvent.OFF
         }
-    }
-
-    fun editAction() {
-        _navEvent.value = NavEvent.NavigateEditMessage(selectedMessages.get())
     }
 
     fun cancelAction() {
@@ -99,6 +95,10 @@ class MemoViewModel(
             status.value = getStatusUseCase.execute()
             _actionMode.value = ActionModeEvent.OFF
         }
+    }
+
+    fun editAction() {
+        _navEvent.value = NavEvent.NavigateEditMessage(selectedMessages.get())
     }
 
     sealed class NavEvent {

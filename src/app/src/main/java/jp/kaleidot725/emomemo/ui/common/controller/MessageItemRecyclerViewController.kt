@@ -1,11 +1,12 @@
 package jp.kaleidot725.emomemo.ui.common.controller
 
 import android.text.format.DateFormat
-import android.view.View
+import android.util.Log
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MessageItemContainerBindingModel_
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
+import kotlinx.android.synthetic.main.message_item_container.view.container
 
 typealias OnClickMessage = (item: MessageEntity) -> Unit
 typealias OnLongTapMessage = (item: MessageEntity) -> Unit
@@ -19,17 +20,22 @@ class MessageItemRecyclerViewController(
     override fun buildItemModel(currentPosition: Int, item: MessageEntity?): EpoxyModel<*> {
         return if (item != null) {
             MessageItemContainerBindingModel_().apply {
+                Log.v("TAG", "selected ${selected.firstOrNull()} item ${item}")
                 id(item.time)
                 time(DateFormat.format("yyyy/MM/dd aa hh:mm:ss", item.time).toString())
                 title(item.value)
                 selected(selected.contains(item))
-                onClickListener(View.OnClickListener {
-                    onClickMessage?.invoke(item)
-                })
-                onLongClickListener(View.OnLongClickListener {
-                    onLongTapMessage?.invoke(item)
-                    true
-                })
+                onBind { _, view, _ ->
+                    view.dataBinding.root.container.apply {
+                        setOnClickListener {
+                            onClickMessage?.invoke(item)
+                        }
+                        setOnLongClickListener {
+                            onLongTapMessage?.invoke(item)
+                            true
+                        }
+                    }
+                }
             }
         } else {
             MessageItemContainerBindingModel_()
