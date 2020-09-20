@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
@@ -47,7 +46,7 @@ class HomeViewModel(
 
     private val selectedSet: MutableSet<MemoStatusView> = mutableSetOf()
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
-    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.notebookId) }.distinctUntilChanged()
+    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemoUseCase.execute(it.notebookId) }
     val memosWithSelected: LiveData<MemosWithSelected> = memos.map { MemosWithSelected(it, selectedSet) }
 
     init {
@@ -56,7 +55,9 @@ class HomeViewModel(
     }
 
     fun refresh() {
-        viewModelScope.launch { status.value = getStatusUseCase.execute() }
+        viewModelScope.launch {
+            status.value = getStatusUseCase.execute()
+        }
     }
 
     override fun onCleared() {
@@ -66,6 +67,7 @@ class HomeViewModel(
     fun select(memo: MemoStatusView) {
         when (actionMode.value) {
             ActionModeEvent.ON -> {
+                selectedSet.clear()
                 selectedSet.add(memo)
                 refresh()
             }
@@ -80,7 +82,6 @@ class HomeViewModel(
 
     fun startAction(memo: MemoStatusView) {
         viewModelScope.launch {
-            selectedSet.clear()
             selectedSet.add(memo)
 
             refresh()
