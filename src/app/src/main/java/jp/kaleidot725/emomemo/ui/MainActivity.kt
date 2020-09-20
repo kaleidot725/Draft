@@ -127,9 +127,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTitle(data: NotebookWithStatus) {
         if (navController.currentDestination?.id == R.id.homeFragment) {
-            this.title = data.selectedNotebook?.title
+            this.title = data.selectedNotebook?.title ?: getString(R.string.app_name)
         } else if (navController.currentDestination?.id == R.id.memoFragment) {
-            this.title = data.selectedMemo?.title
+            this.title = data.selectedMemo?.title ?: getString(R.string.app_name)
         }
     }
 }
