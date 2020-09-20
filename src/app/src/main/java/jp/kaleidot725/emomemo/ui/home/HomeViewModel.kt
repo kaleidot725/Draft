@@ -17,7 +17,6 @@ import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 data class MemosWithSelectedSet(
     val memos: PagedList<MemoStatusView>,
@@ -60,12 +59,9 @@ class HomeViewModel(
     val navEvent: LiveData<NavEvent> = _navEvent
 
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
-    val canAddNotebook: LiveData<Boolean> = status.map {
-        Timber.w("status ${it}")
-        it.notebookId != UNSELECTED_NOTEBOOK
-    }
+    val canAddNotebook: LiveData<Boolean> = status.map { it.notebookId != UNSELECTED_NOTEBOOK }
 
-    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.execute(it.notebookId) }
+    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
 
     fun refresh() {
