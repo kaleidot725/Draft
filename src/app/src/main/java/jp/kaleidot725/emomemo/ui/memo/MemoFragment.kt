@@ -53,13 +53,9 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         binding.voiceButton.setOnClickListener { showRecordAudioWithPermissionCheck() }
         binding.sendButton.setOnClickListener { viewModel.create() }
 
-        viewModel.messages.observe(viewLifecycleOwner, Observer {
-            epoxyController.submitList(it)
-            epoxyController.requestModelBuild()
-        })
-
-        viewModel.selected.observe(viewLifecycleOwner, Observer {
-            epoxyController.submitSelectedList(it.toList())
+        viewModel.messagesWithSelectedSet.observe(viewLifecycleOwner, Observer {
+            epoxyController.submitList(it.messages)
+            epoxyController.submitSelectedList(it.selectedMessages)
             epoxyController.requestForcedModelBuild()
         })
 
