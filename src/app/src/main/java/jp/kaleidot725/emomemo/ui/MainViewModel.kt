@@ -50,4 +50,7 @@ class MainViewModel(
             refresh.value = Unit
         }
     }
+   
+    fun getSelectedNotebook() = notebooksWithStatus.value?.selectedNotebook
+    fun getSelectedMemo() = notebooksWithStatus.value?.selectedMemo
 }

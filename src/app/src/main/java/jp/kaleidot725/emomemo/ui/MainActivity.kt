@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -50,14 +49,6 @@ class MainActivity : AppCompatActivity() {
                     binding.drawerLayout.closeDrawers()
                 }
             }
-            binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
-                override fun onDrawerClosed(drawerView: View) {}
-                override fun onDrawerOpened(drawerView: View) {}
-                override fun onDrawerStateChanged(newState: Int) {}
-                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                    viewModel.refresh()
-                }
-            })
             binding.viewModel = viewModel
         }
     }
@@ -65,19 +56,25 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.notebooksWithStatus.observe(this, Observer {
             setupNavDrawer(it.notebooks, it.selectedNotebook)
+            setupTitle(it)
         })
     }
 
     private fun setupNavController() {
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, _, _ ->
+            // Change ActionBar Visibility
             val currentId = controller.currentDestination?.id ?: 0
             val isNotTopFragment = R.id.topFragment != currentId
             setActionBarVisibility(isNotTopFragment)
 
+            // Change DrawerLayout Lock Status
             val isHomeFragment = R.id.homeFragment != currentId
             val lockMode = if (isHomeFragment) DrawerLayout.LOCK_MODE_LOCKED_CLOSED else DrawerLayout.LOCK_MODE_UNLOCKED
             binding.drawerLayout.setDrawerLockMode(lockMode)
+
+            // Refresh MainActivity Status
+            viewModel.refresh()
         }
     }
 
@@ -123,6 +120,14 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
+        }
+    }
+
+    private fun setupTitle(data: NotebookWithStatus) {
+        if (navController.currentDestination?.id == R.id.homeFragment) {
+            this.title = data.selectedNotebook?.title
+        } else if (navController.currentDestination?.id == R.id.memoFragment) {
+            this.title = data.selectedMemo?.title
         }
     }
 }
