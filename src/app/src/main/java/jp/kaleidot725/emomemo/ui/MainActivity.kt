@@ -1,6 +1,7 @@
 package jp.kaleidot725.emomemo.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -49,19 +50,21 @@ class MainActivity : AppCompatActivity() {
                     binding.drawerLayout.closeDrawers()
                 }
             }
+            binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+                override fun onDrawerClosed(drawerView: View) {}
+                override fun onDrawerOpened(drawerView: View) {}
+                override fun onDrawerStateChanged(newState: Int) {}
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                    viewModel.refresh()
+                }
+            })
             binding.viewModel = viewModel
         }
     }
 
     private fun setupViewModel() {
-        viewModel.notebooks.observe(this, Observer { notebooks ->
-            setupNavDrawer(notebooks, viewModel.selectedNotebook.value)
-        })
-
-        // FIXME メモタイトルが表示されないバグを修正する
-        viewModel.selectedNotebook.observe(this, Observer { notebook ->
-            setupNavDrawer(viewModel.notebooks.value, notebook)
-            this.title = notebook.title
+        viewModel.notebooksWithStatus.observe(this, Observer {
+            setupNavDrawer(it.notebooks, it.selectedNotebook)
         })
     }
 

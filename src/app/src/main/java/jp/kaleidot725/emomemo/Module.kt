@@ -29,8 +29,10 @@ import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.InitializeDataBaseUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
@@ -160,6 +162,14 @@ val appModule = module {
         GetStatusUseCase(get())
     }
 
+    factory {
+        GetNotebooksUseCase(get())
+    }
+
+    factory {
+        GetMemosUseCase(get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get())
     }
@@ -189,7 +199,7 @@ val appModule = module {
     }
 
     viewModel {
-        MainViewModel(get(), get(), get())
+        MainViewModel(get(), get(), get(), get(), get())
     }
 
     viewModel { (memo: MemoStatusView) ->
