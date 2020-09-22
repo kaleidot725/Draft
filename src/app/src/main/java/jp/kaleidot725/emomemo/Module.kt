@@ -159,7 +159,7 @@ val appModule = module {
     factory {
         GetMessageCountUseCase(get())
     }
-    
+
     viewModel {
         HomeViewModel(get(), get(), get(), get())
     }
