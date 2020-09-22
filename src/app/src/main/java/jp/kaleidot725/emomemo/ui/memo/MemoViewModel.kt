@@ -14,6 +14,7 @@ import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.home.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
+import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import kotlinx.coroutines.launch
@@ -27,6 +28,7 @@ class MemoViewModel(
     private val getStatusUseCase: GetStatusUseCase,
     private val createMessageUseCase: CreateMessageUseCase,
     private val getMessageUseCase: GetMessageUseCase,
+    private val getMessageCountUseCase: GetMessageCountUseCase,
     private val deleteMessagesUseCase: DeleteMessagesUseCase
 ) : ViewModel() {
     // TODO 未実装
@@ -47,6 +49,9 @@ class MemoViewModel(
 
     val inputMessage: MutableLiveData<String> = MutableLiveData()
     val isNotEmptyMessage: LiveData<Boolean> = inputMessage.map { it.isNotEmpty() }
+
+    private val messagesCount: LiveData<Int> = status.switchMap { getMessageCountUseCase.execute(it.memoId) }
+    val messagesAreEmpty: LiveData<Boolean> = messagesCount.map { it == 0 }
 
     fun refresh() {
         viewModelScope.launch {
