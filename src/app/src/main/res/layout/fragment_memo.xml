@@ -41,14 +41,14 @@
                 android:layout_height="match_parent"
                 android:visibility="@{memoViewModel.loading ? View.INVISIBLE : View.VISIBLE}" />
 
-            <!-- TODO 未実装 -->
             <TextView
                 android:id="@+id/empty_message_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="@string/message_is_not_found"
                 android:textSize="20sp"
-                tools:text="TEST TEST TEST" />
+                android:visibility="@{memoViewModel.messagesAreEmpty ? View.VISIBLE : View.INVISIBLE}" />
         </FrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,8 +94,8 @@
                 android:layout_height="40dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="@{memoViewModel.isNotEmptyMessage()}"
-                android:tint="@{memoViewModel.isNotEmptyMessage() ? @color/primaryColor : @color/black}"
                 android:src="@drawable/ic_send"
+                android:tint="@{memoViewModel.isNotEmptyMessage() ? @color/primaryColor : @color/black}"
 
                 app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
                 app:layout_constraintEnd_toEndOf="parent"
