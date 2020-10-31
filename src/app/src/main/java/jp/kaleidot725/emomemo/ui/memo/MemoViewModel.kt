@@ -13,7 +13,6 @@ import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.home.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
@@ -28,8 +27,7 @@ class MemoViewModel(
     private val getStatusUseCase: GetStatusUseCase,
     private val createMessageUseCase: CreateMessageUseCase,
     private val getMessageUseCase: GetMessageUseCase,
-    private val getMessageCountUseCase: GetMessageCountUseCase,
-    private val deleteMessagesUseCase: DeleteMessagesUseCase
+    private val getMessageCountUseCase: GetMessageCountUseCase
 ) : ViewModel() {
     // TODO 未実装
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
