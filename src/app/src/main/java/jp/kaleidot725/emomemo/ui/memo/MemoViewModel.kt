@@ -1,6 +1,5 @@
 package jp.kaleidot725.emomemo.ui.memo
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -58,7 +57,6 @@ class MemoViewModel(
 
     init {
         observeRecognizedTextUseCase.execute {
-            Log.v("TAG", "onChanged ${it}")
             inputMessage.postValue(it)
         }
     }

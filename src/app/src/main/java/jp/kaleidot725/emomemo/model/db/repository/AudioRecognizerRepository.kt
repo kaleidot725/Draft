@@ -1,6 +1,6 @@
 package jp.kaleidot725.emomemo.model.db.repository
 
-class AudioRecognizerRepository() {
+class AudioRecognizerRepository {
     private val listeners: MutableList<OnChangedRecognizedTextListener> = mutableListOf()
     private var text: String = ""
 
