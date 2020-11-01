@@ -47,6 +47,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+    // 変更通知の仕組みを実現するためにシングルトンで定義している
+    single {
+        AudioRecognizerRepository()
+    }
+
     factory {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
@@ -74,10 +79,6 @@ val appModule = module {
     factory {
         val db: AppDatabase = get()
         StatusRepository(db.statusDao())
-    }
-
-    factory {
-        AudioRecognizerRepository()
     }
 
     factory {
@@ -181,7 +182,7 @@ val appModule = module {
     }
 
     viewModel {
-        MemoViewModel(get(), get(), get(), get(), get())
+        MemoViewModel(get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
