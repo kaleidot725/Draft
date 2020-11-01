@@ -52,7 +52,6 @@ val appModule = module {
         AudioRecognizerRepository()
     }
 
-
     factory {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
