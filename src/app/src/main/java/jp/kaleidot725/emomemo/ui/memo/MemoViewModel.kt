@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.ui.memo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +14,11 @@ import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.home.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
 import kotlinx.coroutines.launch
 
 data class MessageWithSelectedSet(
@@ -26,8 +29,10 @@ data class MessageWithSelectedSet(
 class MemoViewModel(
     private val getStatusUseCase: GetStatusUseCase,
     private val createMessageUseCase: CreateMessageUseCase,
+    private val deleteMessagesUseCase: DeleteMessagesUseCase,
     private val getMessageUseCase: GetMessageUseCase,
-    private val getMessageCountUseCase: GetMessageCountUseCase
+    private val getMessageCountUseCase: GetMessageCountUseCase,
+    private val observeRecognizedTextUseCase: ObserveRecognizedTextUseCase
 ) : ViewModel() {
     // TODO 未実装
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -50,6 +55,13 @@ class MemoViewModel(
 
     private val messagesCount: LiveData<Int> = status.switchMap { getMessageCountUseCase.execute(it.memoId) }
     val messagesAreEmpty: LiveData<Boolean> = messagesCount.map { it == 0 }
+
+    init {
+        observeRecognizedTextUseCase.execute {
+            Log.v("TAG", "onChanged ${it}")
+            inputMessage.postValue(it)
+        }
+    }
 
     fun refresh() {
         viewModelScope.launch {
@@ -102,6 +114,11 @@ class MemoViewModel(
 
     fun editAction() {
         _navEvent.value = NavEvent.NavigateEditMessage(selectedMessages.get())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        observeRecognizedTextUseCase.dispose()
     }
 
     sealed class NavEvent {

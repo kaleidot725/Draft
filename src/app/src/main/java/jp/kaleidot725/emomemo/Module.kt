@@ -181,7 +181,7 @@ val appModule = module {
     }
 
     viewModel {
-        MemoViewModel(get(), get(), get(), get(), get())
+        MemoViewModel(get(), get(), get(), get(), get(), get())
     }
 
     viewModel {
