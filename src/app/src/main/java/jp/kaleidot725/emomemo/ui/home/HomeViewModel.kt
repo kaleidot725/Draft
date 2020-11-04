@@ -12,6 +12,7 @@ import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
+import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
@@ -22,27 +23,6 @@ data class MemosWithSelectedSet(
     val memos: PagedList<MemoStatusView>,
     val selectedMemos: List<MemoStatusView>
 )
-
-class SingleSelectList<T> {
-    private val set: MutableSet<T> = mutableSetOf()
-
-    fun add(item: T) {
-        set.clear()
-        set.add(item)
-    }
-
-    fun clear() {
-        set.clear()
-    }
-
-    fun get(): T {
-        return set.first()
-    }
-
-    fun getList(): List<T> {
-        return set.toList()
-    }
-}
 
 class HomeViewModel(
     private val getStatusUseCase: GetStatusUseCase,
