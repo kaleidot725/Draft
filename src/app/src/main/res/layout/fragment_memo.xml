@@ -7,8 +7,6 @@
 
         <import type="jp.kaleidot725.emomemo.ui.EmptyStatus" />
 
-        <import type="jp.kaleidot725.emomemo.extension.EmptyStatusExtKt" />
-
         <import type="android.view.View" />
 
         <variable

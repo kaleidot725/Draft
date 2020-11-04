@@ -1,6 +1,7 @@
 package jp.kaleidot725.emomemo.ui.home
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
@@ -8,7 +9,9 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.extension.getHomeErrorMessage
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
+import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_MEMO
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
@@ -39,10 +42,13 @@ class HomeViewModel(
     val navEvent: LiveData<NavEvent> = _navEvent
 
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
-    val canAddNotebook: LiveData<Boolean> = status.map { it.notebookId != UNSELECTED_NOTEBOOK }
 
     private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
+    
+    val error: LiveData<Int> = status.map { it.getHomeErrorMessage() }
+    val hasError: LiveData<Boolean> = status.map { it.notebookId == UNSELECTED_NOTEBOOK}
+    val canAddNotebook: LiveData<Boolean> = status.map { it.notebookId != UNSELECTED_NOTEBOOK }
 
     fun refresh() {
         viewModelScope.launch {
