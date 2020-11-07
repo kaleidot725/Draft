@@ -26,5 +26,8 @@ interface MemoDao {
     suspend fun getMemo(id: Int): MemoEntity
 
     @Query("select COUNT(*) from memo where notebookId = :notebookId")
-    fun getMemoCount(notebookId: Int): LiveData<Int>
+    suspend fun getMemoCount(notebookId: Int): Int
+
+    @Query("select COUNT(*) from memo where notebookId = :notebookId")
+    fun getMemoCountLiveData(notebookId: Int): LiveData<Int>
 }

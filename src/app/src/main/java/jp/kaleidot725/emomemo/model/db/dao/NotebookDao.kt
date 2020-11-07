@@ -30,4 +30,10 @@ interface NotebookDao {
 
     @Query("select * from notebook where id = :id")
     suspend fun getNotebook(id: Int): NotebookEntity?
+
+    @Query("select COUNT(*) from notebook")
+    suspend fun getNotebookCount(): Int
+
+    @Query("select COUNT(*) from notebook")
+    fun getNotebookCountLiveData(): LiveData<Int>
 }

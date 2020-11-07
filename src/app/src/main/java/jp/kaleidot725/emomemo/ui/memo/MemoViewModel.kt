@@ -11,7 +11,7 @@ import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
-import jp.kaleidot725.emomemo.ui.home.SingleSelectList
+import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase

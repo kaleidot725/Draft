@@ -8,13 +8,17 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
+import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
+import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import kotlinx.coroutines.launch
 
@@ -23,32 +27,13 @@ data class MemosWithSelectedSet(
     val selectedMemos: List<MemoStatusView>
 )
 
-class SingleSelectList<T> {
-    private val set: MutableSet<T> = mutableSetOf()
-
-    fun add(item: T) {
-        set.clear()
-        set.add(item)
-    }
-
-    fun clear() {
-        set.clear()
-    }
-
-    fun get(): T {
-        return set.first()
-    }
-
-    fun getList(): List<T> {
-        return set.toList()
-    }
-}
-
 class HomeViewModel(
     private val getStatusUseCase: GetStatusUseCase,
     private val getMemosUseCase: GetMemosUseCase,
     private val selectMemoUseCase: SelectMemoUseCase,
-    private val deleteMemoUseCase: DeleteMemosUseCase
+    private val deleteMemoUseCase: DeleteMemosUseCase,
+    private val observeNotebookCountUseCase: ObserveNotebookCountUseCase,
+    private val observeMemoCountUseCase: ObserveMemoCountUseCase
 ) : ViewModel() {
     private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
 
@@ -63,6 +48,30 @@ class HomeViewModel(
 
     private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
+
+    private var notebookCount: Int = 0
+    private var memoCount: Int = 0
+    private val _error: MutableLiveData<Int> = MutableLiveData()
+    val error: LiveData<Int> = _error
+
+    private val _hasError: MutableLiveData<Boolean> = MutableLiveData(false)
+    val hasError: LiveData<Boolean> = _hasError
+
+    init {
+        observeNotebookCountUseCase.dispose()
+        observeNotebookCountUseCase.execute { count ->
+            notebookCount = count
+            updateHomeErrorMessage()
+        }
+
+        status.observeForever { status ->
+            observeMemoCountUseCase.dispose()
+            observeMemoCountUseCase.execute(status.notebookId) { count ->
+                memoCount = count
+                updateHomeErrorMessage()
+            }
+        }
+    }
 
     fun refresh() {
         viewModelScope.launch {
@@ -113,6 +122,15 @@ class HomeViewModel(
 
     fun editAction() {
         _navEvent.value = NavEvent.EditMemo(selectedMemos.get())
+    }
+
+    private fun updateHomeErrorMessage() {
+        _hasError.value = (notebookCount == 0) || (memoCount == 0)
+        _error.value = when {
+            (notebookCount == 0) -> R.string.home_notebook_is_not_found
+            (memoCount == 0) -> R.string.home_memo_is_not_found
+            else -> R.string.empty
+        }
     }
 
     sealed class NavEvent {

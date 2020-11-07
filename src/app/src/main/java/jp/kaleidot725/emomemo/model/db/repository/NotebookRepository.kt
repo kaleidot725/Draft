@@ -32,4 +32,12 @@ class NotebookRepository(private val dao: NotebookDao) {
     suspend fun getNoteBook(id: Int): NotebookEntity? {
         return dao.getNotebook(id)
     }
+
+    suspend fun getNotebookCount(): Int {
+        return dao.getNotebookCount()
+    }
+
+    fun getNotebookCountLiveData(): LiveData<Int> {
+        return dao.getNotebookCountLiveData()
+    }
 }

@@ -25,7 +25,11 @@ class MessageRepository(private val dao: MessageDao) {
         return dao.getPage(memoId, (no - 1) * limit, limit)
     }
 
-    fun getMessageCount(memoId: Int): LiveData<Int> {
+    suspend fun getMessageCount(memoId: Int): Int {
         return dao.getMessageCount(memoId)
+    }
+
+    fun getMessageCountLiveData(memoId: Int): LiveData<Int> {
+        return dao.getMessageCountLiveData(memoId)
     }
 }
