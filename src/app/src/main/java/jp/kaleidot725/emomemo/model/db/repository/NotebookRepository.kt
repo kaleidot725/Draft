@@ -36,7 +36,7 @@ class NotebookRepository(private val dao: NotebookDao) {
     suspend fun getNotebookCount(): Int {
         return dao.getNotebookCount()
     }
-    
+
     fun getNotebookCountLiveData(): LiveData<Int> {
         return dao.getNotebookCountLiveData()
     }
