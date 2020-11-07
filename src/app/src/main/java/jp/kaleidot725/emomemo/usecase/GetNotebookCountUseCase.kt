@@ -1,10 +1,10 @@
 package jp.kaleidot725.emomemo.usecase
 
 import androidx.lifecycle.LiveData
-import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
+import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 
-class GetNotebookCountUseCase(private val memoRepository: MemoRepository) {
-    fun execute(notebookId: Int): LiveData<Int> {
-        return memoRepository.getMemoCount(notebookId)
+class GetNotebookCountUseCase(private val notebookRepository: NotebookRepository) {
+    fun execute(): LiveData<Int> {
+        return notebookRepository.getNotebookCountLiveData()
     }
 }

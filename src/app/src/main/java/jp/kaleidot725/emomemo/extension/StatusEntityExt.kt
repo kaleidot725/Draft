@@ -5,15 +5,6 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_MEMO
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
-import jp.kaleidot725.emomemo.ui.EmptyStatus
-
-@StringRes
-fun StatusEntity.getMemoErrorMessage(): Int {
-    return when (this.memoId) {
-        UNSELECTED_MEMO -> R.string.memo_no_message_text
-        else -> R.string.empty
-    }
-}
 
 @StringRes
 fun StatusEntity.getHomeErrorMessage(): Int {
