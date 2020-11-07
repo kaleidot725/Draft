@@ -25,7 +25,11 @@ class MemoRepository(private val dao: MemoDao) {
         return dao.getMemo(id)
     }
 
-    fun getMemoCount(notebookId: Int): LiveData<Int> {
+    suspend fun getMemoCount(notebookId: Int): Int {
         return dao.getMemoCount(notebookId)
+    }
+
+    fun getMemoCountLiveData(notebookId: Int): LiveData<Int> {
+        return dao.getMemoCountLiveData(notebookId)
     }
 }
