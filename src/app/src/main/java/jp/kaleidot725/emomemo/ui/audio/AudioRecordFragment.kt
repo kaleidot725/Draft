@@ -51,7 +51,7 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
 
         binding.viewModel = viewModel
         binding.imageView.loadGifImage(getRecordGifImage())
-        
+
         viewModel.shouldHide.observe(viewLifecycleOwner, Observer {
             if (it) {
                 hidingFragmentHandler.postDelayed(HIDE_DELAY_DURATION)
