@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -45,25 +46,12 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
             viewModel.update(event, text)
         }
 
-        binding.viewModel = viewModel
-
         lifecycle.addObserver(speechRecognizerController)
         lifecycle.addObserver(hidingFragmentHandler)
 
-        // RAWリソースのURLを生成する
-        val url = Uri.parse("android.resource://" + requireActivity().packageName + "/" + R.raw.record)
-
-        val imageLoader = ImageLoader.Builder(requireContext())
-            .componentRegistry {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder())
-                } else {
-                    add(GifDecoder())
-                }
-            }
-            .build()
-        binding.imageView.load(url, imageLoader)
-
+        binding.viewModel = viewModel
+        binding.imageView.loadGifImage(getRecordGifImage())
+        
         viewModel.shouldHide.observe(viewLifecycleOwner, Observer {
             if (it) {
                 hidingFragmentHandler.postDelayed(HIDE_DELAY_DURATION)
@@ -85,6 +73,21 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
         super.onDestroyView()
         lifecycle.removeObserver(speechRecognizerController)
         lifecycle.removeObserver(hidingFragmentHandler)
+    }
+
+    private fun ImageView.loadGifImage(url: Uri) {
+        val imageLoader = ImageLoader.Builder(requireContext()).componentRegistry {
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder())
+            } else {
+                add(GifDecoder())
+            }
+        }.build()
+        this.load(url, imageLoader)
+    }
+
+    private fun getRecordGifImage(): Uri {
+        return Uri.parse("android.resource://" + requireActivity().packageName + "/" + R.raw.record)
     }
 
     companion object {
