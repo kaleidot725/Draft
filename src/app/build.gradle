@@ -123,6 +123,10 @@ dependencies {
 
     // Paging
     implementation "androidx.paging:paging-runtime:${versions.paging}"
+
+    // Coil
+    implementation "io.coil-kt:coil:${versions.coil}"
+    implementation "io.coil-kt:coil-gif:${versions.coil}"
 }
 
 repositories {
