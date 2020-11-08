@@ -33,25 +33,22 @@
                 android:text="@{viewModel.message}"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@id/floating_action_button"
+                app:layout_constraintBottom_toTopOf="@id/image_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Listening" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floating_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_gravity="center"
-                app:elevation="0dp"
-                app:fabCustomSize="128dp"
-                app:imageResource="@{viewModel.fabResId}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_text_view"
-                app:maxImageSize="50dp"
-                app:tint="@android:color/white" />
+                app:tint="@android:color/white"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

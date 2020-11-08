@@ -1,10 +1,17 @@
 package jp.kaleidot725.emomemo.ui.audio
 
+import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.load
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentAudioRecordBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
@@ -39,13 +46,11 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
             viewModel.update(event, text)
         }
 
-        binding.let {
-            it.viewModel = viewModel
-            it.floatingActionButton.setOnClickListener { speechRecognizerController.retry() }
-        }
-
         lifecycle.addObserver(speechRecognizerController)
         lifecycle.addObserver(hidingFragmentHandler)
+
+        binding.viewModel = viewModel
+        binding.imageView.loadGifImage(getRecordGifImage())
 
         viewModel.shouldHide.observe(viewLifecycleOwner, Observer {
             if (it) {
@@ -68,6 +73,21 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
         super.onDestroyView()
         lifecycle.removeObserver(speechRecognizerController)
         lifecycle.removeObserver(hidingFragmentHandler)
+    }
+
+    private fun ImageView.loadGifImage(url: Uri) {
+        val imageLoader = ImageLoader.Builder(requireContext()).componentRegistry {
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder())
+            } else {
+                add(GifDecoder())
+            }
+        }.build()
+        this.load(url, imageLoader)
+    }
+
+    private fun getRecordGifImage(): Uri {
+        return Uri.parse("android.resource://" + requireActivity().packageName + "/" + R.raw.record)
     }
 
     companion object {
