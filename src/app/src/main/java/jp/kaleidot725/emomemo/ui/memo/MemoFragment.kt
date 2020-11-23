@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
@@ -25,6 +26,7 @@ import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
+import kotlinx.android.synthetic.main.fragment_memo.recycler_view
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
@@ -57,6 +59,8 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             epoxyController.submitList(it.messages)
             epoxyController.submitSelectedList(it.selectedMessages)
             epoxyController.requestForcedModelBuild()
+            hideSoftKeyBoard()
+            scrollToLatestMessage()
         })
 
         viewModel.actionMode.observe(viewLifecycleOwner, Observer {
@@ -106,6 +110,10 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         Toast.makeText(context, R.string.memo_fragment_audio_permission_never_ask_again, Toast.LENGTH_SHORT).show()
     }
 
+    private fun scrollToLatestMessage() {
+        binding.recyclerView.scrollToPosition(0)
+    }
+
     private fun hideSoftKeyBoard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
@@ -138,6 +146,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
 
         this.setController(epoxyController)
+        this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
         this.addItemDecoration(decoration)
     }
 }

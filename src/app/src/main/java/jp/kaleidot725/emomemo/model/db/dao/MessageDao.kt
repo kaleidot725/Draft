@@ -28,8 +28,11 @@ interface MessageDao {
     @Query("select * from message")
     suspend fun getAll(): List<MessageEntity>
 
-    @Query("select * from message where memoId = :memoId LIMIT :limit OFFSET :offset")
-    suspend fun getPage(memoId: Int, offset: Int, limit: Int): List<MessageEntity>
+    @Query("select * from message where memoId = :memoId ORDER BY time ASC LIMIT :limit OFFSET :offset")
+    suspend fun getPageAsc(memoId: Int, offset: Int, limit: Int): List<MessageEntity>
+
+    @Query("select * from message where memoId = :memoId ORDER BY time DESC LIMIT :limit OFFSET :offset")
+    suspend fun getPageDesc(memoId: Int, offset: Int, limit: Int): List<MessageEntity>
 
     @Query("select COUNT(*) from message where memoId = :memoId")
     suspend fun getMessageCount(memoId: Int): Int

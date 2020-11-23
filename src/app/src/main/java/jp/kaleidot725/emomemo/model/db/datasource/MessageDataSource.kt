@@ -20,7 +20,7 @@ class MessageDataSource(
         val perPage = params.requestedLoadSize
 
         // ページに表示するデータを取得する
-        val items = runBlocking { repository.getPage(memoId, page, perPage) }
+        val items = runBlocking { repository.getPageDesc(memoId, page, perPage) }
 
         // 次に表示するページの番号を計算する
         val nextPage = page + 1
@@ -37,7 +37,7 @@ class MessageDataSource(
         val perPage = params.requestedLoadSize
 
         // ページに表示するデータを取得する
-        val items = runBlocking { repository.getPage(memoId, page, perPage) }
+        val items = runBlocking { repository.getPageDesc(memoId, page, perPage) }
 
         // 次に表示するページの番号を計算する
         val nextPage = page + 1
