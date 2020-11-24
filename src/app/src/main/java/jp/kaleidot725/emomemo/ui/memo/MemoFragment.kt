@@ -75,12 +75,12 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             }
         })
 
-        navController.getBackStackEntry(R.id.memoFragment).lifecycle.addObserver(refreshObserver)
+        lifecycle.addObserver(refreshObserver)
     }
 
     override fun onDestroyView() {
         hideSoftKeyBoard()
-        navController.getBackStackEntry(R.id.homeFragment).lifecycle.removeObserver(refreshObserver)
+        lifecycle.removeObserver(refreshObserver)
         super.onDestroyView()
     }
 
