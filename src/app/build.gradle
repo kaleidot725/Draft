@@ -127,6 +127,9 @@ dependencies {
     // Coil
     implementation "io.coil-kt:coil:${versions.coil}"
     implementation "io.coil-kt:coil-gif:${versions.coil}"
+
+    // Keyboard Visibility Event
+    implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:${versions.keyboard_visibility_event}"
 }
 
 repositories {
