@@ -8,9 +8,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -34,6 +31,7 @@ import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.RuntimePermissions
 import timber.log.Timber
 
+
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val viewModel: MemoViewModel by viewModel()
@@ -41,9 +39,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val navController: NavController get() = findNavController()
     private lateinit var epoxyController: MessageItemRecyclerViewController
     private lateinit var actionModeController: ActionModeController
-    private val refreshObserver: LifecycleObserver = object : DefaultLifecycleObserver {
-        override fun onResume(owner: LifecycleOwner) = viewModel.refresh()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,13 +47,12 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         binding.recyclerView.setup()
         binding.voiceButton.setOnClickListener { showRecordAudioWithPermissionCheck() }
         binding.sendButton.setOnClickListener { viewModel.create() }
-
         viewModel.messagesWithSelectedSet.observe(viewLifecycleOwner, Observer {
             epoxyController.submitList(it.messages)
             epoxyController.submitSelectedList(it.selectedMessages)
             epoxyController.requestForcedModelBuild()
-            hideSoftKeyBoard()
             scrollToLatestMessage()
+            hideSoftKeyBoard()
         })
 
         viewModel.actionMode.observe(viewLifecycleOwner, Observer {
@@ -75,12 +69,11 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             }
         })
 
-        lifecycle.addObserver(refreshObserver)
+        viewModel.refresh()
     }
 
     override fun onDestroyView() {
         hideSoftKeyBoard()
-        lifecycle.removeObserver(refreshObserver)
         super.onDestroyView()
     }
 
@@ -109,7 +102,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     }
 
     private fun scrollToLatestMessage() {
-        binding.recyclerView.scrollToPosition(0)
+        binding.recyclerView.postDelayed({ binding.recyclerView.scrollToPosition(0) }, 400)
     }
 
     private fun hideSoftKeyBoard() {
