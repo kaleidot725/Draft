@@ -39,6 +39,8 @@ import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.ReselectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.ReselectNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
 import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
@@ -171,6 +173,14 @@ val appModule = module {
         ObserveNotebookCountUseCase(get())
     }
 
+    factory {
+        ReselectNotebookUseCase(get(), get())
+    }
+
+    factory {
+        ReselectMemoUseCase(get(), get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get(), get())
     }
@@ -180,7 +190,7 @@ val appModule = module {
     }
 
     viewModel {
-        AddNotebookViewModel(get())
+        AddNotebookViewModel(get(), get())
     }
 
     viewModel {
@@ -188,7 +198,7 @@ val appModule = module {
     }
 
     viewModel {
-        AddMemoDialogViewModel(get())
+        AddMemoDialogViewModel(get(), get())
     }
 
     viewModel {

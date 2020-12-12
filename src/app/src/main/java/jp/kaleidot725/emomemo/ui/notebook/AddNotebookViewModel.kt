@@ -6,9 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.ReselectNotebookUseCase
 import kotlinx.coroutines.launch
 
-class AddNotebookViewModel(private val createNotebookUseCase: CreateNotebookUseCase) : ViewModel() {
+class AddNotebookViewModel(
+    private val createNotebookUseCase: CreateNotebookUseCase,
+    private val reselectNotebookUseCase: ReselectNotebookUseCase
+) : ViewModel() {
     private val _event: LiveEvent<NavEvent> = LiveEvent()
     val event: LiveData<NavEvent> = _event
     val title: MutableLiveData<String> = MutableLiveData()
@@ -18,6 +22,7 @@ class AddNotebookViewModel(private val createNotebookUseCase: CreateNotebookUseC
             val value = title.value ?: ""
             if (value.isNotEmpty()) {
                 createNotebookUseCase.execute(value)
+                reselectNotebookUseCase.execute()
                 _event.postValue(NavEvent.SUCCESS)
             }
         }

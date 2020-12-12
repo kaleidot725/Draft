@@ -7,9 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
+import jp.kaleidot725.emomemo.usecase.ReselectMemoUseCase
 import kotlinx.coroutines.launch
 
-class AddMemoDialogViewModel(private val createMemoUseCase: CreateMemoUseCase) : ViewModel() {
+class AddMemoDialogViewModel(
+    private val createMemoUseCase: CreateMemoUseCase,
+    private val reselectMemoUseCase: ReselectMemoUseCase
+) : ViewModel() {
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
 
@@ -32,6 +36,7 @@ class AddMemoDialogViewModel(private val createMemoUseCase: CreateMemoUseCase) :
 
         viewModelScope.launch {
             createMemoUseCase.execute(inputtedTitle)
+            reselectMemoUseCase.execute()
             complete()
         }
     }
