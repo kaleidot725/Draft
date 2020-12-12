@@ -21,7 +21,6 @@ import jp.kaleidot725.emomemo.ui.message.EditMessageDialogViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogViewModel
-import jp.kaleidot725.emomemo.ui.top.TopViewModel
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
@@ -183,10 +182,6 @@ val appModule = module {
 
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get(), get())
-    }
-
-    viewModel {
-        TopViewModel()
     }
 
     viewModel {

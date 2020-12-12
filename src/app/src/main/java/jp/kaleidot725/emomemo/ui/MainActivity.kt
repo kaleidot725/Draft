@@ -13,7 +13,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.ActivityMainBinding
-import jp.kaleidot725.emomemo.extension.setActionBarVisibility
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
@@ -49,7 +48,9 @@ class MainActivity : AppCompatActivity() {
                     binding.drawerLayout.closeDrawers()
                 }
             }
+
             binding.viewModel = viewModel
+            binding.lifecycleOwner = this
         }
     }
 
@@ -58,18 +59,14 @@ class MainActivity : AppCompatActivity() {
             setupNavDrawer(it.notebooks, it.selectedNotebook)
             setupTitle(it)
         })
+        viewModel.splash()
     }
 
     private fun setupNavController() {
         setupActionBarWithNavController(this, navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, _, _ ->
-            // Change ActionBar Visibility
-            val currentId = controller.currentDestination?.id ?: 0
-            val isNotTopFragment = R.id.topFragment != currentId
-            setActionBarVisibility(isNotTopFragment)
-
             // Change DrawerLayout Lock Status
-            val isHomeFragment = R.id.homeFragment != currentId
+            val isHomeFragment = R.id.homeFragment != controller.currentDestination?.id
             val lockMode = if (isHomeFragment) DrawerLayout.LOCK_MODE_LOCKED_CLOSED else DrawerLayout.LOCK_MODE_UNLOCKED
             binding.drawerLayout.setDrawerLockMode(lockMode)
 
