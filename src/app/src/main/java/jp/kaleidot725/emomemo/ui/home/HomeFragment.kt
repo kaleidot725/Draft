@@ -10,8 +10,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
@@ -90,10 +88,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
 
         this.setController(epoxyController)
-
-        val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)
-        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
-        this.addItemDecoration(decoration)
     }
 
     private fun navigateMemoFragment() {

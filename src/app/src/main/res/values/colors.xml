@@ -1,11 +1,11 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="primaryColor">#0277bc</color>
-    <color name="primaryLightColor">#58a5ef</color>
-    <color name="primaryDarkColor">#004c8b</color>
-    <color name="secondaryColor">#01579b</color>
-    <color name="secondaryLightColor">#4f83cc</color>
-    <color name="secondaryDarkColor">#002f6c</color>
+    <color name="primaryColor">#03A9F4</color>
+    <color name="primaryLightColor">#03A9F4</color>
+    <color name="primaryDarkColor">#03A9F4</color>
+    <color name="secondaryColor">#FFC107</color>
+    <color name="secondaryLightColor">#FFC107</color>
+    <color name="secondaryDarkColor">#FFC107</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="darkPrimaryTextColor">#111111</color>
@@ -15,5 +15,5 @@
 
     <!-- palette-->
     <color name="black">#000000</color>
-    <color name="selected">#500277bc</color>
+    <color name="selected">#FFC107</color>
 </resources>

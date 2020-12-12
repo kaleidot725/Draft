@@ -24,10 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="@{memoViewModel.messagesAreEmpty ? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingVertical="4dp"
+            app:itemSpacing="8dp"
+            app:layout_constraintBottom_toTopOf="@id/message_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/message_layout" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/empty_message_text_view"
@@ -38,10 +40,10 @@
             android:text="@string/message_is_not_found"
             android:textSize="20sp"
             android:visibility="@{memoViewModel.messagesAreEmpty ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/message_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/message_layout" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/message_layout"
@@ -49,9 +51,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/bottomCardColor"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <EditText
                 android:id="@+id/message_edit_text"
