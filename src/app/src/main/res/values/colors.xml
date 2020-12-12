@@ -15,5 +15,5 @@
 
     <!-- palette-->
     <color name="black">#000000</color>
-    <color name="selected">#79a3b1</color>
+    <color name="selected">#FFC107</color>
 </resources>

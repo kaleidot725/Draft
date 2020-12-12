@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
@@ -132,11 +130,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             onLongTapMessage = { viewModel.startAction(it) }
         )
 
-        val drawable = resources.getDrawable(R.drawable.divider, requireContext().theme)
-        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL).apply { setDrawable(drawable) }
-
         this.setController(epoxyController)
-        this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-        this.addItemDecoration(decoration)
     }
 }

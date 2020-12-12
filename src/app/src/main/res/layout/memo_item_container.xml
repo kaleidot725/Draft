@@ -21,37 +21,44 @@
             type="Boolean" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/container"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{selected ? @color/selected : @android:color/white}"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_marginHorizontal="4dp"
+        app:cardCornerRadius="4dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/title_text_view"
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
-            android:text="@{title}"
-            android:textColor="@color/darkPrimaryTextColor"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title Title Title Title Title Title Title" />
+            android:background="@{selected ? @color/selected : @android:color/white}"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lines="2"
-            android:minLines="1"
-            android:text="@{detail}"
-            android:textColor="@color/darkSecondaryTextColor"
-            android:textSize="12sp"
-            tools:text="6 months" />
-    </LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="@{title}"
+                android:textColor="@color/darkPrimaryTextColor"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Title Title Title Title Title Title Title" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/detail_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:minLines="1"
+                android:text="@{detail}"
+                android:textColor="@color/darkSecondaryTextColor"
+                android:textSize="12sp"
+                tools:text="6 months" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
