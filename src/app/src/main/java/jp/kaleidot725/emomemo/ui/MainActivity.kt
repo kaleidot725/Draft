@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             binding.navView.setupWithNavController(navController)
             binding.navView.inflateHeaderView(R.layout.navigation_drawer_header).also { drawerHeader ->
                 drawerHeader.setting_image_button.setOnClickListener {
-                    val intent = Intent(this, SettingActivity::class.java, )
+                    val intent = Intent(this, SettingActivity::class.java)
                     startActivity(intent)
                 }
             }
