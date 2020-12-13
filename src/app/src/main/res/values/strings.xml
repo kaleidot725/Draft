@@ -73,4 +73,6 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="preference_privacy_policy">プライバシーポリシー</string>
+    <string name="preference_license">ライセンス</string>
 </resources>
