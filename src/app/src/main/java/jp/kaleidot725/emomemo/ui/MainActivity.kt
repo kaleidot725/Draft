@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -44,8 +45,8 @@ class MainActivity : AppCompatActivity() {
             binding.navView.setupWithNavController(navController)
             binding.navView.inflateHeaderView(R.layout.navigation_drawer_header).also { drawerHeader ->
                 drawerHeader.setting_image_button.setOnClickListener {
-                    navController.navigate(R.id.action_global_settingFragment)
-                    binding.drawerLayout.closeDrawers()
+                    val intent = Intent(this, SettingActivity::class.java)
+                    startActivity(intent)
                 }
             }
 
