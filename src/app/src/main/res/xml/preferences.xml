@@ -2,12 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        app:key="setting"
+        app:key="@string/privacy_policy"
         app:iconSpaceReserved="false"
         app:title="@string/preference_privacy_policy" />
 
     <Preference
-        app:key="license"
+        app:key="@string/license"
         app:iconSpaceReserved="false"
         app:title="@string/preference_license" />
 </PreferenceScreen>
