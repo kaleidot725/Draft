@@ -3,6 +3,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     ext.versions = [
@@ -28,7 +31,8 @@ buildscript {
             "timber"                   : "4.7.1",
             "coil"                     : "1.0.0",
             "keyboard_visibility_event": "2.3.0",
-            "prefrence" : "1.1.1"
+            "prefrence"                : "1.1.1",
+            "license_tools_plugin"     : "1.2.2"
     ]
 
     dependencies {
@@ -36,6 +40,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.nav}"
         classpath "org.koin:koin-gradle-plugin:${versions.koin}"
+        classpath "gradle.plugin.com.cookpad.android.plugin:plugin:${versions.license_tools_plugin}"
     }
 }
 
