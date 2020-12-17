@@ -4,4 +4,9 @@
         app:key="@string/preference_license"
         app:iconSpaceReserved="false"
         app:title="@string/preference_license" />
+
+    <Preference
+        app:key="@string/version"
+        app:iconSpaceReserved="false"
+        app:title="@string/version"/>
 </PreferenceScreen>

@@ -72,4 +72,5 @@
     <!-- 設定画面 -->
     <string name="preference_license">ライセンス</string>
     <string name="license">ライセンス</string>
+    <string name="version">Version</string>
 </resources>

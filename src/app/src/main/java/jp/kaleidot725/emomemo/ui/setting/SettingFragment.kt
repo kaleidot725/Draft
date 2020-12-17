@@ -6,6 +6,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import jp.kaleidot725.emomemo.R
 
+
 class SettingFragment : PreferenceFragmentCompat() {
     private val navController get() = findNavController()
 
@@ -15,5 +16,8 @@ class SettingFragment : PreferenceFragmentCompat() {
             navController.navigate(R.id.action_settingFragment_to_licenseFragment)
             true
         }
+
+        val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
+        findPreference<Preference>(getString(R.string.version))?.summary = packageInfo.versionName
     }
 }
