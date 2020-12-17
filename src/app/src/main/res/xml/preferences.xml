@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        app:key="@string/privacy_policy"
-        app:iconSpaceReserved="false"
-        app:title="@string/preference_privacy_policy" />
-
-    <Preference
-        app:key="@string/license"
+        app:key="@string/preference_license"
         app:iconSpaceReserved="false"
         app:title="@string/preference_license" />
 </PreferenceScreen>

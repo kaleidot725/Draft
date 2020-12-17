@@ -13,18 +13,10 @@
         <action
             android:id="@+id/action_settingFragment_to_licenseFragment"
             app:destination="@id/licenseFragment" />
-        <action
-            android:id="@+id/action_settingFragment_to_privacyPolicyFragment"
-            app:destination="@id/privacyPolicyFragment" />
     </fragment>
     <fragment
         android:id="@+id/licenseFragment"
         android:name="jp.kaleidot725.emomemo.ui.setting.LicenseFragment"
         android:label="@string/license"
         tools:layout="@layout/fragment_license" />
-    <fragment
-        android:id="@+id/privacyPolicyFragment"
-        android:name="jp.kaleidot725.emomemo.ui.setting.PrivacyPolicyFragment"
-        android:label="@string/privacy_policy"
-        tools:layout="@layout/fragment_privacy_policy" />
 </navigation>
