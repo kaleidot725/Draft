@@ -6,7 +6,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import jp.kaleidot725.emomemo.R
 
-
 class SettingFragment : PreferenceFragmentCompat() {
     private val navController get() = findNavController()
 
