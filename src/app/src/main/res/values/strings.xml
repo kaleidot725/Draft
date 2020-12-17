@@ -68,13 +68,8 @@
     <string name="navigation_drawer_sub_menu_notebooks">一覧</string>
     <string name="edit">編集</string>
     <string name="title_activity_setting">設定</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="preference_privacy_policy">プライバシーポリシー</string>
+
+    <!-- 設定画面 -->
     <string name="preference_license">ライセンス</string>
     <string name="license">ライセンス</string>
-    <string name="privacy_policy">プライバシーポリシー</string>
 </resources>
