@@ -132,8 +132,11 @@ dependencies {
     // Keyboard Visibility Event
     implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:${versions.keyboard_visibility_event}"
 
-    def preference_version = "1.1.1"
+    // Preference
     implementation "androidx.preference:preference-ktx:${versions.prefrence}"
+
+    // Recycler_view Animator
+    implementation "jp.wasabeef:recyclerview-animators:${versions.recycler_view_animator}"
 }
 
 repositories {

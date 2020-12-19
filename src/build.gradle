@@ -32,7 +32,8 @@ buildscript {
             "coil"                     : "1.0.0",
             "keyboard_visibility_event": "2.3.0",
             "prefrence"                : "1.1.1",
-            "license_tools_plugin"     : "1.2.2"
+            "license_tools_plugin"     : "1.2.2",
+            "recycler_view_animator"   : "4.0.1"
     ]
 
     dependencies {

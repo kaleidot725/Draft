@@ -19,6 +19,7 @@ import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
@@ -131,5 +132,11 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         )
 
         this.setController(epoxyController)
+        this.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 100
+            removeDuration = 100
+            moveDuration = 100
+            changeDuration = 100
+        }
     }
 }

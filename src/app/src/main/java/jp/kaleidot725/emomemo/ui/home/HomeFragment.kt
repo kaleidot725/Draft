@@ -18,6 +18,7 @@ import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -88,6 +89,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
 
         this.setController(epoxyController)
+        this.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 100
+            removeDuration = 100
+            moveDuration = 100
+            changeDuration = 100
+        }
     }
 
     private fun navigateMemoFragment() {
