@@ -136,7 +136,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             addDuration = 100
             removeDuration = 100
             moveDuration = 100
-            changeDuration = 100
+            changeDuration = 0
         }
     }
 }
