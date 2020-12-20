@@ -93,7 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             addDuration = 100
             removeDuration = 100
             moveDuration = 100
-            changeDuration = 100
+            changeDuration = 0
         }
     }
 
