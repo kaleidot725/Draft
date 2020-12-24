@@ -12,7 +12,6 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
@@ -36,9 +35,6 @@ class HomeViewModel(
     private val observeMemoCountUseCase: ObserveMemoCountUseCase
 ) : ViewModel() {
     private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
-
-    private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
-    val actionMode: LiveData<ActionModeEvent> = _actionMode
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
@@ -76,52 +72,21 @@ class HomeViewModel(
     fun refresh() {
         viewModelScope.launch {
             status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
         }
     }
 
-    fun select(memo: MemoStatusView) {
+    fun tap(memo: MemoStatusView) {
         viewModelScope.launch {
-            when (actionMode.value) {
-                ActionModeEvent.ON -> {
-                    selectedMemos.add(memo)
-                    status.value = getStatusUseCase.execute()
-                }
-                ActionModeEvent.OFF -> {
-                    selectMemoUseCase.execute(memo.id)
-                    _navEvent.value = NavEvent.NavigateMemo
-                }
-            }
+            selectMemoUseCase.execute(memo.id)
+            _navEvent.value = NavEvent.NavigateMemo
         }
     }
 
-    fun startAction(memo: MemoStatusView) {
+    fun longTap(memo: MemoStatusView) {
         viewModelScope.launch {
-            selectedMemos.add(memo)
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.ON
+            selectMemoUseCase.execute(memo.id)
+            _navEvent.value = NavEvent.NavigateMemoOption
         }
-    }
-
-    fun deleteAction() {
-        viewModelScope.launch {
-            deleteMemoUseCase.execute(selectedMemos.getList())
-            selectedMemos.clear()
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
-        }
-    }
-
-    fun cancelAction() {
-        viewModelScope.launch {
-            selectedMemos.clear()
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
-        }
-    }
-
-    fun editAction() {
-        _navEvent.value = NavEvent.EditMemo(selectedMemos.get())
     }
 
     private fun updateHomeErrorMessage() {
@@ -135,6 +100,6 @@ class HomeViewModel(
 
     sealed class NavEvent {
         object NavigateMemo : NavEvent()
-        data class EditMemo(val memo: MemoStatusView) : NavEvent()
+        object NavigateMemoOption : NavEvent()
     }
 }

@@ -27,8 +27,8 @@
             android:id="@+id/action_homeFragment_to_editMemoDialogFragment"
             app:destination="@id/editMemoDialogFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_notebookOptionDialogFragment"
-            app:destination="@id/notebookOptionDialogFragment" />
+            android:id="@+id/action_homeFragment_to_memoOptionDialogFragment"
+            app:destination="@id/memoOptionDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/homeDialogFragment"
@@ -110,7 +110,7 @@
         android:id="@+id/action_global_editNotebookDialogFragment"
         app:destination="@id/editNotebookDialogFragment" />
     <dialog
-        android:id="@+id/notebookOptionDialogFragment"
+        android:id="@+id/memoOptionDialogFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogFragment"
-        android:label="NotebookOptionDialogFragment" />
+        android:label="MemoOptionDialogFragment" />
 </navigation>
