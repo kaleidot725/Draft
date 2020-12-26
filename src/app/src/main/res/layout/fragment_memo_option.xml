@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="title"
-            type="String" />
+            name="viewModel"
+            type="jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogViewModel" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,24 +21,34 @@
             tools:ignore="UselessParent">
 
             <TextView
+                android:id="@+id/title_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:paddingVertical="8dp"
-                android:text="@{title}"
+                android:text="@{viewModel.memo.title}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 tools:text="TITLE TITLE TITLE" />
 
             <TextView
+                android:id="@+id/edit_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{() -> viewModel.edit()}"
                 android:paddingVertical="16sp"
                 android:text="@string/do_editting"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/delete_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{() -> viewModel.delete()}"
                 android:paddingVertical="16sp"
                 android:text="@string/do_deleting"
                 android:textSize="16sp" />

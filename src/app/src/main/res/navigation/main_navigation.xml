@@ -24,9 +24,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_homeFragment_to_editMemoDialogFragment"
-            app:destination="@id/editMemoDialogFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_memoOptionDialogFragment"
             app:destination="@id/memoOptionDialogFragment" />
     </fragment>
@@ -113,4 +110,7 @@
         android:id="@+id/memoOptionDialogFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogFragment"
         android:label="MemoOptionDialogFragment" />
+    <action
+        android:id="@+id/action_global_editMemoDialogFragment"
+        app:destination="@id/editMemoDialogFragment" />
 </navigation>

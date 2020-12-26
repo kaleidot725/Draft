@@ -7,22 +7,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
 import kotlinx.coroutines.launch
 
 class EditMemoDialogViewModel(
-    private val memo: MemoStatusView,
+    private val getStatusUseCase: GetStatusUseCase,
+    private val getMemoUseCase: GetMemoUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase
 ) : ViewModel() {
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
 
-    val inputTitle: MutableLiveData<String> = MutableLiveData(memo.title)
-    private var inputtedTitle: String = memo.title
+    private val _memo: MutableLiveData<MemoStatusView> = MutableLiveData()
+    val memo: LiveData<MemoStatusView> = _memo
+
+    val inputTitle: MutableLiveData<String> = MutableLiveData()
+    private var inputtedTitle: String = ""
     private val inputTitleObserver: Observer<String> = Observer { inputtedTitle = it }
 
     init {
-        inputTitle.observeForever(inputTitleObserver)
+        viewModelScope.launch {
+            val status = getStatusUseCase.execute()
+            val memo = getMemoUseCase.execute(status.memoId) ?: return@launch
+            inputTitle.value = memo.title
+            inputTitle.observeForever(inputTitleObserver)
+        }
     }
 
     override fun onCleared() {
@@ -35,6 +46,8 @@ class EditMemoDialogViewModel(
         }
 
         viewModelScope.launch {
+            val status = getStatusUseCase.execute()
+            val memo = getMemoUseCase.execute(status.memoId) ?: return@launch
             updateMemoUseCase.execute(memo.id, memo.notebookId, inputtedTitle)
             complete()
         }

@@ -13,7 +13,7 @@ import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
-import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
+import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
@@ -30,7 +30,7 @@ class HomeViewModel(
     private val getStatusUseCase: GetStatusUseCase,
     private val getMemosUseCase: GetMemosUseCase,
     private val selectMemoUseCase: SelectMemoUseCase,
-    private val deleteMemoUseCase: DeleteMemosUseCase,
+    private val deleteMemoUseCase: DeleteMemoUseCase,
     private val observeNotebookCountUseCase: ObserveNotebookCountUseCase,
     private val observeMemoCountUseCase: ObserveMemoCountUseCase
 ) : ViewModel() {
