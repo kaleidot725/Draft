@@ -18,7 +18,7 @@ import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
-import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
 import kotlinx.coroutines.launch
 
 data class MemosWithSelectedSet(

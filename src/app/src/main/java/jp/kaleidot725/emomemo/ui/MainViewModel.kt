@@ -13,7 +13,7 @@ import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

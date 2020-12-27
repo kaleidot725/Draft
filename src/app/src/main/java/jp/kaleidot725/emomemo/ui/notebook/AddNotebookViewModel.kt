@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.ReselectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.ReselectNotebookUseCase
 import kotlinx.coroutines.launch
 
 class AddNotebookViewModel(
