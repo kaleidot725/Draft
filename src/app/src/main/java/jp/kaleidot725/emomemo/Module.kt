@@ -27,7 +27,6 @@ import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteSelectedMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
@@ -35,18 +34,19 @@ import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
-import jp.kaleidot725.emomemo.usecase.GetSelectedMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
-import jp.kaleidot725.emomemo.usecase.ReselectMemoUseCase
-import jp.kaleidot725.emomemo.usecase.ReselectNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
-import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.ReselectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.ReselectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMemoUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -139,10 +139,6 @@ val appModule = module {
     }
 
     factory {
-        UpdateMemoUseCase(get())
-    }
-
-    factory {
         UpdateMessageUseCase(get())
     }
 
@@ -189,7 +185,11 @@ val appModule = module {
     factory {
         GetSelectedMemoUseCase(get(), get())
     }
-    
+
+    factory {
+        UpdateSelectedMemoUseCase(get(), get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get(), get())
     }
@@ -219,7 +219,7 @@ val appModule = module {
     }
 
     viewModel {
-        EditMemoDialogViewModel(get(), get(), get())
+        EditMemoDialogViewModel(get(), get())
     }
 
     viewModel { (message: MessageEntity) ->

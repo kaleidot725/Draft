@@ -7,15 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMemoUseCase
 import kotlinx.coroutines.launch
 
 class EditMemoDialogViewModel(
-    private val getStatusUseCase: GetStatusUseCase,
-    private val getMemoUseCase: GetMemoUseCase,
-    private val updateMemoUseCase: UpdateMemoUseCase
+    private val getSelectedMemoUseCase: GetSelectedMemoUseCase,
+    private val updateSelectedMemoUseCase: UpdateSelectedMemoUseCase
 ) : ViewModel() {
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
@@ -29,10 +27,10 @@ class EditMemoDialogViewModel(
 
     init {
         viewModelScope.launch {
-            val status = getStatusUseCase.execute()
-            val memo = getMemoUseCase.execute(status.memoId) ?: return@launch
-            inputTitle.value = memo.title
-            inputTitle.observeForever(inputTitleObserver)
+            getSelectedMemoUseCase.execute()?.let { memo ->
+                inputTitle.value = memo.title
+                inputTitle.observeForever(inputTitleObserver)
+            }
         }
     }
 
@@ -46,18 +44,12 @@ class EditMemoDialogViewModel(
         }
 
         viewModelScope.launch {
-            val status = getStatusUseCase.execute()
-            val memo = getMemoUseCase.execute(status.memoId) ?: return@launch
-            updateMemoUseCase.execute(memo.id, memo.notebookId, inputtedTitle)
-            complete()
+            updateSelectedMemoUseCase.execute(inputtedTitle)
+            _isCompleted.value = true
         }
     }
 
     fun cancel() {
-        complete()
-    }
-
-    private fun complete() {
         _isCompleted.value = true
     }
 }
