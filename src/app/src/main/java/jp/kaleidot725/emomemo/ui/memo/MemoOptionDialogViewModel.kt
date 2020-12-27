@@ -6,15 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.DeleteSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.GetSelectedMemoUseCase
 import kotlinx.coroutines.launch
 
 class MemoOptionDialogViewModel(
-    private val getStatusUseCase: GetStatusUseCase,
-    private val getMemoUseCase: GetMemoUseCase,
-    private val deleteMemoUseCase: DeleteMemoUseCase,
+    private val getSelectedMemoUseCase: GetSelectedMemoUseCase,
+    private val deleteSelectedMemoUseCase: DeleteSelectedMemoUseCase
 ) : ViewModel() {
     private val _memo: MutableLiveData<MemoStatusView> = MutableLiveData()
     val memo: LiveData<MemoStatusView> = _memo
@@ -24,9 +22,7 @@ class MemoOptionDialogViewModel(
 
     init {
         viewModelScope.launch {
-            val status = getStatusUseCase.execute()
-            val selected = getMemoUseCase.execute(status.memoId) ?: return@launch
-            _memo.value = selected
+            _memo.value = getSelectedMemoUseCase.execute()
         }
     }
 
@@ -38,8 +34,7 @@ class MemoOptionDialogViewModel(
 
     fun delete() {
         viewModelScope.launch {
-            val status = getStatusUseCase.execute()
-            deleteMemoUseCase.execute(status.memoId)
+            deleteSelectedMemoUseCase.execute()
             _navEvent.value = NavEvent.NavigateMemoDelete
         }
     }

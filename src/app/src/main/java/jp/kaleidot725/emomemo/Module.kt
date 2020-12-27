@@ -27,6 +27,7 @@ import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.DeleteSelectedMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
@@ -34,6 +35,7 @@ import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.usecase.GetSelectedMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
@@ -180,6 +182,14 @@ val appModule = module {
         ReselectMemoUseCase(get(), get())
     }
 
+    factory {
+        DeleteSelectedMemoUseCase(get(), get())
+    }
+
+    factory {
+        GetSelectedMemoUseCase(get(), get())
+    }
+    
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get(), get())
     }
@@ -221,6 +231,6 @@ val appModule = module {
     }
 
     viewModel {
-        MemoOptionDialogViewModel(get(), get(), get())
+        MemoOptionDialogViewModel(get(), get())
     }
 }
