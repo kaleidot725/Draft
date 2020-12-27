@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.ui.home
 
 import android.os.Bundle
-import android.view.ActionMode
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -14,9 +13,6 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
-import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,7 +27,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private lateinit var epoxyController: MemoItemRecyclerViewController
-    private lateinit var actionModeController: ActionModeController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,18 +41,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             epoxyController.requestForcedModelBuild()
         })
 
-        viewModel.actionMode.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                ActionModeEvent.ON -> actionModeController.startActionMode(requireActivity())
-                ActionModeEvent.OFF -> actionModeController.cancelActionMode()
-                else -> Timber.w("invalid actionEvent")
-            }
-        })
-
         viewModel.navEvent.observe(viewLifecycleOwner, Observer {
             when (it) {
                 HomeViewModel.NavEvent.NavigateMemo -> navigateMemoFragment()
-                is HomeViewModel.NavEvent.EditMemo -> navigateEditMemoFragment(it.memo)
+                is HomeViewModel.NavEvent.NavigateMemoOption -> navigateMemoOptionFragment()
                 else -> Timber.w("invalid navEvent")
             }
         })
@@ -71,21 +58,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun EpoxyRecyclerView.setup() {
-        actionModeController = ActionModeController(
-            R.menu.memo_action_menu,
-            ActionMode.TYPE_PRIMARY,
-            onAction = {
-                when (it.itemId) {
-                    R.id.delete -> viewModel.deleteAction()
-                    R.id.edit -> viewModel.editAction()
-                }
-            },
-            onDestroy = { viewModel.cancelAction() }
-        )
-
         epoxyController = MemoItemRecyclerViewController(
-            onClickMemo = { viewModel.select(it) },
-            onLongTapMemo = { viewModel.startAction(it) }
+            onClickMemo = { viewModel.tap(it) },
+            onLongTapMemo = { viewModel.longTap(it) }
         )
 
         this.setController(epoxyController)
@@ -101,9 +76,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         navController.navigate(R.id.action_homeFragment_to_memoFragment)
     }
 
-    private fun navigateEditMemoFragment(memo: MemoStatusView) {
-        val action = HomeFragmentDirections.actionHomeFragmentToEditMemoDialogFragment(memo)
-        navController.navigate(action)
+    private fun navigateMemoOptionFragment() {
+        navController.navigate(R.id.action_homeFragment_to_memoOptionDialogFragment)
     }
 
     private fun navigateHomeDialogFragment() {

@@ -10,12 +10,12 @@ import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
 import jp.kaleidot725.emomemo.ui.memo.AddMemoDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.EditMemoDialogViewModel
+import jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.message.EditMessageDialogViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
@@ -24,7 +24,7 @@ import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogViewModel
 import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteMemosUseCase
+import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoCountUseCase
@@ -38,13 +38,15 @@ import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
-import jp.kaleidot725.emomemo.usecase.ReselectMemoUseCase
-import jp.kaleidot725.emomemo.usecase.ReselectNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.SelectMemoUseCase
-import jp.kaleidot725.emomemo.usecase.SelectNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.ReselectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.ReselectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMemoUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -129,15 +131,11 @@ val appModule = module {
     }
 
     factory {
-        DeleteMemosUseCase(get())
+        DeleteMemoUseCase(get())
     }
 
     factory {
         DeleteMessagesUseCase(get())
-    }
-
-    factory {
-        UpdateMemoUseCase(get())
     }
 
     factory {
@@ -180,6 +178,18 @@ val appModule = module {
         ReselectMemoUseCase(get(), get())
     }
 
+    factory {
+        DeleteSelectedMemoUseCase(get(), get())
+    }
+
+    factory {
+        GetSelectedMemoUseCase(get(), get())
+    }
+
+    factory {
+        UpdateSelectedMemoUseCase(get(), get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get(), get())
     }
@@ -208,8 +218,8 @@ val appModule = module {
         MainViewModel(get(), get(), get(), get(), get())
     }
 
-    viewModel { (memo: MemoStatusView) ->
-        EditMemoDialogViewModel(memo, get())
+    viewModel {
+        EditMemoDialogViewModel(get(), get())
     }
 
     viewModel { (message: MessageEntity) ->
@@ -218,5 +228,9 @@ val appModule = module {
 
     viewModel { (notebook: NotebookEntity) ->
         EditNotebookDialogViewModel(notebook, get())
+    }
+
+    viewModel {
+        MemoOptionDialogViewModel(get(), get())
     }
 }

@@ -6,18 +6,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentEditMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class EditMemoDialogFragment : DialogFragment(R.layout.fragment_edit_memo) {
-    private val args: EditMemoDialogFragmentArgs by navArgs()
     private val navController: NavController get() = findNavController()
     private val binding: FragmentEditMemoBinding by viewBinding()
-    private val editMemoDialogViewModel: EditMemoDialogViewModel by viewModel { parametersOf(args.memo) }
+    private val editMemoDialogViewModel: EditMemoDialogViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

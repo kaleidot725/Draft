@@ -7,22 +7,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.UpdateMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMemoUseCase
 import kotlinx.coroutines.launch
 
 class EditMemoDialogViewModel(
-    private val memo: MemoStatusView,
-    private val updateMemoUseCase: UpdateMemoUseCase
+    private val getSelectedMemoUseCase: GetSelectedMemoUseCase,
+    private val updateSelectedMemoUseCase: UpdateSelectedMemoUseCase
 ) : ViewModel() {
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
 
-    val inputTitle: MutableLiveData<String> = MutableLiveData(memo.title)
-    private var inputtedTitle: String = memo.title
+    private val _memo: MutableLiveData<MemoStatusView> = MutableLiveData()
+    val memo: LiveData<MemoStatusView> = _memo
+
+    val inputTitle: MutableLiveData<String> = MutableLiveData()
+    private var inputtedTitle: String = ""
     private val inputTitleObserver: Observer<String> = Observer { inputtedTitle = it }
 
     init {
-        inputTitle.observeForever(inputTitleObserver)
+        viewModelScope.launch {
+            getSelectedMemoUseCase.execute()?.let { memo ->
+                inputTitle.value = memo.title
+                inputTitle.observeForever(inputTitleObserver)
+            }
+        }
     }
 
     override fun onCleared() {
@@ -35,16 +44,12 @@ class EditMemoDialogViewModel(
         }
 
         viewModelScope.launch {
-            updateMemoUseCase.execute(memo.id, memo.notebookId, inputtedTitle)
-            complete()
+            updateSelectedMemoUseCase.execute(inputtedTitle)
+            _isCompleted.value = true
         }
     }
 
     fun cancel() {
-        complete()
-    }
-
-    private fun complete() {
         _isCompleted.value = true
     }
 }
