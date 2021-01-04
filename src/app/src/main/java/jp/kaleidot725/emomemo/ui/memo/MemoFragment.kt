@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo.ui.memo
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
 import android.os.Bundle
-import android.view.ActionMode
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -16,8 +15,6 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
-import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
-import jp.kaleidot725.emomemo.ui.common.controller.ActionModeController
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
@@ -28,7 +25,6 @@ import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.OnShowRationale
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.RuntimePermissions
-import timber.log.Timber
 
 @RuntimePermissions
 class MemoFragment : Fragment(R.layout.fragment_memo) {
@@ -36,7 +32,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
     private lateinit var epoxyController: MessageItemRecyclerViewController
-    private lateinit var actionModeController: ActionModeController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,14 +46,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             epoxyController.requestForcedModelBuild()
             scrollToLatestMessage()
             hideSoftKeyBoard()
-        })
-
-        viewModel.actionMode.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                ActionModeEvent.ON -> actionModeController.startActionMode(requireActivity())
-                ActionModeEvent.OFF -> actionModeController.cancelActionMode()
-                else -> Timber.w("invalid actionEvent")
-            }
         })
 
         viewModel.navEvent.observe(viewLifecycleOwner, Observer {
@@ -114,21 +101,9 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     }
 
     private fun EpoxyRecyclerView.setup() {
-        actionModeController = ActionModeController(
-            R.menu.memo_action_menu,
-            ActionMode.TYPE_PRIMARY,
-            onAction = {
-                when (it.itemId) {
-                    R.id.delete -> viewModel.deleteAction()
-                    R.id.edit -> viewModel.editAction()
-                }
-            },
-            onDestroy = { viewModel.cancelAction() }
-        )
-
         epoxyController = MessageItemRecyclerViewController(
             onClickMessage = { viewModel.select(it) },
-            onLongTapMessage = { viewModel.startAction(it) }
+            onLongTapMessage = { }
         )
 
         this.setController(epoxyController)

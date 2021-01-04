@@ -10,7 +10,6 @@ import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
-import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
@@ -37,9 +36,6 @@ class MemoViewModel(
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
-    val actionMode: LiveData<ActionModeEvent> = _actionMode
-
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
@@ -64,18 +60,10 @@ class MemoViewModel(
     fun refresh() {
         viewModelScope.launch {
             status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
         }
     }
 
-    fun select(message: MessageEntity) {
-        viewModelScope.launch {
-            if (actionMode.value == ActionModeEvent.ON) {
-                selectedMessages.add(message)
-                status.value = getStatusUseCase.execute()
-            }
-        }
-    }
+    fun select(message: MessageEntity) {}
 
     fun create() {
         viewModelScope.launch {
@@ -83,35 +71,6 @@ class MemoViewModel(
             inputMessage.value = ""
             status.value = getStatusUseCase.execute()
         }
-    }
-
-    fun startAction(message: MessageEntity) {
-        viewModelScope.launch {
-            selectedMessages.add(message)
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.ON
-        }
-    }
-
-    fun deleteAction() {
-        viewModelScope.launch {
-            deleteMessagesUseCase.execute(selectedMessages.getList())
-            selectedMessages.clear()
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
-        }
-    }
-
-    fun cancelAction() {
-        viewModelScope.launch {
-            selectedMessages.clear()
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
-        }
-    }
-
-    fun editAction() {
-        _navEvent.value = NavEvent.NavigateEditMessage(selectedMessages.get())
     }
 
     override fun onCleared() {
