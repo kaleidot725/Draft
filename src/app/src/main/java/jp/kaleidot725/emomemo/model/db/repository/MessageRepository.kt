@@ -33,6 +33,10 @@ class MessageRepository(private val dao: MessageDao) {
         return dao.getMessageCount(memoId)
     }
 
+    suspend fun getByMessageId(messageId: Int): MessageEntity? {
+        return dao.getByMessageId(messageId)
+    }
+
     fun getMessageCountLiveData(memoId: Int): LiveData<Int> {
         return dao.getMessageCountLiveData(memoId)
     }

@@ -2,6 +2,7 @@ package jp.kaleidot725.emomemo.usecase
 
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_MEMO
+import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_MESSAGE
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
@@ -20,9 +21,9 @@ class DeleteNotebookUseCase(
         if (deleteItem.id == oldStatus?.notebookId) {
             val notebooks = notebookRepository.getAll()
             if (notebooks.isNotEmpty()) {
-                statusRepository.update(notebooks.first().id, UNSELECTED_MEMO)
+                statusRepository.update(notebooks.first().id, UNSELECTED_MEMO, UNSELECTED_MESSAGE)
             } else {
-                statusRepository.update(UNSELECTED_NOTEBOOK, UNSELECTED_MEMO)
+                statusRepository.update(UNSELECTED_NOTEBOOK, UNSELECTED_MEMO, UNSELECTED_MESSAGE)
             }
         }
     }

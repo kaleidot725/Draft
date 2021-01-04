@@ -11,6 +11,6 @@ class ReselectNotebookUseCase(
     suspend fun execute() {
         statusRepository.get()?.notebookId ?: return
         val firstNotebook = notebookRepository.getAll().firstOrNull() ?: return
-        statusRepository.update(firstNotebook.id, StatusEntity.UNSELECTED_NOTEBOOK)
+        statusRepository.update(firstNotebook.id, StatusEntity.UNSELECTED_NOTEBOOK, StatusEntity.UNSELECTED_MESSAGE)
     }
 }
