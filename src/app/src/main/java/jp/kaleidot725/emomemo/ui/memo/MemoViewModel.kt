@@ -12,11 +12,11 @@ import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import kotlinx.coroutines.launch
 
 data class MessageWithSelectedSet(
@@ -26,8 +26,8 @@ data class MessageWithSelectedSet(
 
 class MemoViewModel(
     private val getStatusUseCase: GetStatusUseCase,
+    private val selectMessageUseCase: SelectMessageUseCase,
     private val createMessageUseCase: CreateMessageUseCase,
-    private val deleteMessagesUseCase: DeleteMessagesUseCase,
     private val getMessageUseCase: GetMessageUseCase,
     private val getMessageCountUseCase: GetMessageCountUseCase,
     private val observeRecognizedTextUseCase: ObserveRecognizedTextUseCase
@@ -63,7 +63,12 @@ class MemoViewModel(
         }
     }
 
-    fun select(message: MessageEntity) {}
+    fun longTap(message: MessageEntity) {
+        viewModelScope.launch {
+            selectMessageUseCase.execute(message.id)
+            _navEvent.value = NavEvent.NavigateMessageOption
+        }
+    }
 
     fun create() {
         viewModelScope.launch {
@@ -79,6 +84,6 @@ class MemoViewModel(
     }
 
     sealed class NavEvent {
-        data class NavigateEditMessage(val message: MessageEntity) : NavEvent()
+        object NavigateMessageOption : NavEvent()
     }
 }

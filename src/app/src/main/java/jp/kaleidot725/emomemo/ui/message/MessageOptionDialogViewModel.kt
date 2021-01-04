@@ -1,46 +1,46 @@
-package jp.kaleidot725.emomemo.ui.memo
+package jp.kaleidot725.emomemo.ui.message
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
-import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
+import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMessageUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMessageUseCase
 import kotlinx.coroutines.launch
 
-class MemoOptionDialogViewModel(
-    private val getSelectedMemoUseCase: GetSelectedMemoUseCase,
-    private val deleteSelectedMemoUseCase: DeleteSelectedMemoUseCase
+class MessageOptionDialogViewModel(
+    private val getSelectedMessageUseCase: GetSelectedMessageUseCase,
+    private val deleteSelectedMessageUseCase: DeleteSelectedMessageUseCase
 ) : ViewModel() {
-    private val _memo: MutableLiveData<MemoStatusView> = MutableLiveData()
-    val memo: LiveData<MemoStatusView> = _memo
+    private val _message: MutableLiveData<MessageEntity> = MutableLiveData()
+    val message: LiveData<MessageEntity> = _message
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
     init {
         viewModelScope.launch {
-            _memo.value = getSelectedMemoUseCase.execute()
+            _message.value = getSelectedMessageUseCase.execute()
         }
     }
 
     fun edit() {
         viewModelScope.launch {
-            _navEvent.value = NavEvent.NavigateMemoEdit
+            _navEvent.value = NavEvent.NavigateEdittingMessage
         }
     }
 
     fun delete() {
         viewModelScope.launch {
-            deleteSelectedMemoUseCase.execute()
-            _navEvent.value = NavEvent.NavigateMemoDelete
+            deleteSelectedMessageUseCase.execute()
+            _navEvent.value = NavEvent.NavigateDeletingMessage
         }
     }
 
     sealed class NavEvent {
-        object NavigateMemoEdit : NavEvent()
-        object NavigateMemoDelete : NavEvent()
+        object NavigateEdittingMessage : NavEvent()
+        object NavigateDeletingMessage : NavEvent()
     }
 }

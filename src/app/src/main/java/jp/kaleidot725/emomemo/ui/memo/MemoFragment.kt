@@ -14,7 +14,6 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
@@ -50,7 +49,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
         viewModel.navEvent.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is MemoViewModel.NavEvent.NavigateEditMessage -> navigateEditMessage(it.message)
+                is MemoViewModel.NavEvent.NavigateMessageOption -> navigateEditMessage()
             }
         })
 
@@ -95,15 +94,14 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         imm?.hideSoftInputFromWindow(message_edit_text.windowToken, 0)
     }
 
-    private fun navigateEditMessage(message: MessageEntity) {
-        val action = MemoFragmentDirections.actionMemoFragmentToEditMessageDialogFragment(message)
-        navController.navigate(action)
+    private fun navigateEditMessage() {
+        navController.navigate(R.id.action_memoFragment_to_messageOptionDialogFragment)
     }
 
     private fun EpoxyRecyclerView.setup() {
         epoxyController = MessageItemRecyclerViewController(
-            onClickMessage = { viewModel.select(it) },
-            onLongTapMessage = { }
+            onClickMessage = { /** TODO タップしたときの動作を実装する */ },
+            onLongTapMessage = { viewModel.longTap(it) }
         )
 
         this.setController(epoxyController)

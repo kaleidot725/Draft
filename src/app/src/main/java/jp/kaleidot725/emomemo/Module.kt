@@ -2,7 +2,6 @@ package jp.kaleidot725.emomemo
 
 import androidx.room.Room
 import jp.kaleidot725.emomemo.model.db.AppDatabase
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
@@ -18,6 +17,7 @@ import jp.kaleidot725.emomemo.ui.memo.EditMemoDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogViewModel
 import jp.kaleidot725.emomemo.ui.memo.MemoViewModel
 import jp.kaleidot725.emomemo.ui.message.EditMessageDialogViewModel
+import jp.kaleidot725.emomemo.ui.message.MessageOptionDialogViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogViewModel
@@ -41,12 +41,16 @@ import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMessageUseCase
 import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMessageUseCase
 import jp.kaleidot725.emomemo.usecase.select.ReselectMemoUseCase
 import jp.kaleidot725.emomemo.usecase.select.ReselectNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMemoUseCase
+import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMessageUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -190,6 +194,22 @@ val appModule = module {
         UpdateSelectedMemoUseCase(get(), get())
     }
 
+    factory {
+        DeleteSelectedMessageUseCase(get(), get())
+    }
+
+    factory {
+        GetSelectedMessageUseCase(get(), get())
+    }
+
+    factory {
+        SelectMessageUseCase(get())
+    }
+
+    factory {
+        UpdateSelectedMessageUseCase(get(), get())
+    }
+
     viewModel {
         HomeViewModel(get(), get(), get(), get(), get(), get())
     }
@@ -222,8 +242,8 @@ val appModule = module {
         EditMemoDialogViewModel(get(), get())
     }
 
-    viewModel { (message: MessageEntity) ->
-        EditMessageDialogViewModel(message, get())
+    viewModel {
+        EditMessageDialogViewModel(get(), get())
     }
 
     viewModel { (notebook: NotebookEntity) ->
@@ -232,5 +252,9 @@ val appModule = module {
 
     viewModel {
         MemoOptionDialogViewModel(get(), get())
+    }
+
+    viewModel {
+        MessageOptionDialogViewModel(get(), get())
     }
 }

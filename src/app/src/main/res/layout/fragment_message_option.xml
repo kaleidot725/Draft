@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogViewModel" />
+            type="jp.kaleidot725.emomemo.ui.message.MessageOptionDialogViewModel" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:paddingVertical="8dp"
-                android:text="@{viewModel.memo.title}"
+                android:text="@{viewModel.message.value}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 tools:text="TITLE TITLE TITLE" />

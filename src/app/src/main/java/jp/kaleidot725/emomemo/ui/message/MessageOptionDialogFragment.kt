@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.ui.memo
+package jp.kaleidot725.emomemo.ui.message
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,17 +8,17 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import jp.kaleidot725.emomemo.R
-import jp.kaleidot725.emomemo.databinding.FragmentMemoOptionBinding
+import jp.kaleidot725.emomemo.databinding.FragmentMessageOptionBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MemoOptionDialogFragment : BottomSheetDialogFragment() {
+class MessageOptionDialogFragment : BottomSheetDialogFragment() {
     private val navController: NavController get() = findNavController()
-    private val viewModel: MemoOptionDialogViewModel by viewModel()
-    private val binding: FragmentMemoOptionBinding by viewBinding()
+    private val viewModel: MessageOptionDialogViewModel by viewModel()
+    private val binding: FragmentMessageOptionBinding by viewBinding()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_memo_option, container, false)
+        return inflater.inflate(R.layout.fragment_message_option, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,11 +27,11 @@ class MemoOptionDialogFragment : BottomSheetDialogFragment() {
         binding.viewModel = viewModel
         viewModel.navEvent.observe(viewLifecycleOwner) {
             when (it) {
-                MemoOptionDialogViewModel.NavEvent.NavigateMemoEdit -> {
+                MessageOptionDialogViewModel.NavEvent.NavigateEdittingMessage -> {
                     navController.popBackStack()
-                    navController.navigate(R.id.action_global_editMemoDialogFragment)
+                    navController.navigate(R.id.action_global_editMessageDialogFragment)
                 }
-                MemoOptionDialogViewModel.NavEvent.NavigateMemoDelete -> {
+                MessageOptionDialogViewModel.NavEvent.NavigateDeletingMessage -> {
                     navController.popBackStack()
                 }
             }

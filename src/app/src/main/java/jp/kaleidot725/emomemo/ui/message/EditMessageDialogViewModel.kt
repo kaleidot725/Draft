@@ -6,23 +6,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
-import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.select.GetSelectedMessageUseCase
+import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMessageUseCase
 import kotlinx.coroutines.launch
 
 class EditMessageDialogViewModel(
-    private val message: MessageEntity,
-    private val updateMessageUseCase: UpdateMessageUseCase
+    private val getSelectedMessageUseCase: GetSelectedMessageUseCase,
+    private val updateSelectedMessageUseCase: UpdateSelectedMessageUseCase
 ) : ViewModel() {
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()
     val isCompleted: LiveData<Boolean> = _isCompleted
 
-    val inputTitle: MutableLiveData<String> = MutableLiveData(message.value)
-    private var inputtedTitle: String = message.value
+    val inputTitle: MutableLiveData<String> = MutableLiveData()
+    private var inputtedTitle: String = ""
     private val inputTitleObserver: Observer<String> = Observer { inputtedTitle = it }
 
     init {
-        inputTitle.observeForever(inputTitleObserver)
+        viewModelScope.launch {
+            getSelectedMessageUseCase.execute()?.let { memo ->
+                inputTitle.value = memo.value
+                inputTitle.observeForever(inputTitleObserver)
+            }
+        }
     }
 
     override fun onCleared() {
@@ -35,7 +40,7 @@ class EditMessageDialogViewModel(
         }
 
         viewModelScope.launch {
-            updateMessageUseCase.execute(message, inputtedTitle)
+            updateSelectedMessageUseCase.execute(inputtedTitle)
             complete()
         }
     }
