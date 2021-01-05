@@ -7,6 +7,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -30,6 +33,9 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     private val viewModel: MemoViewModel by viewModel()
     private val binding: FragmentMemoBinding by viewBinding()
     private val navController: NavController get() = findNavController()
+    private val refreshObserver: LifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onResume(owner: LifecycleOwner) = viewModel.refresh()
+    }
     private lateinit var epoxyController: MessageItemRecyclerViewController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,12 +59,13 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             }
         })
 
-        viewModel.refresh()
+        navController.getBackStackEntry(R.id.memoFragment).lifecycle.addObserver(refreshObserver)
     }
 
     override fun onDestroyView() {
         hideSoftKeyBoard()
         super.onDestroyView()
+        navController.getBackStackEntry(R.id.homeFragment).lifecycle.removeObserver(refreshObserver)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
