@@ -14,7 +14,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -64,7 +64,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         )
 
         this.setController(epoxyController)
-        this.itemAnimator = SlideInUpAnimator().apply {
+        this.itemAnimator = SlideInRightAnimator().apply {
             addDuration = 100
             removeDuration = 100
             moveDuration = 100
