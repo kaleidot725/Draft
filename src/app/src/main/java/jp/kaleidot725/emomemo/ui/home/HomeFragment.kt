@@ -14,7 +14,6 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentHomeBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.common.controller.MemoItemRecyclerViewController
-import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -62,14 +61,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             onClickMemo = { viewModel.tap(it) },
             onLongTapMemo = { viewModel.longTap(it) }
         )
-
         this.setController(epoxyController)
-        this.itemAnimator = SlideInRightAnimator().apply {
-            addDuration = 100
-            removeDuration = 100
-            moveDuration = 100
-            changeDuration = 0
-        }
     }
 
     private fun navigateMemoFragment() {

@@ -18,7 +18,6 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMemoBinding
 import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.common.controller.MessageItemRecyclerViewController
-import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import kotlinx.android.synthetic.main.fragment_memo.message_edit_text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import permissions.dispatcher.NeedsPermission
@@ -110,13 +109,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             onClickMessage = { /** TODO タップしたときの動作を実装する */ },
             onLongTapMessage = { viewModel.longTap(it) }
         )
-
         this.setController(epoxyController)
-        this.itemAnimator = SlideInRightAnimator().apply {
-            addDuration = 100
-            removeDuration = 100
-            moveDuration = 100
-            changeDuration = 0
-        }
     }
 }
