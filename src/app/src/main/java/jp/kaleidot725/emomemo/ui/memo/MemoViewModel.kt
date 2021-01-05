@@ -10,14 +10,13 @@ import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
-import jp.kaleidot725.emomemo.ui.common.ActionModeEvent
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
 import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import kotlinx.coroutines.launch
 
 data class MessageWithSelectedSet(
@@ -27,8 +26,8 @@ data class MessageWithSelectedSet(
 
 class MemoViewModel(
     private val getStatusUseCase: GetStatusUseCase,
+    private val selectMessageUseCase: SelectMessageUseCase,
     private val createMessageUseCase: CreateMessageUseCase,
-    private val deleteMessagesUseCase: DeleteMessagesUseCase,
     private val getMessageUseCase: GetMessageUseCase,
     private val getMessageCountUseCase: GetMessageCountUseCase,
     private val observeRecognizedTextUseCase: ObserveRecognizedTextUseCase
@@ -36,9 +35,6 @@ class MemoViewModel(
     // TODO 未実装
     private val _loading: MutableLiveData<Boolean> = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
-
-    private val _actionMode: LiveEvent<ActionModeEvent> = LiveEvent<ActionModeEvent>().apply { value = ActionModeEvent.OFF }
-    val actionMode: LiveData<ActionModeEvent> = _actionMode
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
@@ -64,16 +60,13 @@ class MemoViewModel(
     fun refresh() {
         viewModelScope.launch {
             status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
         }
     }
 
-    fun select(message: MessageEntity) {
+    fun longTap(message: MessageEntity) {
         viewModelScope.launch {
-            if (actionMode.value == ActionModeEvent.ON) {
-                selectedMessages.add(message)
-                status.value = getStatusUseCase.execute()
-            }
+            selectMessageUseCase.execute(message.id)
+            _navEvent.value = NavEvent.NavigateMessageOption
         }
     }
 
@@ -85,41 +78,12 @@ class MemoViewModel(
         }
     }
 
-    fun startAction(message: MessageEntity) {
-        viewModelScope.launch {
-            selectedMessages.add(message)
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.ON
-        }
-    }
-
-    fun deleteAction() {
-        viewModelScope.launch {
-            deleteMessagesUseCase.execute(selectedMessages.getList())
-            selectedMessages.clear()
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
-        }
-    }
-
-    fun cancelAction() {
-        viewModelScope.launch {
-            selectedMessages.clear()
-            status.value = getStatusUseCase.execute()
-            _actionMode.value = ActionModeEvent.OFF
-        }
-    }
-
-    fun editAction() {
-        _navEvent.value = NavEvent.NavigateEditMessage(selectedMessages.get())
-    }
-
     override fun onCleared() {
         super.onCleared()
         observeRecognizedTextUseCase.dispose()
     }
 
     sealed class NavEvent {
-        data class NavigateEditMessage(val message: MessageEntity) : NavEvent()
+        object NavigateMessageOption : NavEvent()
     }
 }

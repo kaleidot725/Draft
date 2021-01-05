@@ -37,6 +37,9 @@ interface MessageDao {
     @Query("select COUNT(*) from message where memoId = :memoId")
     suspend fun getMessageCount(memoId: Int): Int
 
+    @Query("select * from message where id =:messageId")
+    suspend fun getByMessageId(messageId: Int): MessageEntity?
+
     @Query("select COUNT(*) from message where memoId = :memoId")
     fun getMessageCountLiveData(memoId: Int): LiveData<Int>
 }

@@ -53,8 +53,8 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_memoFragment_to_editMessageDialogFragment"
-            app:destination="@id/editMessageDialogFragment" />
+            android:id="@+id/action_memoFragment_to_messageOptionDialogFragment"
+            app:destination="@id/messageOptionDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/audioRecognizerFragment"
@@ -113,4 +113,11 @@
     <action
         android:id="@+id/action_global_editMemoDialogFragment"
         app:destination="@id/editMemoDialogFragment" />
+    <dialog
+        android:id="@+id/messageOptionDialogFragment"
+        android:name="jp.kaleidot725.emomemo.ui.message.MessageOptionDialogFragment"
+        android:label="MessageOptionDialogFragment" />
+    <action
+        android:id="@+id/action_global_editMessageDialogFragment"
+        app:destination="@id/editMessageDialogFragment" />
 </navigation>

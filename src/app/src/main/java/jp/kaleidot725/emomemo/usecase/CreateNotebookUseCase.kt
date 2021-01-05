@@ -19,7 +19,7 @@ class CreateNotebookUseCase(
         if (oldStatus?.notebookId == StatusEntity.UNSELECTED_NOTEBOOK) {
             val notebooks = notebookRepository.getAll()
             if (notebooks.isNotEmpty()) {
-                statusRepository.update(notebooks.first().id, StatusEntity.UNSELECTED_MEMO)
+                statusRepository.update(notebooks.first().id, StatusEntity.UNSELECTED_MEMO, StatusEntity.UNSELECTED_MESSAGE)
             }
         }
     }

@@ -5,8 +5,8 @@ import jp.kaleidot725.emomemo.model.db.dao.StatusDao
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 
 class StatusRepository(private val dao: StatusDao) {
-    suspend fun update(notebookId: Int, memoID: Int) {
-        dao.insert(StatusEntity(DEFAULT_ID, notebookId, memoID))
+    suspend fun update(notebookId: Int, memoID: Int, messageId: Int) {
+        dao.insert(StatusEntity(DEFAULT_ID, notebookId, memoID, messageId))
     }
 
     suspend fun get(): StatusEntity? {
