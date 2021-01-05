@@ -10,7 +10,7 @@ import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 class GetMessageUseCase(private val messageRepository: MessageRepository) {
     fun execute(memoId: Int): LiveData<PagedList<MessageEntity>> {
         val factory = MessageDataSourceFactory(memoId, messageRepository)
-        val config = PagedList.Config.Builder().setInitialLoadSizeHint(10).setPageSize(10).build()
+        val config = PagedList.Config.Builder().setInitialLoadSizeHint(100).setPageSize(100).build()
         return LivePagedListBuilder(factory, config).build()
     }
 }
