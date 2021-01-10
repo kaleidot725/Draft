@@ -12,10 +12,10 @@
         <action
             android:id="@+id/action_homeFragment_to_memoFragment"
             app:destination="@id/memoFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/nav_slide_enter_anim"
+            app:exitAnim="@anim/nav_slide_exit_anim"
+            app:popEnterAnim="@anim/nav_slide_pop_enter_anim"
+            app:popExitAnim="@anim/nav_slide_pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_homeDialogFragment"
             app:destination="@id/homeDialogFragment"
@@ -25,7 +25,11 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_memoOptionDialogFragment"
-            app:destination="@id/memoOptionDialogFragment" />
+            app:destination="@id/memoOptionDialogFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <dialog
         android:id="@+id/homeDialogFragment"
@@ -54,7 +58,11 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_memoFragment_to_messageOptionDialogFragment"
-            app:destination="@id/messageOptionDialogFragment" />
+            app:destination="@id/messageOptionDialogFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <dialog
         android:id="@+id/audioRecognizerFragment"
@@ -105,19 +113,31 @@
     </dialog>
     <action
         android:id="@+id/action_global_editNotebookDialogFragment"
-        app:destination="@id/editNotebookDialogFragment" />
+        app:destination="@id/editNotebookDialogFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <dialog
         android:id="@+id/memoOptionDialogFragment"
         android:name="jp.kaleidot725.emomemo.ui.memo.MemoOptionDialogFragment"
         android:label="MemoOptionDialogFragment" />
     <action
         android:id="@+id/action_global_editMemoDialogFragment"
-        app:destination="@id/editMemoDialogFragment" />
+        app:destination="@id/editMemoDialogFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <dialog
         android:id="@+id/messageOptionDialogFragment"
         android:name="jp.kaleidot725.emomemo.ui.message.MessageOptionDialogFragment"
         android:label="MessageOptionDialogFragment" />
     <action
         android:id="@+id/action_global_editMessageDialogFragment"
-        app:destination="@id/editMessageDialogFragment" />
+        app:destination="@id/editMessageDialogFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>
