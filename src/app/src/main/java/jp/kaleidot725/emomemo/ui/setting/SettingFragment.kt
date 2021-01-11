@@ -17,6 +17,6 @@ class SettingFragment : PreferenceFragmentCompat() {
         }
 
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
-        findPreference<Preference>(getString(R.string.version))?.summary = packageInfo.versionName
+        findPreference<Preference>(getString(R.string.version))?.title = context?.getString(R.string.version) + " : " + packageInfo.versionName
     }
 }

@@ -72,7 +72,7 @@
     <!-- 設定画面 -->
     <string name="preference_license">ライセンス</string>
     <string name="license">ライセンス</string>
-    <string name="version">Version</string>
+    <string name="version">バージョン</string>
     <string name="do_editting">編集する</string>
     <string name="do_deleting">削除する</string>
 </resources>
