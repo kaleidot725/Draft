@@ -92,7 +92,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     }
 
     private fun scrollToLatestMessage() {
-        binding.recyclerView.postDelayed({ binding.recyclerView.scrollToPosition(0) }, 400)
+        binding.recyclerView.postDelayed({ binding.recyclerView.smoothScrollToPosition(0) }, 400)
     }
 
     private fun hideSoftKeyBoard() {
