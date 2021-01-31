@@ -29,8 +29,7 @@
 
         <activity
             android:name=".ui.SettingActivity"
-            android:label="@string/title_activity_setting"
-            android:theme="@style/AppTheme.Setting"/>
+            android:label="@string/title_activity_setting" />
 
         <activity
             android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"

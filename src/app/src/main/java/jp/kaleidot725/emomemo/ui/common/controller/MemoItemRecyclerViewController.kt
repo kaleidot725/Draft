@@ -14,15 +14,12 @@ class MemoItemRecyclerViewController(
     private val onClickMemo: OnClickMemo? = null,
     private val onLongTapMemo: OnLongTapMemo? = null
 ) : PagedListEpoxyController<MemoStatusView>() {
-    private var selected: List<MemoStatusView> = mutableListOf()
-
     override fun buildItemModel(currentPosition: Int, item: MemoStatusView?): EpoxyModel<*> {
         return if (item != null) {
             MemoItemContainerBindingModel_().apply {
                 id(item.id)
                 title(item.title)
                 detail(getDetailString(item))
-                selected(selected.contains(item))
                 onBind { _, view, _ ->
                     view.dataBinding.root.container.apply {
                         setOnClickListener {
@@ -38,10 +35,6 @@ class MemoItemRecyclerViewController(
         } else {
             MemoItemContainerBindingModel_()
         }
-    }
-
-    fun submitSelectedList(selected: List<MemoStatusView>) {
-        this.selected = selected
     }
 
     private fun getDetailString(memoStatusView: MemoStatusView): String {

@@ -46,8 +46,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         binding.sendButton.setOnClickListener { viewModel.create() }
         viewModel.messagesWithSelectedSet.observe(viewLifecycleOwner, Observer {
             epoxyController.submitList(it.messages)
-            epoxyController.submitSelectedList(it.selectedMessages)
-            epoxyController.requestForcedModelBuild()
             scrollToLatestMessage()
             hideSoftKeyBoard()
         })
@@ -92,7 +90,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
     }
 
     private fun scrollToLatestMessage() {
-        binding.recyclerView.postDelayed({ binding.recyclerView.scrollToPosition(0) }, 400)
+        binding.recyclerView.postDelayed({ binding.recyclerView.smoothScrollToPosition(0) }, 400)
     }
 
     private fun hideSoftKeyBoard() {

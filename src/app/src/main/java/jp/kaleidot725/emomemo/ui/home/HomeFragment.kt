@@ -36,8 +36,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.memosWithSelectedSet.observe(viewLifecycleOwner, Observer {
             epoxyController.submitList(it.memos)
-            epoxyController.submitSelectedList(it.selectedMemos)
-            epoxyController.requestForcedModelBuild()
         })
 
         viewModel.navEvent.observe(viewLifecycleOwner, Observer {

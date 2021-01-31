@@ -37,7 +37,7 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingVertical="4dp"
+            android:paddingVertical="8dp"
             app:itemSpacing="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
