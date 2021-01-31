@@ -14,15 +14,12 @@ class MessageItemRecyclerViewController(
     private val onClickMessage: OnClickMessage? = null,
     private val onLongTapMessage: OnLongTapMessage? = null
 ) : PagedListEpoxyController<MessageEntity>() {
-    private var selected: List<MessageEntity> = mutableListOf()
-
     override fun buildItemModel(currentPosition: Int, item: MessageEntity?): EpoxyModel<*> {
         return if (item != null) {
             MessageItemContainerBindingModel_().apply {
                 id(item.time)
                 time(DateFormat.format("yyyy/MM/dd aa hh:mm:ss", item.time).toString())
                 title(item.value)
-                selected(selected.contains(item))
                 onBind { _, view, _ ->
                     view.dataBinding.root.container.apply {
                         setOnClickListener {
@@ -38,9 +35,5 @@ class MessageItemRecyclerViewController(
         } else {
             MessageItemContainerBindingModel_()
         }
-    }
-
-    fun submitSelectedList(selected: List<MessageEntity>) {
-        this.selected = selected
     }
 }

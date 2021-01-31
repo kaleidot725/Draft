@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/message_dialog_fragment_message_title"
-                android:textColor="@color/darkSecondaryTextColor"
+                android:textColor="@color/primaryTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
                 android:hint="@string/message_dialog_fragment_message_title_hint"
                 android:lines="2"
                 android:text="@={viewModel.inputTitle}"
-                android:textColor="@android:color/black"
+                android:textColor="@color/primaryTextColor"
                 app:layout_constraintTop_toBottomOf="@id/title_text_view" />
 
             <Button

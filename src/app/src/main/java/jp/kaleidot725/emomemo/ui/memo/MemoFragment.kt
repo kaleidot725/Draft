@@ -46,8 +46,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         binding.sendButton.setOnClickListener { viewModel.create() }
         viewModel.messagesWithSelectedSet.observe(viewLifecycleOwner, Observer {
             epoxyController.submitList(it.messages)
-            epoxyController.submitSelectedList(it.selectedMessages)
-            epoxyController.requestForcedModelBuild()
             scrollToLatestMessage()
             hideSoftKeyBoard()
         })

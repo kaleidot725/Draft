@@ -92,7 +92,7 @@
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="@{memoViewModel.isNotEmptyMessage()}"
                 android:src="@drawable/ic_send"
-                android:tint="@{memoViewModel.isNotEmptyMessage() ? @color/primaryColor : @color/black}"
+                android:tint="@{memoViewModel.isNotEmptyMessage() ? @color/accentColor : @color/black}"
                 app:layout_constraintBottom_toBottomOf="@id/message_edit_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/voice_button"
