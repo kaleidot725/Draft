@@ -6,8 +6,8 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.usecase.delete.DeleteNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebooksUseCase
 import kotlinx.coroutines.launch
 
 class DeleteNotebookViewModel(

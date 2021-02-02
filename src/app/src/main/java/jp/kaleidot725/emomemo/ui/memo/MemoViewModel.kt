@@ -11,11 +11,11 @@ import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
-import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
-import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.create.CreateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMessageCountUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMessageUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.observe.ObserveRecognizedTextUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import kotlinx.coroutines.launch
 

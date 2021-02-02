@@ -9,10 +9,10 @@ import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ class MainViewModel(
     private val getMemoUseCase: GetMemoUseCase,
     private val selectNotebookUseCase: SelectNotebookUseCase
 ) : ViewModel() {
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData<Boolean>(true)
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val loading: LiveData<Boolean> = _loading
 
     private val refresh: MutableLiveData<Unit> = MutableLiveData(Unit)
@@ -44,23 +44,34 @@ class MainViewModel(
         }
     }
 
+    init {
+        splash()
+    }
+
     fun refresh() {
         refresh.value = Unit
     }
 
-    fun splash() {
-        viewModelScope.launch {
-            _loading.value = true
-            refresh.value = Unit
-            delay(3000)
-            _loading.value = false
-        }
-    }
 
     fun selectNotebook(notebook: NotebookEntity) {
         viewModelScope.launch {
             selectNotebookUseCase.execute(notebook.id)
             refresh.value = Unit
         }
+    }
+
+    private fun splash() {
+        viewModelScope.launch {
+            loading {
+                refresh.value = Unit
+                delay(3000)
+            }
+        }
+    }
+
+    private suspend fun loading(block: suspend () -> Unit) {
+        _loading.value = true
+        block.invoke()
+        _loading.value = false
     }
 }

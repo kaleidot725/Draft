@@ -13,11 +13,11 @@ import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
-import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
+import jp.kaleidot725.emomemo.usecase.delete.DeleteMemoUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMemosUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.observe.ObserveMemoCountUseCase
+import jp.kaleidot725.emomemo.usecase.observe.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
 import kotlinx.coroutines.launch
 

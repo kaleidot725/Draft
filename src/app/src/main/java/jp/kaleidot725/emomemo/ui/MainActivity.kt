@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
             setupNavDrawer(it.notebooks, it.selectedNotebook)
             setupTitle(it)
         })
-        viewModel.splash()
     }
 
     private fun setupNavController() {
