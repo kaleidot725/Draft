@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 data class NotebookWithStatus(
     val notebooks: List<NotebookEntity>,
     val selectedNotebook: NotebookEntity?,
-    val selectedMemo: MemoStatusView?
+    val selectedMemo: MemoStatusView?,
 )
 
 class MainViewModel(
@@ -30,7 +30,7 @@ class MainViewModel(
     private val getMemoUseCase: GetMemoUseCase,
     private val selectNotebookUseCase: SelectNotebookUseCase
 ) : ViewModel() {
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData<Boolean>(true)
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val loading: LiveData<Boolean> = _loading
 
     private val refresh: MutableLiveData<Unit> = MutableLiveData(Unit)
@@ -44,23 +44,34 @@ class MainViewModel(
         }
     }
 
+    init {
+        splash()
+    }
+
     fun refresh() {
         refresh.value = Unit
     }
 
-    fun splash() {
-        viewModelScope.launch {
-            _loading.value = true
-            refresh.value = Unit
-            delay(3000)
-            _loading.value = false
-        }
-    }
 
     fun selectNotebook(notebook: NotebookEntity) {
         viewModelScope.launch {
             selectNotebookUseCase.execute(notebook.id)
             refresh.value = Unit
         }
+    }
+
+    private fun splash() {
+        viewModelScope.launch {
+            loading {
+                refresh.value = Unit
+                delay(3000)
+            }
+        }
+    }
+
+    private suspend fun loading(block: suspend () -> Unit) {
+        _loading.value = true
+        block.invoke()
+        _loading.value = false
     }
 }

@@ -3,6 +3,7 @@ package jp.kaleidot725.emomemo
 import androidx.room.Room
 import jp.kaleidot725.emomemo.model.db.AppDatabase
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
+import jp.kaleidot725.emomemo.model.db.repository.ApplicationRepository
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
@@ -27,6 +28,7 @@ import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
 import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.GetInitializedUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
 import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
@@ -38,6 +40,7 @@ import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.usecase.UpdateInitializedUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.UpdateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
@@ -88,6 +91,10 @@ val appModule = module {
     factory {
         val db: AppDatabase = get()
         StatusRepository(db.statusDao())
+    }
+
+    single {
+        ApplicationRepository()
     }
 
     factory {
@@ -208,6 +215,14 @@ val appModule = module {
 
     factory {
         UpdateSelectedMessageUseCase(get(), get())
+    }
+
+    factory {
+        GetInitializedUseCase(get())
+    }
+
+    factory {
+        UpdateInitializedUseCase(get())
     }
 
     viewModel {
