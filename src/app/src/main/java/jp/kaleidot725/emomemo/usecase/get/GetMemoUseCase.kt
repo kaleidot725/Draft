@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.usecase
+package jp.kaleidot725.emomemo.usecase.get
 
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView

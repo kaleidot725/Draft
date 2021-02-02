@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.create.CreateNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.select.ReselectNotebookUseCase
 import kotlinx.coroutines.launch
 

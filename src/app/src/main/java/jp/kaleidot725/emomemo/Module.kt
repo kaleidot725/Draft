@@ -3,7 +3,6 @@ package jp.kaleidot725.emomemo
 import androidx.room.Room
 import jp.kaleidot725.emomemo.model.db.AppDatabase
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.model.db.repository.ApplicationRepository
 import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
 import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
@@ -22,27 +21,23 @@ import jp.kaleidot725.emomemo.ui.message.MessageOptionDialogViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogViewModel
-import jp.kaleidot725.emomemo.usecase.CreateMemoUseCase
-import jp.kaleidot725.emomemo.usecase.CreateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.CreateNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteMemoUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteMessagesUseCase
-import jp.kaleidot725.emomemo.usecase.DeleteNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.GetInitializedUseCase
-import jp.kaleidot725.emomemo.usecase.GetMemoCountUseCase
-import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetMemosUseCase
-import jp.kaleidot725.emomemo.usecase.GetMessageCountUseCase
-import jp.kaleidot725.emomemo.usecase.GetMessageUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveMemoCountUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveNotebookCountUseCase
-import jp.kaleidot725.emomemo.usecase.ObserveRecognizedTextUseCase
-import jp.kaleidot725.emomemo.usecase.UpdateInitializedUseCase
-import jp.kaleidot725.emomemo.usecase.UpdateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.UpdateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.create.CreateMemoUseCase
+import jp.kaleidot725.emomemo.usecase.create.CreateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.create.CreateNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.delete.DeleteMemoUseCase
+import jp.kaleidot725.emomemo.usecase.delete.DeleteMessagesUseCase
+import jp.kaleidot725.emomemo.usecase.delete.DeleteNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMemoCountUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMemosUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMessageCountUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMessageUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.observe.ObserveMemoCountUseCase
+import jp.kaleidot725.emomemo.usecase.observe.ObserveNotebookCountUseCase
+import jp.kaleidot725.emomemo.usecase.observe.ObserveRecognizedTextUseCase
 import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
 import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMessageUseCase
 import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
@@ -54,6 +49,8 @@ import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
 import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMemoUseCase
 import jp.kaleidot725.emomemo.usecase.select.UpdateSelectedMessageUseCase
+import jp.kaleidot725.emomemo.usecase.update.UpdateMessageUseCase
+import jp.kaleidot725.emomemo.usecase.update.UpdateNotebookUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -91,10 +88,6 @@ val appModule = module {
     factory {
         val db: AppDatabase = get()
         StatusRepository(db.statusDao())
-    }
-
-    single {
-        ApplicationRepository()
     }
 
     factory {
@@ -215,14 +208,6 @@ val appModule = module {
 
     factory {
         UpdateSelectedMessageUseCase(get(), get())
-    }
-
-    factory {
-        GetInitializedUseCase(get())
-    }
-
-    factory {
-        UpdateInitializedUseCase(get())
     }
 
     viewModel {

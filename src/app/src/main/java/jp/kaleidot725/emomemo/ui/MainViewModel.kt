@@ -9,10 +9,10 @@ import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.GetNotebooksUseCase
-import jp.kaleidot725.emomemo.usecase.GetStatusUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetMemoUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebookUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
 import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

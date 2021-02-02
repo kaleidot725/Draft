@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.usecase
+package jp.kaleidot725.emomemo.usecase.observe
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
