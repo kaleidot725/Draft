@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 data class NotebookWithStatus(
     val notebooks: List<NotebookEntity>,
     val selectedNotebook: NotebookEntity?,
-    val selectedMemo: MemoStatusView?,
+    val selectedMemo: MemoStatusView?
 )
 
 class MainViewModel(
