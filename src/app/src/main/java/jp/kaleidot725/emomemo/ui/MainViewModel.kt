@@ -52,7 +52,6 @@ class MainViewModel(
         refresh.value = Unit
     }
 
-
     fun selectNotebook(notebook: NotebookEntity) {
         viewModelScope.launch {
             selectNotebookUseCase.execute(notebook.id)
