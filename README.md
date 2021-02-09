@@ -1,4 +1,4 @@
-# [EMOMEMO](https://play.google.com/store/apps/details?id=jp.kaleidot725.emomemo)
+# EmoMemo
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE.md)
 ![CI](https://github.com/kaleidot725/emomemo/workflows/merge_check/badge.svg
