@@ -13,8 +13,8 @@ android {
         applicationId "jp.kaleidot725.emomemo"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "0.1.0"
+        versionCode 3
+        versionName "0.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
