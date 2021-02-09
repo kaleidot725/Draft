@@ -4,5 +4,3 @@
 )
 
 EmoMemo is simple notebook app for Android.
-
-![](./design/emomemo_black.png)
