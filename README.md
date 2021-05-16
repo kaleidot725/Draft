@@ -11,6 +11,9 @@ EmoMemo is open source, note app for android.
 - Create Notebook and Note and Message.
 - Speech Recognition.
 
+|![demo1](./demo1.jpg) | ![demo2](./demo2.jpg) |
+| -- | -- |
+
 # Download
 
 <a href='https://play.google.com/store/apps/details?id=jp.kaleidot725.emomemo&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height=100/></a>
