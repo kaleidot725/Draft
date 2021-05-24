@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="jp.kaleidot725.emomemo.ui.EmptyStatus" />
+        <import type="jp.kaleidot725.emomemo.ui.common.EmptyStatus" />
 
         <import type="android.view.View" />
 

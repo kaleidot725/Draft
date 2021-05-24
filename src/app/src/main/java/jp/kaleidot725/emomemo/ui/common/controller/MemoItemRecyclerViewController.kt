@@ -4,7 +4,7 @@ import android.text.format.DateFormat
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MemoItemContainerBindingModel_
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.data.view.MemoStatusView
 import kotlinx.android.synthetic.main.memo_item_container.view.container
 
 typealias OnClickMemo = (item: MemoStatusView) -> Unit

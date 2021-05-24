@@ -6,12 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.usecase.update.UpdateNotebookUseCase
+import jp.kaleidot725.emomemo.domain.usecase.update.UpdateNotebookUseCase
 import kotlinx.coroutines.launch
 
 class EditNotebookDialogViewModel(
-    private val notebookEntity: NotebookEntity,
+    private val notebookEntity: jp.kaleidot725.emomemo.data.entity.NotebookEntity,
     private val updateNotebookUseCase: UpdateNotebookUseCase
 ) : ViewModel() {
     private val _isCompleted: LiveEvent<Boolean> = LiveEvent()

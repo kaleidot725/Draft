@@ -4,7 +4,7 @@ import android.text.format.DateFormat
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MessageItemContainerBindingModel_
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
+import jp.kaleidot725.emomemo.data.entity.MessageEntity
 import kotlinx.android.synthetic.main.message_item_container.view.container
 
 typealias OnClickMessage = (item: MessageEntity) -> Unit

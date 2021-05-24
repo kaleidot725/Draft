@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentEditMemoBinding
-import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.extension.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditMemoDialogFragment : DialogFragment(R.layout.fragment_edit_memo) {

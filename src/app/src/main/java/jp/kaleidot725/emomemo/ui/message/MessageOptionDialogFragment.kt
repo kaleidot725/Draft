@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentMessageOptionBinding
-import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.extension.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MessageOptionDialogFragment : BottomSheetDialogFragment() {

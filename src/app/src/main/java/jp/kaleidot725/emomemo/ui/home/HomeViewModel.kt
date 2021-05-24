@@ -9,16 +9,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.R
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.data.entity.StatusEntity
+import jp.kaleidot725.emomemo.data.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
+import jp.kaleidot725.emomemo.data.view.MemoStatusView
+import jp.kaleidot725.emomemo.domain.usecase.delete.DeleteMemoUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetStatusUseCase
+import jp.kaleidot725.emomemo.domain.usecase.observe.ObserveMemoCountUseCase
+import jp.kaleidot725.emomemo.domain.usecase.observe.ObserveNotebookCountUseCase
+import jp.kaleidot725.emomemo.domain.usecase.select.SelectMemoUseCase
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
-import jp.kaleidot725.emomemo.usecase.delete.DeleteMemoUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetMemosUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.observe.ObserveMemoCountUseCase
-import jp.kaleidot725.emomemo.usecase.observe.ObserveNotebookCountUseCase
-import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
 import kotlinx.coroutines.launch
 
 data class MemosWithSelectedSet(
@@ -42,7 +42,8 @@ class HomeViewModel(
     private val status: MutableLiveData<StatusEntity> = MutableLiveData()
     val canAddNotebook: LiveData<Boolean> = status.map { it.notebookId != UNSELECTED_NOTEBOOK }
 
-    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
+    private val memos: LiveData<PagedList<MemoStatusView>> =
+        status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
 
     private var notebookCount: Int = 0

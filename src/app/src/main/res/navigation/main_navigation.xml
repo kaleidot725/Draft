@@ -93,7 +93,7 @@
         android:label="EditMemoDialogFragment">
         <argument
             android:name="memo"
-            app:argType="jp.kaleidot725.emomemo.model.db.view.MemoStatusView" />
+            app:argType="jp.kaleidot725.emomemo.data.view.MemoStatusView" />
     </dialog>
     <dialog
         android:id="@+id/editMessageDialogFragment"
@@ -101,7 +101,7 @@
         android:label="EditMessageDialogFragment">
         <argument
             android:name="message"
-            app:argType="jp.kaleidot725.emomemo.model.db.entity.MessageEntity" />
+            app:argType="jp.kaleidot725.emomemo.data.entity.MessageEntity" />
     </dialog>
     <dialog
         android:id="@+id/editNotebookDialogFragment"
@@ -109,7 +109,7 @@
         android:label="EditNotebookDialogFragment">
         <argument
             android:name="notebook"
-            app:argType="jp.kaleidot725.emomemo.model.db.entity.NotebookEntity" />
+            app:argType="jp.kaleidot725.emomemo.data.entity.NotebookEntity" />
     </dialog>
     <action
         android:id="@+id/action_global_editNotebookDialogFragment"

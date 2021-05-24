@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMemoUseCase
-import jp.kaleidot725.emomemo.usecase.select.GetSelectedMemoUseCase
+import jp.kaleidot725.emomemo.data.view.MemoStatusView
+import jp.kaleidot725.emomemo.domain.usecase.select.DeleteSelectedMemoUseCase
+import jp.kaleidot725.emomemo.domain.usecase.select.GetSelectedMemoUseCase
 import kotlinx.coroutines.launch
 
 class MemoOptionDialogViewModel(

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentLicenseBinding
-import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.extension.viewBinding
 
 class LicenseFragment : Fragment(R.layout.fragment_license) {
     private val binding: FragmentLicenseBinding by viewBinding()

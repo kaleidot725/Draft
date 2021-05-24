@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
-import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMessageUseCase
-import jp.kaleidot725.emomemo.usecase.select.GetSelectedMessageUseCase
+import jp.kaleidot725.emomemo.data.entity.MessageEntity
+import jp.kaleidot725.emomemo.domain.usecase.select.DeleteSelectedMessageUseCase
+import jp.kaleidot725.emomemo.domain.usecase.select.GetSelectedMessageUseCase
 import kotlinx.coroutines.launch
 
 class MessageOptionDialogViewModel(
