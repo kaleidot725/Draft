@@ -4,17 +4,16 @@ import android.text.format.DateFormat
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MemoItemContainerBindingModel_
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
 import kotlinx.android.synthetic.main.memo_item_container.view.container
 
-typealias OnClickMemo = (item: MemoStatusView) -> Unit
-typealias OnLongTapMemo = (item: MemoStatusView) -> Unit
+typealias OnClickMemo = (item: jp.kaleidot725.emomemo.data.view.MemoStatusView) -> Unit
+typealias OnLongTapMemo = (item: jp.kaleidot725.emomemo.data.view.MemoStatusView) -> Unit
 
 class MemoItemRecyclerViewController(
     private val onClickMemo: OnClickMemo? = null,
     private val onLongTapMemo: OnLongTapMemo? = null
-) : PagedListEpoxyController<MemoStatusView>() {
-    override fun buildItemModel(currentPosition: Int, item: MemoStatusView?): EpoxyModel<*> {
+) : PagedListEpoxyController<jp.kaleidot725.emomemo.data.view.MemoStatusView>() {
+    override fun buildItemModel(currentPosition: Int, item: jp.kaleidot725.emomemo.data.view.MemoStatusView?): EpoxyModel<*> {
         return if (item != null) {
             MemoItemContainerBindingModel_().apply {
                 id(item.id)
@@ -37,7 +36,7 @@ class MemoItemRecyclerViewController(
         }
     }
 
-    private fun getDetailString(memoStatusView: MemoStatusView): String {
+    private fun getDetailString(memoStatusView: jp.kaleidot725.emomemo.data.view.MemoStatusView): String {
         return getLatestTimeString(memoStatusView.lastTime) + getLatestMessage(memoStatusView.lastMessage)
     }
 

@@ -6,13 +6,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "com.cookpad.android.plugin.license-tools"
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "jp.kaleidot725.emomemo"
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "0.1.0"
 
@@ -30,9 +30,6 @@ android {
         abortOnError false
     }
 
-    dataBinding {
-        enabled = true
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -42,6 +39,9 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        dataBinding true
+    }
 
     lintOptions {
         disable "NullSafeMutableLiveData"
@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+    implementation project(":data")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -80,15 +81,8 @@ dependencies {
     implementation "com.github.hadilq.liveevent:liveevent:${versions.live_event}"
 
     // Koin
-    implementation "org.koin:koin-androidx-scope:${versions.koin}"
-    implementation "org.koin:koin-androidx-viewmodel:${versions.koin}"
-    implementation "org.koin:koin-androidx-fragment:${versions.koin}"
-    implementation "org.koin:koin-androidx-ext:${versions.koin}"
-
-    // Room
-    implementation "androidx.room:room-runtime:${versions.room}"
-    implementation "androidx.room:room-ktx:${versions.room}"
-    kapt "androidx.room:room-compiler:${versions.room}"
+    implementation "io.insert-koin:koin-android:${versions.koin}"
+    implementation "io.insert-koin:koin-android-ext:${versions.koin}"
 
     // LiveData Ktx
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
@@ -122,9 +116,6 @@ dependencies {
     // Timber
     implementation "com.jakewharton.timber:timber:${versions.timber}"
 
-    // Paging
-    implementation "androidx.paging:paging-runtime:${versions.paging}"
-
     // Coil
     implementation "io.coil-kt:coil:${versions.coil}"
     implementation "io.coil-kt:coil-gif:${versions.coil}"
@@ -151,6 +142,9 @@ def outputDir = "${project.buildDir}/reports/ktlint/"
 
 dependencies {
 
+
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
+    implementation 'androidx.room:room-runtime:2.3.0'
     implementation 'com.google.android.support:wearable:2.7.0'
     implementation 'androidx.wear:wear:1.0.0'
     compileOnly 'com.google.android.wearable:wearable:2.7.0'

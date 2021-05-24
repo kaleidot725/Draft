@@ -1,22 +1,19 @@
 package jp.kaleidot725.emomemo.usecase.delete
 
-import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_MEMO
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_MESSAGE
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
-import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
-import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
+import jp.kaleidot725.emomemo.data.entity.StatusEntity.Companion.UNSELECTED_MEMO
+import jp.kaleidot725.emomemo.data.entity.StatusEntity.Companion.UNSELECTED_MESSAGE
+import jp.kaleidot725.emomemo.data.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 
 class DeleteNotebookUseCase(
-    private val statusRepository: StatusRepository,
-    private val notebookRepository: NotebookRepository
+    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository,
+    private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository
 ) {
-    suspend fun execute(notebook: NotebookEntity) {
+    suspend fun execute(notebook: jp.kaleidot725.emomemo.data.entity.NotebookEntity) {
         notebookRepository.delete(notebook)
         reselectNotebook(notebook)
     }
 
-    private suspend fun reselectNotebook(deleteItem: NotebookEntity) {
+    private suspend fun reselectNotebook(deleteItem: jp.kaleidot725.emomemo.data.entity.NotebookEntity) {
         val oldStatus = statusRepository.get()
         if (deleteItem.id == oldStatus?.notebookId) {
             val notebooks = notebookRepository.getAll()

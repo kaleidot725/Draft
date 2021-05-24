@@ -1,14 +1,6 @@
 package jp.kaleidot725.emomemo
 
 import androidx.room.Room
-import jp.kaleidot725.emomemo.model.db.AppDatabase
-import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
-import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
-import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
-import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
-import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
-import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
 import jp.kaleidot725.emomemo.ui.MainViewModel
 import jp.kaleidot725.emomemo.ui.audio.AudioRecordViewModel
 import jp.kaleidot725.emomemo.ui.home.HomeViewModel
@@ -58,36 +50,36 @@ import org.koin.dsl.module
 val appModule = module {
     // 変更通知の仕組みを実現するためにシングルトンで定義している
     single {
-        AudioRecognizerRepository()
+        jp.kaleidot725.emomemo.data.repository.AudioRecognizerRepository()
     }
 
     factory {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
+        Room.databaseBuilder(androidContext(), jp.kaleidot725.emomemo.data.AppDatabase::class.java, "emomemo-database").build()
     }
 
     factory {
-        val db: AppDatabase = get()
-        NotebookRepository(db.notebookDao())
+        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
+        jp.kaleidot725.emomemo.data.repository.NotebookRepository(db.notebookDao())
     }
 
     factory {
-        val db: AppDatabase = get()
-        MemoRepository(db.memoDao())
+        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
+        jp.kaleidot725.emomemo.data.repository.MemoRepository(db.memoDao())
     }
 
     factory {
-        val db: AppDatabase = get()
-        MessageRepository(db.messageDao())
+        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
+        jp.kaleidot725.emomemo.data.repository.MessageRepository(db.messageDao())
     }
 
     factory {
-        val db: AppDatabase = get()
-        MemoStatusRepository(db.memoStatusDao())
+        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
+        jp.kaleidot725.emomemo.data.repository.MemoStatusRepository(db.memoStatusDao())
     }
 
     factory {
-        val db: AppDatabase = get()
-        StatusRepository(db.statusDao())
+        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
+        jp.kaleidot725.emomemo.data.repository.StatusRepository(db.statusDao())
     }
 
     factory {
@@ -246,7 +238,7 @@ val appModule = module {
         EditMessageDialogViewModel(get(), get())
     }
 
-    viewModel { (notebook: NotebookEntity) ->
+    viewModel { (notebook: jp.kaleidot725.emomemo.data.entity.NotebookEntity) ->
         EditNotebookDialogViewModel(notebook, get())
     }
 

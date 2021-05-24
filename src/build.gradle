@@ -1,8 +1,8 @@
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.4.32'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -16,8 +16,8 @@ buildscript {
             "material"                 : "1.3.0-alpha02",
             "epoxy"                    : "3.11.0",
             "live_event"               : "1.2.0",
-            "koin"                     : "2.2.0-rc-4",
-            "room"                     : "2.3.0-alpha02",
+            "koin"                     : "3.0.2",
+            "room"                     : "2.3.0",
             "livedata_ktx"             : "2.2.0-alpha02",
             "permission_dispatcher"    : "4.7.0",
             "lifecycle"                : "2.2.0",
@@ -37,10 +37,9 @@ buildscript {
     ]
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:7.0.0-beta02'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.nav}"
-        classpath "org.koin:koin-gradle-plugin:${versions.koin}"
         classpath "gradle.plugin.com.cookpad.android.plugin:plugin:${versions.license_tools_plugin}"
     }
 }
@@ -48,12 +47,10 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-apply plugin: 'koin'

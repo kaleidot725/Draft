@@ -3,13 +3,10 @@ package jp.kaleidot725.emomemo.usecase.get
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import jp.kaleidot725.emomemo.model.db.datasource.MessageDataSourceFactory
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
-import jp.kaleidot725.emomemo.model.db.repository.MessageRepository
 
-class GetMessageUseCase(private val messageRepository: MessageRepository) {
-    fun execute(memoId: Int): LiveData<PagedList<MessageEntity>> {
-        val factory = MessageDataSourceFactory(memoId, messageRepository)
+class GetMessageUseCase(private val messageRepository: jp.kaleidot725.emomemo.data.repository.MessageRepository) {
+    fun execute(memoId: Int): LiveData<PagedList<jp.kaleidot725.emomemo.data.entity.MessageEntity>> {
+        val factory = jp.kaleidot725.emomemo.data.datasource.MessageDataSourceFactory(memoId, messageRepository)
         val config = PagedList.Config.Builder().setInitialLoadSizeHint(100).setPageSize(100).build()
         return LivePagedListBuilder(factory, config).build()
     }

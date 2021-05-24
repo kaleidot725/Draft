@@ -1,14 +1,10 @@
 package jp.kaleidot725.emomemo.usecase.select
 
-import jp.kaleidot725.emomemo.model.db.repository.MemoStatusRepository
-import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
-
 class GetSelectedMemoUseCase(
-    private val statusRepository: StatusRepository,
-    private val memoStatusRepository: MemoStatusRepository
+    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository,
+    private val memoStatusRepository: jp.kaleidot725.emomemo.data.repository.MemoStatusRepository
 ) {
-    suspend fun execute(): MemoStatusView? {
+    suspend fun execute(): jp.kaleidot725.emomemo.data.view.MemoStatusView? {
         val status = statusRepository.get() ?: return null
         return memoStatusRepository.getMemoByMemoId(status.memoId)
     }

@@ -1,15 +1,13 @@
 package jp.kaleidot725.emomemo.usecase.get
 
 import androidx.lifecycle.LiveData
-import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
-import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 
-class GetNotebooksUseCase(private val notebookRepository: NotebookRepository) {
-    suspend fun execute(): List<NotebookEntity> {
+class GetNotebooksUseCase(private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository) {
+    suspend fun execute(): List<jp.kaleidot725.emomemo.data.entity.NotebookEntity> {
         return notebookRepository.getAll()
     }
 
-    fun executeLiveData(): LiveData<List<NotebookEntity>> {
+    fun executeLiveData(): LiveData<List<jp.kaleidot725.emomemo.data.entity.NotebookEntity>> {
         return notebookRepository.getAllLiveData()
     }
 }

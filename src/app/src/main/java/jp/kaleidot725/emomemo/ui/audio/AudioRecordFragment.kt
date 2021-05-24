@@ -45,7 +45,7 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
         speechRecognizerController = SpeechRecognizerController(this.context) { event, text ->
             viewModel.update(event, text)
         }
-
+       
         lifecycle.addObserver(speechRecognizerController)
         lifecycle.addObserver(hidingFragmentHandler)
 

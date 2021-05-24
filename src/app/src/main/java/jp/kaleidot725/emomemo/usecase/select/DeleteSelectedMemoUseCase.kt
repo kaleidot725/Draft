@@ -1,11 +1,8 @@
 package jp.kaleidot725.emomemo.usecase.select
 
-import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
-import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
-
 class DeleteSelectedMemoUseCase(
-    private val statusRepository: StatusRepository,
-    private val memoRepository: MemoRepository
+    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository,
+    private val memoRepository: jp.kaleidot725.emomemo.data.repository.MemoRepository
 ) {
     suspend fun execute() {
         val status = statusRepository.get() ?: return

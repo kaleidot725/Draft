@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
 import jp.kaleidot725.emomemo.usecase.select.DeleteSelectedMessageUseCase
 import jp.kaleidot725.emomemo.usecase.select.GetSelectedMessageUseCase
 import kotlinx.coroutines.launch
@@ -14,8 +13,8 @@ class MessageOptionDialogViewModel(
     private val getSelectedMessageUseCase: GetSelectedMessageUseCase,
     private val deleteSelectedMessageUseCase: DeleteSelectedMessageUseCase
 ) : ViewModel() {
-    private val _message: MutableLiveData<MessageEntity> = MutableLiveData()
-    val message: LiveData<MessageEntity> = _message
+    private val _message: MutableLiveData<jp.kaleidot725.emomemo.data.entity.MessageEntity> = MutableLiveData()
+    val message: LiveData<jp.kaleidot725.emomemo.data.entity.MessageEntity> = _message
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent

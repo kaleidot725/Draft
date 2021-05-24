@@ -1,10 +1,7 @@
 package jp.kaleidot725.emomemo.usecase.get
 
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
-import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
-
-class GetStatusUseCase(private val statusRepository: StatusRepository) {
-    suspend fun execute(): StatusEntity {
-        return statusRepository.get() ?: StatusEntity()
+class GetStatusUseCase(private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository) {
+    suspend fun execute(): jp.kaleidot725.emomemo.data.entity.StatusEntity {
+        return statusRepository.get() ?: jp.kaleidot725.emomemo.data.entity.StatusEntity()
     }
 }

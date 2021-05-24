@@ -9,9 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
 import jp.kaleidot725.emomemo.R
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
-import jp.kaleidot725.emomemo.model.db.view.MemoStatusView
+import jp.kaleidot725.emomemo.data.entity.StatusEntity.Companion.UNSELECTED_NOTEBOOK
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.delete.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.usecase.get.GetMemosUseCase
@@ -22,8 +20,8 @@ import jp.kaleidot725.emomemo.usecase.select.SelectMemoUseCase
 import kotlinx.coroutines.launch
 
 data class MemosWithSelectedSet(
-    val memos: PagedList<MemoStatusView>,
-    val selectedMemos: List<MemoStatusView>
+    val memos: PagedList<jp.kaleidot725.emomemo.data.view.MemoStatusView>,
+    val selectedMemos: List<jp.kaleidot725.emomemo.data.view.MemoStatusView>
 )
 
 class HomeViewModel(
@@ -34,15 +32,16 @@ class HomeViewModel(
     private val observeNotebookCountUseCase: ObserveNotebookCountUseCase,
     private val observeMemoCountUseCase: ObserveMemoCountUseCase
 ) : ViewModel() {
-    private val selectedMemos: SingleSelectList<MemoStatusView> = SingleSelectList()
+    private val selectedMemos: SingleSelectList<jp.kaleidot725.emomemo.data.view.MemoStatusView> = SingleSelectList()
 
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
-    private val status: MutableLiveData<StatusEntity> = MutableLiveData()
+    private val status: MutableLiveData<jp.kaleidot725.emomemo.data.entity.StatusEntity> = MutableLiveData()
     val canAddNotebook: LiveData<Boolean> = status.map { it.notebookId != UNSELECTED_NOTEBOOK }
 
-    private val memos: LiveData<PagedList<MemoStatusView>> = status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
+    private val memos: LiveData<PagedList<jp.kaleidot725.emomemo.data.view.MemoStatusView>> =
+        status.switchMap { getMemosUseCase.executeLiveData(it.notebookId) }
     val memosWithSelectedSet: LiveData<MemosWithSelectedSet> = memos.map { MemosWithSelectedSet(it, selectedMemos.getList()) }
 
     private var notebookCount: Int = 0
@@ -75,14 +74,14 @@ class HomeViewModel(
         }
     }
 
-    fun tap(memo: MemoStatusView) {
+    fun tap(memo: jp.kaleidot725.emomemo.data.view.MemoStatusView) {
         viewModelScope.launch {
             selectMemoUseCase.execute(memo.id)
             _navEvent.value = NavEvent.NavigateMemo
         }
     }
 
-    fun longTap(memo: MemoStatusView) {
+    fun longTap(memo: jp.kaleidot725.emomemo.data.view.MemoStatusView) {
         viewModelScope.launch {
             selectMemoUseCase.execute(memo.id)
             _navEvent.value = NavEvent.NavigateMemoOption

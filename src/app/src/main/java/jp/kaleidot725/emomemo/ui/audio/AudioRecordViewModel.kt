@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.repository.AudioRecognizerRepository
 import jp.kaleidot725.emomemo.ui.common.controller.SpeechRecognizerController
 
-class AudioRecordViewModel(private val audioRecognizerRepository: AudioRecognizerRepository) : ViewModel() {
+class AudioRecordViewModel(private val audioRecognizerRepository: jp.kaleidot725.emomemo.data.repository.AudioRecognizerRepository) : ViewModel() {
     private val _event: LiveEvent<SpeechRecognizerController.RecognizeEvent> = LiveEvent()
     val shouldHide: LiveData<Boolean> = _event.map { it.shouldHide() }
 

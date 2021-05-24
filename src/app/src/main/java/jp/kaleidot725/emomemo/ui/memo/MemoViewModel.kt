@@ -8,8 +8,6 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.model.db.entity.MessageEntity
-import jp.kaleidot725.emomemo.model.db.entity.StatusEntity
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import jp.kaleidot725.emomemo.usecase.create.CreateMessageUseCase
 import jp.kaleidot725.emomemo.usecase.get.GetMessageCountUseCase
@@ -20,8 +18,8 @@ import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import kotlinx.coroutines.launch
 
 data class MessageWithSelectedSet(
-    val messages: PagedList<MessageEntity>,
-    val selectedMessages: List<MessageEntity>
+    val messages: PagedList<jp.kaleidot725.emomemo.data.entity.MessageEntity>,
+    val selectedMessages: List<jp.kaleidot725.emomemo.data.entity.MessageEntity>
 )
 
 class MemoViewModel(
@@ -39,10 +37,11 @@ class MemoViewModel(
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
-    private val selectedMessages: SingleSelectList<MessageEntity> = SingleSelectList()
+    private val selectedMessages: SingleSelectList<jp.kaleidot725.emomemo.data.entity.MessageEntity> = SingleSelectList()
 
-    private val status: MutableLiveData<StatusEntity> = MutableLiveData()
-    private val messages: LiveData<PagedList<MessageEntity>> = status.switchMap { getMessageUseCase.execute(it.memoId) }
+    private val status: MutableLiveData<jp.kaleidot725.emomemo.data.entity.StatusEntity> = MutableLiveData()
+    private val messages: LiveData<PagedList<jp.kaleidot725.emomemo.data.entity.MessageEntity>> =
+        status.switchMap { getMessageUseCase.execute(it.memoId) }
     val messagesWithSelectedSet: LiveData<MessageWithSelectedSet> = messages.map { MessageWithSelectedSet(it, selectedMessages.getList()) }
 
     val inputMessage: MutableLiveData<String> = MutableLiveData()
@@ -63,7 +62,7 @@ class MemoViewModel(
         }
     }
 
-    fun longTap(message: MessageEntity) {
+    fun longTap(message: jp.kaleidot725.emomemo.data.entity.MessageEntity) {
         viewModelScope.launch {
             selectMessageUseCase.execute(message.id)
             _navEvent.value = NavEvent.NavigateMessageOption

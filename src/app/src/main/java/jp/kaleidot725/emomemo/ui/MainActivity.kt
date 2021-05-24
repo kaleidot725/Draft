@@ -14,7 +14,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.ActivityMainBinding
-import jp.kaleidot725.emomemo.model.db.entity.NotebookEntity
 import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.setting_image_button
@@ -75,7 +74,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupNavDrawer(notebooks: List<NotebookEntity>?, selectedNotebook: NotebookEntity?) {
+    private fun setupNavDrawer(
+        notebooks: List<jp.kaleidot725.emomemo.data.entity.NotebookEntity>?,
+        selectedNotebook: jp.kaleidot725.emomemo.data.entity.NotebookEntity?
+    ) {
         // Initialize
         val menu = binding.navView.menu.apply { clear() }
 

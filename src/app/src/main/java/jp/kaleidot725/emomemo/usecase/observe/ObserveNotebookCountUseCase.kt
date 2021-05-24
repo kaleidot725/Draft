@@ -2,11 +2,10 @@ package jp.kaleidot725.emomemo.usecase.observe
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import jp.kaleidot725.emomemo.model.db.repository.NotebookRepository
 import timber.log.Timber
 
 class ObserveNotebookCountUseCase(
-    private val notebookRepository: NotebookRepository
+    private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository
 ) {
     private var liveData: LiveData<Int>? = null
     private var observer: Observer<Int>? = null

@@ -1,16 +1,12 @@
 package jp.kaleidot725.emomemo.usecase.select
 
-import jp.kaleidot725.emomemo.model.db.entity.MemoEntity
-import jp.kaleidot725.emomemo.model.db.repository.MemoRepository
-import jp.kaleidot725.emomemo.model.db.repository.StatusRepository
-
 class UpdateSelectedMemoUseCase(
-    private val statusRepository: StatusRepository,
-    private val memoRepository: MemoRepository
+    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository,
+    private val memoRepository: jp.kaleidot725.emomemo.data.repository.MemoRepository
 ) {
     suspend fun execute(title: String) {
         val status = statusRepository.get() ?: return
-        val new = MemoEntity(status.memoId, status.notebookId, title)
+        val new = jp.kaleidot725.emomemo.data.entity.MemoEntity(status.memoId, status.notebookId, title)
         memoRepository.update(new)
     }
 }
