@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hadilq.liveevent.LiveEvent
-import jp.kaleidot725.emomemo.usecase.create.CreateMemoUseCase
-import jp.kaleidot725.emomemo.usecase.select.ReselectMemoUseCase
+import jp.kaleidot725.emomemo.domain.usecase.create.CreateMemoUseCase
+import jp.kaleidot725.emomemo.domain.usecase.select.ReselectMemoUseCase
 import kotlinx.coroutines.launch
 
 class AddMemoDialogViewModel(

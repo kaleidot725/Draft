@@ -38,7 +38,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0-beta02'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.nav}"
         classpath "gradle.plugin.com.cookpad.android.plugin:plugin:${versions.license_tools_plugin}"
     }

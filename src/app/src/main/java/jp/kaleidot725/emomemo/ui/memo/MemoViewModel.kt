@@ -8,13 +8,13 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.domain.usecase.create.CreateMessageUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetMessageCountUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetMessageUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetStatusUseCase
+import jp.kaleidot725.emomemo.domain.usecase.observe.ObserveRecognizedTextUseCase
+import jp.kaleidot725.emomemo.domain.usecase.select.SelectMessageUseCase
 import jp.kaleidot725.emomemo.ui.common.SingleSelectList
-import jp.kaleidot725.emomemo.usecase.create.CreateMessageUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetMessageCountUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetMessageUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.observe.ObserveRecognizedTextUseCase
-import jp.kaleidot725.emomemo.usecase.select.SelectMessageUseCase
 import kotlinx.coroutines.launch
 
 data class MessageWithSelectedSet(

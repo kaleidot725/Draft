@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import jp.kaleidot725.emomemo.usecase.get.GetMemoUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetNotebookUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetNotebooksUseCase
-import jp.kaleidot725.emomemo.usecase.get.GetStatusUseCase
-import jp.kaleidot725.emomemo.usecase.select.SelectNotebookUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebookUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetStatusUseCase
+import jp.kaleidot725.emomemo.domain.usecase.select.SelectNotebookUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

@@ -9,7 +9,7 @@ import android.speech.SpeechRecognizer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import jp.kaleidot725.emomemo.R
-import jp.kaleidot725.emomemo.extension.getSafetyString
+import jp.kaleidot725.emomemo.ui.extension.getSafetyString
 
 class SpeechRecognizerController(
     private val context: Context?,

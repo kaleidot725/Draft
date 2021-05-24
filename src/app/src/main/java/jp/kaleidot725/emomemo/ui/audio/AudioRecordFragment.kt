@@ -14,9 +14,9 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentAudioRecordBinding
-import jp.kaleidot725.emomemo.extension.viewBinding
 import jp.kaleidot725.emomemo.ui.common.controller.SpeechRecognizerController
 import jp.kaleidot725.emomemo.ui.common.handler.SafetyHandler
+import jp.kaleidot725.emomemo.ui.extension.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -45,7 +45,7 @@ class AudioRecordFragment : DialogFragment(R.layout.fragment_audio_record) {
         speechRecognizerController = SpeechRecognizerController(this.context) { event, text ->
             viewModel.update(event, text)
         }
-       
+
         lifecycle.addObserver(speechRecognizerController)
         lifecycle.addObserver(hidingFragmentHandler)
 

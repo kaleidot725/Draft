@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.databinding.FragmentEditNotebookBinding
-import jp.kaleidot725.emomemo.extension.viewBinding
+import jp.kaleidot725.emomemo.ui.extension.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
