@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
@@ -8,7 +8,7 @@
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>
     </style>
 
-    <style name="DialogStyle" parent="Theme.MaterialComponents.Dialog.Alert">
+    <style name="DialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
@@ -17,7 +17,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="ToolbarColoredBackArrow" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="ToolbarColoredBackArrow" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:colorControlNormal">@color/secondaryTextColor</item>
     </style>
 </resources>
