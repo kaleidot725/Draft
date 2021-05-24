@@ -8,6 +8,8 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.hadilq.liveevent.LiveEvent
+import jp.kaleidot725.emomemo.data.entity.MessageEntity
+import jp.kaleidot725.emomemo.data.entity.StatusEntity
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateMessageUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMessageCountUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMessageUseCase
@@ -18,8 +20,8 @@ import jp.kaleidot725.emomemo.ui.common.SingleSelectList
 import kotlinx.coroutines.launch
 
 data class MessageWithSelectedSet(
-    val messages: PagedList<jp.kaleidot725.emomemo.data.entity.MessageEntity>,
-    val selectedMessages: List<jp.kaleidot725.emomemo.data.entity.MessageEntity>
+    val messages: PagedList<MessageEntity>,
+    val selectedMessages: List<MessageEntity>
 )
 
 class MemoViewModel(
@@ -37,10 +39,10 @@ class MemoViewModel(
     private val _navEvent: LiveEvent<NavEvent> = LiveEvent()
     val navEvent: LiveData<NavEvent> = _navEvent
 
-    private val selectedMessages: SingleSelectList<jp.kaleidot725.emomemo.data.entity.MessageEntity> = SingleSelectList()
+    private val selectedMessages: SingleSelectList<MessageEntity> = SingleSelectList()
 
-    private val status: MutableLiveData<jp.kaleidot725.emomemo.data.entity.StatusEntity> = MutableLiveData()
-    private val messages: LiveData<PagedList<jp.kaleidot725.emomemo.data.entity.MessageEntity>> =
+    private val status: MutableLiveData<StatusEntity> = MutableLiveData()
+    private val messages: LiveData<PagedList<MessageEntity>> =
         status.switchMap { getMessageUseCase.execute(it.memoId) }
     val messagesWithSelectedSet: LiveData<MessageWithSelectedSet> = messages.map { MessageWithSelectedSet(it, selectedMessages.getList()) }
 
@@ -62,7 +64,7 @@ class MemoViewModel(
         }
     }
 
-    fun longTap(message: jp.kaleidot725.emomemo.data.entity.MessageEntity) {
+    fun longTap(message: MessageEntity) {
         viewModelScope.launch {
             selectMessageUseCase.execute(message.id)
             _navEvent.value = NavEvent.NavigateMessageOption

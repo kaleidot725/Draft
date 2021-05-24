@@ -1,15 +1,19 @@
 package jp.kaleidot725.emomemo.domain.usecase.select
 
+import jp.kaleidot725.emomemo.data.entity.StatusEntity
+import jp.kaleidot725.emomemo.data.repository.NotebookRepository
+import jp.kaleidot725.emomemo.data.repository.StatusRepository
+
 class ReselectNotebookUseCase(
-    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository,
-    private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository
+    private val statusRepository: StatusRepository,
+    private val notebookRepository: NotebookRepository
 ) {
     suspend fun execute() {
         val firstNotebook = notebookRepository.getAll().firstOrNull() ?: return
         statusRepository.update(
             firstNotebook.id,
-            jp.kaleidot725.emomemo.data.entity.StatusEntity.UNSELECTED_NOTEBOOK,
-            jp.kaleidot725.emomemo.data.entity.StatusEntity.UNSELECTED_MESSAGE
+            StatusEntity.UNSELECTED_NOTEBOOK,
+            StatusEntity.UNSELECTED_MESSAGE
         )
     }
 }

@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import jp.kaleidot725.emomemo.data.entity.NotebookEntity
+import jp.kaleidot725.emomemo.data.entity.StatusEntity
+import jp.kaleidot725.emomemo.data.view.MemoStatusView
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebookUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksUseCase
@@ -15,9 +18,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class NotebookWithStatus(
-    val notebooks: List<jp.kaleidot725.emomemo.data.entity.NotebookEntity>,
-    val selectedNotebook: jp.kaleidot725.emomemo.data.entity.NotebookEntity?,
-    val selectedMemo: jp.kaleidot725.emomemo.data.view.MemoStatusView?
+    val notebooks: List<NotebookEntity>,
+    val selectedNotebook: NotebookEntity?,
+    val selectedMemo: MemoStatusView?
 )
 
 class MainViewModel(
@@ -34,7 +37,7 @@ class MainViewModel(
     val notebooksWithStatus: LiveData<NotebookWithStatus> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext) {
             val notebooks = getNotebooksUseCase.execute()
-            val status = getStatusUseCase.execute() ?: jp.kaleidot725.emomemo.data.entity.StatusEntity()
+            val status = getStatusUseCase.execute() ?: StatusEntity()
             val selectedNotebook = getNotebookUseCase.execute(status.notebookId)
             val selectedMemo = getMemoUseCase.execute(status.memoId)
             emit(NotebookWithStatus(notebooks, selectedNotebook, selectedMemo))
@@ -49,7 +52,7 @@ class MainViewModel(
         refresh.value = Unit
     }
 
-    fun selectNotebook(notebook: jp.kaleidot725.emomemo.data.entity.NotebookEntity) {
+    fun selectNotebook(notebook: NotebookEntity) {
         viewModelScope.launch {
             selectNotebookUseCase.execute(notebook.id)
             refresh.value = Unit

@@ -1,6 +1,5 @@
 package jp.kaleidot725.emomemo
 
-import androidx.room.Room
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateMessageUseCase
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateNotebookUseCase
@@ -43,45 +42,10 @@ import jp.kaleidot725.emomemo.ui.message.MessageOptionDialogViewModel
 import jp.kaleidot725.emomemo.ui.notebook.AddNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.ui.notebook.EditNotebookDialogViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val appModule = module {
-    // 変更通知の仕組みを実現するためにシングルトンで定義している
-    single {
-        jp.kaleidot725.emomemo.data.repository.AudioRecognizerRepository()
-    }
-
-    factory {
-        Room.databaseBuilder(androidContext(), jp.kaleidot725.emomemo.data.AppDatabase::class.java, "emomemo-database").build()
-    }
-
-    factory {
-        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
-        jp.kaleidot725.emomemo.data.repository.NotebookRepository(db.notebookDao())
-    }
-
-    factory {
-        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
-        jp.kaleidot725.emomemo.data.repository.MemoRepository(db.memoDao())
-    }
-
-    factory {
-        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
-        jp.kaleidot725.emomemo.data.repository.MessageRepository(db.messageDao())
-    }
-
-    factory {
-        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
-        jp.kaleidot725.emomemo.data.repository.MemoStatusRepository(db.memoStatusDao())
-    }
-
-    factory {
-        val db: jp.kaleidot725.emomemo.data.AppDatabase = get()
-        jp.kaleidot725.emomemo.data.repository.StatusRepository(db.statusDao())
-    }
-
+val uiModule = module {
     factory {
         ObserveRecognizedTextUseCase(get())
     }

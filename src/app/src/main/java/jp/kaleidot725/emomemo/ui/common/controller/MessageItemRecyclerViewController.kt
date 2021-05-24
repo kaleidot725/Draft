@@ -4,16 +4,17 @@ import android.text.format.DateFormat
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import jp.kaleidot725.emomemo.MessageItemContainerBindingModel_
+import jp.kaleidot725.emomemo.data.entity.MessageEntity
 import kotlinx.android.synthetic.main.message_item_container.view.container
 
-typealias OnClickMessage = (item: jp.kaleidot725.emomemo.data.entity.MessageEntity) -> Unit
-typealias OnLongTapMessage = (item: jp.kaleidot725.emomemo.data.entity.MessageEntity) -> Unit
+typealias OnClickMessage = (item: MessageEntity) -> Unit
+typealias OnLongTapMessage = (item: MessageEntity) -> Unit
 
 class MessageItemRecyclerViewController(
     private val onClickMessage: OnClickMessage? = null,
     private val onLongTapMessage: OnLongTapMessage? = null
-) : PagedListEpoxyController<jp.kaleidot725.emomemo.data.entity.MessageEntity>() {
-    override fun buildItemModel(currentPosition: Int, item: jp.kaleidot725.emomemo.data.entity.MessageEntity?): EpoxyModel<*> {
+) : PagedListEpoxyController<MessageEntity>() {
+    override fun buildItemModel(currentPosition: Int, item: MessageEntity?): EpoxyModel<*> {
         return if (item != null) {
             MessageItemContainerBindingModel_().apply {
                 id(item.time)

@@ -1,8 +1,11 @@
 package jp.kaleidot725.emomemo.domain.usecase.create
 
+import jp.kaleidot725.emomemo.data.repository.MessageRepository
+import jp.kaleidot725.emomemo.data.repository.StatusRepository
+
 class CreateMessageUseCase(
-    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository,
-    private val messageRepository: jp.kaleidot725.emomemo.data.repository.MessageRepository
+    private val statusRepository: StatusRepository,
+    private val messageRepository: MessageRepository
 ) {
     suspend fun execute(title: String) {
         val status = statusRepository.get() ?: return

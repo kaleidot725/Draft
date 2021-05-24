@@ -1,7 +1,10 @@
 package jp.kaleidot725.emomemo.domain.usecase.get
 
-class GetNotebookUseCase(private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository) {
-    suspend fun execute(notebookId: Int): jp.kaleidot725.emomemo.data.entity.NotebookEntity? {
+import jp.kaleidot725.emomemo.data.entity.NotebookEntity
+import jp.kaleidot725.emomemo.data.repository.NotebookRepository
+
+class GetNotebookUseCase(private val notebookRepository: NotebookRepository) {
+    suspend fun execute(notebookId: Int): NotebookEntity? {
         return notebookRepository.getNoteBook(notebookId)
     }
 }

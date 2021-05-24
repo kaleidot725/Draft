@@ -1,8 +1,11 @@
 package jp.kaleidot725.emomemo.domain.usecase.create
 
+import jp.kaleidot725.emomemo.data.repository.NotebookRepository
+import jp.kaleidot725.emomemo.data.repository.StatusRepository
+
 class CreateNotebookUseCase(
-    private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository,
-    private val statusRepository: jp.kaleidot725.emomemo.data.repository.StatusRepository
+    private val notebookRepository: NotebookRepository,
+    private val statusRepository: StatusRepository
 ) {
     suspend fun execute(title: String) {
         notebookRepository.insert(jp.kaleidot725.emomemo.data.entity.NotebookEntity.create(title))

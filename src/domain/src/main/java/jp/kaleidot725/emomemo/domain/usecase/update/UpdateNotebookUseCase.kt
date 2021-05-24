@@ -1,8 +1,11 @@
 package jp.kaleidot725.emomemo.domain.usecase.update
 
-class UpdateNotebookUseCase(private val notebookRepository: jp.kaleidot725.emomemo.data.repository.NotebookRepository) {
+import jp.kaleidot725.emomemo.data.entity.NotebookEntity
+import jp.kaleidot725.emomemo.data.repository.NotebookRepository
+
+class UpdateNotebookUseCase(private val notebookRepository: NotebookRepository) {
     suspend fun execute(notebookEntity: jp.kaleidot725.emomemo.data.entity.NotebookEntity, value: String) {
-        val new = jp.kaleidot725.emomemo.data.entity.NotebookEntity(notebookEntity.id, value)
+        val new = NotebookEntity(notebookEntity.id, value)
         notebookRepository.update(new)
     }
 }

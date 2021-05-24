@@ -47,6 +47,10 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime:${versions.paging}"
 
+    // Koin
+    implementation "io.insert-koin:koin-android:${versions.koin}"
+    implementation "io.insert-koin:koin-android-ext:${versions.koin}"
+
     // Timber
     implementation "com.jakewharton.timber:timber:${versions.timber}"
 }
