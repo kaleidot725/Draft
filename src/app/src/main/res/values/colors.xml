@@ -1,12 +1,7 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
     <color name="primaryColor">#ffffff</color>
-    <color name="primaryLightColor">#ffffff</color>
-    <color name="primaryDarkColor">#ffffff</color>
     <color name="secondaryColor">#111111</color>
-    <color name="secondaryLightColor">#111111</color>
-    <color name="secondaryDarkColor">#111111</color>
-
     <color name="primaryTextColor">#111111</color>
     <color name="secondaryTextColor">#404040</color>
     <color name="darkPrimaryTextColor">#ffffff</color>
@@ -14,7 +9,10 @@
 
     <color name="strokeColor">#80c7c7c7</color>
     <color name="bottomCardColor">#80EEEEEE</color>
-    <color name="accentColor">#00a496</color>
+    <color name="editTextColor">#cccccc</color>
+    <color name="editCursorColor">#ffffff</color>
+    <color name="accentColor">#0C7CEE</color>
+    <color name="colorOnBackground">#ffffff</color>
 
     <!-- palette-->
     <color name="black">#000000</color>

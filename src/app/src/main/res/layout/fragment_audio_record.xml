@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:minHeight="220dp"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/primaryColor"
         app:cardCornerRadius="8dp"
         tools:context=".ui.audio.AudioRecordFragment">
 
@@ -47,7 +47,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_text_view"
-                app:tint="@android:color/white"
                 tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
