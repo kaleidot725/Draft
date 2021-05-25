@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/primaryColor"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,13 +34,13 @@
                 android:id="@+id/title_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/secondaryColor"
+                android:backgroundTint="@color/editTextColor"
+                android:textCursorDrawable="@color/editCursorColor"
                 android:gravity="start|top"
                 android:hint="@string/memo_dialog_fragment_memo_title_hint"
                 android:lines="2"
                 android:text="@={viewModel.inputTitle}"
                 android:textColor="@color/primaryTextColor"
-                android:textColorHint="@color/secondaryTextColor"
                 app:layout_constraintTop_toBottomOf="@id/title_text_view" />
 
             <Button
@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:backgroundTint="@color/secondaryColor"
+                android:backgroundTint="@color/accentColor"
                 android:onClick="@{() -> viewModel.success()}"
                 android:text="@string/memo_dialog_fragment_update"
                 android:textColor="@color/white"
@@ -61,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:backgroundTint="@color/secondaryColor"
+                android:backgroundTint="@color/accentColor"
                 android:onClick="@{() -> viewModel.cancel()}"
                 android:text="@string/memo_dialog_fragment_cancel"
                 android:textColor="@color/white"

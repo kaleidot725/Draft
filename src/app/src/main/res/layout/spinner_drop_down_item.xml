@@ -5,11 +5,11 @@
 
     <CheckedTextView
         android:id="@+id/item_text_view"
-        style="?android:attr/spinnerDropDownItemStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ellipsize="marquee"
         android:gravity="center|start"
         android:singleLine="true"
-        android:textColor="@android:color/black" />
+        android:background="@color/secondaryColor"
+        android:textColor="@color/primaryTextColor" />
 </FrameLayout>

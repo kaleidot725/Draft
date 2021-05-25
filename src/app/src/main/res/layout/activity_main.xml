@@ -16,6 +16,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primaryColor"
         tools:context=".ui.MainActivity">
 
         <FrameLayout
@@ -67,6 +68,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:itemTextColor="@color/menu_text_color"
+            android:background="@color/primaryColor"
             android:fitsSystemWindows="true" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

@@ -25,7 +25,7 @@
         android:layout_margin="16dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_settings"
-        android:tint="@color/secondaryColor"
+        app:tint="@color/secondaryTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

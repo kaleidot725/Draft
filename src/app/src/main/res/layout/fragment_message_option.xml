@@ -27,7 +27,7 @@
                 android:ellipsize="end"
                 android:paddingVertical="8dp"
                 android:text="@{viewModel.message.value}"
-                android:textColor="@color/black"
+                android:textColor="@color/primaryTextColor"
                 android:textSize="20sp"
                 tools:text="TITLE TITLE TITLE" />
 
@@ -40,7 +40,7 @@
                 android:onClick="@{() -> viewModel.edit()}"
                 android:paddingVertical="16sp"
                 android:text="@string/do_editting"
-                android:textColor="@color/black"
+                android:textColor="@color/primaryTextColor"
                 android:textSize="16sp" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:onClick="@{() -> viewModel.delete()}"
                 android:paddingVertical="16sp"
                 android:text="@string/do_deleting"
-                android:textColor="@color/black"
+                android:textColor="@color/primaryTextColor"
                 android:textSize="16sp" />
 
         </LinearLayout>
