@@ -14,7 +14,6 @@ import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebookUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetStatusUseCase
 import jp.kaleidot725.emomemo.domain.usecase.select.SelectNotebookUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class NotebookWithStatus(
@@ -30,9 +29,6 @@ class MainViewModel(
     private val getMemoUseCase: GetMemoUseCase,
     private val selectNotebookUseCase: SelectNotebookUseCase
 ) : ViewModel() {
-    private val _loading: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
-    val loading: LiveData<Boolean> = _loading
-
     private val refresh: MutableLiveData<Unit> = MutableLiveData(Unit)
     val notebooksWithStatus: LiveData<NotebookWithStatus> = refresh.switchMap {
         liveData(viewModelScope.coroutineContext) {
@@ -44,10 +40,6 @@ class MainViewModel(
         }
     }
 
-    init {
-        splash()
-    }
-
     fun refresh() {
         refresh.value = Unit
     }
@@ -57,20 +49,5 @@ class MainViewModel(
             selectNotebookUseCase.execute(notebook.id)
             refresh.value = Unit
         }
-    }
-
-    private fun splash() {
-        viewModelScope.launch {
-            loading {
-                refresh.value = Unit
-                delay(3000)
-            }
-        }
-    }
-
-    private suspend fun loading(block: suspend () -> Unit) {
-        _loading.value = true
-        block.invoke()
-        _loading.value = false
     }
 }

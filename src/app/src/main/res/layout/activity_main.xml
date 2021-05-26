@@ -19,48 +19,27 @@
         android:background="@color/primaryColor"
         tools:context=".ui.MainActivity">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/action_bar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/action_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/primaryColor"
-                    android:foregroundTint="@color/primaryTextColor"
-                    app:theme="@style/ToolbarColoredBackArrow" />
-
-                <fragment
-                    android:id="@+id/nav_host_fragment"
-                    android:name="androidx.navigation.fragment.NavHostFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:defaultNavHost="true"
-                    app:navGraph="@navigation/main_navigation" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/splash_screen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:background="@color/primaryColor"
-                android:visibility="@{viewModel.loading ? View.VISIBLE : View.INVISIBLE}"
-                tools:context=".ui.top.TopFragment">
+                android:foregroundTint="@color/primaryTextColor"
+                app:theme="@style/ToolbarColoredBackArrow" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/emomemo"
-                    tools:ignore="ContentDescription" />
-            </FrameLayout>
-        </FrameLayout>
+            <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/main_navigation" />
+        </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
