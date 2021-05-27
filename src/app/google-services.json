@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "106113543191",
+    "project_id": "emomemo-2b508",
+    "storage_bucket": "emomemo-2b508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106113543191:android:64be6da8f1eb78f9630052",
+        "android_client_info": {
+          "package_name": "jp.kaleidot725.emomemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106113543191-8h50pq8atkvh9e8evstrtb64k1v4cjla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCicdVKO0Heh_4YOGd8vgqrFYaT6yZNp1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106113543191-8h50pq8atkvh9e8evstrtb64k1v4cjla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
