@@ -92,8 +92,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
 
     // Permission Dispatcher
-    implementation "org.permissionsdispatcher:permissionsdispatcher:${versions.permission_dispatcher}"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permission_dispatcher}"
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher:${versions.permission_dispatcher}"
+    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:${versions.permission_dispatcher}"
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
