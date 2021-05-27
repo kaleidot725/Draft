@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 apply plugin: "com.cookpad.android.plugin.license-tools"
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: "com.google.firebase.crashlytics"
 
 android {
     compileSdkVersion 30
@@ -129,10 +132,11 @@ dependencies {
 
     // Recycler_view Animator
     implementation "jp.wasabeef:recyclerview-animators:${versions.recycler_view_animator}"
-}
 
-repositories {
-    jcenter()
+    //  Firebase
+    implementation platform("com.google.firebase:firebase-bom:${versions.firebase}")
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
 
 configurations {
@@ -142,8 +146,6 @@ configurations {
 def outputDir = "${project.buildDir}/reports/ktlint/"
 
 dependencies {
-
-
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
     implementation 'androidx.room:room-runtime:2.3.0'
     implementation 'com.google.android.support:wearable:2.7.0'
