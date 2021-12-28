@@ -10,7 +10,7 @@
     <!-- HomeFragment -->
     <string name="home_fragment_title">Home</string>
     <string name="home_notebook_is_not_found">Not found notebook.\nPlease create notebook.</string>
-    <string name="home_memo_is_not_found">Not found note.\nPlease create note.メモがありません\nメモを作成してください。</string>
+    <string name="home_memo_is_not_found">Not found note.\nPlease create note.</string>
 
     <!-- MemoDialogFragment -->
     <string name="memo_dialog_fragment_title">Add</string>
