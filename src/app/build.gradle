@@ -9,13 +9,13 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: "com.google.firebase.crashlytics"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "jp.kaleidot725.emomemo"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 4
         versionName "0.1.2"
 
@@ -35,12 +35,12 @@ android {
 
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_11
     }
     buildFeatures {
         dataBinding true
@@ -86,7 +86,6 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:${versions.koin}"
-    implementation "io.insert-koin:koin-android-ext:${versions.koin}"
 
     // LiveData Ktx
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
@@ -146,13 +145,13 @@ configurations {
 def outputDir = "${project.buildDir}/reports/ktlint/"
 
 dependencies {
-    annotationProcessor 'androidx.room:room-compiler:2.3.0'
-    implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'com.google.android.support:wearable:2.7.0'
-    implementation 'androidx.wear:wear:1.0.0'
-    compileOnly 'com.google.android.wearable:wearable:2.7.0'
+    annotationProcessor 'androidx.room:room-compiler:2.4.0'
+    implementation 'androidx.room:room-runtime:2.4.0'
+    implementation 'com.google.android.support:wearable:2.8.1'
+    implementation 'androidx.wear:wear:1.2.0'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    ktlint "com.pinterest:ktlint:0.33.0"
+    ktlint "com.pinterest:ktlint:0.42.1"
 }
 
 task ktlint(type: JavaExec, group: "verification") {
