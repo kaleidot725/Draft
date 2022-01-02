@@ -20,23 +20,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:exported="true"
-            android:name=".ui.MainActivity">
+            android:name=".ui.ComposeMainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.SettingActivity"
             android:label="@string/title_activity_setting" />
-
         <activity
             android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>
