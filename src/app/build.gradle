@@ -28,9 +28,6 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -49,10 +46,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.0.5"
     }
-
-    lintOptions {
-        disable "NullSafeMutableLiveData"
+    lint {
+        abortOnError false
+        disable 'NullSafeMutableLiveData'
     }
+    namespace 'jp.kaleidot725.emomemo'
+
 }
 
 dependencies {

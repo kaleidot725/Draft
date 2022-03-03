@@ -27,6 +27,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+    namespace 'jp.kaleidot725.emomemo.domain'
 }
 
 dependencies {
