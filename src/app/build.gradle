@@ -1,20 +1,16 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'kotlin-kapt'
-apply plugin: "com.cookpad.android.plugin.license-tools"
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: "com.google.firebase.crashlytics"
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "jp.kaleidot725.emomemo"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 4
         versionName "0.1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -26,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -46,66 +41,22 @@ android {
         kotlinCompilerExtensionVersion = "1.1.0"
     }
 
-    lint {
-        abortOnError false
-        disable 'NullSafeMutableLiveData'
-    }
     namespace 'jp.kaleidot725.emomemo'
-
 }
 
 dependencies {
     implementation project(":data")
     implementation project(":domain")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    // AppCompat
-    implementation "androidx.appcompat:appcompat:${versions.appcompat}"
 
     // Core Ktx
     implementation "androidx.core:core-ktx:${versions.core_ktx}"
 
-    // Constraint Layout
-    implementation "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}"
-
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment:${versions.nav}"
-    implementation "androidx.navigation:navigation-ui:${versions.nav}"
-    implementation "androidx.navigation:navigation-fragment-ktx:${versions.nav}"
-    implementation "androidx.navigation:navigation-ui-ktx:${versions.nav}"
-
-    // Material
-    implementation "com.google.android.material:material:${versions.material}"
-
-    // Epoxy
-    implementation "com.airbnb.android:epoxy:${versions.epoxy}"
-    implementation "com.airbnb.android:epoxy-databinding:${versions.epoxy}"
-    implementation "com.airbnb.android:epoxy-paging:${versions.epoxy}"
-    kapt "com.airbnb.android:epoxy-processor:${versions.epoxy}"
-
-    // LiveEvent
-    implementation "com.github.hadilq.liveevent:liveevent:${versions.live_event}"
-
     // Koin
     implementation "io.insert-koin:koin-android:${versions.koin}"
 
-    // LiveData Ktx
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
-
-    // Permission Dispatcher
-    implementation "com.github.permissions-dispatcher:permissionsdispatcher:${versions.permission_dispatcher}"
-    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:${versions.permission_dispatcher}"
-
     // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
-    kapt "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}"
-
-    // Fragment Ktx
-    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
     // Junit
     testImplementation "junit:junit:${versions.junit}"
@@ -123,17 +74,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:${versions.timber}"
 
     // Coil
-    implementation "io.coil-kt:coil:${versions.coil}"
-    implementation "io.coil-kt:coil-gif:${versions.coil}"
-
-    // Keyboard Visibility Event
-    implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:${versions.keyboard_visibility_event}"
-
-    // Preference
-    implementation "androidx.preference:preference-ktx:${versions.prefrence}"
-
-    // Recycler_view Animator
-    implementation "jp.wasabeef:recyclerview-animators:${versions.recycler_view_animator}"
+    implementation("io.coil-kt:coil-compose:1.4.0")
 
     //  Firebase
     implementation platform("com.google.firebase:firebase-bom:${versions.firebase}")
@@ -142,51 +83,12 @@ dependencies {
 
     // Compose
     implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.ui:ui:1.0.5")
-    implementation("androidx.compose.ui:ui-tooling:1.0.5")
-    implementation("androidx.compose.foundation:foundation:1.0.5")
-    implementation("androidx.compose.material:material:1.0.5")
-    implementation("androidx.compose.material:material-icons-core:1.0.5")
-    implementation("androidx.compose.material:material-icons-extended:1.0.5")
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.5")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
-}
-
-configurations {
-    ktlint
-}
-
-def outputDir = "${project.buildDir}/reports/ktlint/"
-
-dependencies {
-    kapt 'androidx.room:room-compiler:2.4.2'
-    implementation 'androidx.room:room-runtime:2.4.2'
-    implementation 'com.google.android.support:wearable:2.9.0'
-    implementation 'androidx.wear:wear:1.2.0'
-    compileOnly 'com.google.android.wearable:wearable:2.8.1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    ktlint "com.pinterest:ktlint:0.42.1"
-}
-
-task ktlint(type: JavaExec, group: "verification") {
-    outputs.dir(outputDir)
-
-    description = "Check Kotlin code style."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.ktlint
-    args "--reporter=checkstyle,output=${buildDir}/reports/ktlint/ktlintMainSourceSetCheck.xml", "src/**/*.kt"
-    ignoreExitValue true
-}
-
-check.dependsOn ktlint
-
-task ktlintFormat(type: JavaExec, group: "formatting") {
-    outputs.dir(outputDir)
-
-    description = "Fix Kotlin code style deviations."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.ktlint
-    args "-F", "--reporter=checkstyle,output=${buildDir}/reports/ktlint/ktlintMainSourceSetCheck.xml", "src/**/*.kt"
-    ignoreExitValue true
+    implementation("androidx.compose.ui:ui:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling:1.1.1")
+    implementation("androidx.compose.foundation:foundation:1.1.1")
+    implementation("androidx.compose.material:material:1.1.1")
+    implementation("androidx.compose.material:material-icons-core:1.1.1")
+    implementation("androidx.compose.material:material-icons-extended:1.1.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
 }
