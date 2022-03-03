@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.6.10'
     repositories {
         google()
         mavenCentral()
@@ -12,12 +12,12 @@ buildscript {
             "appcompat"                  : "1.4.0",
             "core_ktx"                   : "1.7.0",
             "constraint_layout"          : "2.1.2",
-            "nav"                        : "2.3.5",
+            "nav"                        : "2.4.1",
             "material"                   : "1.4.0",
             "epoxy"                      : "3.11.0",
             "live_event"                 : "1.2.0",
             "koin"                       : "3.1.4",
-            "room"                       : "2.4.0",
+            "room"                       : "2.4.2",
             "livedata_ktx"               : "2.4.0",
             "permission_dispatcher"      : "4.8.0",
             "lifecycle"                  : "2.4.0",
@@ -41,7 +41,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.nav}"
         classpath "gradle.plugin.com.cookpad.android.plugin:plugin:${versions.license_tools_plugin}"
         classpath "com.google.gms:google-services:${versions.google_services}"

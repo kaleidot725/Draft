@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo
 
 import android.app.Application
-import android.util.Log.ERROR
 import jp.kaleidot725.emomemo.data.dataModule
 import jp.kaleidot725.emomemo.domain.usecase.domainModule
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +19,7 @@ class EmomemoApp : Application() {
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(applicationContext)
-            modules(uiModule, dataModule, domainModule)
+            modules(dataModule, domainModule)
         }
 
         if (BuildConfig.DEBUG) {

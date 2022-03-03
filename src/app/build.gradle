@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'kotlin-kapt'
 apply plugin: "com.cookpad.android.plugin.license-tools"
@@ -44,8 +43,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.5"
+        kotlinCompilerExtensionVersion = "1.1.0"
     }
+
     lint {
         abortOnError false
         disable 'NullSafeMutableLiveData'
@@ -160,9 +160,9 @@ configurations {
 def outputDir = "${project.buildDir}/reports/ktlint/"
 
 dependencies {
-    annotationProcessor 'androidx.room:room-compiler:2.4.0'
-    implementation 'androidx.room:room-runtime:2.4.0'
-    implementation 'com.google.android.support:wearable:2.8.1'
+    kapt 'androidx.room:room-compiler:2.4.2'
+    implementation 'androidx.room:room-runtime:2.4.2'
+    implementation 'com.google.android.support:wearable:2.9.0'
     implementation 'androidx.wear:wear:1.2.0'
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
