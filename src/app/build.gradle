@@ -49,46 +49,24 @@ dependencies {
     implementation project(":domain")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Core Ktx
-    implementation "androidx.core:core-ktx:${versions.core_ktx}"
+    implementation libs.kotlin.stdlib
+    implementation libs.corektx
+    implementation libs.koin
+    implementation libs.lifecycle
+    implementation libs.lifecycle.livedata
+    implementation libs.timber
 
-    // Koin
-    implementation "io.insert-koin:koin-android:${versions.koin}"
+    implementation libs.coil.compose
+    implementation libs.bundles.compose
 
-    // Lifecycle
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation platform(libs.firebase)
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
+    implementation "com.google.firebase:firebase-analytics-ktx"
 
-    // Junit
-    testImplementation "junit:junit:${versions.junit}"
-    androidTestImplementation "androidx.test.ext:junit:${versions.junit_ext}"
+    testImplementation libs.junit
+    androidTestImplementation libs.junit.ext
 
-    // Esporesso
-    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso_core}"
-
-    // Flipper
-    debugImplementation "com.facebook.flipper:flipper:${versions.flipper}"
-    debugImplementation "com.facebook.soloader:soloader:${versions.soloader}"
-    releaseImplementation "com.facebook.flipper:flipper-noop:${versions.flipper}"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:${versions.timber}"
-
-    // Coil
-    implementation("io.coil-kt:coil-compose:1.4.0")
-
-    //  Firebase
-    implementation platform("com.google.firebase:firebase-bom:${versions.firebase}")
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-
-    // Compose
-    implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.ui:ui:1.1.1")
-    implementation("androidx.compose.ui:ui-tooling:1.1.1")
-    implementation("androidx.compose.foundation:foundation:1.1.1")
-    implementation("androidx.compose.material:material:1.1.1")
-    implementation("androidx.compose.material:material-icons-core:1.1.1")
-    implementation("androidx.compose.material:material-icons-extended:1.1.1")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
+    debugImplementation libs.flipper
+    debugImplementation libs.soloader
+    releaseImplementation libs.flipper.noop
 }
