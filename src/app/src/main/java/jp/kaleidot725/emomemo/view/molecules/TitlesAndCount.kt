@@ -25,7 +25,7 @@ fun TitlesAndCount(subtitle1: String, subtitle2: String, count: String, modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .align(Alignment.CenterStart)
-                .padding(horizontal = 12.dp)
+                .padding(horizontal = 16.dp)
                 .padding(end = 100.dp)
         ) {
             Texts.TitleMedium(text = subtitle1, maxLines = 1)

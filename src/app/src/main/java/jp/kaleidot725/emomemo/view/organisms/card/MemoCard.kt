@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.MessageEntity
 import jp.kaleidot725.emomemo.view.molecules.TitlesAndCount
+import jp.kaleidot725.emomemo.view.sample.SampleData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,9 +28,9 @@ fun MemoCard(memo: MemoEntity, lastMessage: MessageEntity, messageCount: Int, mo
 @Composable
 private fun MemoCard_Preview() {
     MemoCard(
-        memo = MemoEntity(0, 0, "MESSAGE"),
-        lastMessage = MessageEntity(0, 0, 0, "LAST MESSAGE"),
-        messageCount = 100,
+        memo = SampleData.memoList[0],
+        lastMessage = SampleData.messageList[0],
+        messageCount = 1,
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)

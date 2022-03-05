@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.data.entity.MessageEntity
 import jp.kaleidot725.emomemo.view.molecules.Message
+import jp.kaleidot725.emomemo.view.sample.SampleData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,9 +27,8 @@ fun MessageCard(message: MessageEntity, modifier: Modifier = Modifier) {
 @Composable
 private fun MessageCard_Preview() {
     MessageCard(
-        message = MessageEntity(
-            0, 0, 0, "MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE MESSAGE"
-        ), modifier = Modifier
+        message = SampleData.messageList[0],
+        modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
     )

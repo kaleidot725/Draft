@@ -4,19 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import jp.kaleidot725.emomemo.view.pages.main.MainPage
 
 class ComposeMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { MainApp() }
-    }
-}
-
-@Composable
-fun MainApp() {
-    MaterialTheme {
-        Text(text = "TEST TEST TEST")
+        setContent {
+            MaterialTheme {
+                MainPage()
+            }
+        }
     }
 }
