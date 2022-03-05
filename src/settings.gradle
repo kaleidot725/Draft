@@ -22,6 +22,11 @@ dependencyResolutionManagement {
             alias("firebase").to("com.google.firebase:firebase-bom:28.0.1")
             alias("coil-compose").to("io.coil-kt:coil-compose:1.4.0")
 
+            alias("orbit-core").to("org.orbit-mvi:orbit-core:4.3.2")
+            alias("orbit-viewmodel").to("org.orbit-mvi:orbit-viewmodel:4.3.2")
+            bundle("orbit", ["orbit-core", "orbit-viewmodel"])
+            alias("orbit-test").to("org.orbit-mvi:orbit-test:4.3.2")
+            
             alias("lifecycle").to("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
             alias("lifecycle-livedata").to("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
 

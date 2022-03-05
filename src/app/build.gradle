@@ -53,6 +53,7 @@ dependencies {
 
     implementation libs.coil.compose
     implementation libs.bundles.compose
+    implementation libs.bundles.orbit
 
     implementation platform(libs.firebase)
     implementation "com.google.firebase:firebase-crashlytics-ktx"
@@ -60,6 +61,7 @@ dependencies {
 
     testImplementation libs.junit
     androidTestImplementation libs.junit.ext
+    testImplementation libs.orbit.test
 
     debugImplementation libs.flipper
     debugImplementation libs.soloader
