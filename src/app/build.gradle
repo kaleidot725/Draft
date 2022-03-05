@@ -50,7 +50,8 @@ dependencies {
     implementation libs.lifecycle
     implementation libs.lifecycle.livedata
     implementation libs.timber
-
+    implementation libs.navigation.compose
+    
     implementation libs.coil.compose
     implementation libs.bundles.compose
     implementation libs.bundles.orbit

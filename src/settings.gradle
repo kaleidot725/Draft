@@ -21,19 +21,20 @@ dependencyResolutionManagement {
             alias("paging").to("androidx.paging:paging-runtime:2.1.2")
             alias("firebase").to("com.google.firebase:firebase-bom:28.0.1")
             alias("coil-compose").to("io.coil-kt:coil-compose:1.4.0")
-
+            alias("navigation-compose").to("androidx.navigation:navigation-compose:2.4.1")
+            
             alias("orbit-core").to("org.orbit-mvi:orbit-core:4.3.2")
             alias("orbit-viewmodel").to("org.orbit-mvi:orbit-viewmodel:4.3.2")
-            bundle("orbit", ["orbit-core", "orbit-viewmodel"])
             alias("orbit-test").to("org.orbit-mvi:orbit-test:4.3.2")
+            bundle("orbit", ["orbit-core", "orbit-viewmodel"])
 
             alias("lifecycle").to("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
             alias("lifecycle-livedata").to("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
 
             alias("room-runtime").to("androidx.room:room-runtime:2.4.2")
             alias("room-ktx").to("androidx.room:room-ktx:2.4.2")
-            bundle("room", ["room-runtime", "room-ktx"])
             alias("room-compiler").to("androidx.room:room-compiler:2.4.2")
+            bundle("room", ["room-runtime", "room-ktx"])
 
             alias("activity-compose").to("androidx.activity:activity-compose:1.4.0")
             alias("compose-ui").to("androidx.compose.ui:ui:1.1.1")
