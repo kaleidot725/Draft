@@ -4,30 +4,29 @@ plugins {
 }
 
 android {
+    namespace 'jp.kaleidot725.emomemo.domain'
+
     compileSdk 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdk 23
         targetSdk 32
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-    }
-    namespace 'jp.kaleidot725.emomemo.domain'
 }
 
 dependencies {
