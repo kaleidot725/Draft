@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.view.molecules.FloatingActionIconButton
@@ -22,9 +23,10 @@ import jp.kaleidot725.emomemo.view.templates.main.MainTemplate
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainPage() {
-    val pinnedScrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
+    
     MainTemplate(
-        topBar = { MainTopAppBar(title = "MAIN TOP APP BAR", scrollBehavior = pinnedScrollBehavior) },
+        topBar = { MainTopAppBar(title = "MAIN TOP APP BAR", scrollBehavior = scrollBehavior) },
         mainContent = {
             Box {
                 MemoList(memos = SampleData.memoDetailsList, modifier = Modifier.padding(8.dp))
@@ -38,7 +40,9 @@ fun MainPage() {
                 )
             }
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
     )
 }
 
