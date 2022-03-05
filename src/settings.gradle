@@ -26,7 +26,7 @@ dependencyResolutionManagement {
             alias("orbit-viewmodel").to("org.orbit-mvi:orbit-viewmodel:4.3.2")
             bundle("orbit", ["orbit-core", "orbit-viewmodel"])
             alias("orbit-test").to("org.orbit-mvi:orbit-test:4.3.2")
-            
+
             alias("lifecycle").to("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
             alias("lifecycle-livedata").to("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
 
@@ -39,10 +39,8 @@ dependencyResolutionManagement {
             alias("compose-ui").to("androidx.compose.ui:ui:1.1.1")
             alias("compose-ui-tooling").to("androidx.compose.ui:ui-tooling:1.1.1")
             alias("compose-foundation").to("androidx.compose.foundation:foundation:1.1.1")
-            alias("compose-material").to("androidx.compose.material:material:1.1.1")
-            alias("compose-material-icons-core").to("androidx.compose.material:material-icons-core:1.1.1")
-            alias("compose-material-icons-extended").to("androidx.compose.runtime:runtime-livedata:1.1.1")
-            bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material-icons-core", "compose-material-icons-extended"])
+            alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha06")
+            bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material3"])
 
             alias("junit").to("junit:junit:4.13.2")
             alias("junit-ext").to("androidx.test.ext:junit:1.1.3")

@@ -1,8 +1,8 @@
 package jp.kaleidot725.emomemo.view.atoms
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -10,134 +10,167 @@ import androidx.compose.ui.tooling.preview.Preview
 
 object Texts {
     @Composable
-    fun H1(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun DisplayLarge(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h1
+            style = MaterialTheme.typography.displayLarge
         )
     }
 
     @Composable
-    fun H2(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun DisplayMedium(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h2
+            style = MaterialTheme.typography.displayMedium
         )
     }
 
     @Composable
-    fun H3(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun DisplaySmall(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h3
+            style = MaterialTheme.typography.displaySmall
         )
     }
 
     @Composable
-    fun H4(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun HeadlineLarge(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h4
+            style = MaterialTheme.typography.headlineLarge
         )
     }
 
     @Composable
-    fun H5(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun HeadlineMedium(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.headlineMedium
         )
     }
 
     @Composable
-    fun H6(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun HeadlineSmall(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.headlineSmall
         )
     }
 
     @Composable
-    fun Subtitle1(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun TitleLarge(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.titleLarge
         )
     }
 
     @Composable
-    fun Subtitle2(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun TitleMedium(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.subtitle2
+            style = MaterialTheme.typography.titleMedium
         )
     }
 
     @Composable
-    fun Body1(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun TitleSmall(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.titleSmall
         )
     }
 
     @Composable
-    fun Body2(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun BodyLarge(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 
     @Composable
-    fun Button(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun BodyMedium(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.button
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 
     @Composable
-    fun Caption(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+    fun BodySmall(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
         Text(
             text = text,
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.caption
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+
+    @Composable
+    fun LabelLarge(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+        Text(
+            text = text,
+            maxLines = maxLines,
+            modifier = modifier,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.labelLarge
+        )
+    }
+
+    @Composable
+    fun LabelMedium(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+        Text(
+            text = text,
+            maxLines = maxLines,
+            modifier = modifier,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.labelMedium
+        )
+    }
+
+    @Composable
+    fun LabelSmall(text: String, maxLines: Int = Int.MAX_VALUE, modifier: Modifier = Modifier) {
+        Text(
+            text = text,
+            maxLines = maxLines,
+            modifier = modifier,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.labelSmall
         )
     }
 }
@@ -146,17 +179,20 @@ object Texts {
 @Composable
 private fun Texts_Preview() {
     Column {
-        Texts.H1("H1")
-        Texts.H2("H2")
-        Texts.H3("H3")
-        Texts.H4("H4")
-        Texts.H5("H5")
-        Texts.H6("H6")
-        Texts.Subtitle1("Subtitle1")
-        Texts.Subtitle2("Subtitle2")
-        Texts.Body1("Body1")
-        Texts.Body2("Body2")
-        Texts.Button("Button")
-        Texts.Caption("Caption")
+        Texts.DisplayLarge("DisplayLarge")
+        Texts.DisplayMedium("DisplayMedium")
+        Texts.DisplaySmall("DisplaySmall")
+        Texts.HeadlineLarge("HeadlineLarge")
+        Texts.HeadlineMedium("HeadlineMedium")
+        Texts.HeadlineSmall("HeadlineSmall")
+        Texts.TitleLarge("TitleLarge")
+        Texts.TitleMedium("TitleMedium")
+        Texts.TitleSmall("TitleSmall")
+        Texts.BodyLarge("BodyLarge")
+        Texts.BodyMedium("BodyMedium")
+        Texts.BodySmall("BodySmall")
+        Texts.LabelLarge("LabelLarge")
+        Texts.LabelMedium("LabelMedium")
+        Texts.LabelSmall("LabelSmall")
     }
 }
