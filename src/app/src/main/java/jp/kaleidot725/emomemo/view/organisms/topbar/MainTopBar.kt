@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.view.organisms.topbar
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -17,11 +18,22 @@ import jp.kaleidot725.emomemo.view.atoms.Texts
 
 @Composable
 fun MainTopAppBar(
-    title: String, modifier: Modifier = Modifier, scrollBehavior: TopAppBarScrollBehavior? = null
+    title: String,
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+    onClickNavigationIcon: (() -> Unit)? = null,
 ) {
     CenterAlignedTopAppBar(
         title = { Texts.TitleLarge(text = title) },
-        navigationIcon = { Icon(Icons.Filled.Menu, "Menu", Modifier.padding(start = 16.dp)) },
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Filled.Menu,
+                contentDescription = "Menu",
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .clickable { onClickNavigationIcon?.invoke() }
+            )
+        },
         scrollBehavior = scrollBehavior,
         modifier = modifier
     )

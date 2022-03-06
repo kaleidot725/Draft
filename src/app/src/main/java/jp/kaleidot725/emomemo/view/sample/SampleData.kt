@@ -2,6 +2,7 @@ package jp.kaleidot725.emomemo.view.sample
 
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.MessageEntity
+import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.domain.usecase.MemoDetails
 
 object SampleData {
@@ -29,6 +30,19 @@ object SampleData {
         MessageEntity(id = 0, memoId = 7, value = "MESSAGE8", time = 0L),
         MessageEntity(id = 0, memoId = 8, value = "MESSAGE9", time = 0L),
         MessageEntity(id = 0, memoId = 9, value = "MESSAGE10", time = 0L),
+    )
+
+    val notebookList = listOf(
+        NotebookEntity(id = 0, title = "NOTEBOOK1"),
+        NotebookEntity(id = 1, title = "NOTEBOOK2"),
+        NotebookEntity(id = 2, title = "NOTEBOOK3"),
+        NotebookEntity(id = 3, title = "NOTEBOOK4"),
+        NotebookEntity(id = 4, title = "NOTEBOOK5"),
+        NotebookEntity(id = 5, title = "NOTEBOOK6"),
+        NotebookEntity(id = 6, title = "NOTEBOOK7"),
+        NotebookEntity(id = 7, title = "NOTEBOOK8"),
+        NotebookEntity(id = 8, title = "NOTEBOOK9"),
+        NotebookEntity(id = 9, title = "NOTEBOOK10")
     )
 
     val memoDetailsList = listOf(

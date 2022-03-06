@@ -65,7 +65,7 @@
     <string name="navigation_drawer_item_add_notebook">ノートブックを追加する</string>
     <string name="navigation_drawer_item_remove_notebook">ノートブックを削除する</string>
     <string name="navigation_drawer_item_edit_notebook">選択中のノートブックを編集する</string>
-    <string name="navigation_drawer_sub_menu_notebooks">一覧</string>
+    <string name="navigation_drawer_sub_menu_notebooks">ノートブック</string>
     <string name="edit">編集</string>
     <string name="title_activity_setting">設定</string>
 

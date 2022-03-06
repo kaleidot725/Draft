@@ -65,7 +65,7 @@
     <string name="navigation_drawer_item_add_notebook">Add Notebook</string>
     <string name="navigation_drawer_item_remove_notebook">Delete Notebook</string>
     <string name="navigation_drawer_item_edit_notebook">Edit Selected Notebook</string>
-    <string name="navigation_drawer_sub_menu_notebooks">Notebooks</string>
+    <string name="navigation_drawer_sub_menu_notebooks">Notebook</string>
     <string name="edit">Edit</string>
     <string name="title_activity_setting">Setting</string>
 
