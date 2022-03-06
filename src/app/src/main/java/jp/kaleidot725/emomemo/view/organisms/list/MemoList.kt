@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.view.organisms.list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,7 +16,11 @@ import jp.kaleidot725.emomemo.view.organisms.MemoCard
 import jp.kaleidot725.emomemo.view.sample.SampleData
 
 @Composable
-fun MemoList(memos: List<MemoDetails>, modifier: Modifier = Modifier) {
+fun MemoList(
+    memos: List<MemoDetails>,
+    onClickMemo: (MemoDetails) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -28,6 +33,7 @@ fun MemoList(memos: List<MemoDetails>, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp)
+                    .clickable { onClickMemo(memo) }
             )
         }
     }
@@ -36,5 +42,5 @@ fun MemoList(memos: List<MemoDetails>, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun MemoList_Preview() {
-    MemoList(memos = SampleData.memoDetailsList, modifier = Modifier.fillMaxSize())
+    MemoList(memos = SampleData.memoDetailsList, onClickMemo = {}, modifier = Modifier.fillMaxSize())
 }

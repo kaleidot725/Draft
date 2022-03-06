@@ -16,9 +16,15 @@ import jp.kaleidot725.emomemo.view.sample.SampleData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MemoCard(memo: MemoEntity, lastMessage: MessageEntity, messageCount: Int, modifier: Modifier = Modifier) {
+fun MemoCard(
+    memo: MemoEntity,
+    lastMessage: MessageEntity,
+    messageCount: Int,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = modifier, shape = RoundedCornerShape(12.dp)
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp)
     ) {
         TitlesAndCount(subtitle1 = memo.title, subtitle2 = lastMessage.value, count = messageCount.toString())
     }

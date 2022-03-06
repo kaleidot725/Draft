@@ -4,16 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import jp.kaleidot725.emomemo.view.pages.Page
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
-import jp.kaleidot725.emomemo.view.pages.main.MainViewModel
 import org.koin.androidx.viewmodel.ViewModelOwner
 import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.parameter.ParametersDefinition
@@ -28,8 +29,25 @@ class ComposeMainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = Page.Main.route) {
                     composable(route = Page.Main.route) {
-                        val viewModel = getNavComposeViewModel<MainViewModel>()
-                        MainPage(viewModel)
+                        MainPage(
+                            viewModel = getNavComposeViewModel(),
+                            onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
+                            onNavigateRemoveNotebook = { navController.navigate(Page.RemoveNotebook.route) },
+                            onNavigateMemoDetails = { navController.navigate(Page.Memo.route) },
+                            onNavigateAddMemo = { navController.navigate(Page.AddMemo.route) }
+                        )
+                    }
+                    dialog(route = Page.AddNoteBook.route) {
+                        Text(text = "Add Note Book")
+                    }
+                    dialog(route = Page.RemoveNotebook.route) {
+                        Text(text = "Remove Note Book")
+                    }
+                    composable(route = Page.Memo.route) {
+                        Text(text = "MEMO MEMO MEMO")
+                    }
+                    dialog(route = Page.AddMemo.route) {
+                        Text(text = "ADD MEMO MEMO")
                     }
                 }
             }

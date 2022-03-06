@@ -23,13 +23,17 @@ import jp.kaleidot725.emomemo.view.organisms.drawer.MainDrawer
 import jp.kaleidot725.emomemo.view.organisms.list.MemoList
 import jp.kaleidot725.emomemo.view.organisms.topbar.MainTopAppBar
 import jp.kaleidot725.emomemo.view.templates.main.MainTemplate
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainPage(
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
+    onNavigateAddNotebook: () -> Unit,
+    onNavigateRemoveNotebook: () -> Unit,
+    onNavigateMemoDetails: () -> Unit,
+    onNavigateAddMemo: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
@@ -37,7 +41,14 @@ fun MainPage(
     val uiState by viewModel.container.stateFlow.collectAsState()
 
     LaunchedEffect(viewModel) {
-        viewModel.container.sideEffectFlow.collect()
+        viewModel.container.sideEffectFlow.collectLatest {
+            when (it) {
+                MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
+                MainSideEffect.NavigateRemoveNotebook -> onNavigateRemoveNotebook()
+                MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails()
+                MainSideEffect.NavigateAddMemo -> onNavigateAddMemo()
+            }
+        }
     }
 
     MainTemplate(
@@ -51,12 +62,13 @@ fun MainPage(
         content = {
             MemoList(
                 memos = uiState.memos,
+                onClickMemo = { viewModel.selectMemo(it) },
                 modifier = Modifier.padding(8.dp)
             )
         },
         floatingAction = {
             FloatingActionIconButton(
-                onClick = {},
+                onClick = { viewModel.navigateAddMemo() },
                 iconVector = Icons.Filled.Edit,
                 iconDescription = "Add Memo"
             )
@@ -67,11 +79,11 @@ fun MainPage(
                 selectedNotebook = uiState.selectedNotebook,
                 notebooks = uiState.notebooks,
                 onAddNotebook = {
-                    // TODO
+                    viewModel.navigateAddNotebook()
                     coroutineScope.launch { drawerState.close() }
                 },
                 onDeleteNotebook = {
-                    // TODO
+                    viewModel.navigateRemoveNotebook()
                     coroutineScope.launch { drawerState.close() }
                 },
                 onClickNotebook = {
@@ -89,5 +101,11 @@ fun MainPage(
 @Preview
 @Composable
 private fun MainPage_Preview() {
-    MainPage(MainViewModel())
+    MainPage(
+        viewModel = MainViewModel(),
+        onNavigateMemoDetails = {},
+        onNavigateRemoveNotebook = {},
+        onNavigateAddNotebook = {},
+        onNavigateAddMemo = {}
+    )
 }
