@@ -20,7 +20,7 @@ import jp.kaleidot725.emomemo.view.sample.SampleData
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainDrawer(
-    selectedNotebook: NotebookEntity,
+    selectedNotebook: NotebookEntity?,
     notebooks: List<NotebookEntity>,
     onAddNotebook: () -> Unit,
     onDeleteNotebook: () -> Unit,
