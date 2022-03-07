@@ -4,6 +4,7 @@ import android.app.Application
 import jp.kaleidot725.emomemo.data.dataModule
 import jp.kaleidot725.emomemo.domain.usecase.domainModule
 import jp.kaleidot725.emomemo.view.pages.main.MainViewModel
+import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -34,5 +35,9 @@ class EmomemoApp : Application() {
 val appModule = module {
     viewModel {
         MainViewModel()
+    }
+
+    viewModel {
+        MemoDetailViewModel()
     }
 }

@@ -32,8 +32,7 @@ fun MainPage(
     viewModel: MainViewModel,
     onNavigateAddNotebook: () -> Unit,
     onNavigateRemoveNotebook: () -> Unit,
-    onNavigateMemoDetails: () -> Unit,
-    onNavigateAddMemo: () -> Unit
+    onNavigateMemoDetails: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
@@ -104,7 +103,6 @@ private fun MainPage_Preview() {
         viewModel = MainViewModel(),
         onNavigateMemoDetails = {},
         onNavigateRemoveNotebook = {},
-        onNavigateAddNotebook = {},
-        onNavigateAddMemo = {}
+        onNavigateAddNotebook = {}
     )
 }
