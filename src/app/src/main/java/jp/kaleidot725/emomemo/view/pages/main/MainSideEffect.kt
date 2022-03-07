@@ -4,5 +4,4 @@ sealed class MainSideEffect {
     object NavigateAddNotebook : MainSideEffect()
     object NavigateRemoveNotebook : MainSideEffect()
     object NavigateMemoDetails : MainSideEffect()
-    object NavigateAddMemo : MainSideEffect()
 }

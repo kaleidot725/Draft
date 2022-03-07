@@ -46,7 +46,6 @@ fun MainPage(
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
                 MainSideEffect.NavigateRemoveNotebook -> onNavigateRemoveNotebook()
                 MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails()
-                MainSideEffect.NavigateAddMemo -> onNavigateAddMemo()
             }
         }
     }
@@ -68,7 +67,7 @@ fun MainPage(
         },
         floatingAction = {
             FloatingActionIconButton(
-                onClick = { viewModel.navigateAddMemo() },
+                onClick = { viewModel.createMemo() },
                 iconVector = Icons.Filled.Edit,
                 iconDescription = "Add Memo"
             )

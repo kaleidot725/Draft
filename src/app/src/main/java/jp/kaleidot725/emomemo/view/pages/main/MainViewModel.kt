@@ -48,15 +48,15 @@ class MainViewModel : ViewModel(), ContainerHost<MainState, MainSideEffect> {
         }
     }
 
-    fun selectMemo(memo: MemoDetails) {
+    fun createMemo() {
         intent {
             postSideEffect(MainSideEffect.NavigateMemoDetails)
         }
     }
 
-    fun navigateAddMemo() {
+    fun selectMemo(memo: MemoDetails) {
         intent {
-            postSideEffect(MainSideEffect.NavigateAddMemo)
+            postSideEffect(MainSideEffect.NavigateMemoDetails)
         }
     }
 }

@@ -34,7 +34,7 @@ class ComposeMainActivity : ComponentActivity() {
                             onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
                             onNavigateRemoveNotebook = { navController.navigate(Page.RemoveNotebook.route) },
                             onNavigateMemoDetails = { navController.navigate(Page.Memo.route) },
-                            onNavigateAddMemo = { navController.navigate(Page.AddMemo.route) }
+                            onNavigateAddMemo = { navController.navigate(Page.Memo.route) }
                         )
                     }
                     dialog(route = Page.AddNoteBook.route) {
@@ -45,9 +45,6 @@ class ComposeMainActivity : ComponentActivity() {
                     }
                     composable(route = Page.Memo.route) {
                         Text(text = "MEMO MEMO MEMO")
-                    }
-                    dialog(route = Page.AddMemo.route) {
-                        Text(text = "ADD MEMO MEMO")
                     }
                 }
             }
