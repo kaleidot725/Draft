@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import jp.kaleidot725.emomemo.view.pages.Page
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
 import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailPage
+import jp.kaleidot725.emomemo.view.pages.notebook.AddNotebookDialog
 import org.koin.androidx.viewmodel.ViewModelOwner
 import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.parameter.ParametersDefinition
@@ -43,7 +44,9 @@ class ComposeMainActivity : ComponentActivity() {
                         )
                     }
                     dialog(route = Page.AddNoteBook.route) {
-                        Text(text = "Add Note Book")
+                        AddNotebookDialog(
+                            viewModel = getNavComposeViewModel()
+                        )
                     }
                     dialog(route = Page.RemoveNotebook.route) {
                         Text(text = "Remove Note Book")
