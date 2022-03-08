@@ -6,6 +6,7 @@ import jp.kaleidot725.emomemo.domain.usecase.domainModule
 import jp.kaleidot725.emomemo.view.pages.main.MainViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.AddNotebookViewModel
+import jp.kaleidot725.emomemo.view.pages.notebook.DeleteNotebookViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -44,5 +45,9 @@ val appModule = module {
 
     viewModel {
         AddNotebookViewModel()
+    }
+
+    viewModel {
+        DeleteNotebookViewModel()
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
 import androidx.lifecycle.ViewModel
@@ -17,6 +16,7 @@ import jp.kaleidot725.emomemo.view.pages.Page
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
 import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailPage
 import jp.kaleidot725.emomemo.view.pages.notebook.AddNotebookDialog
+import jp.kaleidot725.emomemo.view.pages.notebook.DeleteNotebookDialog
 import org.koin.androidx.viewmodel.ViewModelOwner
 import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.parameter.ParametersDefinition
@@ -49,9 +49,10 @@ class ComposeMainActivity : ComponentActivity() {
                         )
                     }
                     dialog(route = Page.RemoveNotebook.route) {
-                        Text(text = "Remove Note Book")
+                        DeleteNotebookDialog(
+                            viewModel = getNavComposeViewModel()
+                        )
                     }
-
                 }
             }
         }
