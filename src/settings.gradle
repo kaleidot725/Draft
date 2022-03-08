@@ -22,7 +22,7 @@ dependencyResolutionManagement {
             alias("firebase").to("com.google.firebase:firebase-bom:28.0.1")
             alias("coil-compose").to("io.coil-kt:coil-compose:1.4.0")
             alias("navigation-compose").to("androidx.navigation:navigation-compose:2.4.1")
-            
+
             alias("orbit-core").to("org.orbit-mvi:orbit-core:4.3.2")
             alias("orbit-viewmodel").to("org.orbit-mvi:orbit-viewmodel:4.3.2")
             alias("orbit-test").to("org.orbit-mvi:orbit-test:4.3.2")
@@ -40,8 +40,10 @@ dependencyResolutionManagement {
             alias("compose-ui").to("androidx.compose.ui:ui:1.1.1")
             alias("compose-ui-tooling").to("androidx.compose.ui:ui-tooling:1.1.1")
             alias("compose-foundation").to("androidx.compose.foundation:foundation:1.1.1")
+            alias("compose-material").to("androidx.compose.material:material:1.2.0-alpha04")
             alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha06")
-            bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material3"])
+            alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha06")
+            bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material3"])
 
             alias("junit").to("junit:junit:4.13.2")
             alias("junit-ext").to("androidx.test.ext:junit:1.1.3")

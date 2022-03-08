@@ -40,7 +40,8 @@ class ComposeMainActivity : ComponentActivity() {
                     }
                     composable(route = Page.Memo.route) {
                         MemoDetailPage(
-                            viewModel = getNavComposeViewModel()
+                            viewModel = getNavComposeViewModel(),
+                            onBack = { navController.popBackStack() }
                         )
                     }
                     dialog(route = Page.AddNoteBook.route) {
