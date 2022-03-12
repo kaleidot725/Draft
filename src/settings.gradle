@@ -37,13 +37,17 @@ dependencyResolutionManagement {
             bundle("room", ["room-runtime", "room-ktx"])
 
             alias("activity-compose").to("androidx.activity:activity-compose:1.4.0")
-            alias("compose-ui").to("androidx.compose.ui:ui:1.1.1")
-            alias("compose-ui-tooling").to("androidx.compose.ui:ui-tooling:1.1.1")
-            alias("compose-foundation").to("androidx.compose.foundation:foundation:1.1.1")
-            alias("compose-material").to("androidx.compose.material:material:1.2.0-alpha04")
-            alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha06")
-            alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha06")
+            alias("compose-ui").to("androidx.compose.ui:ui:1.1.0")
+            alias("compose-ui-tooling").to("androidx.compose.ui:ui-tooling:1.1.0")
+            alias("compose-foundation").to("androidx.compose.foundation:foundation:1.1.0")
+            alias("compose-material").to("androidx.compose.material:material:1.1.0")
+            alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha07")
             bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material3"])
+
+            alias("accompanist-insets").to("com.google.accompanist:accompanist-insets:0.24.1-alpha")
+            alias("accompanist-insets-ui").to("com.google.accompanist:accompanist-insets-ui:0.24.1-alpha")
+            alias("accompanist-systemuicontroller").to("com.google.accompanist:accompanist-systemuicontroller:0.24.1-alpha")
+            bundle("accompanist", ["accompanist-insets", "accompanist-insets-ui", "accompanist-systemuicontroller"])
 
             alias("junit").to("junit:junit:4.13.2")
             alias("junit-ext").to("androidx.test.ext:junit:1.1.3")

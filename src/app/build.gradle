@@ -51,10 +51,11 @@ dependencies {
     implementation libs.lifecycle.livedata
     implementation libs.timber
     implementation libs.navigation.compose
-    
+
     implementation libs.coil.compose
     implementation libs.bundles.compose
     implementation libs.bundles.orbit
+    implementation libs.bundles.accompanist
 
     implementation platform(libs.firebase)
     implementation "com.google.firebase:firebase-crashlytics-ktx"

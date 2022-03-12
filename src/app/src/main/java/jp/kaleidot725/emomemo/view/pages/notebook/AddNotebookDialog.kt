@@ -4,16 +4,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import jp.kaleidot725.emomemo.view.templates.memo.MemoTemplate
 
 @Composable
 fun AddNotebookDialog(viewModel: AddNotebookViewModel) {
     val uiState by viewModel.container.stateFlow.collectAsState()
 
-    MemoTemplate(
-        topBar = {},
-        content = {
-            Text(text = uiState.test)
-        }
-    )
+    Text(text = uiState.test)
 }
