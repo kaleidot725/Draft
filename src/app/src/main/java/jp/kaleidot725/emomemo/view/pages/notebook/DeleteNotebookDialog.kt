@@ -1,7 +1,6 @@
 package jp.kaleidot725.emomemo.view.pages.notebook
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.view.atoms.TextFields
 import jp.kaleidot725.emomemo.view.atoms.Texts
+import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,19 +43,15 @@ fun DeleteNotebookDialog(viewModel: DeleteNotebookViewModel) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row(
+            OkAndCancelButtons(
+                okText = "削除する",
+                onOk = {},
+                cancelText = "キャンセル",
+                onCancel = {},
                 modifier = Modifier
                     .wrapContentWidth()
-                    .align(Alignment.End),
-            ) {
-                TextButton(onClick = { /*TODO*/ }) {
-                    Texts.LabelLarge(text = "キャンセル")
-                }
-
-                TextButton(onClick = { /*TODO*/ }) {
-                    Texts.LabelLarge(text = "削除する")
-                }
-            }
+                    .align(Alignment.End)
+            )
         }
     }
 }
