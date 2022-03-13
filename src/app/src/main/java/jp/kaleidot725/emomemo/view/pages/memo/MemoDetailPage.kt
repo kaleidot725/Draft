@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.systemBarsPadding
-import jp.kaleidot725.emomemo.view.atoms.TextFields
+import jp.kaleidot725.emomemo.view.atoms.BasicTextFields
 import jp.kaleidot725.emomemo.view.organisms.topbar.MemoTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +45,7 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit) {
                     .navigationBarsWithImePadding(),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                TextFields.BodyLarge(
+                BasicTextFields.BodyLarge(
                     text = title,
                     onValueChange = { title = it },
                     modifier = Modifier.fillMaxWidth()
@@ -53,7 +53,7 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit) {
 
                 Divider()
 
-                TextFields.BodyMedium(
+                BasicTextFields.BodyMedium(
                     text = content,
                     onValueChange = { content = it },
                     singleLine = false,
