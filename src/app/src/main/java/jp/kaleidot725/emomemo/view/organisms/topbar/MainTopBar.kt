@@ -4,9 +4,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -14,17 +14,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import jp.kaleidot725.emomemo.view.atoms.Texts
+import jp.kaleidot725.emomemo.view.atoms.BasicTextFields
 
 @Composable
 fun MainTopAppBar(
     title: String,
+    onChangeTitle: (String) -> Unit,
+    enabledTitle: Boolean,
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
 ) {
-    CenterAlignedTopAppBar(
-        title = { Texts.TitleLarge(text = title) },
+    SmallTopAppBar(
+        title = {
+            BasicTextFields.TitleLarge(
+                text = title,
+                onValueChange = onChangeTitle,
+                enabled = enabledTitle,
+                modifier = modifier.padding(16.dp)
+            )
+        },
         navigationIcon = {
             Icon(
                 imageVector = Icons.Filled.Menu,
@@ -45,6 +54,6 @@ fun MainTopAppBar(
 private fun MainTopAppBar_Preview() {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     MainTopAppBar(
-        title = "お買い物", modifier = Modifier, scrollBehavior = scrollBehavior
+        title = "お買い物", onChangeTitle = {}, enabledTitle = false, modifier = Modifier, scrollBehavior = scrollBehavior
     )
 }

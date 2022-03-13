@@ -13,165 +13,270 @@ import androidx.compose.ui.tooling.preview.Preview
 
 object BasicTextFields {
     @Composable
-    fun DisplayLarge(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun DisplayLarge(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.displayLarge
         )
     }
 
     @Composable
-    fun DisplayMedium(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun DisplayMedium(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.displayMedium
         )
     }
 
     @Composable
-    fun DisplaySmall(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun DisplaySmall(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.displaySmall
         )
     }
 
     @Composable
-    fun HeadlineLarge(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun HeadlineLarge(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.headlineLarge
         )
     }
 
     @Composable
-    fun HeadlineMedium(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun HeadlineMedium(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.headlineMedium
         )
     }
 
     @Composable
-    fun HeadlineSmall(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun HeadlineSmall(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.headlineSmall
         )
     }
 
     @Composable
-    fun TitleLarge(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun TitleLarge(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.titleLarge
         )
     }
 
     @Composable
-    fun TitleMedium(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun TitleMedium(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.titleMedium
         )
     }
 
     @Composable
-    fun TitleSmall(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun TitleSmall(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.titleSmall
         )
     }
 
     @Composable
-    fun BodyLarge(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun BodyLarge(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.bodyLarge
         )
     }
 
     @Composable
-    fun BodyMedium(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun BodyMedium(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.bodyMedium
         )
     }
 
     @Composable
-    fun BodySmall(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun BodySmall(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.bodySmall
         )
     }
 
     @Composable
-    fun LabelLarge(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun LabelLarge(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.labelLarge
         )
     }
 
     @Composable
-    fun LabelMedium(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun LabelMedium(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.labelMedium
         )
     }
 
     @Composable
-    fun LabelSmall(text: String, onValueChange: (String) -> Unit, singleLine: Boolean = true, modifier: Modifier = Modifier) {
+    fun LabelSmall(
+        text: String,
+        onValueChange: (String) -> Unit,
+        singleLine: Boolean = true,
+        enabled: Boolean = true,
+        modifier: Modifier = Modifier
+    ) {
         BasicTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
+            enabled = enabled,
             modifier = modifier,
             textStyle = MaterialTheme.typography.labelSmall
         )

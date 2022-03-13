@@ -83,7 +83,9 @@ fun MainPage(
                 Scaffold(
                     topBar = {
                         MainTopAppBar(
-                            title = uiState.selectedNotebook?.title ?: "NOTEBOOK",
+                            title = uiState.selectedNotebook?.title ?: "",
+                            onChangeTitle = { viewModel.updateSelectedNotebookTitle(it) },
+                            enabledTitle = uiState.result != MainState.Result.NOT_FOUND_NOTEBOOK,
                             scrollBehavior = scrollBehavior,
                             onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } }
                         )

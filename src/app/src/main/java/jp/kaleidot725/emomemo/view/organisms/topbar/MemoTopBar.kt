@@ -14,20 +14,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import jp.kaleidot725.emomemo.view.atoms.Texts
+import jp.kaleidot725.emomemo.view.atoms.BasicTextFields
 
 @Composable
 fun MemoTopBar(
     title: String,
+    onChangeTitle: (String) -> Unit,
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
 ) {
     SmallTopAppBar(
         title = {
-            Texts.TitleLarge(
+            BasicTextFields.TitleLarge(
                 text = title,
-                maxLines = 1,
+                onValueChange = onChangeTitle,
                 modifier = modifier.padding(16.dp)
             )
         },
@@ -52,6 +53,7 @@ private fun MemoTopBar_Preview() {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     MemoTopBar(
         title = "お買い物",
+        onChangeTitle = {},
         modifier = Modifier,
         scrollBehavior = scrollBehavior
     )

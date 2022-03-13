@@ -7,6 +7,7 @@ import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosFlowUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksFlowUseCase
+import jp.kaleidot725.emomemo.domain.usecase.update.UpdateNotebookUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class MainViewModel(
     private val getNotebooksUseCase: GetNotebooksFlowUseCase,
     private val getMemosFlowUseCase: GetMemosFlowUseCase,
     private val createMemoUseCase: CreateMemoUseCase,
+    private val updateNotebookUseCase: UpdateNotebookUseCase
 ) : ViewModel(), ContainerHost<MainState, MainSideEffect> {
     override val container: Container<MainState, MainSideEffect> = container(MainState())
 
@@ -44,6 +46,17 @@ class MainViewModel(
         intent {
             reduce { state.copy(selectedNotebook = notebook) }
             observeMemos(notebook)
+        }
+    }
+
+    fun updateSelectedNotebookTitle(title: String) {
+        intent {
+            val newNotebook = state.selectedNotebook?.copy(title = title)
+            if (newNotebook != null) {
+                updateNotebookUseCase.execute(newNotebook)
+                reduce { state.copy(selectedNotebook = newNotebook) }
+                observeNotebooks()
+            }
         }
     }
 
