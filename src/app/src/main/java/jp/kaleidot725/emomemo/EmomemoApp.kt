@@ -36,7 +36,7 @@ class EmomemoApp : Application() {
 
 val appModule = module {
     viewModel {
-        MainViewModel(get())
+        MainViewModel(get(), get())
     }
 
     viewModel {

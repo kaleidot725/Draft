@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.domain.usecase.delete.DeleteNotebookUseCase
-import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksFlowUseCase
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
@@ -15,7 +15,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class DeleteNotebookViewModel(
-    private val getNotebooksUseCase: GetNotebooksUseCase,
+    private val getNotebooksUseCase: GetNotebooksFlowUseCase,
     private val deleteNotebookUseCase: DeleteNotebookUseCase
 ) : ViewModel(), ContainerHost<DeleteNotebookState, DeleteNotebookSideEffect> {
     override val container: Container<DeleteNotebookState, DeleteNotebookSideEffect> = container(DeleteNotebookState())

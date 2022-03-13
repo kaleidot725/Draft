@@ -19,5 +19,6 @@
     <string name="navigation_drawer_create_notebook">Create Notebook</string>
     <string name="navigation_drawer_delete_notebook">Delete Notebook</string>
 
-
+    <string name="main_not_found_notebook_message">Not Found Notebook</string>
+    <string name="main_not_found_memo_message">Not Found Memo</string>
 </resources>

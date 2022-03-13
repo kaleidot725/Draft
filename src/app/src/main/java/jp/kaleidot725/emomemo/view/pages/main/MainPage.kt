@@ -1,5 +1,6 @@
 package jp.kaleidot725.emomemo.view.pages.main
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,11 +17,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
+import jp.kaleidot725.emomemo.R
+import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.FloatingActionIconButton
 import jp.kaleidot725.emomemo.view.organisms.drawer.MainDrawer
 import jp.kaleidot725.emomemo.view.organisms.list.MemoList
@@ -83,11 +88,31 @@ fun MainPage(
                         )
                     },
                     content = {
-                        MemoList(
-                            memos = uiState.memos,
-                            onClickMemo = { viewModel.selectMemo(it) },
-                            modifier = Modifier.padding(8.dp)
-                        )
+                        when (uiState.result) {
+                            MainState.Result.SUCCESS -> {
+                                MemoList(
+                                    memos = uiState.memos,
+                                    onClickMemo = { viewModel.selectMemo(it) },
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
+                            MainState.Result.NOT_FOUND_NOTEBOOK -> {
+                                Box(Modifier.fillMaxSize()) {
+                                    Texts.BodyLarge(
+                                        text = stringResource(id = R.string.main_not_found_notebook_message),
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
+                            }
+                            MainState.Result.NOT_FOUND_MEMO -> {
+                                Box(Modifier.fillMaxSize()) {
+                                    Texts.BodyLarge(
+                                        text = stringResource(id = R.string.main_not_found_memo_message),
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
+                            }
+                        }
                     },
                     floatingActionButton = {
                         FloatingActionIconButton(

@@ -4,7 +4,7 @@ import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.data.repository.NotebookRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetNotebooksUseCase(private val notebookRepository: NotebookRepository) {
+class GetNotebooksFlowUseCase(private val notebookRepository: NotebookRepository) {
     fun execute(): Flow<List<NotebookEntity>> {
         return notebookRepository.getAllFlow()
     }

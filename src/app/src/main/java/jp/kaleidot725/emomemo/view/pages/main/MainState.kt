@@ -8,5 +8,17 @@ data class MainState(
     val selectedNotebook: NotebookEntity? = null,
     val memos: List<MemoEntity> = emptyList()
 ) {
+    val result = when {
+        notebooks.isEmpty() -> Result.NOT_FOUND_NOTEBOOK
+        memos.isEmpty() -> Result.NOT_FOUND_MEMO
+        else -> Result.SUCCESS
+    }
+
+    enum class Result {
+        NOT_FOUND_NOTEBOOK,
+        NOT_FOUND_MEMO,
+        SUCCESS
+    }
+
     val canDeleteNotebook = notebooks.isNotEmpty()
 }

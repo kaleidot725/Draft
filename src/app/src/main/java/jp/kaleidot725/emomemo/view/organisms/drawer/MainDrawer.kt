@@ -1,9 +1,10 @@
 package jp.kaleidot725.emomemo.view.organisms.drawer
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationDrawerItem
@@ -29,64 +30,58 @@ fun MainDrawer(
     onClickNotebook: (NotebookEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(modifier) {
-        item {
-            Texts.TitleLarge(
-                text = stringResource(id = R.string.top_title),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            )
-        }
+    Column(modifier.verticalScroll(rememberScrollState())) {
+        Texts.TitleLarge(
+            text = stringResource(id = R.string.top_title),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
 
-        item {
-            Texts.TitleMedium(
-                text = stringResource(id = R.string.navigation_drawer_action_title),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+        Texts.TitleMedium(
+            text = stringResource(id = R.string.navigation_drawer_action_title),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
 
-            )
-        }
+        )
 
-        item {
-            NavigationDrawerItem(
-                label = {
-                    Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_create_notebook))
-                },
-                selected = false,
-                onClick = { onAddNotebook() }
-            )
-        }
+        NavigationDrawerItem(
+            label = {
+                Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_create_notebook))
+            },
+            selected = false,
+            onClick = { onAddNotebook() }
+        )
 
-        item {
-            NavigationDrawerItem(
-                label = {
-                    Texts.TitleMedium(
-                        text = stringResource(id = R.string.navigation_drawer_delete_notebook),
-                        modifier = Modifier.alpha(if (enabledDeleteNotebook) 1f else 0.3f)
-                    )
-                },
-                selected = false,
-                onClick = { if (enabledDeleteNotebook) onDeleteNotebook() },
-            )
-        }
+        NavigationDrawerItem(
+            label = {
+                Texts.TitleMedium(
+                    text = stringResource(id = R.string.navigation_drawer_delete_notebook),
+                    modifier = Modifier.alpha(if (enabledDeleteNotebook) 1f else 0.3f)
+                )
+            },
+            selected = false,
+            onClick = { if (enabledDeleteNotebook) onDeleteNotebook() },
+        )
 
-        item {
-            Divider(modifier = Modifier.padding(16.dp))
-        }
+        Divider(modifier = Modifier.padding(16.dp))
 
-        item {
+        if (notebooks.isNotEmpty()) {
+
             Texts.TitleMedium(
                 text = stringResource(id = R.string.navigation_drawer_notebook_title),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             )
-        }
 
-        items(notebooks) {
-            NavigationDrawerItem(label = { Texts.TitleMedium(text = it.title) }, selected = it == selectedNotebook, onClick = { onClickNotebook(it) })
+            notebooks.forEach {
+                NavigationDrawerItem(
+                    label = { Texts.TitleMedium(text = it.title) },
+                    selected = it == selectedNotebook,
+                    onClick = { onClickNotebook(it) })
+            }
         }
     }
 }
