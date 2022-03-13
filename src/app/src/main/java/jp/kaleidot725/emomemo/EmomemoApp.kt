@@ -44,7 +44,7 @@ val appModule = module {
     }
 
     viewModel {
-        AddNotebookViewModel()
+        AddNotebookViewModel(get())
     }
 
     viewModel {

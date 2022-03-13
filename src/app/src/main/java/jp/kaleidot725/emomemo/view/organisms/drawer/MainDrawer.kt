@@ -39,7 +39,7 @@ fun MainDrawer(
 
         item {
             Texts.TitleMedium(
-                text = stringResource(id = R.string.navigation_drawer_sub_menu_action),
+                text = stringResource(id = R.string.navigation_drawer_action_title),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -49,7 +49,7 @@ fun MainDrawer(
 
         item {
             NavigationDrawerItem(
-                label = { Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_item_add_notebook)) },
+                label = { Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_create_notebook)) },
                 selected = false,
                 onClick = { onAddNotebook() }
             )
@@ -57,7 +57,7 @@ fun MainDrawer(
 
         item {
             NavigationDrawerItem(
-                label = { Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_item_remove_notebook)) },
+                label = { Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_delete_notebook)) },
                 selected = false,
                 onClick = { onDeleteNotebook() }
             )
@@ -69,7 +69,7 @@ fun MainDrawer(
 
         item {
             Texts.TitleMedium(
-                text = stringResource(id = R.string.navigation_drawer_sub_menu_notebooks),
+                text = stringResource(id = R.string.navigation_drawer_notebook_title),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)

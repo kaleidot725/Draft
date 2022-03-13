@@ -47,7 +47,8 @@ class ComposeMainActivity : ComponentActivity() {
                         }
                         dialog(route = Page.AddNoteBook.route) {
                             AddNotebookDialog(
-                                viewModel = getNavComposeViewModel()
+                                viewModel = getNavComposeViewModel(),
+                                onClose = { navController.popBackStack() }
                             )
                         }
                         dialog(route = Page.RemoveNotebook.route) {

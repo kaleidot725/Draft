@@ -4,75 +4,14 @@
     <string name="empty" />
     <string name="delete">削除</string>
 
-    <!-- SettingFragment-->
-    <string name="setting">設定</string>
+    <!-- AddNotebookDialog -->
+    <string name="add_notebook_title">ノートブックを作成する</string>
+    <string name="add_notebook_ok">作成する</string>
+    <string name="add_notebook_cancel">キャンセル</string>
+    <string name="add_notebook_field_title">タイトル</string>
 
-    <!-- HomeFragment -->
-    <string name="home_fragment_title">ホーム</string>
-    <string name="home_notebook_is_not_found">ノートブックがありません\nノートブックを作成してください。</string>
-    <string name="home_memo_is_not_found">メモがありません\nメモを作成してください。</string>
-
-    <!-- MemoDialogFragment -->
-    <string name="memo_dialog_fragment_title">追加</string>
-    <string name="memo_dialog_fragment_memo_title">タイトル</string>
-    <string name="memo_dialog_fragment_memo_title_hint">タイトルを入力してください</string>
-    <string name="memo_dialog_fragment_memo_tag">タグ</string>
-    <string name="memo_dialog_fragment_memo_tag_hint">タグを入力してください</string>
-    <string name="memo_dialog_fragment_create">作成</string>
-    <string name="memo_dialog_fragment_update">更新</string>
-    <string name="memo_dialog_fragment_cancel">キャンセル</string>
-    <string name="memo_fragment_title">メモ</string>
-
-    <!-- MessageDialogFragment -->
-    <string name="message_dialog_fragment_message_title">メッセージ</string>
-    <string name="message_dialog_fragment_message_title_hint">メッセージを入力してください</string>
-    <string name="message_is_not_found">メッセージがありません\nメッセージを追加してください。</string>
-    <string name="message_dialog_fragment_update">更新</string>
-    <string name="message_dialog_Fragment_cancel">キャンセル</string>
-
-    <!-- NotebookDialogFragment -->
-    <string name="notebook_dialog_fragment_message_title">ノートブック</string>
-    <string name="notebook_dialog_fragment_message_title_hint">ノートブックを入力してください</string>
-    <string name="notebook_dialog_fragment_update">更新</string>
-    <string name="notebook_dialog_Fragment_cancel">キャンセル</string>
-
-
-    <!-- AddNotebookDialogFragment -->
-    <string name="add_notebook_fragment_notebook_title">タイトル</string>
-    <string name="add_notebook_fragment_notebook_title_hint">タイトルを入力してください</string>
-    <string name="add_notebook_fragment_create">作成</string>
-    <string name="add_notebook_fragment_cancel">キャンセル</string>
-
-    <!-- DeleteNotebookDialogFragment -->
-    <string name="delete_notebook_fragment_notebook_title">タイトル</string>
-    <string name="delete_notebook_fragment_delete">削除</string>
-    <string name="delete_notebook_fragment_cancel">キャンセル</string>
-
-    <!-- MemoFragment -->
-    <string name="memo_fragment_audio_permission_denied">音声入力をする場合は音声録音の権限を許可してください</string>
-    <string name="memo_fragment_audio_permission_never_ask_again">音声入力をする場合は音声録音の権限を許可してください</string>
-    <string name="memo_no_message_time">"00/00/00 00:00:00"</string>
-    <string name="memo_no_message_text">"メッセージがありません"</string>
-
-    <!-- AudioRecognizerDialogFragment -->
-    <string name="audio_recognizer_dialog_fragment_title">音声入力</string>
-    <string name="audio_recognizer_start">話してください</string>
-    <string name="audio_recognizer_end">認識中</string>
-    <string name="audio_recognizer_error">認識できませんでした</string>
-
-    <!-- Navigation Drawer -->
-    <string name="navigation_drawer_sub_menu_action">編集</string>
-    <string name="navigation_drawer_item_add_notebook">ノートブックを追加する</string>
-    <string name="navigation_drawer_item_remove_notebook">ノートブックを削除する</string>
-    <string name="navigation_drawer_item_edit_notebook">選択中のノートブックを編集する</string>
-    <string name="navigation_drawer_sub_menu_notebooks">ノートブック</string>
-    <string name="edit">編集</string>
-    <string name="title_activity_setting">設定</string>
-
-    <!-- 設定画面 -->
-    <string name="preference_license">ライセンス</string>
-    <string name="license">ライセンス</string>
-    <string name="version">バージョン</string>
-    <string name="do_editting">編集する</string>
-    <string name="do_deleting">削除する</string>
+    <string name="navigation_drawer_notebook_title">ノートブック</string>
+    <string name="navigation_drawer_action_title">編集</string>
+    <string name="navigation_drawer_create_notebook">ノートブックを作成する</string>
+    <string name="navigation_drawer_delete_notebook">オートブックを削除する</string>
 </resources>

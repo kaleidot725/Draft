@@ -10,16 +10,18 @@ import jp.kaleidot725.emomemo.view.atoms.Texts
 fun OkAndCancelButtons(
     okText: String,
     onOk: () -> Unit,
+    enabledOk: Boolean,
     cancelText: String,
     onCancel: () -> Unit,
+    enabledCancel: Boolean,
     modifier: Modifier = Modifier
 ) {
     Row(modifier) {
-        TextButton(onClick = onCancel) {
+        TextButton(onClick = onCancel, enabled = enabledCancel) {
             Texts.LabelLarge(text = cancelText)
         }
 
-        TextButton(onClick = onOk) {
+        TextButton(onClick = onOk, enabled = enabledOk) {
             Texts.LabelLarge(text = okText)
         }
     }

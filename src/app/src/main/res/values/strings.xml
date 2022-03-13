@@ -4,75 +4,16 @@
     <string name="empty" />
     <string name="delete">Delete</string>
 
-    <!-- SettingFragment-->
-    <string name="setting">Setting</string>
+    <!-- AddNotebookDialog -->
+    <string name="add_notebook_title">Create Notebook</string>
+    <string name="add_notebook_ok">Create</string>
+    <string name="add_notebook_cancel">Cancel</string>
+    <string name="add_notebook_field_title">Title</string>
 
-    <!-- HomeFragment -->
-    <string name="home_fragment_title">Home</string>
-    <string name="home_notebook_is_not_found">Not found notebook.\nPlease create notebook.</string>
-    <string name="home_memo_is_not_found">Not found note.\nPlease create note.</string>
-
-    <!-- MemoDialogFragment -->
-    <string name="memo_dialog_fragment_title">Add</string>
-    <string name="memo_dialog_fragment_memo_title">Title</string>
-    <string name="memo_dialog_fragment_memo_title_hint">Please input title.</string>
-    <string name="memo_dialog_fragment_memo_tag">Tag</string>
-    <string name="memo_dialog_fragment_memo_tag_hint">Please input tag.</string>
-    <string name="memo_dialog_fragment_create">Create</string>
-    <string name="memo_dialog_fragment_update">Update</string>
-    <string name="memo_dialog_fragment_cancel">Cancel</string>
-    <string name="memo_fragment_title">Note</string>
-
-    <!-- MessageDialogFragment -->
-    <string name="message_dialog_fragment_message_title">Message</string>
-    <string name="message_dialog_fragment_message_title_hint">Please input message.</string>
-    <string name="message_is_not_found">Not found message.\nPlease create message.</string>
-    <string name="message_dialog_fragment_update">Update</string>
-    <string name="message_dialog_Fragment_cancel">Cancel</string>
-
-    <!-- NotebookDialogFragment -->
-    <string name="notebook_dialog_fragment_message_title">Memo</string>
-    <string name="notebook_dialog_fragment_message_title_hint">Please input title.</string>
-    <string name="notebook_dialog_fragment_update">Update</string>
-    <string name="notebook_dialog_Fragment_cancel">Cancel</string>
+    <string name="navigation_drawer_notebook_title">Notebook</string>
+    <string name="navigation_drawer_action_title">Edit</string>
+    <string name="navigation_drawer_create_notebook">Create Notebook</string>
+    <string name="navigation_drawer_delete_notebook">Delete Notebook</string>
 
 
-    <!-- AddNotebookDialogFragment -->
-    <string name="add_notebook_fragment_notebook_title">Title</string>
-    <string name="add_notebook_fragment_notebook_title_hint">Please input title.</string>
-    <string name="add_notebook_fragment_create">Create</string>
-    <string name="add_notebook_fragment_cancel">Cancel</string>
-
-    <!-- DeleteNotebookDialogFragment -->
-    <string name="delete_notebook_fragment_notebook_title">Title</string>
-    <string name="delete_notebook_fragment_delete">Delete</string>
-    <string name="delete_notebook_fragment_cancel">Cancel</string>
-
-    <!-- MemoFragment -->
-    <string name="memo_fragment_audio_permission_denied">Please allow voice recording permission.</string>
-    <string name="memo_fragment_audio_permission_never_ask_again">Please allow voice recording permission.</string>
-    <string name="memo_no_message_time">"00/00/00 00:00:00"</string>
-    <string name="memo_no_message_text">"Not found message."</string>
-
-    <!-- AudioRecognizerDialogFragment -->
-    <string name="audio_recognizer_dialog_fragment_title">Voice Recognition</string>
-    <string name="audio_recognizer_start">Please talk.</string>
-    <string name="audio_recognizer_end">Recognizing</string>
-    <string name="audio_recognizer_error">Could not be recognized</string>
-
-    <!-- Navigation Drawer -->
-    <string name="navigation_drawer_sub_menu_action">Edit</string>
-    <string name="navigation_drawer_item_add_notebook">Add Notebook</string>
-    <string name="navigation_drawer_item_remove_notebook">Delete Notebook</string>
-    <string name="navigation_drawer_item_edit_notebook">Edit Selected Notebook</string>
-    <string name="navigation_drawer_sub_menu_notebooks">Notebook</string>
-    <string name="edit">Edit</string>
-    <string name="title_activity_setting">Setting</string>
-
-    <!-- 設定画面 -->
-    <string name="preference_license">License</string>
-    <string name="license">License</string>
-    <string name="version">Version</string>
-    <string name="do_editting">Edit</string>
-    <string name="do_deleting">Delete</string>
 </resources>
