@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
-import jp.kaleidot725.emomemo.data.entity.MessageEntity
 import jp.kaleidot725.emomemo.view.molecules.TitlesAndCount
 import jp.kaleidot725.emomemo.view.sample.SampleData
 
@@ -18,15 +17,14 @@ import jp.kaleidot725.emomemo.view.sample.SampleData
 @Composable
 fun MemoCard(
     memo: MemoEntity,
-    lastMessage: MessageEntity,
-    messageCount: Int,
+    memoCount: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp)
     ) {
-        TitlesAndCount(subtitle1 = memo.title, subtitle2 = lastMessage.value, count = messageCount.toString())
+        TitlesAndCount(subtitle1 = memo.title, subtitle2 = memo.content, count = memoCount.toString())
     }
 }
 
@@ -35,8 +33,7 @@ fun MemoCard(
 private fun MemoCard_Preview() {
     MemoCard(
         memo = SampleData.memoList[0],
-        lastMessage = SampleData.messageList[0],
-        messageCount = 1,
+        memoCount = 1,
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)

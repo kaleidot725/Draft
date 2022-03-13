@@ -11,14 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import jp.kaleidot725.emomemo.domain.usecase.MemoDetails
+import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.view.organisms.MemoCard
 import jp.kaleidot725.emomemo.view.sample.SampleData
 
 @Composable
 fun MemoList(
-    memos: List<MemoDetails>,
-    onClickMemo: (MemoDetails) -> Unit,
+    memos: List<MemoEntity>,
+    onClickMemo: (MemoEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -27,9 +27,8 @@ fun MemoList(
     ) {
         items(memos) { memo ->
             MemoCard(
-                memo = memo.memo,
-                lastMessage = memo.lastMessage,
-                messageCount = memo.messageCount,
+                memo = memo,
+                memoCount = memo.content.length,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp)
@@ -42,5 +41,5 @@ fun MemoList(
 @Preview
 @Composable
 private fun MemoList_Preview() {
-    MemoList(memos = SampleData.memoDetailsList, onClickMemo = {}, modifier = Modifier.fillMaxSize())
+    MemoList(memos = SampleData.memoList, onClickMemo = {}, modifier = Modifier.fillMaxSize())
 }

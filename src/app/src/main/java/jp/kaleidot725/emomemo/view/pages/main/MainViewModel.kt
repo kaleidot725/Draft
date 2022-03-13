@@ -1,8 +1,8 @@
 package jp.kaleidot725.emomemo.view.pages.main
 
 import androidx.lifecycle.ViewModel
+import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
-import jp.kaleidot725.emomemo.domain.usecase.MemoDetails
 import jp.kaleidot725.emomemo.view.sample.SampleData
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -20,7 +20,7 @@ class MainViewModel : ViewModel(), ContainerHost<MainState, MainSideEffect> {
                 state.copy(
                     notebooks = SampleData.notebookList,
                     selectedNotebook = SampleData.notebookList.first(),
-                    memos = SampleData.memoDetailsList
+                    memos = SampleData.memoList
                 )
             }
         }
@@ -54,7 +54,7 @@ class MainViewModel : ViewModel(), ContainerHost<MainState, MainSideEffect> {
         }
     }
 
-    fun selectMemo(memo: MemoDetails) {
+    fun selectMemo(memo: MemoEntity) {
         intent {
             postSideEffect(MainSideEffect.NavigateMemoDetails)
         }

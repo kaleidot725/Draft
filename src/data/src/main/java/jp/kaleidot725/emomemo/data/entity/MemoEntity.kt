@@ -20,11 +20,12 @@ data class MemoEntity(
     val id: Int,
     @ColumnInfo(index = true)
     val notebookId: Int,
-    val title: String
+    val title: String,
+    val content: String
 ) : Serializable {
     companion object {
-        fun create(notebookId: Int, title: String): MemoEntity {
-            return MemoEntity(0, notebookId, title)
+        fun create(notebookId: Int, title: String, content: String): MemoEntity {
+            return MemoEntity(0, notebookId, title, content)
         }
     }
 }

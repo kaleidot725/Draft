@@ -1,9 +1,10 @@
 package jp.kaleidot725.emomemo.domain.usecase.get
 
-import jp.kaleidot725.emomemo.data.repository.MemoStatusRepository
+import jp.kaleidot725.emomemo.data.entity.MemoEntity
+import jp.kaleidot725.emomemo.data.repository.MemoRepository
 
-class GetMemoUseCase(private val memoStatusRepository: MemoStatusRepository) {
-    suspend fun execute(memoId: Int): jp.kaleidot725.emomemo.data.view.MemoStatusView? {
-        return memoStatusRepository.getMemoByMemoId(memoId)
+class GetMemoUseCase(private val memoRepository: MemoRepository) {
+    suspend fun execute(memoId: Int): MemoEntity {
+        return memoRepository.getMemo(memoId)
     }
 }
