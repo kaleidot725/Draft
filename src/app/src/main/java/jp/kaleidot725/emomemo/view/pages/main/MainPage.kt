@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import jp.kaleidot725.emomemo.R
+import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.FloatingActionIconButton
 import jp.kaleidot725.emomemo.view.organisms.drawer.MainDrawer
@@ -39,7 +40,7 @@ fun MainPage(
     viewModel: MainViewModel,
     onNavigateAddNotebook: () -> Unit,
     onNavigateRemoveNotebook: () -> Unit,
-    onNavigateMemoDetails: () -> Unit
+    onNavigateMemoDetails: (MemoEntity) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
@@ -51,7 +52,7 @@ fun MainPage(
             when (it) {
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
                 MainSideEffect.NavigateRemoveNotebook -> onNavigateRemoveNotebook()
-                MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails()
+                is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoEntity)
             }
         }
     }

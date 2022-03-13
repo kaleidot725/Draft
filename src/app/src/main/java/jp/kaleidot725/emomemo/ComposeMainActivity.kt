@@ -22,6 +22,7 @@ import jp.kaleidot725.emomemo.view.pages.notebook.DeleteNotebookDialog
 import org.koin.androidx.viewmodel.ViewModelOwner
 import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.parameter.ParametersDefinition
+import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.Qualifier
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -40,11 +41,12 @@ class ComposeMainActivity : ComponentActivity() {
                             MainPage(viewModel = getNavComposeViewModel(),
                                 onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
                                 onNavigateRemoveNotebook = { navController.navigate(Page.RemoveNotebook.route) },
-                                onNavigateMemoDetails = { navController.navigate(Page.Memo.route) })
+                                onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it.id)) })
                         }
                         composable(route = Page.Memo.route) {
+                            val memoId = Page.Memo.getArgumentId(it)
                             MemoDetailPage(
-                                viewModel = getNavComposeViewModel(),
+                                viewModel = getNavComposeViewModel { parametersOf(memoId) },
                                 onBack = { navController.popBackStack() }
                             )
                         }

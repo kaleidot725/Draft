@@ -36,11 +36,11 @@ class EmomemoApp : Application() {
 
 val appModule = module {
     viewModel {
-        MainViewModel(get(), get())
+        MainViewModel(get(), get(), get())
     }
 
-    viewModel {
-        MemoDetailViewModel()
+    viewModel { (memoId: Int) ->
+        MemoDetailViewModel(memoId, get(), get())
     }
 
     viewModel {

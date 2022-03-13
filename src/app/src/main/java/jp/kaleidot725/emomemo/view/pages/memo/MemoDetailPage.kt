@@ -12,9 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
@@ -26,13 +23,11 @@ import jp.kaleidot725.emomemo.view.organisms.topbar.MemoTopBar
 @Composable
 fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit) {
     val uiState by viewModel.container.stateFlow.collectAsState()
-    var title by remember { mutableStateOf("お買い物") }
-    var content by remember { mutableStateOf(uiState.test) }
 
     Scaffold(
         topBar = {
             MemoTopBar(
-                title = title,
+                title = uiState.memoEntity?.title ?: "",
                 onClickNavigationIcon = onBack
             )
         },
@@ -46,16 +41,16 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 BasicTextFields.BodyLarge(
-                    text = title,
-                    onValueChange = { title = it },
+                    text = uiState.memoEntity?.title ?: "",
+                    onValueChange = { viewModel.updateTitle(it) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 Divider()
 
                 BasicTextFields.BodyMedium(
-                    text = content,
-                    onValueChange = { content = it },
+                    text = uiState.memoEntity?.content ?: "",
+                    onValueChange = { viewModel.updateContent(it) },
                     singleLine = false,
                     modifier = Modifier.fillMaxWidth()
                 )

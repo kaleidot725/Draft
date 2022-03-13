@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
+import jp.kaleidot725.emomemo.domain.usecase.create.CreateMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksFlowUseCase
 import kotlinx.coroutines.flow.collectLatest
@@ -17,7 +18,8 @@ import org.orbitmvi.orbit.viewmodel.container
 
 class MainViewModel(
     private val getNotebooksUseCase: GetNotebooksFlowUseCase,
-    private val getMemosUseCase: GetMemosUseCase
+    private val getMemosUseCase: GetMemosUseCase,
+    private val createMemoUseCase: CreateMemoUseCase
 ) : ViewModel(), ContainerHost<MainState, MainSideEffect> {
     override val container: Container<MainState, MainSideEffect> = container(MainState())
 
@@ -46,13 +48,16 @@ class MainViewModel(
 
     fun createMemo() {
         intent {
-            postSideEffect(MainSideEffect.NavigateMemoDetails)
+            state.selectedNotebook?.let { notebook ->
+                val newMemo = createMemoUseCase.execute(notebook)
+                postSideEffect(MainSideEffect.NavigateMemoDetails(newMemo))
+            }
         }
     }
 
     fun selectMemo(memo: MemoEntity) {
         intent {
-            postSideEffect(MainSideEffect.NavigateMemoDetails)
+            postSideEffect(MainSideEffect.NavigateMemoDetails(memo))
         }
     }
 
