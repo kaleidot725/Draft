@@ -1,8 +1,8 @@
 package jp.kaleidot725.emomemo.data.repository
 
-import androidx.lifecycle.LiveData
 import jp.kaleidot725.emomemo.data.dao.MemoDao
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
+import kotlinx.coroutines.flow.Flow
 
 class MemoRepository(private val dao: MemoDao) {
     suspend fun insert(memo: MemoEntity) {
@@ -29,7 +29,7 @@ class MemoRepository(private val dao: MemoDao) {
         return dao.getMemos(notebookId)
     }
 
-    fun getMemoCountLiveData(notebookId: Int): LiveData<Int> {
-        return dao.getMemoCountLiveData(notebookId)
+    fun getMemoCountFlow(notebookId: Int): Flow<Int> {
+        return dao.getMemoCountFlow(notebookId)
     }
 }

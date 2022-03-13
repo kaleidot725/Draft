@@ -1,10 +1,10 @@
 package jp.kaleidot725.emomemo.domain.usecase.get
 
-import androidx.lifecycle.LiveData
 import jp.kaleidot725.emomemo.data.repository.MemoRepository
+import kotlinx.coroutines.flow.Flow
 
 class GetMemoCountUseCase(private val memoRepository: MemoRepository) {
-    fun execute(notebookId: Int): LiveData<Int> {
-        return memoRepository.getMemoCountLiveData(notebookId)
+    fun execute(notebookId: Int): Flow<Int> {
+        return memoRepository.getMemoCountFlow(notebookId)
     }
 }

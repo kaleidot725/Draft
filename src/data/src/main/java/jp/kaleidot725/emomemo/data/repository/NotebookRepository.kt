@@ -1,8 +1,8 @@
 package jp.kaleidot725.emomemo.data.repository
 
-import androidx.lifecycle.LiveData
 import jp.kaleidot725.emomemo.data.dao.NotebookDao
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
+import kotlinx.coroutines.flow.Flow
 
 class NotebookRepository(private val dao: NotebookDao) {
     suspend fun insert(notebook: NotebookEntity) {
@@ -25,8 +25,8 @@ class NotebookRepository(private val dao: NotebookDao) {
         return dao.getAll()
     }
 
-    fun getAllLiveData(): LiveData<List<NotebookEntity>> {
-        return dao.getAllLiveData()
+    fun getAllFlow(): Flow<List<NotebookEntity>> {
+        return dao.getAllFlow()
     }
 
     suspend fun getNoteBook(id: Int): NotebookEntity? {
@@ -37,7 +37,7 @@ class NotebookRepository(private val dao: NotebookDao) {
         return dao.getNotebookCount()
     }
 
-    fun getNotebookCountLiveData(): LiveData<Int> {
-        return dao.getNotebookCountLiveData()
+    fun getNotebookCountFlow(): Flow<Int> {
+        return dao.getNotebookCountFlow()
     }
 }

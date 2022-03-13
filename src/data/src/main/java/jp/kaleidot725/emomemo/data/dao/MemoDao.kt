@@ -1,12 +1,12 @@
 package jp.kaleidot725.emomemo.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MemoDao {
@@ -29,5 +29,5 @@ interface MemoDao {
     suspend fun getMemos(notebookId: Int): List<MemoEntity>
 
     @Query("select COUNT(*) from memo where notebookId = :notebookId")
-    fun getMemoCountLiveData(notebookId: Int): LiveData<Int>
+    fun getMemoCountFlow(notebookId: Int): Flow<Int>
 }

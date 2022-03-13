@@ -8,8 +8,6 @@ import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebookUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksUseCase
-import jp.kaleidot725.emomemo.domain.usecase.observe.ObserveMemoCountUseCase
-import jp.kaleidot725.emomemo.domain.usecase.observe.ObserveNotebookCountUseCase
 import jp.kaleidot725.emomemo.domain.usecase.update.UpdateNotebookUseCase
 import org.koin.dsl.module
 
@@ -48,13 +46,5 @@ val domainModule = module {
 
     factory {
         GetMemosUseCase(get())
-    }
-
-    factory {
-        ObserveMemoCountUseCase(get())
-    }
-
-    factory {
-        ObserveNotebookCountUseCase(get())
     }
 }
