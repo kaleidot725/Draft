@@ -7,4 +7,6 @@ data class MainState(
     val notebooks: List<NotebookEntity> = emptyList(),
     val selectedNotebook: NotebookEntity? = null,
     val memos: List<MemoEntity> = emptyList()
-)
+) {
+    val canDeleteNotebook = notebooks.isNotEmpty()
+}

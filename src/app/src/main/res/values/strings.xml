@@ -4,11 +4,15 @@
     <string name="empty" />
     <string name="delete">Delete</string>
 
-    <!-- AddNotebookDialog -->
     <string name="add_notebook_title">Create Notebook</string>
     <string name="add_notebook_ok">Create</string>
     <string name="add_notebook_cancel">Cancel</string>
     <string name="add_notebook_field_title">Title</string>
+
+    <string name="delete_notebook_title">Delete Notebook</string>
+    <string name="delete_notebook_ok">Delete</string>
+    <string name="delete_notebook_cancel">Cancel</string>
+    <string name="delete_notebook_field_title">Title</string>
 
     <string name="navigation_drawer_notebook_title">Notebook</string>
     <string name="navigation_drawer_action_title">Edit</string>

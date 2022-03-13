@@ -43,7 +43,10 @@ class ComposeMainActivity : ComponentActivity() {
                                 onNavigateMemoDetails = { navController.navigate(Page.Memo.route) })
                         }
                         composable(route = Page.Memo.route) {
-                            MemoDetailPage(viewModel = getNavComposeViewModel(), onBack = { navController.popBackStack() })
+                            MemoDetailPage(
+                                viewModel = getNavComposeViewModel(),
+                                onBack = { navController.popBackStack() }
+                            )
                         }
                         dialog(route = Page.AddNoteBook.route) {
                             AddNotebookDialog(
@@ -53,7 +56,8 @@ class ComposeMainActivity : ComponentActivity() {
                         }
                         dialog(route = Page.RemoveNotebook.route) {
                             DeleteNotebookDialog(
-                                viewModel = getNavComposeViewModel()
+                                viewModel = getNavComposeViewModel(),
+                                onClose = { navController.popBackStack() }
                             )
                         }
                     }

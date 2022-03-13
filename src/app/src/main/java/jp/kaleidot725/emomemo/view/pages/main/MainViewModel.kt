@@ -16,12 +16,11 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class MainViewModel(
-    val getNotebooksUseCase: GetNotebooksUseCase
+    private val getNotebooksUseCase: GetNotebooksUseCase
 ) : ViewModel(), ContainerHost<MainState, MainSideEffect> {
     override val container: Container<MainState, MainSideEffect> = container(MainState())
 
     init {
-
         intent {
             reduce {
                 state.copy(

@@ -17,7 +17,7 @@ class AddNotebookViewModel(
     fun updateNotebookTitle(notebookTitle: String) {
         intent {
             reduce {
-                state.copy(notebookTitle = notebookTitle, canCreate = notebookTitle.isNotBlank())
+                state.copy(notebookTitle = notebookTitle)
             }
         }
     }

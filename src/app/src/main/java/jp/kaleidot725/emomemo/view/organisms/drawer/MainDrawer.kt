@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,7 @@ fun MainDrawer(
     selectedNotebook: NotebookEntity?,
     notebooks: List<NotebookEntity>,
     onAddNotebook: () -> Unit,
+    enabledDeleteNotebook: Boolean,
     onDeleteNotebook: () -> Unit,
     onClickNotebook: (NotebookEntity) -> Unit,
     modifier: Modifier = Modifier
@@ -49,7 +51,9 @@ fun MainDrawer(
 
         item {
             NavigationDrawerItem(
-                label = { Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_create_notebook)) },
+                label = {
+                    Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_create_notebook))
+                },
                 selected = false,
                 onClick = { onAddNotebook() }
             )
@@ -57,9 +61,14 @@ fun MainDrawer(
 
         item {
             NavigationDrawerItem(
-                label = { Texts.TitleMedium(text = stringResource(id = R.string.navigation_drawer_delete_notebook)) },
+                label = {
+                    Texts.TitleMedium(
+                        text = stringResource(id = R.string.navigation_drawer_delete_notebook),
+                        modifier = Modifier.alpha(if (enabledDeleteNotebook) 1f else 0.3f)
+                    )
+                },
                 selected = false,
-                onClick = { onDeleteNotebook() }
+                onClick = { if (enabledDeleteNotebook) onDeleteNotebook() },
             )
         }
 
@@ -89,6 +98,7 @@ private fun MainDrawer_Preview() {
         selectedNotebook = SampleData.notebookList.first(),
         notebooks = SampleData.notebookList,
         onAddNotebook = {},
+        enabledDeleteNotebook = false,
         onDeleteNotebook = {},
         onClickNotebook = {}
     )

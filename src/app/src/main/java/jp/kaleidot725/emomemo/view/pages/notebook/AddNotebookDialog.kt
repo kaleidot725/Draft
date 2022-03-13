@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,7 +50,7 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
                 value = uiState.notebookTitle,
                 onValueChange = { viewModel.updateNotebookTitle(it) },
                 label = {
-                    Texts.LabelSmall(text = stringResource(id = R.string.add_notebook_field_title))
+                    Text(text = stringResource(id = R.string.add_notebook_field_title))
                 }
             )
 

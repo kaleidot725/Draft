@@ -62,6 +62,7 @@ fun MainPage(
                         viewModel.navigateAddNotebook()
                         coroutineScope.launch { drawerState.close() }
                     },
+                    enabledDeleteNotebook = uiState.canDeleteNotebook,
                     onDeleteNotebook = {
                         viewModel.navigateRemoveNotebook()
                         coroutineScope.launch { drawerState.close() }

@@ -93,7 +93,7 @@ object Texts {
             maxLines = maxLines,
             modifier = modifier,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
     }
 

@@ -48,6 +48,6 @@ val appModule = module {
     }
 
     viewModel {
-        DeleteNotebookViewModel()
+        DeleteNotebookViewModel(get(), get())
     }
 }
