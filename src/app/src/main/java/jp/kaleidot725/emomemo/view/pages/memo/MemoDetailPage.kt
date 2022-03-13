@@ -1,6 +1,5 @@
 package jp.kaleidot725.emomemo.view.pages.memo
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,9 +37,8 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit) {
                     .padding(horizontal = 8.dp)
                     .verticalScroll(rememberScrollState())
                     .navigationBarsWithImePadding(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                BasicTextFields.BodyMedium(
+                BasicTextFields.BodyLarge(
                     text = uiState.memoEntity?.content ?: "",
                     onValueChange = { viewModel.updateContent(it) },
                     singleLine = false,

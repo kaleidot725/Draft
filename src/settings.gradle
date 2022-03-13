@@ -44,9 +44,9 @@ dependencyResolutionManagement {
             alias("compose-material3").to("androidx.compose.material3:material3:1.0.0-alpha07")
             bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material3"])
 
-            alias("accompanist-insets").to("com.google.accompanist:accompanist-insets:0.24.1-alpha")
-            alias("accompanist-insets-ui").to("com.google.accompanist:accompanist-insets-ui:0.24.1-alpha")
-            alias("accompanist-systemuicontroller").to("com.google.accompanist:accompanist-systemuicontroller:0.24.1-alpha")
+            alias("accompanist-insets").to("com.google.accompanist:accompanist-insets:0.23.1")
+            alias("accompanist-insets-ui").to("com.google.accompanist:accompanist-insets-ui:0.23.1")
+            alias("accompanist-systemuicontroller").to("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
             bundle("accompanist", ["accompanist-insets", "accompanist-insets-ui", "accompanist-systemuicontroller"])
 
             alias("junit").to("junit:junit:4.13.2")

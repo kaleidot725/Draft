@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
@@ -57,79 +56,77 @@ fun MainPage(
         }
     }
 
-    ProvideWindowInsets {
-        ModalNavigationDrawer(
-            drawerState = drawerState,
-            drawerContent = {
-                MainDrawer(
-                    selectedNotebook = uiState.selectedNotebook,
-                    notebooks = uiState.notebooks,
-                    onAddNotebook = {
-                        viewModel.navigateAddNotebook()
-                        coroutineScope.launch { drawerState.close() }
-                    },
-                    enabledDeleteNotebook = uiState.canDeleteNotebook,
-                    onDeleteNotebook = {
-                        viewModel.navigateRemoveNotebook()
-                        coroutineScope.launch { drawerState.close() }
-                    },
-                    onClickNotebook = {
-                        viewModel.selectNotebook(it)
-                        coroutineScope.launch { drawerState.close() }
-                    }
-                )
-            },
-            content = {
-                Scaffold(
-                    topBar = {
-                        MainTopAppBar(
-                            title = uiState.selectedNotebook?.title ?: "",
-                            onChangeTitle = { viewModel.updateSelectedNotebookTitle(it) },
-                            enabledTitle = uiState.result != MainState.Result.NOT_FOUND_NOTEBOOK,
-                            scrollBehavior = scrollBehavior,
-                            onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } }
-                        )
-                    },
-                    content = {
-                        when (uiState.result) {
-                            MainState.Result.SUCCESS -> {
-                                MemoList(
-                                    memos = uiState.memos,
-                                    onClickMemo = { viewModel.selectMemo(it) },
-                                    modifier = Modifier.padding(8.dp)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            MainDrawer(
+                selectedNotebook = uiState.selectedNotebook,
+                notebooks = uiState.notebooks,
+                onAddNotebook = {
+                    viewModel.navigateAddNotebook()
+                    coroutineScope.launch { drawerState.close() }
+                },
+                enabledDeleteNotebook = uiState.canDeleteNotebook,
+                onDeleteNotebook = {
+                    viewModel.navigateRemoveNotebook()
+                    coroutineScope.launch { drawerState.close() }
+                },
+                onClickNotebook = {
+                    viewModel.selectNotebook(it)
+                    coroutineScope.launch { drawerState.close() }
+                }
+            )
+        },
+        content = {
+            Scaffold(
+                topBar = {
+                    MainTopAppBar(
+                        title = uiState.selectedNotebook?.title ?: "",
+                        onChangeTitle = { viewModel.updateSelectedNotebookTitle(it) },
+                        enabledTitle = uiState.result != MainState.Result.NOT_FOUND_NOTEBOOK,
+                        scrollBehavior = scrollBehavior,
+                        onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } }
+                    )
+                },
+                content = {
+                    when (uiState.result) {
+                        MainState.Result.SUCCESS -> {
+                            MemoList(
+                                memos = uiState.memos,
+                                onClickMemo = { viewModel.selectMemo(it) },
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+                        MainState.Result.NOT_FOUND_NOTEBOOK -> {
+                            Box(Modifier.fillMaxSize()) {
+                                Texts.BodyLarge(
+                                    text = stringResource(id = R.string.main_not_found_notebook_message),
+                                    modifier = Modifier.align(Alignment.Center)
                                 )
                             }
-                            MainState.Result.NOT_FOUND_NOTEBOOK -> {
-                                Box(Modifier.fillMaxSize()) {
-                                    Texts.BodyLarge(
-                                        text = stringResource(id = R.string.main_not_found_notebook_message),
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
-                                }
-                            }
-                            MainState.Result.NOT_FOUND_MEMO -> {
-                                Box(Modifier.fillMaxSize()) {
-                                    Texts.BodyLarge(
-                                        text = stringResource(id = R.string.main_not_found_memo_message),
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
-                                }
+                        }
+                        MainState.Result.NOT_FOUND_MEMO -> {
+                            Box(Modifier.fillMaxSize()) {
+                                Texts.BodyLarge(
+                                    text = stringResource(id = R.string.main_not_found_memo_message),
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
                             }
                         }
-                    },
-                    floatingActionButton = {
-                        FloatingActionIconButton(
-                            onClick = { viewModel.createMemo() },
-                            iconVector = Icons.Filled.Edit,
-                            iconDescription = "Add Memo"
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .nestedScroll(scrollBehavior.nestedScrollConnection)
-                )
-            },
-            modifier = Modifier.systemBarsPadding()
-        )
-    }
+                    }
+                },
+                floatingActionButton = {
+                    FloatingActionIconButton(
+                        onClick = { viewModel.createMemo() },
+                        iconVector = Icons.Filled.Edit,
+                        iconDescription = "Add Memo"
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+            )
+        },
+        modifier = Modifier.systemBarsPadding()
+    )
 }
