@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val dataModule = module {
-    factory {
+    single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "emomemo-database").build()
     }
 

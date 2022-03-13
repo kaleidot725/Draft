@@ -21,13 +21,10 @@ class MainViewModel(
     override val container: Container<MainState, MainSideEffect> = container(MainState())
 
     init {
+        // Fixme Remove Test Code
         intent {
             reduce {
-                state.copy(
-                    notebooks = SampleData.notebookList,
-                    selectedNotebook = SampleData.notebookList.first(),
-                    memos = SampleData.memoList
-                )
+                state.copy(memos = SampleData.memoList)
             }
         }
 
@@ -35,7 +32,8 @@ class MainViewModel(
             getNotebooksUseCase.execute().collectLatest {
                 intent {
                     reduce {
-                        state.copy(notebooks = it)
+                        val selectedNotebook = if (it.contains(state.selectedNotebook)) state.selectedNotebook else it.firstOrNull()
+                        state.copy(notebooks = it, selectedNotebook = selectedNotebook)
                     }
                 }
             }

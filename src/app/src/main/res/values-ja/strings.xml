@@ -14,8 +14,8 @@
     <string name="delete_notebook_cancel">キャンセル</string>
     <string name="delete_notebook_field_title">タイトル</string>
 
-    <string name="navigation_drawer_notebook_title">ノートブック</string>
+    <string name="navigation_drawer_notebook_title">一覧</string>
     <string name="navigation_drawer_action_title">編集</string>
     <string name="navigation_drawer_create_notebook">ノートブックを作成する</string>
-    <string name="navigation_drawer_delete_notebook">オートブックを削除する</string>
+    <string name="navigation_drawer_delete_notebook">ノートブックを削除する</string>
 </resources>

@@ -36,8 +36,7 @@ fun NotebookDropdownMenu(
             value = selectedNotebook?.title ?: "",
             onValueChange = { },
             label = { Text(label) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) }
         )
 
         ExposedDropdownMenu(expanded = dropdownExpanded, onDismissRequest = { dropdownExpanded = false }) {
