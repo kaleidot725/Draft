@@ -5,8 +5,8 @@ import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import kotlinx.coroutines.flow.Flow
 
 class MemoRepository(private val dao: MemoDao) {
-    suspend fun insert(memo: MemoEntity) {
-        dao.insert(memo)
+    suspend fun insert(memo: MemoEntity): Long {
+        return dao.insert(memo)
     }
 
     suspend fun update(memoEntity: MemoEntity) {
@@ -29,7 +29,7 @@ class MemoRepository(private val dao: MemoDao) {
         return dao.getMemos(notebookId)
     }
 
-    fun getMemoCountFlow(notebookId: Int): Flow<Int> {
-        return dao.getMemoCountFlow(notebookId)
+    suspend fun getMemosFlow(notebookId: Int): Flow<List<MemoEntity>> {
+        return dao.getMemosFlow(notebookId)
     }
 }

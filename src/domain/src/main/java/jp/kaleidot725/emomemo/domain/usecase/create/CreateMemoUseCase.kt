@@ -8,8 +8,8 @@ class CreateMemoUseCase(
     private val memoRepository: MemoRepository
 ) {
     suspend fun execute(notebookEntity: NotebookEntity): MemoEntity {
-        return MemoEntity.create(notebookEntity.id, "NEW MEMO", "NEW CONTENT").apply {
-            memoRepository.insert(this)
-        }
+        val newMemo = MemoEntity.create(notebookEntity.id, "NEW MEMO", "NEW CONTENT")
+        val newId = memoRepository.insert(newMemo)
+        return newMemo.copy(id = newId.toInt())
     }
 }

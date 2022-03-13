@@ -4,8 +4,8 @@ import jp.kaleidot725.emomemo.domain.usecase.create.CreateMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateNotebookUseCase
 import jp.kaleidot725.emomemo.domain.usecase.delete.DeleteMemoUseCase
 import jp.kaleidot725.emomemo.domain.usecase.delete.DeleteNotebookUseCase
-import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoCountUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosFlowUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebookUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksFlowUseCase
@@ -24,25 +24,20 @@ val domainModule = module {
         UpdateMemoUseCase(get())
     }
     factory {
-        GetMemoCountUseCase(get())
+        GetMemosFlowUseCase(get())
     }
-
     factory {
         CreateNotebookUseCase(get())
     }
-
     factory {
         DeleteNotebookUseCase(get())
     }
-
     factory {
         GetNotebookUseCase(get())
     }
-
     factory {
         DeleteMemoUseCase(get())
     }
-
     factory {
         UpdateNotebookUseCase(get())
     }
@@ -50,7 +45,6 @@ val domainModule = module {
     factory {
         GetNotebooksFlowUseCase(get())
     }
-
     factory {
         GetMemosUseCase(get())
     }
