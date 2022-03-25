@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import jp.kaleidot725.emomemo.view.pages.Page
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
+import jp.kaleidot725.emomemo.view.pages.memo.DeleteMemoDialog
 import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailPage
 import jp.kaleidot725.emomemo.view.pages.notebook.AddNotebookDialog
 import jp.kaleidot725.emomemo.view.pages.notebook.DeleteNotebookDialog
@@ -40,19 +41,8 @@ class ComposeMainActivity : ComponentActivity() {
                         composable(route = Page.Main.route) {
                             MainPage(viewModel = getNavComposeViewModel(),
                                 onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
-                                onNavigateRemoveNotebook = { navController.navigate(Page.RemoveNotebook.route) },
+                                onNavigateRemoveNotebook = { navController.navigate(Page.DeleteNotebook.route) },
                                 onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it.id)) })
-                        }
-                        composable(route = Page.Memo.route) {
-                            val memoId = Page.Memo.getArgumentId(it)
-                            MemoDetailPage(
-                                viewModel = getNavComposeViewModel { parametersOf(memoId) },
-                                onBack = { navController.popBackStack() },
-                                onDeleteMemo = {
-                                    /** TODO */
-                                    navController.popBackStack()
-                                }
-                            )
                         }
                         dialog(route = Page.AddNoteBook.route) {
                             AddNotebookDialog(
@@ -60,9 +50,25 @@ class ComposeMainActivity : ComponentActivity() {
                                 onClose = { navController.popBackStack() }
                             )
                         }
-                        dialog(route = Page.RemoveNotebook.route) {
+                        dialog(route = Page.DeleteNotebook.route) {
                             DeleteNotebookDialog(
                                 viewModel = getNavComposeViewModel(),
+                                onClose = { navController.popBackStack() }
+                            )
+                        }
+                        composable(route = Page.Memo.route) {
+                            val memoId = Page.Memo.getArgumentId(it)
+                            MemoDetailPage(
+                                viewModel = getNavComposeViewModel { parametersOf(memoId) },
+                                onBack = { navController.popBackStack() },
+                                onDeleteMemo = { navController.navigate(Page.DeleteMemo.createRoute(it)) }
+                            )
+                        }
+                        dialog(route = Page.DeleteMemo.route) {
+                            val memoId = Page.DeleteMemo.getArgumentId(it)
+                            DeleteMemoDialog(
+                                viewModel = getNavComposeViewModel { parametersOf(memoId) },
+                                onBackHome = { navController.popBackStack(Page.Memo.route, inclusive = true) },
                                 onClose = { navController.popBackStack() }
                             )
                         }

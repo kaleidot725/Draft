@@ -39,8 +39,7 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentWidth()
-                .padding(16.dp)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
         ) {
             Texts.TitleLarge(text = stringResource(id = R.string.add_notebook_title))
 

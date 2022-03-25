@@ -19,6 +19,11 @@
     <string name="navigation_drawer_create_notebook">ノートブックを作成する</string>
     <string name="navigation_drawer_delete_notebook">ノートブックを削除する</string>
 
+    <string name="delete_memo_title">メモを削除する</string>
+    <string name="delete_memo_message">%sを削除してもよろしいですか？</string>
+    <string name="delete_memo_ok">削除する</string>
+    <string name="delete_memo_cancel">キャンセル</string>
+
     <string name="main_not_found_notebook_message">ノートブックがありません</string>
     <string name="main_not_found_memo_message">メモがありません</string>
 </resources>
