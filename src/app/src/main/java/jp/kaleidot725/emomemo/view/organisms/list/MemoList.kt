@@ -28,7 +28,6 @@ fun MemoList(
         items(memos) { memo ->
             MemoCard(
                 memo = memo,
-                memoCount = memo.content.length,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp)

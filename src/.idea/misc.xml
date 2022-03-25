@@ -89,6 +89,9 @@
         <entry key="..\:/Users/81906/Documents/Github/emomemo/src/app/src/main/res/layout/spinner_drop_down_item.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/81906/Documents/Github/emomemo/src/app/src/main/res/layout/spinner_item.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/81906/Documents/Github/emomemo/src/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3861538461538462" />
+        <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/TitlesAndCount.kt" value="0.75" />
+        <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/card/MemoCard.kt" value="0.5935185185185186" />
+        <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/list/MemoList.kt" value="0.4535472972972973" />
         <entry key="app/src/main/res/drawable/round_rectangle_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/message_item_container.xml" value="0.1940222897669706" />
         <entry key="app/src/main/res/layout/navigation_drawer_header.xml" value="0.39895833333333336" />

@@ -1,7 +1,7 @@
 package jp.kaleidot725.emomemo.view.pages.memo
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -42,7 +42,7 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit) {
                     text = uiState.memoEntity?.content ?: "",
                     onValueChange = { viewModel.updateContent(it) },
                     singleLine = false,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         },
