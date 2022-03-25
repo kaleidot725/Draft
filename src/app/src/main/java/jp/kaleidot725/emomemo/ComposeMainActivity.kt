@@ -47,7 +47,11 @@ class ComposeMainActivity : ComponentActivity() {
                             val memoId = Page.Memo.getArgumentId(it)
                             MemoDetailPage(
                                 viewModel = getNavComposeViewModel { parametersOf(memoId) },
-                                onBack = { navController.popBackStack() }
+                                onBack = { navController.popBackStack() },
+                                onDeleteMemo = {
+                                    /** TODO */
+                                    navController.popBackStack()
+                                }
                             )
                         }
                         dialog(route = Page.AddNoteBook.route) {

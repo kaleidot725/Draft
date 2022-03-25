@@ -23,7 +23,7 @@ fun MainTopAppBar(
     enabledTitle: Boolean,
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    onClickNavigationIcon: (() -> Unit)? = null,
+    onClickNavigationIcon: (() -> Unit)? = null
 ) {
     SmallTopAppBar(
         title = {

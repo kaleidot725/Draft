@@ -4,8 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -23,6 +25,7 @@ fun MemoTopBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
+    onDeleteNotebook: (() -> Unit)? = null
 ) {
     SmallTopAppBar(
         title = {
@@ -31,6 +34,11 @@ fun MemoTopBar(
                 onValueChange = onChangeTitle,
                 modifier = modifier.padding(16.dp)
             )
+        },
+        actions = {
+            IconButton(onClick = { onDeleteNotebook?.invoke() }) {
+                Icon(Icons.Filled.Delete, contentDescription = "Delete text")
+            }
         },
         navigationIcon = {
             Icon(

@@ -6,6 +6,7 @@ import jp.kaleidot725.emomemo.domain.usecase.update.UpdateMemoUseCase
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
@@ -41,6 +42,18 @@ class MemoDetailViewModel(
                 updateMemoUseCase.execute(newMemo)
                 reduce { state.copy(memoEntity = newMemo) }
             }
+        }
+    }
+
+    fun back() {
+        intent {
+            postSideEffect(MemoDetailSideEffect.Back)
+        }
+    }
+
+    fun deleteMemo() {
+        intent {
+            postSideEffect(MemoDetailSideEffect.DeleteMemo(state.memoEntity?.id ?: 0))
         }
     }
 }
