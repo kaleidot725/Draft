@@ -41,7 +41,7 @@ fun DeleteMemoDialog(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Texts.TitleLarge(text = stringResource(id = R.string.delete_memo_title))
