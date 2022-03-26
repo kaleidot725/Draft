@@ -1,24 +1,20 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'kotlin-kapt'
-apply plugin: "com.cookpad.android.plugin.license-tools"
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: "com.google.firebase.crashlytics"
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 30
+    namespace 'jp.kaleidot725.emomemo'
+
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "jp.kaleidot725.emomemo"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 4
         versionName "0.1.2"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -29,25 +25,17 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
-
-
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
     buildFeatures {
-        dataBinding true
+        compose true
     }
 
-    lintOptions {
-        disable "NullSafeMutableLiveData"
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.1.0"
     }
 }
 
@@ -55,124 +43,29 @@ dependencies {
     implementation project(":data")
     implementation project(":domain")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // AppCompat
-    implementation "androidx.appcompat:appcompat:${versions.appcompat}"
+    implementation libs.kotlin.stdlib
+    implementation libs.corektx
+    implementation libs.koin
+    implementation libs.lifecycle
+    implementation libs.lifecycle.livedata
+    implementation libs.timber
+    implementation libs.navigation.compose
 
-    // Core Ktx
-    implementation "androidx.core:core-ktx:${versions.core_ktx}"
+    implementation libs.coil.compose
+    implementation libs.bundles.compose
+    implementation libs.bundles.orbit
+    implementation libs.bundles.accompanist
 
-    // Constraint Layout
-    implementation "androidx.constraintlayout:constraintlayout:${versions.constraint_layout}"
+    implementation platform(libs.firebase)
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
+    implementation "com.google.firebase:firebase-analytics-ktx"
 
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment:${versions.nav}"
-    implementation "androidx.navigation:navigation-ui:${versions.nav}"
-    implementation "androidx.navigation:navigation-fragment-ktx:${versions.nav}"
-    implementation "androidx.navigation:navigation-ui-ktx:${versions.nav}"
+    testImplementation libs.junit
+    androidTestImplementation libs.junit.ext
+    testImplementation libs.orbit.test
 
-    // Material
-    implementation "com.google.android.material:material:${versions.material}"
-
-    // Epoxy
-    implementation "com.airbnb.android:epoxy:${versions.epoxy}"
-    implementation "com.airbnb.android:epoxy-databinding:${versions.epoxy}"
-    implementation "com.airbnb.android:epoxy-paging:${versions.epoxy}"
-    kapt "com.airbnb.android:epoxy-processor:${versions.epoxy}"
-
-    // LiveEvent
-    implementation "com.github.hadilq.liveevent:liveevent:${versions.live_event}"
-
-    // Koin
-    implementation "io.insert-koin:koin-android:${versions.koin}"
-    implementation "io.insert-koin:koin-android-ext:${versions.koin}"
-
-    // LiveData Ktx
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
-
-    // Permission Dispatcher
-    implementation "com.github.permissions-dispatcher:permissionsdispatcher:${versions.permission_dispatcher}"
-    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:${versions.permission_dispatcher}"
-
-    // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:${versions.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
-    kapt "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}"
-
-    // Fragment Ktx
-    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
-
-    // Junit
-    testImplementation "junit:junit:${versions.junit}"
-    androidTestImplementation "androidx.test.ext:junit:${versions.junit_ext}"
-
-    // Esporesso
-    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso_core}"
-
-    // Flipper
-    debugImplementation "com.facebook.flipper:flipper:${versions.flipper}"
-    debugImplementation "com.facebook.soloader:soloader:${versions.soloader}"
-    releaseImplementation "com.facebook.flipper:flipper-noop:${versions.flipper}"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:${versions.timber}"
-
-    // Coil
-    implementation "io.coil-kt:coil:${versions.coil}"
-    implementation "io.coil-kt:coil-gif:${versions.coil}"
-
-    // Keyboard Visibility Event
-    implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:${versions.keyboard_visibility_event}"
-
-    // Preference
-    implementation "androidx.preference:preference-ktx:${versions.prefrence}"
-
-    // Recycler_view Animator
-    implementation "jp.wasabeef:recyclerview-animators:${versions.recycler_view_animator}"
-
-    //  Firebase
-    implementation platform("com.google.firebase:firebase-bom:${versions.firebase}")
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-}
-
-configurations {
-    ktlint
-}
-
-def outputDir = "${project.buildDir}/reports/ktlint/"
-
-dependencies {
-    annotationProcessor 'androidx.room:room-compiler:2.3.0'
-    implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'com.google.android.support:wearable:2.7.0'
-    implementation 'androidx.wear:wear:1.0.0'
-    compileOnly 'com.google.android.wearable:wearable:2.7.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    ktlint "com.pinterest:ktlint:0.33.0"
-}
-
-task ktlint(type: JavaExec, group: "verification") {
-    outputs.dir(outputDir)
-
-    description = "Check Kotlin code style."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.ktlint
-    args "--reporter=checkstyle,output=${buildDir}/reports/ktlint/ktlintMainSourceSetCheck.xml", "src/**/*.kt"
-    ignoreExitValue true
-}
-
-check.dependsOn ktlint
-
-task ktlintFormat(type: JavaExec, group: "formatting") {
-    outputs.dir(outputDir)
-
-    description = "Fix Kotlin code style deviations."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.ktlint
-    args "-F", "--reporter=checkstyle,output=${buildDir}/reports/ktlint/ktlintMainSourceSetCheck.xml", "src/**/*.kt"
-    ignoreExitValue true
+    debugImplementation libs.flipper
+    debugImplementation libs.soloader
+    releaseImplementation libs.flipper.noop
 }

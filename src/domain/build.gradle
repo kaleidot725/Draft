@@ -4,15 +4,14 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    namespace 'jp.kaleidot725.emomemo.domain'
+
+    compileSdk 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdk 23
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
-
+        targetSdk 32
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -23,34 +22,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
 dependencies {
     implementation project(":data")
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // LiveData Ktx
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
+    implementation libs.kotlin.stdlib
+    implementation libs.corektx
+    implementation libs.koin
+    implementation libs.lifecycle
+    implementation libs.lifecycle.livedata
+    implementation libs.timber
 
-    // Paging
-    implementation "androidx.paging:paging-runtime:${versions.paging}"
+    implementation libs.paging
 
-    // Koin
-    implementation "io.insert-koin:koin-android:${versions.koin}"
-    implementation "io.insert-koin:koin-android-ext:${versions.koin}"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:${versions.timber}"
+    testImplementation libs.junit
+    androidTestImplementation libs.junit.ext
 }

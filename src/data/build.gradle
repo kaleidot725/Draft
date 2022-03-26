@@ -5,14 +5,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    namespace 'jp.kaleidot725.emomemo.data'
+
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -24,37 +24,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation libs.kotlin.stdlib
+    implementation libs.corektx
+    implementation libs.koin
+    implementation libs.lifecycle
+    implementation libs.lifecycle.livedata
+    implementation libs.timber
 
-    // Room
-    implementation "androidx.room:room-runtime:${versions.room}"
-    implementation "androidx.room:room-ktx:${versions.room}"
-    kapt "androidx.room:room-compiler:${versions.room}"
+    implementation libs.paging
+    implementation libs.bundles.room
 
-    // LiveData Ktx
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${versions.livedata_ktx}"
+    kapt libs.room.compiler
 
-    // Paging
-    implementation "androidx.paging:paging-runtime:${versions.paging}"
-
-    // Koin
-    implementation "io.insert-koin:koin-android:${versions.koin}"
-    implementation "io.insert-koin:koin-android-ext:${versions.koin}"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:${versions.timber}"
+    testImplementation libs.junit
+    androidTestImplementation libs.junit.ext
 }

@@ -1,14 +1,15 @@
 package jp.kaleidot725.emomemo.domain.usecase.create
 
+import jp.kaleidot725.emomemo.data.entity.MemoEntity
+import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.data.repository.MemoRepository
-import jp.kaleidot725.emomemo.data.repository.StatusRepository
 
 class CreateMemoUseCase(
-    private val statusRepository: StatusRepository,
     private val memoRepository: MemoRepository
 ) {
-    suspend fun execute(title: String) {
-        val status = statusRepository.get() ?: return
-        memoRepository.insert(jp.kaleidot725.emomemo.data.entity.MemoEntity.create(status.notebookId, title))
+    suspend fun execute(notebookEntity: NotebookEntity): MemoEntity {
+        val newMemo = MemoEntity.create(notebookEntity.id, "NEW MEMO", "NEW CONTENT")
+        val newId = memoRepository.insert(newMemo)
+        return newMemo.copy(id = newId.toInt())
     }
 }

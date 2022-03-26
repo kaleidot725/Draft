@@ -1,23 +1,26 @@
 package jp.kaleidot725.emomemo.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotebookDao {
     @Insert
-    suspend fun insert(memoEntity: NotebookEntity)
+    suspend fun insert(notebookEntity: NotebookEntity)
 
     @Update
-    suspend fun update(memoEntity: NotebookEntity)
+    suspend fun update(notebookEntity: NotebookEntity)
 
     @Delete
-    suspend fun delete(memoEntity: NotebookEntity)
+    suspend fun delete(notebookEntity: NotebookEntity)
+
+    @Query("delete from notebook where id in (:notebookEntityIds)")
+    suspend fun delete(notebookEntityIds: List<Int>)
 
     @Query("delete from notebook")
     suspend fun deleteAll()
@@ -26,14 +29,8 @@ interface NotebookDao {
     suspend fun getAll(): List<NotebookEntity>
 
     @Query("select * from notebook")
-    fun getAllLiveData(): LiveData<List<NotebookEntity>>
+    fun getAllFlow(): Flow<List<NotebookEntity>>
 
     @Query("select * from notebook where id = :id")
     suspend fun getNotebook(id: Int): NotebookEntity?
-
-    @Query("select COUNT(*) from notebook")
-    suspend fun getNotebookCount(): Int
-
-    @Query("select COUNT(*) from notebook")
-    fun getNotebookCountLiveData(): LiveData<Int>
 }
