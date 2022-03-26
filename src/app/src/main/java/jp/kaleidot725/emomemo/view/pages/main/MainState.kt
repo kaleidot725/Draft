@@ -19,6 +19,4 @@ data class MainState(
         NOT_FOUND_MEMO,
         SUCCESS
     }
-
-    val canDeleteNotebook = notebooks.isNotEmpty()
 }
