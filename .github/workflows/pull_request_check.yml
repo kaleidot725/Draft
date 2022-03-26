@@ -15,7 +15,7 @@ jobs:
     - name: run ktlintCheck
       run: |
         cd src
-        ./gradlew ktlintCheck
+        ./gradlew --continue ktlintCheck
     - name: run androidLint
       run: |
         cd src
