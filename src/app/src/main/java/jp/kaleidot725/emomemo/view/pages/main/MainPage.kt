@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.systemBarsPadding
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
+import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.FloatingActionIconButton
 import jp.kaleidot725.emomemo.view.organisms.drawer.MainDrawer
@@ -38,8 +39,8 @@ import kotlinx.coroutines.launch
 fun MainPage(
     viewModel: MainViewModel,
     onNavigateAddNotebook: () -> Unit,
-    onNavigateRemoveNotebook: () -> Unit,
-    onNavigateMemoDetails: (MemoEntity) -> Unit
+    onNavigateDeleteNotebook: (NotebookEntity) -> Unit,
+    onNavigateMemoDetails: (MemoEntity) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
@@ -50,7 +51,7 @@ fun MainPage(
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
-                MainSideEffect.NavigateRemoveNotebook -> onNavigateRemoveNotebook()
+                is MainSideEffect.NavigateDeleteNotebook -> onNavigateDeleteNotebook(it.notebookEntity)
                 is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoEntity)
             }
         }
@@ -68,7 +69,7 @@ fun MainPage(
                 },
                 enabledDeleteNotebook = uiState.canDeleteNotebook,
                 onDeleteNotebook = {
-                    viewModel.navigateRemoveNotebook()
+                    viewModel.navigateDeleteNotebook()
                     coroutineScope.launch { drawerState.close() }
                 },
                 onClickNotebook = {
@@ -84,8 +85,10 @@ fun MainPage(
                         title = uiState.selectedNotebook?.title ?: "",
                         onChangeTitle = { viewModel.updateSelectedNotebookTitle(it) },
                         enabledTitle = uiState.result != MainState.Result.NOT_FOUND_NOTEBOOK,
+                        enabledAction = uiState.selectedNotebook != null,
                         scrollBehavior = scrollBehavior,
-                        onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } }
+                        onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } },
+                        onDeleteNotebook = { viewModel.navigateDeleteNotebook() }
                     )
                 },
                 content = {

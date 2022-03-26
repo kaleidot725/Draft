@@ -41,7 +41,7 @@ class ComposeMainActivity : ComponentActivity() {
                         composable(route = Page.Main.route) {
                             MainPage(viewModel = getNavComposeViewModel(),
                                 onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
-                                onNavigateRemoveNotebook = { navController.navigate(Page.DeleteNotebook.route) },
+                                onNavigateDeleteNotebook = { navController.navigate(Page.DeleteNotebook.createRoute(it.id)) },
                                 onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it.id)) })
                         }
                         dialog(route = Page.AddNoteBook.route) {
@@ -52,7 +52,8 @@ class ComposeMainActivity : ComponentActivity() {
                         }
                         dialog(route = Page.DeleteNotebook.route) {
                             DeleteNotebookDialog(
-                                viewModel = getNavComposeViewModel(),
+                                viewModel = getNavComposeViewModel { parametersOf(Page.DeleteNotebook.getArgumentId(it)) },
+                                onBackHome = { navController.popBackStack(Page.Main.route, inclusive = false) },
                                 onClose = { navController.popBackStack() }
                             )
                         }
@@ -66,7 +67,7 @@ class ComposeMainActivity : ComponentActivity() {
                         dialog(route = Page.DeleteMemo.route) {
                             DeleteMemoDialog(
                                 viewModel = getNavComposeViewModel { parametersOf(Page.DeleteMemo.getArgumentId(it)) },
-                                onBackHome = { navController.popBackStack(Page.Memo.route, inclusive = true) },
+                                onBackHome = { navController.popBackStack(Page.Main.route, inclusive = false) },
                                 onClose = { navController.popBackStack() }
                             )
                         }

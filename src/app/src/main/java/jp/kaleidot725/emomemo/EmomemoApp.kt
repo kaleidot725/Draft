@@ -48,8 +48,8 @@ val appModule = module {
         AddNotebookViewModel(get())
     }
 
-    viewModel {
-        DeleteNotebookViewModel(get(), get())
+    viewModel { (notebookId: Int) ->
+        DeleteNotebookViewModel(notebookId, get(), get())
     }
 
     viewModel { (memoId: Int) ->

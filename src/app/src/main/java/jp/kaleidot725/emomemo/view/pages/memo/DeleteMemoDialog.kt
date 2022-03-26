@@ -49,10 +49,10 @@ fun DeleteMemoDialog(
             Texts.BodyMedium(text = stringResource(id = R.string.delete_memo_message, uiState.memo?.title ?: ""), maxLines = 3)
 
             OkAndCancelButtons(
-                okText = stringResource(id = R.string.delete_notebook_ok),
+                okText = stringResource(id = R.string.delete_memo_ok),
                 onOk = { viewModel.ok() },
                 enabledOk = true,
-                cancelText = stringResource(id = R.string.delete_notebook_cancel),
+                cancelText = stringResource(id = R.string.delete_memo_cancel),
                 onCancel = { viewModel.cancel() },
                 enabledCancel = true,
                 modifier = Modifier

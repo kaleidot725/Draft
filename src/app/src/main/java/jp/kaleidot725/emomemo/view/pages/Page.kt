@@ -5,7 +5,12 @@ import androidx.navigation.NavBackStackEntry
 sealed class Page(val route: String) {
     object Main : Page(route = "main")
     object AddNoteBook : Page(route = "main/add")
-    object DeleteNotebook : Page(route = "main/remove")
+    object DeleteNotebook : Page(route = "main/remove/{notebookId}") {
+        fun createRoute(notebookId: Int) = "main/remove/$notebookId"
+        fun getArgumentId(entry: NavBackStackEntry): Int {
+            return entry.arguments?.getString("notebookId")?.toInt() ?: 0
+        }
+    }
 
     object Memo : Page(route = "memo/{memoId}") {
         fun createRoute(memoId: Int) = "memo/$memoId"

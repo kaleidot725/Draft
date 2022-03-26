@@ -25,7 +25,7 @@ fun MemoTopBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
-    onDeleteNotebook: (() -> Unit)? = null
+    onDeleteMemo: (() -> Unit)? = null
 ) {
     SmallTopAppBar(
         title = {
@@ -36,7 +36,7 @@ fun MemoTopBar(
             )
         },
         actions = {
-            IconButton(onClick = { onDeleteNotebook?.invoke() }) {
+            IconButton(onClick = { onDeleteMemo?.invoke() }) {
                 Icon(Icons.Filled.Delete, contentDescription = "Delete text")
             }
         },

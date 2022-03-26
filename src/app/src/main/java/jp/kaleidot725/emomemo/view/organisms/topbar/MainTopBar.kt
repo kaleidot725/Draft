@@ -3,9 +3,11 @@ package jp.kaleidot725.emomemo.view.organisms.topbar
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -21,9 +23,11 @@ fun MainTopAppBar(
     title: String,
     onChangeTitle: (String) -> Unit,
     enabledTitle: Boolean,
+    enabledAction: Boolean,
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    onClickNavigationIcon: (() -> Unit)? = null
+    onClickNavigationIcon: (() -> Unit)? = null,
+    onDeleteNotebook: (() -> Unit)? = null
 ) {
     SmallTopAppBar(
         title = {
@@ -33,6 +37,13 @@ fun MainTopAppBar(
                 enabled = enabledTitle,
                 modifier = modifier.padding(16.dp)
             )
+        },
+        actions = {
+            if (enabledAction) {
+                IconButton(onClick = { onDeleteNotebook?.invoke() }) {
+                    Icon(Icons.Filled.Delete, contentDescription = "Delete text")
+                }
+            }
         },
         navigationIcon = {
             Icon(
@@ -54,6 +65,6 @@ fun MainTopAppBar(
 private fun MainTopAppBar_Preview() {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     MainTopAppBar(
-        title = "お買い物", onChangeTitle = {}, enabledTitle = false, modifier = Modifier, scrollBehavior = scrollBehavior
+        title = "お買い物", onChangeTitle = {}, enabledTitle = false, enabledAction = true, modifier = Modifier, scrollBehavior = scrollBehavior
     )
 }

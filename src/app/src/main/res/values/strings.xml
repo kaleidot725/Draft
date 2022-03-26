@@ -10,9 +10,9 @@
     <string name="add_notebook_field_title">Title</string>
 
     <string name="delete_notebook_title">Delete Notebook</string>
+    <string name="delete_notebook_message">Are you sure you want to delete the %s?</string>
     <string name="delete_notebook_ok">Delete</string>
     <string name="delete_notebook_cancel">Cancel</string>
-    <string name="delete_notebook_field_title">Title</string>
 
     <string name="delete_memo_title">Delete Memo</string>
     <string name="delete_memo_message">Are you sure you want to delete the %s?</string>

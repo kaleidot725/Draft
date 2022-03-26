@@ -17,6 +17,10 @@ class NotebookRepository(private val dao: NotebookDao) {
         dao.delete(notebook)
     }
 
+    suspend fun delete(notebookIds: List<Int>) {
+        dao.delete(notebookIds)
+    }
+
     suspend fun deleteAll() {
         dao.deleteAll()
     }

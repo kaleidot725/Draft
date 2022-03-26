@@ -1,11 +1,9 @@
 package jp.kaleidot725.emomemo.view.pages.notebook
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -22,13 +20,13 @@ import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
-import jp.kaleidot725.emomemo.view.organisms.dropdown.NotebookDropdownMenu
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun DeleteNotebookDialog(
     viewModel: DeleteNotebookViewModel,
+    onBackHome: () -> Unit,
     onClose: () -> Unit
 ) {
     val uiState by viewModel.container.stateFlow.collectAsState()
@@ -36,6 +34,7 @@ fun DeleteNotebookDialog(
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
+                DeleteNotebookSideEffect.BackHome -> onBackHome.invoke()
                 DeleteNotebookSideEffect.Close -> onClose.invoke()
             }
         }
@@ -45,26 +44,17 @@ fun DeleteNotebookDialog(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Texts.TitleLarge(text = stringResource(id = R.string.delete_notebook_title))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            NotebookDropdownMenu(
-                label = stringResource(id = R.string.delete_notebook_field_title),
-                notebooks = uiState.notebooks,
-                selectedNotebook = uiState.selectedNotebook,
-                onSelect = { viewModel.select(it) },
-                modifier = Modifier.wrapContentHeight()
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
+            Texts.BodyMedium(text = stringResource(id = R.string.delete_notebook_message, uiState.notebook?.title ?: ""), maxLines = 3)
 
             OkAndCancelButtons(
                 okText = stringResource(id = R.string.delete_notebook_ok),
                 onOk = { viewModel.ok() },
-                enabledOk = uiState.canDelete,
+                enabledOk = true,
                 cancelText = stringResource(id = R.string.delete_notebook_cancel),
                 onCancel = { viewModel.cancel() },
                 enabledCancel = true,

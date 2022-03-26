@@ -11,13 +11,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NotebookDao {
     @Insert
-    suspend fun insert(memoEntity: NotebookEntity)
+    suspend fun insert(notebookEntity: NotebookEntity)
 
     @Update
-    suspend fun update(memoEntity: NotebookEntity)
+    suspend fun update(notebookEntity: NotebookEntity)
 
     @Delete
-    suspend fun delete(memoEntity: NotebookEntity)
+    suspend fun delete(notebookEntity: NotebookEntity)
+
+    @Query("delete from notebook where id in (:notebookEntityIds)")
+    suspend fun delete(notebookEntityIds: List<Int>)
 
     @Query("delete from notebook")
     suspend fun deleteAll()

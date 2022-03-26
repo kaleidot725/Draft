@@ -36,9 +36,10 @@ class MainViewModel(
         }
     }
 
-    fun navigateRemoveNotebook() {
+    fun navigateDeleteNotebook() {
         intent {
-            postSideEffect(MainSideEffect.NavigateRemoveNotebook)
+            val notebook = state.selectedNotebook ?: return@intent
+            postSideEffect(MainSideEffect.NavigateDeleteNotebook(notebook))
         }
     }
 

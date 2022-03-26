@@ -30,7 +30,7 @@ val domainModule = module {
         CreateNotebookUseCase(get())
     }
     factory {
-        DeleteNotebookUseCase(get())
+        DeleteNotebookUseCase(get(), get())
     }
     factory {
         GetNotebookUseCase(get())
