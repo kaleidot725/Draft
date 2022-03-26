@@ -1,9 +1,8 @@
 package jp.kaleidot725.emomemo.view.pages.memo
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,15 +41,12 @@ fun DeleteMemoDialog(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Texts.TitleLarge(text = stringResource(id = R.string.delete_memo_title))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
             Texts.BodyMedium(text = stringResource(id = R.string.delete_memo_message, uiState.memo?.title ?: ""), maxLines = 3)
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             OkAndCancelButtons(
                 okText = stringResource(id = R.string.delete_notebook_ok),

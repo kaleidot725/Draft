@@ -57,17 +57,15 @@ class ComposeMainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = Page.Memo.route) {
-                            val memoId = Page.Memo.getArgumentId(it)
                             MemoDetailPage(
-                                viewModel = getNavComposeViewModel { parametersOf(memoId) },
+                                viewModel = getNavComposeViewModel { parametersOf(Page.Memo.getArgumentId(it)) },
                                 onBack = { navController.popBackStack() },
                                 onDeleteMemo = { navController.navigate(Page.DeleteMemo.createRoute(it)) }
                             )
                         }
                         dialog(route = Page.DeleteMemo.route) {
-                            val memoId = Page.DeleteMemo.getArgumentId(it)
                             DeleteMemoDialog(
-                                viewModel = getNavComposeViewModel { parametersOf(memoId) },
+                                viewModel = getNavComposeViewModel { parametersOf(Page.DeleteMemo.getArgumentId(it)) },
                                 onBackHome = { navController.popBackStack(Page.Memo.route, inclusive = true) },
                                 onClose = { navController.popBackStack() }
                             )
