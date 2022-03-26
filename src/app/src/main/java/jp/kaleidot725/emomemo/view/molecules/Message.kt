@@ -26,7 +26,8 @@ fun Message(message: String, modifier: Modifier = Modifier) {
 @Composable
 private fun TitlesAndCount_Preview() {
     Message(
-        message = "AATTBBDDAATTBBDDAATTBBDDAATTBBDDAATTBBDDAATTBBDDAATTBBDD", modifier = Modifier
+        message = "AATTBBDDAATTBBDDAATTBBDDAATTBBDDAATTBBDDAATTBBDDAATTBBDD",
+        modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
     )

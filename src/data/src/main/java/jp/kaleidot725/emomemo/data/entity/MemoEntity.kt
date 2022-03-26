@@ -8,12 +8,14 @@ import java.io.Serializable
 
 @Entity(
     tableName = "memo",
-    foreignKeys = [ForeignKey(
-        entity = NotebookEntity::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("notebookId"),
-        onDelete = ForeignKey.CASCADE
-    )]
+    foreignKeys = [
+        ForeignKey(
+            entity = NotebookEntity::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("notebookId"),
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
 )
 data class MemoEntity(
     @PrimaryKey(autoGenerate = true)

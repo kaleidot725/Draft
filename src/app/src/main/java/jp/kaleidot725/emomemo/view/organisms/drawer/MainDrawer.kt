@@ -43,7 +43,7 @@ fun MainDrawer(
         Texts.DisplaySmall(
             text = stringResource(id = R.string.top_title), modifier = Modifier.fillMaxWidth()
         )
-        
+
         Divider()
 
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -64,9 +64,11 @@ fun MainDrawer(
 
         if (notebooks.isNotEmpty()) {
             notebooks.forEach {
-                NavigationDrawerItem(label = { Texts.TitleMedium(text = it.title) },
+                NavigationDrawerItem(
+                    label = { Texts.TitleMedium(text = it.title) },
                     selected = it == selectedNotebook,
-                    onClick = { onClickNotebook(it) })
+                    onClick = { onClickNotebook(it) }
+                )
             }
         }
     }

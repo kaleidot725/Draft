@@ -39,10 +39,12 @@ class ComposeMainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = Page.Main.route) {
                         composable(route = Page.Main.route) {
-                            MainPage(viewModel = getNavComposeViewModel(),
+                            MainPage(
+                                viewModel = getNavComposeViewModel(),
                                 onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
                                 onNavigateDeleteNotebook = { navController.navigate(Page.DeleteNotebook.createRoute(it.id)) },
-                                onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it.id)) })
+                                onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it.id)) }
+                            )
                         }
                         dialog(route = Page.AddNoteBook.route) {
                             AddNotebookDialog(
