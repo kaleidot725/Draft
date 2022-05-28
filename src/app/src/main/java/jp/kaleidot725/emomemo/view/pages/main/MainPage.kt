@@ -43,7 +43,7 @@ fun MainPage(
     onNavigateMemoDetails: (MemoEntity) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val scrollBehavior = remember { TopAppBarDefaults.enterAlwaysScrollBehavior() }
+    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val uiState by viewModel.container.stateFlow.collectAsState()
 
@@ -87,28 +87,30 @@ fun MainPage(
                     )
                 },
                 content = {
-                    when (uiState.result) {
-                        MainState.Result.SUCCESS -> {
-                            MemoList(
-                                memos = uiState.memos,
-                                onClickMemo = { viewModel.selectMemo(it) },
-                                modifier = Modifier.padding(8.dp)
-                            )
-                        }
-                        MainState.Result.NOT_FOUND_NOTEBOOK -> {
-                            Box(Modifier.fillMaxSize()) {
-                                Texts.BodyLarge(
-                                    text = stringResource(id = R.string.main_not_found_notebook_message),
-                                    modifier = Modifier.align(Alignment.Center)
+                    Box(modifier = Modifier.padding(it)) {
+                        when (uiState.result) {
+                            MainState.Result.SUCCESS -> {
+                                MemoList(
+                                    memos = uiState.memos,
+                                    onClickMemo = { viewModel.selectMemo(it) },
+                                    modifier = Modifier.padding(8.dp)
                                 )
                             }
-                        }
-                        MainState.Result.NOT_FOUND_MEMO -> {
-                            Box(Modifier.fillMaxSize()) {
-                                Texts.BodyLarge(
-                                    text = stringResource(id = R.string.main_not_found_memo_message),
-                                    modifier = Modifier.align(Alignment.Center)
-                                )
+                            MainState.Result.NOT_FOUND_NOTEBOOK -> {
+                                Box(Modifier.fillMaxSize()) {
+                                    Texts.BodyLarge(
+                                        text = stringResource(id = R.string.main_not_found_notebook_message),
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
+                            }
+                            MainState.Result.NOT_FOUND_MEMO -> {
+                                Box(Modifier.fillMaxSize()) {
+                                    Texts.BodyLarge(
+                                        text = stringResource(id = R.string.main_not_found_memo_message),
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
                             }
                         }
                     }

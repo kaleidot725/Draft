@@ -18,6 +18,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -26,6 +27,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.displayLarge
         )
     }
@@ -36,6 +38,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -44,6 +47,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.displayMedium
         )
     }
@@ -54,6 +58,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -62,6 +67,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.displaySmall
         )
     }
@@ -72,6 +78,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -80,6 +87,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.headlineLarge
         )
     }
@@ -90,6 +98,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -98,6 +107,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.headlineMedium
         )
     }
@@ -108,6 +118,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -116,6 +127,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.headlineSmall
         )
     }
@@ -126,6 +138,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -134,7 +147,8 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
-            textStyle = MaterialTheme.typography.titleLarge
+            maxLines = maxLines,
+            textStyle = MaterialTheme.typography.titleLarge,
         )
     }
 
@@ -144,6 +158,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -152,6 +167,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.titleMedium
         )
     }
@@ -162,6 +178,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -170,6 +187,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.titleSmall
         )
     }
@@ -180,6 +198,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -188,6 +207,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.bodyLarge
         )
     }
@@ -198,6 +218,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -206,6 +227,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.bodyMedium
         )
     }
@@ -216,6 +238,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -224,6 +247,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.bodySmall
         )
     }
@@ -234,6 +258,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -242,6 +267,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.labelLarge
         )
     }
@@ -252,6 +278,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -260,6 +287,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.labelMedium
         )
     }
@@ -270,6 +298,7 @@ object BasicTextFields {
         onValueChange: (String) -> Unit,
         singleLine: Boolean = true,
         enabled: Boolean = true,
+        maxLines: Int = Int.MAX_VALUE,
         modifier: Modifier = Modifier
     ) {
         BasicTextField(
@@ -278,6 +307,7 @@ object BasicTextFields {
             singleLine = singleLine,
             enabled = enabled,
             modifier = modifier,
+            maxLines = maxLines,
             textStyle = MaterialTheme.typography.labelSmall
         )
     }

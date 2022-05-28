@@ -35,7 +35,8 @@ fun MainTopAppBar(
                 text = title,
                 onValueChange = onChangeTitle,
                 enabled = enabledTitle,
-                modifier = modifier.padding(16.dp)
+                maxLines = 1,
+                modifier = modifier.padding(16.dp),
             )
         },
         actions = {
