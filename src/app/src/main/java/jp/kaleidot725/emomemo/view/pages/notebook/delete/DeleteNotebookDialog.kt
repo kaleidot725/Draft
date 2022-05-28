@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.memo
+package jp.kaleidot725.emomemo.view.pages.notebook.delete
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,9 +22,10 @@ import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
 import kotlinx.coroutines.flow.collectLatest
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
-fun DeleteMemoDialog(
-    viewModel: DeleteMemoViewModel,
+fun DeleteNotebookDialog(
+    viewModel: DeleteNotebookViewModel,
     onBackHome: () -> Unit,
     onClose: () -> Unit
 ) {
@@ -31,8 +34,8 @@ fun DeleteMemoDialog(
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
-                DeleteMemoSideEffect.BackHome -> onBackHome.invoke()
-                DeleteMemoSideEffect.Close -> onClose.invoke()
+                DeleteNotebookSideEffect.BackHome -> onBackHome.invoke()
+                DeleteNotebookSideEffect.Close -> onClose.invoke()
             }
         }
     }
@@ -44,15 +47,15 @@ fun DeleteMemoDialog(
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Texts.TitleLarge(text = stringResource(id = R.string.delete_memo_title))
+            Texts.TitleLarge(text = stringResource(id = R.string.delete_notebook_title))
 
-            Texts.BodyMedium(text = stringResource(id = R.string.delete_memo_message, uiState.memo?.title ?: ""), maxLines = 3)
+            Texts.BodyMedium(text = stringResource(id = R.string.delete_notebook_message, uiState.notebook?.title ?: ""), maxLines = 3)
 
             OkAndCancelButtons(
-                okText = stringResource(id = R.string.delete_memo_ok),
+                okText = stringResource(id = R.string.delete_notebook_ok),
                 onOk = { viewModel.ok() },
                 enabledOk = true,
-                cancelText = stringResource(id = R.string.delete_memo_cancel),
+                cancelText = stringResource(id = R.string.delete_notebook_cancel),
                 onCancel = { viewModel.cancel() },
                 enabledCancel = true,
                 modifier = Modifier

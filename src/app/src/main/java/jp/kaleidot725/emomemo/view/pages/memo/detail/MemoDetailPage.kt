@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.memo
+package jp.kaleidot725.emomemo.view.pages.memo.detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

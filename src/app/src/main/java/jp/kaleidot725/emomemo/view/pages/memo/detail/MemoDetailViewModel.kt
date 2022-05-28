@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.memo
+package jp.kaleidot725.emomemo.view.pages.memo.detail
 
 import androidx.lifecycle.ViewModel
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoUseCase

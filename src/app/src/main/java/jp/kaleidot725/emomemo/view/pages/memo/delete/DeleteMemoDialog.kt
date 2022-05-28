@@ -1,15 +1,12 @@
-package jp.kaleidot725.emomemo.view.pages.notebook
+package jp.kaleidot725.emomemo.view.pages.memo.delete
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,13 +21,18 @@ import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
+fun DeleteMemoDialog(
+    viewModel: DeleteMemoViewModel,
+    onBackHome: () -> Unit,
+    onClose: () -> Unit
+) {
     val uiState by viewModel.container.stateFlow.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
-                AddNotebookSideEffect.Close -> onClose.invoke()
+                DeleteMemoSideEffect.BackHome -> onBackHome.invoke()
+                DeleteMemoSideEffect.Close -> onClose.invoke()
             }
         }
     }
@@ -39,29 +41,20 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Texts.TitleLarge(text = stringResource(id = R.string.add_notebook_title))
+            Texts.TitleLarge(text = stringResource(id = R.string.delete_memo_title))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = uiState.notebookTitle,
-                onValueChange = { viewModel.updateNotebookTitle(it) },
-                label = {
-                    Text(text = stringResource(id = R.string.add_notebook_field_title))
-                }
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
+            Texts.BodyMedium(text = stringResource(id = R.string.delete_memo_message, uiState.memo?.title ?: ""), maxLines = 3)
 
             OkAndCancelButtons(
-                okText = stringResource(id = R.string.add_notebook_ok),
+                okText = stringResource(id = R.string.delete_memo_ok),
                 onOk = { viewModel.ok() },
-                enabledOk = uiState.canCreate,
-                cancelText = stringResource(id = R.string.add_notebook_cancel),
-                enabledCancel = true,
+                enabledOk = true,
+                cancelText = stringResource(id = R.string.delete_memo_cancel),
                 onCancel = { viewModel.cancel() },
+                enabledCancel = true,
                 modifier = Modifier
                     .wrapContentWidth()
                     .align(Alignment.End)

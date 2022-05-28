@@ -16,10 +16,10 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import jp.kaleidot725.emomemo.view.pages.Page
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
-import jp.kaleidot725.emomemo.view.pages.memo.DeleteMemoDialog
-import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailPage
-import jp.kaleidot725.emomemo.view.pages.notebook.AddNotebookDialog
-import jp.kaleidot725.emomemo.view.pages.notebook.DeleteNotebookDialog
+import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoDialog
+import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailPage
+import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookDialog
+import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookDialog
 import org.koin.androidx.viewmodel.ViewModelOwner
 import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.parameter.ParametersDefinition

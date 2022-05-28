@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.notebook
+package jp.kaleidot725.emomemo.view.pages.notebook.delete
 
 sealed class DeleteNotebookSideEffect {
     object BackHome : DeleteNotebookSideEffect()

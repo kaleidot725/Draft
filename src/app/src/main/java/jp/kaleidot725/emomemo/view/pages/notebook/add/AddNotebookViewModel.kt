@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.notebook
+package jp.kaleidot725.emomemo.view.pages.notebook.add
 
 import androidx.lifecycle.ViewModel
 import jp.kaleidot725.emomemo.domain.usecase.create.CreateNotebookUseCase

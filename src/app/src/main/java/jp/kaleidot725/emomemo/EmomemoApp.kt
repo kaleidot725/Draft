@@ -4,10 +4,10 @@ import android.app.Application
 import jp.kaleidot725.emomemo.data.dataModule
 import jp.kaleidot725.emomemo.domain.usecase.domainModule
 import jp.kaleidot725.emomemo.view.pages.main.MainViewModel
-import jp.kaleidot725.emomemo.view.pages.memo.DeleteMemoViewModel
-import jp.kaleidot725.emomemo.view.pages.memo.MemoDetailViewModel
-import jp.kaleidot725.emomemo.view.pages.notebook.AddNotebookViewModel
-import jp.kaleidot725.emomemo.view.pages.notebook.DeleteNotebookViewModel
+import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoViewModel
+import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailViewModel
+import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookViewModel
+import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
