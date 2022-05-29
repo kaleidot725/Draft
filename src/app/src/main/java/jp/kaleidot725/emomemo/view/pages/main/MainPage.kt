@@ -2,9 +2,11 @@ package jp.kaleidot725.emomemo.view.pages.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
@@ -19,9 +21,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.systemBarsPadding
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
@@ -76,15 +78,24 @@ fun MainPage(
         content = {
             Scaffold(
                 topBar = {
-                    MainTopAppBar(
-                        title = uiState.selectedNotebook?.title ?: "",
-                        onChangeTitle = { viewModel.updateSelectedNotebookTitle(it) },
-                        enabledTitle = uiState.result != MainState.Result.NOT_FOUND_NOTEBOOK,
-                        enabledAction = uiState.selectedNotebook != null,
-                        scrollBehavior = scrollBehavior,
-                        onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } },
-                        onDeleteNotebook = { viewModel.navigateDeleteNotebook() }
-                    )
+                    Box {
+                        MainTopAppBar(
+                            title = uiState.selectedNotebook?.title ?: "",
+                            onChangeTitle = { viewModel.updateSelectedNotebookTitle(it) },
+                            enabledTitle = uiState.result != MainState.Result.NOT_FOUND_NOTEBOOK,
+                            enabledAction = uiState.selectedNotebook != null,
+                            scrollBehavior = scrollBehavior,
+                            onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } },
+                            onDeleteNotebook = { viewModel.navigateDeleteNotebook() }
+                        )
+
+                        Divider(
+                            color = Color.LightGray,
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .fillMaxWidth()
+                        )
+                    }
                 },
                 content = {
                     Box(modifier = Modifier.padding(it)) {
@@ -93,7 +104,6 @@ fun MainPage(
                                 MemoList(
                                     memos = uiState.memos,
                                     onClickMemo = { viewModel.selectMemo(it) },
-                                    modifier = Modifier.padding(8.dp)
                                 )
                             }
                             MainState.Result.NOT_FOUND_NOTEBOOK -> {
