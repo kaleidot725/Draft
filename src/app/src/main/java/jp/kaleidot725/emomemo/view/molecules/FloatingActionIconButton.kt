@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun FloatingActionIconButton(onClick: () -> Unit, iconVector: ImageVector, iconDescription: String, modifier: Modifier = Modifier) {
     FloatingActionButton(onClick = { onClick() }, modifier = modifier) {
-    Icon(iconVector, iconDescription)
-}
+        Icon(iconVector, iconDescription)
+    }
 }
 
 @Preview
