@@ -20,6 +20,7 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.sample.SampleData
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +37,7 @@ fun MainDrawer(
     ) {
         item {
             Texts.TitleLarge(
-                text = stringResource(id = R.string.navigation_drawer_notebook_title),
+                text = stringResource(id = R.string.top_title).uppercase(Locale.ENGLISH),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)

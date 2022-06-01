@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NotebookDao {
     @Insert
-    suspend fun insert(notebookEntity: NotebookEntity)
+    suspend fun insert(notebookEntity: NotebookEntity): Long
 
     @Update
     suspend fun update(notebookEntity: NotebookEntity)
@@ -20,7 +20,7 @@ interface NotebookDao {
     suspend fun delete(notebookEntity: NotebookEntity)
 
     @Query("delete from notebook where id in (:notebookEntityIds)")
-    suspend fun delete(notebookEntityIds: List<Int>)
+    suspend fun delete(notebookEntityIds: List<Long>)
 
     @Query("delete from notebook")
     suspend fun deleteAll()
@@ -32,5 +32,5 @@ interface NotebookDao {
     fun getAllFlow(): Flow<List<NotebookEntity>>
 
     @Query("select * from notebook where id = :id")
-    suspend fun getNotebook(id: Int): NotebookEntity?
+    suspend fun getNotebook(id: Long): NotebookEntity?
 }

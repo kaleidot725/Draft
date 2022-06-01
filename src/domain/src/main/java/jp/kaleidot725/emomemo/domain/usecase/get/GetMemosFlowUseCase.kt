@@ -5,7 +5,7 @@ import jp.kaleidot725.emomemo.data.repository.MemoRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetMemosFlowUseCase(private val memoRepository: MemoRepository) {
-    suspend fun execute(notebookId: Int): Flow<List<MemoEntity>> {
+    suspend fun execute(notebookId: Long): Flow<List<MemoEntity>> {
         return memoRepository.getMemosFlow(notebookId)
     }
 }

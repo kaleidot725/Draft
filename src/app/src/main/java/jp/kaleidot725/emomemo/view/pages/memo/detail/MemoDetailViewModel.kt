@@ -11,7 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class MemoDetailViewModel(
-    val memoId: Int,
+    private val memoId: Long,
     private val getMemoUseCase: GetMemoUseCase,
     private val updateMemoUseCase: UpdateMemoUseCase
 ) : ViewModel(),
@@ -53,7 +53,8 @@ class MemoDetailViewModel(
 
     fun deleteMemo() {
         intent {
-            postSideEffect(MemoDetailSideEffect.DeleteMemo(state.memoEntity?.id ?: 0))
+            val id = state.memoEntity?.id ?: return@intent
+            postSideEffect(MemoDetailSideEffect.DeleteMemo(id))
         }
     }
 }

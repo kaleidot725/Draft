@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity(tableName = "notebook")
 data class NotebookEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     val title: String = ""
 ) : Serializable {
     companion object {

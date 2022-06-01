@@ -20,14 +20,14 @@ interface MemoDao {
     suspend fun delete(memoEntity: MemoEntity)
 
     @Query("delete from memo where id in (:memoEntityIds)")
-    suspend fun delete(memoEntityIds: List<Int>)
+    suspend fun delete(memoEntityIds: List<Long>)
 
     @Query("select * from memo where id = :id")
-    suspend fun getMemo(id: Int): MemoEntity
+    suspend fun getMemo(id: Long): MemoEntity
 
     @Query("select * from memo where notebookId = :notebookId")
-    suspend fun getMemos(notebookId: Int): List<MemoEntity>
+    suspend fun getMemos(notebookId: Long): List<MemoEntity>
 
     @Query("select * from memo where notebookId = :notebookId")
-    fun getMemosFlow(notebookId: Int): Flow<List<MemoEntity>>
+    fun getMemosFlow(notebookId: Long): Flow<List<MemoEntity>>
 }

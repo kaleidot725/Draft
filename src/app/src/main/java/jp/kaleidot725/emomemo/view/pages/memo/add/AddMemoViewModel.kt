@@ -1,9 +1,7 @@
-package jp.kaleidot725.emomemo.view.pages.notebook.add
+package jp.kaleidot725.emomemo.view.pages.memo.add
 
 import androidx.lifecycle.ViewModel
-import jp.kaleidot725.emomemo.domain.usecase.create.CreateNotebookUseCase
-import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoSideEffect
-import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoState
+import jp.kaleidot725.emomemo.domain.usecase.create.CreateMemoUseCase
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -11,23 +9,24 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
-class AddNotebookViewModel(
-    private val createNotebookUseCase: CreateNotebookUseCase
+class AddMemoViewModel(
+    private val notebookId: Long,
+    private val createMemoUseCase: CreateMemoUseCase
 ) : ViewModel(), ContainerHost<AddMemoState, AddMemoSideEffect> {
     override val container: Container<AddMemoState, AddMemoSideEffect> = container(AddMemoState())
 
-    fun updateNotebookTitle(notebookTitle: String) {
+    fun updateMemoTitle(memoTitle: String) {
         intent {
             reduce {
-                state.copy(memoTitle = notebookTitle)
+                state.copy(memoTitle = memoTitle)
             }
         }
     }
 
     fun ok() {
         intent {
-            createNotebookUseCase.execute(state.memoTitle)
-            postSideEffect(AddMemoSideEffect.Close)
+            val newMemoId = createMemoUseCase.execute(notebookId) ?: return@intent
+            postSideEffect(AddMemoSideEffect.NavigateMemo(newMemoId))
         }
     }
 

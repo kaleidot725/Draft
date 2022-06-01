@@ -17,6 +17,11 @@
     <string name="navigation_drawer_notebook_title">ノートブック</string>
     <string name="navigation_drawer_action_title">編集</string>
 
+    <string name="add_memo_title">メモを作成する</string>
+    <string name="add_memo_ok">作成する</string>
+    <string name="add_memo_cancel">キャンセル</string>
+    <string name="add_memo_field_title">タイトル</string>
+
     <string name="delete_memo_title">メモを削除する</string>
     <string name="delete_memo_message">%sを削除してもよろしいですか？</string>
     <string name="delete_memo_ok">削除する</string>

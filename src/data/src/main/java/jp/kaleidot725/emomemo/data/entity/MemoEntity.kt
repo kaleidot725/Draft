@@ -19,14 +19,14 @@ import java.io.Serializable
 )
 data class MemoEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     @ColumnInfo(index = true)
-    val notebookId: Int,
+    val notebookId: Long,
     val title: String,
     val content: String
 ) : Serializable {
     companion object {
-        fun create(notebookId: Int, title: String, content: String): MemoEntity {
+        fun create(notebookId: Long, title: String, content: String): MemoEntity {
             return MemoEntity(0, notebookId, title, content)
         }
     }

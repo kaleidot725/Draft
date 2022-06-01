@@ -6,23 +6,25 @@ sealed class Page(val route: String) {
     object Main : Page(route = "main")
     object AddNoteBook : Page(route = "main/add")
     object DeleteNotebook : Page(route = "main/remove/{notebookId}") {
-        fun createRoute(notebookId: Int) = "main/remove/$notebookId"
-        fun getArgumentId(entry: NavBackStackEntry): Int {
-            return entry.arguments?.getString("notebookId")?.toInt() ?: 0
+        fun createRoute(notebookId: Long) = "main/remove/$notebookId"
+        fun getArgumentId(entry: NavBackStackEntry): Long {
+            return entry.arguments?.getString("notebookId")?.toLong() ?: 0L
         }
     }
 
+    object AddMemo : Page(route = "memo/add")
+
     object Memo : Page(route = "memo/{memoId}") {
-        fun createRoute(memoId: Int) = "memo/$memoId"
-        fun getArgumentId(entry: NavBackStackEntry): Int {
-            return entry.arguments?.getString("memoId")?.toInt() ?: 0
+        fun createRoute(memoId: Long) = "memo/$memoId"
+        fun getArgumentId(entry: NavBackStackEntry): Long {
+            return entry.arguments?.getString("memoId")?.toLong() ?: 0L
         }
     }
 
     object DeleteMemo : Page(route = "memo/delete/{memoId}") {
-        fun createRoute(memoId: Int) = "memo/delete/$memoId"
-        fun getArgumentId(entry: NavBackStackEntry): Int {
-            return entry.arguments?.getString("memoId")?.toInt() ?: 0
+        fun createRoute(memoId: Long) = "memo/delete/$memoId"
+        fun getArgumentId(entry: NavBackStackEntry): Long {
+            return entry.arguments?.getString("memoId")?.toLong() ?: 0L
         }
     }
 }

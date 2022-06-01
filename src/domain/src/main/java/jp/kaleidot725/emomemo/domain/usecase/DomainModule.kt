@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 val domainModule = module {
     factory {
-        CreateMemoUseCase(get())
+        CreateMemoUseCase(get(), get())
     }
     factory {
         GetMemoUseCase(get())

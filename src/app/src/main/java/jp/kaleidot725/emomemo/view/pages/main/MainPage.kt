@@ -26,8 +26,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.insets.systemBarsPadding
 import jp.kaleidot725.emomemo.R
-import jp.kaleidot725.emomemo.data.entity.MemoEntity
-import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.FloatingActionIconButton
 import jp.kaleidot725.emomemo.view.organisms.drawer.MainDrawer
@@ -41,8 +39,8 @@ import kotlinx.coroutines.launch
 fun MainPage(
     viewModel: MainViewModel,
     onNavigateAddNotebook: () -> Unit,
-    onNavigateDeleteNotebook: (NotebookEntity) -> Unit,
-    onNavigateMemoDetails: (MemoEntity) -> Unit,
+    onNavigateDeleteNotebook: (Long) -> Unit,
+    onNavigateMemoDetails: (Long) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
@@ -53,8 +51,8 @@ fun MainPage(
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
-                is MainSideEffect.NavigateDeleteNotebook -> onNavigateDeleteNotebook(it.notebookEntity)
-                is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoEntity)
+                is MainSideEffect.NavigateDeleteNotebook -> onNavigateDeleteNotebook(it.notebookId)
+                is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.newMemoId)
             }
         }
     }

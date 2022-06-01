@@ -4,6 +4,7 @@ import android.app.Application
 import jp.kaleidot725.emomemo.data.dataModule
 import jp.kaleidot725.emomemo.domain.usecase.domainModule
 import jp.kaleidot725.emomemo.view.pages.main.MainViewModel
+import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookViewModel
@@ -40,19 +41,23 @@ val appModule = module {
         MainViewModel(get(), get(), get(), get())
     }
 
-    viewModel { (memoId: Int) ->
-        MemoDetailViewModel(memoId, get(), get())
-    }
-
     viewModel {
         AddNotebookViewModel(get())
     }
 
-    viewModel { (notebookId: Int) ->
+    viewModel { (notebookId: Long) ->
         DeleteNotebookViewModel(notebookId, get(), get())
     }
 
-    viewModel { (memoId: Int) ->
+    viewModel { (notebookId: Long) ->
+        AddMemoViewModel(notebookId, get())
+    }
+
+    viewModel { (memoId: Long) ->
+        MemoDetailViewModel(memoId, get(), get())
+    }
+
+    viewModel { (memoId: Long) ->
         DeleteMemoViewModel(memoId, get(), get())
     }
 }

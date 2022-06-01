@@ -39,7 +39,7 @@ class MainViewModel(
     fun navigateDeleteNotebook() {
         intent {
             val notebook = state.selectedNotebook ?: return@intent
-            postSideEffect(MainSideEffect.NavigateDeleteNotebook(notebook))
+            postSideEffect(MainSideEffect.NavigateDeleteNotebook(notebook.id))
         }
     }
 
@@ -64,15 +64,15 @@ class MainViewModel(
     fun createMemo() {
         intent {
             state.selectedNotebook?.let { notebook ->
-                val newMemo = createMemoUseCase.execute(notebook)
-                postSideEffect(MainSideEffect.NavigateMemoDetails(newMemo))
+                val newMemoId = createMemoUseCase.execute(notebook.id) ?: return@let
+                postSideEffect(MainSideEffect.NavigateMemoDetails(newMemoId))
             }
         }
     }
 
     fun selectMemo(memo: MemoEntity) {
         intent {
-            postSideEffect(MainSideEffect.NavigateMemoDetails(memo))
+            postSideEffect(MainSideEffect.NavigateMemoDetails(memo.id))
         }
     }
 

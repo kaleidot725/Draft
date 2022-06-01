@@ -4,7 +4,7 @@ import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.data.repository.NotebookRepository
 
 class GetNotebookUseCase(private val notebookRepository: NotebookRepository) {
-    suspend fun execute(notebookId: Int): NotebookEntity? {
+    suspend fun execute(notebookId: Long): NotebookEntity? {
         return notebookRepository.getNoteBook(notebookId)
     }
 }

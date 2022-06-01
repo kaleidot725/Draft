@@ -45,6 +45,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation libs.kotlin.stdlib
+    implementation libs.kotlin.datetime
     implementation libs.corektx
     implementation libs.koin
     implementation libs.lifecycle

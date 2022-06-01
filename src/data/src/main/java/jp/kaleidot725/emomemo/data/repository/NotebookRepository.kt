@@ -5,8 +5,8 @@ import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import kotlinx.coroutines.flow.Flow
 
 class NotebookRepository(private val dao: NotebookDao) {
-    suspend fun insert(notebook: NotebookEntity) {
-        dao.insert(notebook)
+    suspend fun insert(notebook: NotebookEntity): Long {
+        return dao.insert(notebook)
     }
 
     suspend fun update(notebook: NotebookEntity) {
@@ -17,7 +17,7 @@ class NotebookRepository(private val dao: NotebookDao) {
         dao.delete(notebook)
     }
 
-    suspend fun delete(notebookIds: List<Int>) {
+    suspend fun delete(notebookIds: List<Long>) {
         dao.delete(notebookIds)
     }
 
@@ -33,7 +33,7 @@ class NotebookRepository(private val dao: NotebookDao) {
         return dao.getAllFlow()
     }
 
-    suspend fun getNoteBook(id: Int): NotebookEntity? {
+    suspend fun getNoteBook(id: Long): NotebookEntity? {
         return dao.getNotebook(id)
     }
 }

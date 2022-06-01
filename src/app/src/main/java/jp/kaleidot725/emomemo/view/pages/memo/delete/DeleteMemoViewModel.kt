@@ -11,7 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class DeleteMemoViewModel(
-    private val memoId: Int,
+    private val memoId: Long,
     private val getMemoUseCase: GetMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase
 ) : ViewModel(), ContainerHost<DeleteMemoState, DeleteMemoSideEffect> {

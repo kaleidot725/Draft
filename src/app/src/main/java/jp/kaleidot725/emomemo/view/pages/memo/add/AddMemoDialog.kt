@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.notebook.add
+package jp.kaleidot725.emomemo.view.pages.memo.add
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,13 +24,14 @@ import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
+fun AddMemoDialog(viewModel: AddMemoViewModel, onNavigateMemo: (Long) -> Unit, onClose: () -> Unit) {
     val uiState by viewModel.container.stateFlow.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
-                AddNotebookSideEffect.Close -> onClose.invoke()
+                is AddMemoSideEffect.NavigateMemo -> onNavigateMemo.invoke(it.memoId)
+                AddMemoSideEffect.Close -> onClose.invoke()
             }
         }
     }
@@ -41,25 +42,23 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
         ) {
-            Texts.TitleLarge(text = stringResource(id = R.string.add_notebook_title))
+            Texts.TitleLarge(text = stringResource(id = R.string.add_memo_title))
 
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = uiState.notebookTitle,
-                onValueChange = { viewModel.updateNotebookTitle(it) },
-                label = {
-                    Text(text = stringResource(id = R.string.add_notebook_field_title))
-                }
+                value = uiState.memoTitle,
+                onValueChange = { viewModel.updateMemoTitle(it) },
+                label = { Text(text = stringResource(id = R.string.add_memo_field_title)) }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             OkAndCancelButtons(
-                okText = stringResource(id = R.string.add_notebook_ok),
+                okText = stringResource(id = R.string.add_memo_ok),
                 onOk = { viewModel.ok() },
                 enabledOk = uiState.canCreate,
-                cancelText = stringResource(id = R.string.add_notebook_cancel),
+                cancelText = stringResource(id = R.string.add_memo_cancel),
                 enabledCancel = true,
                 onCancel = { viewModel.cancel() },
                 modifier = Modifier

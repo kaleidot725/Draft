@@ -14,6 +14,11 @@
     <string name="delete_notebook_ok">Delete</string>
     <string name="delete_notebook_cancel">Cancel</string>
 
+    <string name="add_memo_title">Create notebook</string>
+    <string name="add_memo_ok">Create</string>
+    <string name="add_memo_cancel">Cancel</string>
+    <string name="add_memo_field_title">Title</string>
+
     <string name="delete_memo_title">Delete memo</string>
     <string name="delete_memo_message">Are you sure you want to delete the %s?</string>
     <string name="delete_memo_ok">Delete</string>

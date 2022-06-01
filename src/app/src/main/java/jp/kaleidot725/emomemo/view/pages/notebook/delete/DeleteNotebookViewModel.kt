@@ -11,7 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class DeleteNotebookViewModel(
-    private val notebookId: Int,
+    private val notebookId: Long,
     private val getNotebookUseCase: GetNotebookUseCase,
     private val deleteNotebookUseCase: DeleteNotebookUseCase
 ) : ViewModel(), ContainerHost<DeleteNotebookState, DeleteNotebookSideEffect> {
