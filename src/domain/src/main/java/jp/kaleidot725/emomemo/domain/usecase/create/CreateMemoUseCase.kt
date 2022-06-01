@@ -8,8 +8,8 @@ class CreateMemoUseCase(
     private val notebookRepository: NotebookRepository,
     private val memoRepository: MemoRepository
 ) {
-    suspend fun execute(notebookId: Long): Long? {
+    suspend fun execute(notebookId: Long, title: String): Long? {
         val notebook = notebookRepository.getNoteBook(notebookId) ?: return null
-        return memoRepository.insert(MemoEntity.create(notebook.id, "TITLE", ""))
+        return memoRepository.insert(MemoEntity.create(notebook.id, title, ""))
     }
 }

@@ -40,6 +40,7 @@ fun MainPage(
     viewModel: MainViewModel,
     onNavigateAddNotebook: () -> Unit,
     onNavigateDeleteNotebook: (Long) -> Unit,
+    onNavigateAddMemo: (Long) -> Unit,
     onNavigateMemoDetails: (Long) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -52,7 +53,8 @@ fun MainPage(
             when (it) {
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
                 is MainSideEffect.NavigateDeleteNotebook -> onNavigateDeleteNotebook(it.notebookId)
-                is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.newMemoId)
+                is MainSideEffect.NavigateAddMemo -> onNavigateAddMemo(it.notebookId)
+                is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoId)
             }
         }
     }

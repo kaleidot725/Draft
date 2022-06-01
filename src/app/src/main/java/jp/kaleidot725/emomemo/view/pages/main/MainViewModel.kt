@@ -64,8 +64,7 @@ class MainViewModel(
     fun createMemo() {
         intent {
             state.selectedNotebook?.let { notebook ->
-                val newMemoId = createMemoUseCase.execute(notebook.id) ?: return@let
-                postSideEffect(MainSideEffect.NavigateMemoDetails(newMemoId))
+                postSideEffect(MainSideEffect.NavigateAddMemo(notebook.id))
             }
         }
     }

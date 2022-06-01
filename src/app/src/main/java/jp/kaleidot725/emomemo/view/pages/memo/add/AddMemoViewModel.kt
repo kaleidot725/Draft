@@ -25,7 +25,7 @@ class AddMemoViewModel(
 
     fun ok() {
         intent {
-            val newMemoId = createMemoUseCase.execute(notebookId) ?: return@intent
+            val newMemoId = createMemoUseCase.execute(notebookId, state.memoTitle) ?: return@intent
             postSideEffect(AddMemoSideEffect.NavigateMemo(newMemoId))
         }
     }

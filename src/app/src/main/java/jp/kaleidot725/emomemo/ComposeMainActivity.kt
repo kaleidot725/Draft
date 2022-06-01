@@ -36,6 +36,7 @@ class ComposeMainActivity : ComponentActivity() {
                         addMainPage(navController)
                         addAddNotebookPage(navController)
                         addDeleteNotebookDialog(navController)
+                        addAddMemoPage(navController)
                         addMemoPage(navController)
                         addDeleteMemoDialog(navController)
                     }
@@ -51,6 +52,7 @@ private fun NavGraphBuilder.addMainPage(navController: NavController) {
             viewModel = getNavComposeViewModel(),
             onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
             onNavigateDeleteNotebook = { navController.navigate(Page.DeleteNotebook.createRoute(it)) },
+            onNavigateAddMemo = { navController.navigate(Page.AddMemo.createRoute(it)) },
             onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it)) }
         )
     }
@@ -78,7 +80,7 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
 private fun NavGraphBuilder.addAddMemoPage(navController: NavController) {
     dialog(route = Page.AddMemo.route) {
         AddMemoDialog(
-            viewModel = getNavComposeViewModel { parametersOf(Page.DeleteNotebook.getArgumentId(it)) },
+            viewModel = getNavComposeViewModel { parametersOf(Page.AddMemo.getArgumentId(it)) },
             onNavigateMemo = { navController.navigate(Page.Memo.createRoute(it)) },
             onClose = { navController.popBackStack() }
         )

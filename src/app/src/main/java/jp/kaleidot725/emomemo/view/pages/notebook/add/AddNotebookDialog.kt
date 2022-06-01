@@ -22,11 +22,10 @@ import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
 import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoSideEffect
-import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun AddNotebookDialog(viewModel: AddMemoViewModel, onClose: () -> Unit) {
+fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
     val uiState by viewModel.container.stateFlow.collectAsState()
 
     LaunchedEffect(viewModel) {
@@ -49,7 +48,7 @@ fun AddNotebookDialog(viewModel: AddMemoViewModel, onClose: () -> Unit) {
 
             OutlinedTextField(
                 value = uiState.memoTitle,
-                onValueChange = { viewModel.updateMemoTitle(it) },
+                onValueChange = { viewModel.updateNotebookTitle(it) },
                 label = {
                     Text(text = stringResource(id = R.string.add_notebook_field_title))
                 }

@@ -14,7 +14,7 @@
     <string name="delete_notebook_ok">Delete</string>
     <string name="delete_notebook_cancel">Cancel</string>
 
-    <string name="add_memo_title">Create notebook</string>
+    <string name="add_memo_title">Create memo</string>
     <string name="add_memo_ok">Create</string>
     <string name="add_memo_cancel">Cancel</string>
     <string name="add_memo_field_title">Title</string>
