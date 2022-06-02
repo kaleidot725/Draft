@@ -1,5 +1,7 @@
 package jp.kaleidot725.emomemo.view.pages.main
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -97,9 +99,13 @@ fun MainPage(
                         )
                     }
                 },
-                content = {
-                    Box(modifier = Modifier.padding(it)) {
-                        when (uiState.result) {
+                content = { paddingValues ->
+                    Crossfade(
+                        targetState = uiState.result,
+                        animationSpec = tween(600),
+                        modifier = Modifier.padding(paddingValues)
+                    ) { state ->
+                        when (state) {
                             MainState.Result.SUCCESS -> {
                                 MemoList(
                                     memos = uiState.memos,
