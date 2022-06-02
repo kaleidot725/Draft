@@ -3,15 +3,16 @@ package jp.kaleidot725.emomemo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.MaterialTheme
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import jp.kaleidot725.emomemo.ext.animationComposable
 import jp.kaleidot725.emomemo.ext.getNavComposeViewModel
 import jp.kaleidot725.emomemo.view.pages.Page
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
@@ -22,6 +23,7 @@ import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookDialog
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookDialog
 import org.koin.core.parameter.parametersOf
 
+@OptIn(ExperimentalAnimationApi::class)
 class ComposeMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +33,8 @@ class ComposeMainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 ProvideWindowInsets {
-                    val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Page.Main.route) {
+                    val navController = rememberAnimatedNavController()
+                    AnimatedNavHost(navController = navController, startDestination = Page.Main.route) {
                         addMainPage(navController)
                         addAddNotebookPage(navController)
                         addDeleteNotebookDialog(navController)
@@ -47,7 +49,7 @@ class ComposeMainActivity : ComponentActivity() {
 }
 
 private fun NavGraphBuilder.addMainPage(navController: NavController) {
-    composable(route = Page.Main.route) {
+    animationComposable(route = Page.Main.route) {
         MainPage(
             viewModel = getNavComposeViewModel(),
             onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
@@ -88,7 +90,7 @@ private fun NavGraphBuilder.addAddMemoPage(navController: NavController) {
 }
 
 private fun NavGraphBuilder.addMemoPage(navController: NavController) {
-    composable(route = Page.Memo.route) {
+    animationComposable(route = Page.Memo.route) {
         MemoDetailPage(
             viewModel = getNavComposeViewModel { parametersOf(Page.Memo.getArgumentId(it)) },
             onBack = { navController.popBackStack() },
