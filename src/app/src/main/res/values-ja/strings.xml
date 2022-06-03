@@ -2,7 +2,17 @@
     <string name="app_name">EmoMemo</string>
     <string name="top_title">EmoMemo</string>
     <string name="empty" />
+    <string name="notebook">ノート一覧</string>
+    <string name="operation">編集</string>
+    <string name="other">その他</string>
     <string name="delete">削除</string>
+    <string name="license">ライセンス</string>
+    <string name="setting">設定</string>
+    <string name="contact">問い合わせ</string>
+
+    <string name="add_memo_action">メモを作成</string>
+    <string name="add_notebook_action">ノートを作成する</string>
+    <string name="delete_notebook_action">ノート削除する</string>
 
     <string name="add_notebook_title">ノートブックを作成する</string>
     <string name="add_notebook_ok">作成する</string>

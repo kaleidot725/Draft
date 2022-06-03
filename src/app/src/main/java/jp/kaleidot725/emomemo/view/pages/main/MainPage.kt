@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,9 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.insets.systemBarsPadding
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.Edit2
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.view.atoms.Texts
-import jp.kaleidot725.emomemo.view.molecules.FloatingActionIconButton
+import jp.kaleidot725.emomemo.view.molecules.ActionButton
 import jp.kaleidot725.emomemo.view.organisms.drawer.MainDrawer
 import jp.kaleidot725.emomemo.view.organisms.list.MemoList
 import jp.kaleidot725.emomemo.view.organisms.topbar.MainTopAppBar
@@ -132,10 +132,11 @@ fun MainPage(
                     }
                 },
                 floatingActionButton = {
-                    FloatingActionIconButton(
+                    ActionButton(
                         onClick = { viewModel.createMemo() },
-                        iconVector = Icons.Filled.Edit,
-                        iconDescription = "Add Memo"
+                        iconVector = FeatherIcons.Edit2,
+                        iconDescription = "Create memo",
+                        text = stringResource(id = R.string.add_memo_action)
                     )
                 },
                 modifier = Modifier

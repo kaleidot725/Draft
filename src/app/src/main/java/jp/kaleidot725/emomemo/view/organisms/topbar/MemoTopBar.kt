@@ -2,9 +2,6 @@ package jp.kaleidot725.emomemo.view.organisms.topbar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,6 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import compose.icons.FeatherIcons
+import compose.icons.feathericons.ArrowLeft
+import compose.icons.feathericons.MoreVertical
 import jp.kaleidot725.emomemo.view.atoms.BasicTextFields
 
 @Composable
@@ -37,12 +37,12 @@ fun MemoTopBar(
         },
         actions = {
             IconButton(onClick = { onDeleteMemo?.invoke() }) {
-                Icon(Icons.Filled.Delete, contentDescription = "Delete text")
+                Icon(FeatherIcons.MoreVertical, contentDescription = "Delete text")
             }
         },
         navigationIcon = {
             Icon(
-                imageVector = Icons.Filled.ArrowBack,
+                imageVector = FeatherIcons.ArrowLeft,
                 contentDescription = "ArrowBack",
                 modifier = Modifier
                     .padding(start = 16.dp)

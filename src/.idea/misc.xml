@@ -96,6 +96,7 @@
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/card/MemoCard.kt" value="0.5935185185185186" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/drawer/MainDrawer.kt" value="0.5" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/list/MemoList.kt" value="0.4535472972972973" />
+        <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/topbar/MainTopBar.kt" value="0.22592592592592592" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/topbar/MemoTopBar.kt" value="0.5935185185185186" />
         <entry key="app/src/main/res/drawable/round_rectangle_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/message_item_container.xml" value="0.1940222897669706" />
