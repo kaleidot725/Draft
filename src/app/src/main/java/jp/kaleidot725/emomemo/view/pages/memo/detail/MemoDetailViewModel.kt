@@ -25,16 +25,6 @@ class MemoDetailViewModel(
         }
     }
 
-    fun updateTitle(title: String) {
-        intent {
-            val newMemo = state.memoEntity?.copy(title = title)
-            if (newMemo != null) {
-                updateMemoUseCase.execute(newMemo)
-                reduce { state.copy(memoEntity = newMemo) }
-            }
-        }
-    }
-
     fun updateContent(content: String) {
         intent {
             val newMemo = state.memoEntity?.copy(content = content)

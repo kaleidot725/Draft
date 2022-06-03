@@ -43,7 +43,6 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onDeleteM
             Box {
                 MemoTopBar(
                     title = uiState.memoEntity?.title ?: "",
-                    onChangeTitle = { viewModel.updateTitle(it) },
                     onClickNavigationIcon = { viewModel.back() },
                     onDeleteMemo = { viewModel.deleteMemo() },
                 )

@@ -1,7 +1,10 @@
 package jp.kaleidot725.emomemo.view.organisms.topbar
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -10,18 +13,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ArrowLeft
 import compose.icons.feathericons.MoreVertical
-import jp.kaleidot725.emomemo.view.atoms.BasicTextFields
+import jp.kaleidot725.emomemo.view.atoms.Texts
 
 @Composable
 fun MemoTopBar(
     title: String,
-    onChangeTitle: (String) -> Unit,
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
@@ -29,11 +32,13 @@ fun MemoTopBar(
 ) {
     SmallTopAppBar(
         title = {
-            BasicTextFields.TitleLarge(
-                text = title,
-                onValueChange = onChangeTitle,
-                modifier = modifier.padding(16.dp)
-            )
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Texts.TitleLarge(
+                    text = title, maxLines = 1, modifier = Modifier
+                        .wrapContentWidth()
+                        .align(Alignment.Center)
+                )
+            }
         },
         actions = {
             IconButton(onClick = { onDeleteMemo?.invoke() }) {
@@ -61,7 +66,6 @@ private fun MemoTopBar_Preview() {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
     MemoTopBar(
         title = "お買い物",
-        onChangeTitle = {},
         modifier = Modifier,
         scrollBehavior = scrollBehavior
     )

@@ -48,17 +48,6 @@ class MainViewModel(
         }
     }
 
-    fun updateSelectedNotebookTitle(title: String) {
-        intent {
-            val newNotebook = state.selectedNotebook?.copy(title = title)
-            if (newNotebook != null) {
-                updateNotebookUseCase.execute(newNotebook)
-                reduce { state.copy(selectedNotebook = newNotebook) }
-                observeNotebooks()
-            }
-        }
-    }
-
     fun createMemo() {
         intent {
             state.selectedNotebook?.let { notebook ->
