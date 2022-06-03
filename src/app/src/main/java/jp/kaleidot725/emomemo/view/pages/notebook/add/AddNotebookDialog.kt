@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,7 +41,7 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
         ) {
-            Texts.TitleLarge(text = stringResource(id = R.string.add_notebook_title))
+            Texts.HeadlineSmall(text = stringResource(id = R.string.add_notebook_title))
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -50,7 +49,7 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
                 value = uiState.memoTitle,
                 onValueChange = { viewModel.updateNotebookTitle(it) },
                 label = {
-                    Text(text = stringResource(id = R.string.add_notebook_field_title))
+                    Texts.BodyMedium(text = stringResource(id = R.string.add_notebook_field_title))
                 }
             )
 

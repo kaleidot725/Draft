@@ -1,7 +1,7 @@
 package jp.kaleidot725.emomemo.view.organisms.drawer
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +11,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,15 +38,14 @@ fun MainDrawer(
     onClickNotebook: (NotebookEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier) {
+    Surface(modifier = modifier) {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(16.dp)
         ) {
             item {
-                Texts.TitleMedium(
+                Texts.TitleSmall(
                     text = stringResource(id = R.string.notebook),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -67,7 +67,7 @@ fun MainDrawer(
             }
 
             item {
-                Texts.TitleMedium(
+                Texts.TitleSmall(
                     text = stringResource(id = R.string.operation),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -98,7 +98,7 @@ fun MainDrawer(
             }
 
             item {
-                Texts.TitleMedium(
+                Texts.TitleSmall(
                     text = stringResource(id = R.string.other),
                     modifier = Modifier
                         .fillMaxWidth()

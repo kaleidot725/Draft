@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,14 +41,14 @@ fun AddMemoDialog(viewModel: AddMemoViewModel, onNavigateMemo: (Long) -> Unit, o
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 4.dp)
         ) {
-            Texts.TitleLarge(text = stringResource(id = R.string.add_memo_title))
+            Texts.HeadlineSmall(text = stringResource(id = R.string.add_memo_title))
 
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
                 value = uiState.memoTitle,
                 onValueChange = { viewModel.updateMemoTitle(it) },
-                label = { Text(text = stringResource(id = R.string.add_memo_field_title)) }
+                label = { Texts.BodyMedium(text = stringResource(id = R.string.add_memo_field_title)) }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
