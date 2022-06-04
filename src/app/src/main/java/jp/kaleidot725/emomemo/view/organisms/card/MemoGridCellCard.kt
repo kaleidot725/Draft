@@ -1,8 +1,12 @@
 package jp.kaleidot725.emomemo.view.organisms
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,12 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
-import jp.kaleidot725.emomemo.view.molecules.Titles
+import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.sample.SampleData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MemoCard(
+fun GridMemoCard(
     memo: MemoEntity,
     modifier: Modifier = Modifier
 ) {
@@ -24,17 +28,26 @@ fun MemoCard(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp)
     ) {
-        Titles(subtitle1 = memo.title, subtitle2 = memo.content, modifier = Modifier.fillMaxSize())
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(16.dp)
+        ) {
+            Texts.TitleMedium(text = memo.title, maxLines = 1, modifier = Modifier.fillMaxWidth())
+            Texts.TitleMedium(text = memo.content, modifier = Modifier.fillMaxWidth())
+        }
     }
 }
 
 @Preview
 @Composable
 private fun MemoCard_Preview() {
-    MemoCard(
+    GridMemoCard(
         memo = SampleData.memoList[0],
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
+            .width(200.dp)
+            .height(300.dp)
     )
 }
