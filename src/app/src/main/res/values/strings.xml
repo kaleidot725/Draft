@@ -11,8 +11,6 @@
     <string name="contact">Contact</string>
 
     <string name="add_memo_action">New memo</string>
-    <string name="add_notebook_action">Create notebook</string>
-    <string name="delete_notebook_action">Delete notebook</string>
 
     <string name="add_notebook_title">Create notebook</string>
     <string name="add_notebook_ok">Create</string>

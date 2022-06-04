@@ -57,12 +57,11 @@ dependencies {
     implementation libs.bundles.compose
     implementation libs.bundles.orbit
     implementation libs.bundles.accompanist
+    implementation libs.compose.icon.feather
 
     implementation platform(libs.firebase)
     implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation "com.google.firebase:firebase-analytics-ktx"
-
-    implementation("br.com.devsrsouza.compose.icons.android:feather:1.0.0")
 
     testImplementation libs.junit
     androidTestImplementation libs.junit.ext

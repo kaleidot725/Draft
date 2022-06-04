@@ -4,7 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -12,9 +18,14 @@ import androidx.navigation.compose.dialog
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
+import com.google.accompanist.navigation.material.bottomSheet
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import jp.kaleidot725.emomemo.ext.animationComposable
 import jp.kaleidot725.emomemo.ext.getNavComposeViewModel
-import jp.kaleidot725.emomemo.view.pages.Page
+import jp.kaleidot725.emomemo.view.atoms.Texts
+import jp.kaleidot725.emomemo.view.pages.Destination
 import jp.kaleidot725.emomemo.view.pages.main.MainPage
 import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoDialog
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoDialog
@@ -25,6 +36,7 @@ import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalAnimationApi::class)
 class ComposeMainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterialNavigationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,14 +45,18 @@ class ComposeMainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 ProvideWindowInsets {
-                    val navController = rememberAnimatedNavController()
-                    AnimatedNavHost(navController = navController, startDestination = Page.Main.route) {
-                        addMainPage(navController)
-                        addAddNotebookPage(navController)
-                        addDeleteNotebookDialog(navController)
-                        addAddMemoPage(navController)
-                        addMemoPage(navController)
-                        addDeleteMemoDialog(navController)
+                    val bottomSheetNavigator = rememberBottomSheetNavigator()
+                    val navController = rememberAnimatedNavController(bottomSheetNavigator)
+                    ModalBottomSheetLayout(bottomSheetNavigator) {
+                        AnimatedNavHost(navController = navController, startDestination = Destination.Main.route) {
+                            addMainPage(navController)
+                            addNotebookBottomSheet(navController)
+                            addAddNotebookPage(navController)
+                            addDeleteNotebookDialog(navController)
+                            addAddMemoPage(navController)
+                            addMemoPage(navController)
+                            addDeleteMemoDialog(navController)
+                        }
                     }
                 }
             }
@@ -49,19 +65,32 @@ class ComposeMainActivity : ComponentActivity() {
 }
 
 private fun NavGraphBuilder.addMainPage(navController: NavController) {
-    animationComposable(route = Page.Main.route) {
+    animationComposable(route = Destination.Main.route) {
         MainPage(
             viewModel = getNavComposeViewModel(),
-            onNavigateAddNotebook = { navController.navigate(Page.AddNoteBook.route) },
-            onNavigateDeleteNotebook = { navController.navigate(Page.DeleteNotebook.createRoute(it)) },
-            onNavigateAddMemo = { navController.navigate(Page.AddMemo.createRoute(it)) },
-            onNavigateMemoDetails = { navController.navigate(Page.Memo.createRoute(it)) }
+            onNavigateAddNotebook = { navController.navigate(Destination.AddNoteBook.route) },
+            onNavigateNotebookBottomSheet = { navController.navigate(Destination.NotebookBottom.route) },
+            onNavigateAddMemo = { navController.navigate(Destination.AddMemo.createRoute(it)) },
+            onNavigateMemoDetails = { navController.navigate(Destination.Memo.createRoute(it)) }
         )
     }
 }
 
+@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterial3Api::class)
+private fun NavGraphBuilder.addNotebookBottomSheet(navController: NavController) {
+    bottomSheet(route = Destination.NotebookBottom.route) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)
+        ) {
+            Texts.BodyMedium(text = "TEST")
+        }
+    }
+}
+
 private fun NavGraphBuilder.addAddNotebookPage(navController: NavController) {
-    dialog(route = Page.AddNoteBook.route) {
+    dialog(route = Destination.AddNoteBook.route) {
         AddNotebookDialog(
             viewModel = getNavComposeViewModel(),
             onClose = { navController.popBackStack() }
@@ -70,40 +99,40 @@ private fun NavGraphBuilder.addAddNotebookPage(navController: NavController) {
 }
 
 private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController) {
-    dialog(route = Page.DeleteNotebook.route) {
+    dialog(route = Destination.DeleteNotebook.route) {
         DeleteNotebookDialog(
-            viewModel = getNavComposeViewModel { parametersOf(Page.DeleteNotebook.getArgumentId(it)) },
-            onBackHome = { navController.popBackStack(Page.Main.route, inclusive = false) },
+            viewModel = getNavComposeViewModel { parametersOf(Destination.DeleteNotebook.getArgumentId(it)) },
+            onBackHome = { navController.popBackStack(Destination.Main.route, inclusive = false) },
             onClose = { navController.popBackStack() }
         )
     }
 }
 
 private fun NavGraphBuilder.addAddMemoPage(navController: NavController) {
-    dialog(route = Page.AddMemo.route) {
+    dialog(route = Destination.AddMemo.route) {
         AddMemoDialog(
-            viewModel = getNavComposeViewModel { parametersOf(Page.AddMemo.getArgumentId(it)) },
-            onNavigateMemo = { navController.navigate(Page.Memo.createRoute(it)) },
+            viewModel = getNavComposeViewModel { parametersOf(Destination.AddMemo.getArgumentId(it)) },
+            onNavigateMemo = { navController.navigate(Destination.Memo.createRoute(it)) },
             onClose = { navController.popBackStack() }
         )
     }
 }
 
 private fun NavGraphBuilder.addMemoPage(navController: NavController) {
-    animationComposable(route = Page.Memo.route) {
+    animationComposable(route = Destination.Memo.route) {
         MemoDetailPage(
-            viewModel = getNavComposeViewModel { parametersOf(Page.Memo.getArgumentId(it)) },
+            viewModel = getNavComposeViewModel { parametersOf(Destination.Memo.getArgumentId(it)) },
             onBack = { navController.popBackStack() },
-            onDeleteMemo = { navController.navigate(Page.DeleteMemo.createRoute(it)) }
+            onDeleteMemo = { navController.navigate(Destination.DeleteMemo.createRoute(it)) }
         )
     }
 }
 
 private fun NavGraphBuilder.addDeleteMemoDialog(navController: NavController) {
-    dialog(route = Page.DeleteMemo.route) {
+    dialog(route = Destination.DeleteMemo.route) {
         DeleteMemoDialog(
-            viewModel = getNavComposeViewModel { parametersOf(Page.DeleteMemo.getArgumentId(it)) },
-            onBackHome = { navController.popBackStack(Page.Main.route, inclusive = false) },
+            viewModel = getNavComposeViewModel { parametersOf(Destination.DeleteMemo.getArgumentId(it)) },
+            onBackHome = { navController.popBackStack(Destination.Main.route, inclusive = false) },
             onClose = { navController.popBackStack() }
         )
     }

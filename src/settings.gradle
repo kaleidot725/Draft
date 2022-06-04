@@ -49,8 +49,20 @@ dependencyResolutionManagement {
             library("accompanist-insets", "com.google.accompanist:accompanist-insets:0.23.1")
             library("accompanist-insets-ui", "com.google.accompanist:accompanist-insets-ui:0.23.1")
             library("accompanist-systemuicontroller", "com.google.accompanist:accompanist-systemuicontroller:0.23.1")
+            library("accompanist-navigation-material", "com.google.accompanist:accompanist-navigation-material:0.23.1")
             library("accompanist-navigation-animation", "com.google.accompanist:accompanist-navigation-animation:0.23.1")
-            bundle("accompanist", ["accompanist-insets", "accompanist-insets-ui", "accompanist-systemuicontroller", "accompanist-navigation-animation"])
+            bundle(
+                    "accompanist",
+                    [
+                            "accompanist-insets",
+                            "accompanist-insets-ui",
+                            "accompanist-systemuicontroller",
+                            "accompanist-navigation-material",
+                            "accompanist-navigation-animation"
+                    ]
+            )
+
+            library("compose-icon-feather", "br.com.devsrsouza.compose.icons.android:feather:1.0.0")
 
             library("junit", "junit:junit:4.13.2")
             library("junit-ext", "androidx.test.ext:junit:1.1.3")

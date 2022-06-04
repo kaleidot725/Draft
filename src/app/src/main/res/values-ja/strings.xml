@@ -11,8 +11,6 @@
     <string name="contact">問い合わせ</string>
 
     <string name="add_memo_action">メモを作成</string>
-    <string name="add_notebook_action">ノートを作成する</string>
-    <string name="delete_notebook_action">ノート削除する</string>
 
     <string name="add_notebook_title">ノートブックを作成する</string>
     <string name="add_notebook_ok">作成する</string>

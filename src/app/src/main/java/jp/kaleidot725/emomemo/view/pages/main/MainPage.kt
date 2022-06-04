@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
 fun MainPage(
     viewModel: MainViewModel,
     onNavigateAddNotebook: () -> Unit,
-    onNavigateDeleteNotebook: (Long) -> Unit,
+    onNavigateNotebookBottomSheet: (Long) -> Unit,
     onNavigateAddMemo: (Long) -> Unit,
     onNavigateMemoDetails: (Long) -> Unit,
 ) {
@@ -54,7 +54,7 @@ fun MainPage(
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
-                is MainSideEffect.NavigateDeleteNotebook -> onNavigateDeleteNotebook(it.notebookId)
+                is MainSideEffect.NavigateDeleteNotebook -> onNavigateNotebookBottomSheet(it.notebookId)
                 is MainSideEffect.NavigateAddMemo -> onNavigateAddMemo(it.notebookId)
                 is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoId)
             }
