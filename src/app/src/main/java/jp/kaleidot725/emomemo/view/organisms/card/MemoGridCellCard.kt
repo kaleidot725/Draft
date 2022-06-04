@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
@@ -33,9 +35,12 @@ fun GridMemoCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             Texts.TitleMedium(text = memo.title, maxLines = 1, modifier = Modifier.fillMaxWidth())
+
+            Divider(color = Color.LightGray)
+
             Texts.TitleMedium(text = memo.content, modifier = Modifier.fillMaxWidth())
         }
     }
