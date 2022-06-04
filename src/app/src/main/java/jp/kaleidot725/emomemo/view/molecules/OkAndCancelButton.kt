@@ -4,10 +4,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import jp.kaleidot725.emomemo.view.atoms.Texts
 
 @Composable
-fun OkAndCancelButtons(
+fun OkAndCancelButton(
     okText: String,
     onOk: () -> Unit,
     enabledOk: Boolean,
@@ -25,4 +26,17 @@ fun OkAndCancelButtons(
             Texts.LabelLarge(text = okText)
         }
     }
+}
+
+@Preview
+@Composable
+private fun OkAndCancelButton_Preview() {
+    OkAndCancelButton(
+        okText = "OK",
+        onOk = {},
+        enabledOk = false,
+        cancelText = "Cancel",
+        onCancel = {},
+        enabledCancel = true
+    )
 }

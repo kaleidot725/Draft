@@ -94,6 +94,7 @@
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/ActionButton.kt" value="1.543103448275862" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/FloatingActionIconButton.kt" value="2.0" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/Message.kt" value="0.49722222222222223" />
+        <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/OkAndCancelButtons.kt" value="1.5565217391304347" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/Titles.kt" value="0.31666666666666665" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/TitlesAndCount.kt" value="0.75" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/organisms/card/MemoCard.kt" value="0.5935185185185186" />

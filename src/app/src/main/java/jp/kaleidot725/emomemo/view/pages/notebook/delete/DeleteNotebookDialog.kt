@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.view.atoms.Texts
-import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButtons
+import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButton
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
@@ -51,7 +51,7 @@ fun DeleteNotebookDialog(
 
             Texts.BodyMedium(text = stringResource(id = R.string.delete_notebook_message, uiState.notebook?.title ?: ""), maxLines = 3)
 
-            OkAndCancelButtons(
+            OkAndCancelButton(
                 okText = stringResource(id = R.string.delete_notebook_ok),
                 onOk = { viewModel.ok() },
                 enabledOk = true,
