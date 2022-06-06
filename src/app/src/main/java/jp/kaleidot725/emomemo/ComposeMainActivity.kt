@@ -47,7 +47,7 @@ class ComposeMainActivity : ComponentActivity() {
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
                     val navController = rememberAnimatedNavController(bottomSheetNavigator)
                     ModalBottomSheetLayout(bottomSheetNavigator) {
-                        AnimatedNavHost(navController = navController, startDestination = Destination.Main.route) {
+                        AnimatedNavHost(navController = navController, startDestination = Destination.Notebook.route) {
                             addMainPage(navController)
                             addNotebookBottomSheet(navController)
                             addAddNotebookPage(navController)
@@ -65,7 +65,7 @@ class ComposeMainActivity : ComponentActivity() {
 }
 
 private fun NavGraphBuilder.addMainPage(navController: NavController) {
-    animationComposable(route = Destination.Main.route) {
+    animationComposable(route = Destination.Notebook.route) {
         MainPage(
             viewModel = getNavComposeViewModel(),
             onNavigateAddNotebook = { navController.navigate(Destination.AddNoteBook.route) },
@@ -102,7 +102,7 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
     dialog(route = Destination.DeleteNotebook.route) {
         DeleteNotebookDialog(
             viewModel = getNavComposeViewModel { parametersOf(Destination.DeleteNotebook.getArgumentId(it)) },
-            onBackHome = { navController.popBackStack(Destination.Main.route, inclusive = false) },
+            onBackHome = { navController.popBackStack(Destination.Notebook.route, inclusive = false) },
             onClose = { navController.popBackStack() }
         )
     }
@@ -145,7 +145,7 @@ private fun NavGraphBuilder.addDeleteMemoDialog(navController: NavController) {
     dialog(route = Destination.DeleteMemo.route) {
         DeleteMemoDialog(
             viewModel = getNavComposeViewModel { parametersOf(Destination.DeleteMemo.getArgumentId(it)) },
-            onBackHome = { navController.popBackStack(Destination.Main.route, inclusive = false) },
+            onBackHome = { navController.popBackStack(Destination.Notebook.route, inclusive = false) },
             onClose = { navController.popBackStack() }
         )
     }
