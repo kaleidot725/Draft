@@ -2,7 +2,7 @@ package jp.kaleidot725.emomemo.view.pages.memo.bottom
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
@@ -17,7 +17,7 @@ fun MemoBottomSheet() {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .systemBarsPadding()
+            .navigationBarsPadding()
     ) {
         ListItem { Texts.TitleLarge(text = "TEST") }
         ListItem { Texts.TitleLarge(text = "TEST") }
