@@ -18,7 +18,7 @@
     <string name="add_notebook_field_title">Title</string>
 
     <string name="delete_notebook_title">Delete notebook</string>
-    <string name="delete_notebook_message">Are you sure you want to delete the %s?</string>
+    <string name="delete_notebook_message">Are you sure you want to delete the %s notebook?</string>
     <string name="delete_notebook_ok">Delete</string>
     <string name="delete_notebook_cancel">Cancel</string>
 
@@ -28,7 +28,7 @@
     <string name="add_memo_field_title">Title</string>
 
     <string name="delete_memo_title">Delete memo</string>
-    <string name="delete_memo_message">Are you sure you want to delete the %s?</string>
+    <string name="delete_memo_message">Are you sure you want to delete the %s notebook?</string>
     <string name="delete_memo_ok">Delete</string>
     <string name="delete_memo_cancel">Cancel</string>
 
@@ -37,4 +37,7 @@
 
     <string name="main_not_found_notebook_message">No notebooks</string>
     <string name="main_not_found_memo_message">No memos</string>
+
+    <string name="notebook_bottom_edit">Rename notebook</string>
+    <string name="notebook_bottom_delete">Delete notebook</string>
 </resources>

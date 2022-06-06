@@ -12,17 +12,17 @@
 
     <string name="add_memo_action">メモを作成</string>
 
-    <string name="add_notebook_title">ノートブックを作成する</string>
+    <string name="add_notebook_title">ノートを作成する</string>
     <string name="add_notebook_ok">作成する</string>
     <string name="add_notebook_cancel">キャンセル</string>
     <string name="add_notebook_field_title">タイトル</string>
 
-    <string name="delete_notebook_title">ノートブックを削除する</string>
+    <string name="delete_notebook_title">ノートを削除する</string>
     <string name="delete_notebook_message">%sを削除してもよろしいですか？</string>
     <string name="delete_notebook_ok">削除する</string>
     <string name="delete_notebook_cancel">キャンセル</string>
 
-    <string name="navigation_drawer_notebook_title">ノートブック</string>
+    <string name="navigation_drawer_notebook_title">ノート</string>
     <string name="navigation_drawer_action_title">編集</string>
 
     <string name="add_memo_title">メモを作成する</string>
@@ -35,6 +35,9 @@
     <string name="delete_memo_ok">削除する</string>
     <string name="delete_memo_cancel">キャンセル</string>
 
-    <string name="main_not_found_notebook_message">ノートブックがありません</string>
+    <string name="main_not_found_notebook_message">ノートがありません</string>
     <string name="main_not_found_memo_message">メモがありません</string>
+
+    <string name="notebook_bottom_edit">ノートの名称を変更する</string>
+    <string name="notebook_bottom_delete">ノートを削除する</string>
 </resources>
