@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.main
+package jp.kaleidot725.emomemo.view.pages.notebook.main
 
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity

@@ -3,12 +3,12 @@ package jp.kaleidot725.emomemo
 import android.app.Application
 import jp.kaleidot725.emomemo.data.dataModule
 import jp.kaleidot725.emomemo.domain.usecase.domainModule
-import jp.kaleidot725.emomemo.view.pages.main.MainViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookViewModel
+import jp.kaleidot725.emomemo.view.pages.notebook.main.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel

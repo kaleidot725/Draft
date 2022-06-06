@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.main
+package jp.kaleidot725.emomemo.view.pages.notebook.main
 
 sealed class MainSideEffect {
     object NavigateAddNotebook : MainSideEffect()

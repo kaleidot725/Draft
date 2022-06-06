@@ -1,4 +1,4 @@
-package jp.kaleidot725.emomemo.view.pages.main
+package jp.kaleidot725.emomemo.view.pages.notebook.main
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween

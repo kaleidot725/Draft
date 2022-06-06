@@ -4,12 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -23,14 +18,15 @@ import com.google.accompanist.navigation.material.bottomSheet
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import jp.kaleidot725.emomemo.ext.animationComposable
 import jp.kaleidot725.emomemo.ext.getNavComposeViewModel
-import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.pages.Destination
-import jp.kaleidot725.emomemo.view.pages.main.MainPage
 import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoDialog
+import jp.kaleidot725.emomemo.view.pages.memo.bottom.MemoBottomSheet
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoDialog
 import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailPage
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookDialog
+import jp.kaleidot725.emomemo.view.pages.notebook.bottom.NotebookBottomSheet
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookDialog
+import jp.kaleidot725.emomemo.view.pages.notebook.main.MainPage
 import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -79,13 +75,7 @@ private fun NavGraphBuilder.addMainPage(navController: NavController) {
 @OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.addNotebookBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.NotebookBottom.route) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-        ) {
-            Texts.BodyMedium(text = "TEST")
-        }
+        NotebookBottomSheet()
     }
 }
 
@@ -111,13 +101,7 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
 @OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.addMemoBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.MemoBottom.route) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-        ) {
-            Texts.BodyMedium(text = "TEST")
-        }
+        MemoBottomSheet()
     }
 }
 
