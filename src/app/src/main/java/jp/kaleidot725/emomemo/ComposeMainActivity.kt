@@ -65,7 +65,7 @@ private fun NavGraphBuilder.addMainPage(navController: NavController) {
         MainPage(
             viewModel = getNavComposeViewModel(),
             onNavigateAddNotebook = { navController.navigate(Destination.AddNoteBook.route) },
-            onNavigateNotebookBottomSheet = { navController.navigate(Destination.MemoBottom.route) },
+            onNavigateNotebookBottomSheet = { navController.navigate(Destination.NotebookBottom.createRoute(it)) },
             onNavigateAddMemo = { navController.navigate(Destination.AddMemo.createRoute(it)) },
             onNavigateMemoDetails = { navController.navigate(Destination.Memo.createRoute(it)) }
         )
@@ -75,7 +75,17 @@ private fun NavGraphBuilder.addMainPage(navController: NavController) {
 @OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.addNotebookBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.NotebookBottom.route) {
-        NotebookBottomSheet()
+        NotebookBottomSheet(
+            viewModel = getNavComposeViewModel { parametersOf(Destination.NotebookBottom.getArgumentId(it)) },
+            onDeleteNotebook = {
+                navController.popBackStack()
+                navController.navigate(Destination.DeleteNotebook.createRoute(it))
+            },
+            onEditNotebook = {
+                navController.popBackStack()
+                navController.navigate(Destination.DeleteNotebook.createRoute(it))
+            }
+        )
     }
 }
 

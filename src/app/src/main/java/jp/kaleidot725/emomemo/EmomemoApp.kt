@@ -7,6 +7,7 @@ import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookViewModel
+import jp.kaleidot725.emomemo.view.pages.notebook.bottom.NotebookBottomSheetViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.main.MainViewModel
 import org.koin.android.ext.koin.androidContext
@@ -39,6 +40,10 @@ class EmomemoApp : Application() {
 val appModule = module {
     viewModel {
         MainViewModel(get(), get(), get())
+    }
+
+    viewModel { (notebookId: Long) ->
+        NotebookBottomSheetViewModel(notebookId, get())
     }
 
     viewModel {
