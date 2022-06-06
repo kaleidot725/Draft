@@ -47,39 +47,41 @@ fun MainDrawer(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(16.dp)
         ) {
-            item {
-                Box {
-                    Texts.TitleMedium(
-                        text = stringResource(id = R.string.notebook),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp)
-                            .align(Alignment.CenterStart)
-                    )
+            if (notebooks.isNotEmpty()) {
+                item {
+                    Box {
+                        Texts.TitleMedium(
+                            text = stringResource(id = R.string.notebook),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp)
+                                .align(Alignment.CenterStart)
+                        )
 
-                    IconButton(
-                        onClick = { onAddNotebook() },
-                        modifier = Modifier
-                            .padding(end = 4.dp)
-                            .size(20.dp)
-                            .align(Alignment.CenterEnd)
-                    ) {
-                        Icon(imageVector = FeatherIcons.PlusSquare, contentDescription = "add notebook")
+                        IconButton(
+                            onClick = { onAddNotebook() },
+                            modifier = Modifier
+                                .padding(end = 4.dp)
+                                .size(20.dp)
+                                .align(Alignment.CenterEnd)
+                        ) {
+                            Icon(imageVector = FeatherIcons.PlusSquare, contentDescription = "add notebook")
+                        }
                     }
                 }
-            }
 
-            items(notebooks) {
-                NavigationDrawerItem(
-                    label = { Texts.TitleMedium(text = it.title) },
-                    selected = it == selectedNotebook,
-                    onClick = { onClickNotebook(it) },
-                    icon = { Icon(imageVector = FeatherIcons.FileText, contentDescription = "notebook icon") }
-                )
-            }
+                items(notebooks) {
+                    NavigationDrawerItem(
+                        label = { Texts.TitleMedium(text = it.title) },
+                        selected = it == selectedNotebook,
+                        onClick = { onClickNotebook(it) },
+                        icon = { Icon(imageVector = FeatherIcons.FileText, contentDescription = "notebook icon") }
+                    )
+                }
 
-            item {
-                Divider()
+                item {
+                    Divider()
+                }
             }
 
             item {

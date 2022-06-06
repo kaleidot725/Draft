@@ -68,7 +68,7 @@ fun MainPage(
                 selectedNotebook = uiState.selectedNotebook,
                 notebooks = uiState.notebooks,
                 onAddNotebook = {
-                    viewModel.navigateAddNotebook()
+                    viewModel.createNotebook()
                     coroutineScope.launch { drawerState.close() }
                 },
                 onClickNotebook = {
@@ -86,7 +86,7 @@ fun MainPage(
                             enabledAction = uiState.selectedNotebook != null,
                             scrollBehavior = scrollBehavior,
                             onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } },
-                            onDeleteNotebook = { viewModel.navigateDeleteNotebook() }
+                            onDeleteNotebook = { viewModel.deleteNotebook() }
                         )
 
                         Divider(
@@ -112,10 +112,12 @@ fun MainPage(
                             }
                             MainState.Result.NOT_FOUND_NOTEBOOK -> {
                                 Box(Modifier.fillMaxSize()) {
-                                    Texts.BodyLarge(
-                                        text = stringResource(id = R.string.main_not_found_notebook_message),
-                                        modifier = Modifier.align(Alignment.Center)
-                                    )
+                                    Box(Modifier.fillMaxSize()) {
+                                        Texts.BodyLarge(
+                                            text = stringResource(id = R.string.main_not_found_notebook_message),
+                                            modifier = Modifier.align(Alignment.Center)
+                                        )
+                                    }
                                 }
                             }
                             MainState.Result.NOT_FOUND_MEMO -> {
@@ -130,12 +132,25 @@ fun MainPage(
                     }
                 },
                 floatingActionButton = {
-                    ActionButton(
-                        onClick = { viewModel.createMemo() },
-                        iconVector = FeatherIcons.Edit2,
-                        iconDescription = "Create memo",
-                        text = stringResource(id = R.string.add_memo_action)
-                    )
+                    when (uiState.result) {
+                        MainState.Result.NOT_FOUND_NOTEBOOK -> {
+                            ActionButton(
+                                onClick = { viewModel.createNotebook() },
+                                iconVector = FeatherIcons.Edit2,
+                                iconDescription = "Create memo",
+                                text = stringResource(id = R.string.add_notebook_action)
+                            )
+                        }
+                        MainState.Result.NOT_FOUND_MEMO, MainState.Result.SUCCESS -> {
+                            ActionButton(
+                                onClick = { viewModel.createMemo() },
+                                iconVector = FeatherIcons.Edit2,
+                                iconDescription = "Create memo",
+                                text = stringResource(id = R.string.add_memo_action)
+                            )
+                        }
+                        else -> {}
+                    }
                 },
                 modifier = Modifier
                     .fillMaxSize()

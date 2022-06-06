@@ -10,6 +10,7 @@
     <string name="setting">Setting</string>
     <string name="contact">Contact</string>
 
+    <string name="add_notebook_action">New notebook</string>
     <string name="add_memo_action">New memo</string>
 
     <string name="add_notebook_title">Create notebook</string>
@@ -35,8 +36,8 @@
     <string name="navigation_drawer_notebook_title">NOTEBOOKS</string>
     <string name="navigation_drawer_action_title">Edit</string>
 
-    <string name="main_not_found_notebook_message">No notebooks</string>
-    <string name="main_not_found_memo_message">No memos</string>
+    <string name="main_not_found_notebook_message">Please create notebook</string>
+    <string name="main_not_found_memo_message">Please create memo</string>
 
     <string name="notebook_bottom_edit">Rename notebook</string>
     <string name="notebook_bottom_delete">Delete notebook</string>

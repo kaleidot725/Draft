@@ -28,13 +28,13 @@ class MainViewModel(
         observeNotebooks()
     }
 
-    fun navigateAddNotebook() {
+    fun createNotebook() {
         intent {
             postSideEffect(MainSideEffect.NavigateAddNotebook)
         }
     }
 
-    fun navigateDeleteNotebook() {
+    fun deleteNotebook() {
         intent {
             val notebook = state.selectedNotebook ?: return@intent
             postSideEffect(MainSideEffect.NavigateDeleteNotebook(notebook.id))
@@ -69,7 +69,7 @@ class MainViewModel(
             getNotebooksUseCase.execute().collectLatest {
                 intent {
                     val selectedNotebook = if (it.contains(state.selectedNotebook)) state.selectedNotebook else it.firstOrNull()
-                    reduce { state.copy(notebooks = it, selectedNotebook = selectedNotebook) }
+                    reduce { state.copy(initialized = true, notebooks = it, selectedNotebook = selectedNotebook) }
                     if (selectedNotebook != null) observeMemos(selectedNotebook)
                 }
             }
@@ -81,7 +81,7 @@ class MainViewModel(
         memosJob?.cancel()
         memosJob = viewModelScope.launch {
             getMemosFlowUseCase.execute(notebook.id).collectLatest {
-                intent { reduce { state.copy(memos = it) } }
+                intent { reduce { state.copy(initialized = true, memos = it) } }
             }
         }
     }
