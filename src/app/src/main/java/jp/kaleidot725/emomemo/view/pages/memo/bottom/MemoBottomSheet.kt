@@ -1,20 +1,29 @@
 package jp.kaleidot725.emomemo.view.pages.memo.bottom
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import jp.kaleidot725.emomemo.view.atoms.Texts
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MemoBottomSheet() {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
+            .wrapContentHeight()
+            .systemBarsPadding()
     ) {
-        Texts.BodyMedium(text = "TEST")
+        ListItem { Texts.TitleLarge(text = "TEST") }
+        ListItem { Texts.TitleLarge(text = "TEST") }
+        ListItem { Texts.TitleLarge(text = "TEST") }
+        ListItem { Texts.TitleLarge(text = "TEST") }
+        ListItem { Texts.TitleLarge(text = "TEST") }
+        ListItem { Texts.TitleLarge(text = "TEST") }
     }
 }
