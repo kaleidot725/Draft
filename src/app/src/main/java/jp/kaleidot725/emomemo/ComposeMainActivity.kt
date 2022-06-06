@@ -7,7 +7,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -53,6 +52,7 @@ class ComposeMainActivity : ComponentActivity() {
                             addNotebookBottomSheet(navController)
                             addAddNotebookPage(navController)
                             addDeleteNotebookDialog(navController)
+                            addMemoBottomSheet(navController)
                             addAddMemoPage(navController)
                             addMemoPage(navController)
                             addDeleteMemoDialog(navController)
@@ -69,14 +69,14 @@ private fun NavGraphBuilder.addMainPage(navController: NavController) {
         MainPage(
             viewModel = getNavComposeViewModel(),
             onNavigateAddNotebook = { navController.navigate(Destination.AddNoteBook.route) },
-            onNavigateNotebookBottomSheet = { navController.navigate(Destination.NotebookBottom.route) },
+            onNavigateNotebookBottomSheet = { navController.navigate(Destination.MemoBottom.route) },
             onNavigateAddMemo = { navController.navigate(Destination.AddMemo.createRoute(it)) },
             onNavigateMemoDetails = { navController.navigate(Destination.Memo.createRoute(it)) }
         )
     }
 }
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.addNotebookBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.NotebookBottom.route) {
         Box(
@@ -108,6 +108,19 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
     }
 }
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
+private fun NavGraphBuilder.addMemoBottomSheet(navController: NavController) {
+    bottomSheet(route = Destination.MemoBottom.route) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp)
+        ) {
+            Texts.BodyMedium(text = "TEST")
+        }
+    }
+}
+
 private fun NavGraphBuilder.addAddMemoPage(navController: NavController) {
     dialog(route = Destination.AddMemo.route) {
         AddMemoDialog(
@@ -123,7 +136,7 @@ private fun NavGraphBuilder.addMemoPage(navController: NavController) {
         MemoDetailPage(
             viewModel = getNavComposeViewModel { parametersOf(Destination.Memo.getArgumentId(it)) },
             onBack = { navController.popBackStack() },
-            onDeleteMemo = { navController.navigate(Destination.DeleteMemo.createRoute(it)) }
+            onNavigateMemoBottomSheet = { navController.navigate(Destination.MemoBottom.route) }
         )
     }
 }

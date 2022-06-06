@@ -26,14 +26,14 @@ import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onDeleteMemo: (memoId: Long) -> Unit) {
+fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigateMemoBottomSheet: (memoId: Long) -> Unit) {
     val uiState by viewModel.container.stateFlow.collectAsState()
 
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
                 MemoDetailSideEffect.Back -> onBack.invoke()
-                is MemoDetailSideEffect.DeleteMemo -> onDeleteMemo.invoke(it.memoId)
+                is MemoDetailSideEffect.DeleteMemo -> onNavigateMemoBottomSheet.invoke(it.memoId)
             }
         }
     }

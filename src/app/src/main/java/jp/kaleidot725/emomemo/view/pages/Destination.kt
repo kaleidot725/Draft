@@ -20,6 +20,8 @@ sealed class Destination(val route: String) {
         }
     }
 
+    object MemoBottom : Destination(route = "memo/bottom")
+
     object Memo : Destination(route = "memo/{memoId}") {
         fun createRoute(memoId: Long) = "memo/$memoId"
         fun getArgumentId(entry: NavBackStackEntry): Long {
