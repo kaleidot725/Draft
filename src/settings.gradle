@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
+        maven { url 'https://jitpack.io' }
         mavenCentral()
     }
 
@@ -64,6 +65,8 @@ dependencyResolutionManagement {
 
             library("compose-icon-feather", "br.com.devsrsouza.compose.icons.android:feather:1.0.0")
 
+            library("richtext", "com.github.pChochura:richtext-compose:1.2.0")
+            
             library("junit", "junit:junit:4.13.2")
             library("junit-ext", "androidx.test.ext:junit:1.1.3")
 

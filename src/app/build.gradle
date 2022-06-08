@@ -58,7 +58,8 @@ dependencies {
     implementation libs.bundles.orbit
     implementation libs.bundles.accompanist
     implementation libs.compose.icon.feather
-
+    implementation libs.richtext
+    
     implementation platform(libs.firebase)
     implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation "com.google.firebase:firebase-analytics-ktx"

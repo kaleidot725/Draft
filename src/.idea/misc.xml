@@ -90,6 +90,7 @@
         <entry key="..\:/Users/81906/Documents/Github/emomemo/src/app/src/main/res/layout/spinner_item.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/81906/Documents/Github/emomemo/src/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3861538461538462" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/atoms/BasicTextFields.kt" value="0.1" />
+        <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/atoms/TextFields.kt" value="0.25" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/atoms/Texts.kt" value="0.500561167227834" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/ActionButton.kt" value="1.543103448275862" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/molecules/FloatingActionIconButton.kt" value="2.0" />
