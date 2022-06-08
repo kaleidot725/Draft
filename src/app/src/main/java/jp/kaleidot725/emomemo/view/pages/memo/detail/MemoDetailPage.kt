@@ -63,27 +63,30 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigat
             }
         },
         content = { contentPadding ->
-            var value by remember { mutableStateOf(uiState.memoEntity?.content ?: "") }
-            val focusRequester = remember { FocusRequester() }
-            Box(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .padding(contentPadding)
-                    .fillMaxHeight()
-                    .verticalScroll(rememberScrollState())
-                    .clickable(interactionSource = MutableInteractionSource(), indication = null) { focusRequester.requestFocus() }
-            ) {
-                BasicTextField(
-                    value = value,
-                    onValueChange = {
-                        value = it
-                        viewModel.updateContent(it)
-                    },
+            if (uiState.memoEntity != null) {
+                var value by remember { mutableStateOf(uiState.memoEntity?.content ?: "") }
+                val focusRequester = remember { FocusRequester() }
+
+                Box(
                     modifier = Modifier
-                        .focusRequester(focusRequester)
-                        .fillMaxSize(),
-                    textStyle = MaterialTheme.typography.bodyLarge
-                )
+                        .padding(4.dp)
+                        .padding(contentPadding)
+                        .fillMaxHeight()
+                        .verticalScroll(rememberScrollState())
+                        .clickable(interactionSource = MutableInteractionSource(), indication = null) { focusRequester.requestFocus() }
+                ) {
+                    BasicTextField(
+                        value = value,
+                        onValueChange = {
+                            value = it
+                            viewModel.updateContent(it)
+                        },
+                        modifier = Modifier
+                            .focusRequester(focusRequester)
+                            .fillMaxSize(),
+                        textStyle = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
         },
         modifier = Modifier.systemBarsPadding()
