@@ -41,4 +41,7 @@
 
     <string name="notebook_bottom_edit">Rename notebook</string>
     <string name="notebook_bottom_delete">Delete notebook</string>
+
+    <string name="memo_bottom_edit">Rename memo</string>
+    <string name="memo_bottom_delete">Delete memo</string>
 </resources>

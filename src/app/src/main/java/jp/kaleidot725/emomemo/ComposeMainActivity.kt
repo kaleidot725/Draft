@@ -111,7 +111,11 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
 @OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.addMemoBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.MemoBottom.route) {
-        MemoBottomSheet()
+        MemoBottomSheet(
+            viewModel = getNavComposeViewModel { parametersOf(Destination.MemoBottom.getArgumentId(it)) },
+            onDeleteNotebook = { navController.navigate(Destination.DeleteMemo.createRoute(it)) },
+            onEditMemo = { navController.navigate(Destination.DeleteMemo.createRoute(it)) }
+        )
     }
 }
 
@@ -130,7 +134,7 @@ private fun NavGraphBuilder.addMemoPage(navController: NavController) {
         MemoDetailPage(
             viewModel = getNavComposeViewModel { parametersOf(Destination.Memo.getArgumentId(it)) },
             onBack = { navController.popBackStack() },
-            onNavigateMemoBottomSheet = { navController.navigate(Destination.MemoBottom.route) }
+            onNavigateMemoBottomSheet = { navController.navigate(Destination.MemoBottom.createRoute(it)) }
         )
     }
 }

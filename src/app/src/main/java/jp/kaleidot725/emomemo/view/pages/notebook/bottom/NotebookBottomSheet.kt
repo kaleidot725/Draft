@@ -52,7 +52,7 @@ fun NotebookBottomSheet(
 
         ListItem(
             icon = { Icon(imageVector = FeatherIcons.Edit, contentDescription = "edit notebook") },
-            modifier = Modifier.clickable { viewModel.navigateEditNotebook() }
+            modifier = Modifier.clickable { viewModel.editNotebook() }
         ) {
             Texts.TitleMedium(
                 text = stringResource(id = R.string.notebook_bottom_edit)
@@ -61,7 +61,7 @@ fun NotebookBottomSheet(
 
         ListItem(
             icon = { Icon(imageVector = FeatherIcons.Trash2, contentDescription = "delete notebook") },
-            modifier = Modifier.clickable { viewModel.navigateDeleteNotebook() }
+            modifier = Modifier.clickable { viewModel.deleteNotebook() }
         ) {
             Texts.TitleMedium(
                 text = stringResource(id = R.string.notebook_bottom_delete)
