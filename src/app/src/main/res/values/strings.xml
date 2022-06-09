@@ -23,6 +23,11 @@
     <string name="delete_notebook_ok">Delete</string>
     <string name="delete_notebook_cancel">Cancel</string>
 
+    <string name="rename_notebook_title">Rename notebook</string>
+    <string name="rename_notebook_ok">Rename</string>
+    <string name="rename_notebook_cancel">Cancel</string>
+    <string name="rename_notebook_field_title">Title</string>
+
     <string name="add_memo_title">Create memo</string>
     <string name="add_memo_ok">Create</string>
     <string name="add_memo_cancel">Cancel</string>

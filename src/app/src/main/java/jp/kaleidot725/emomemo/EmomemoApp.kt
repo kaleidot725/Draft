@@ -10,6 +10,7 @@ import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.bottom.NotebookBottomSheetViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookViewModel
+import jp.kaleidot725.emomemo.view.pages.notebook.edit.EditNotebookViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.main.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -55,6 +56,10 @@ val appModule = module {
         DeleteNotebookViewModel(notebookId, get(), get())
     }
 
+    viewModel { (notebookId: Long) ->
+        EditNotebookViewModel(notebookId, get(), get())
+    }
+    
     viewModel { (notebookId: Long) ->
         AddMemoViewModel(notebookId, get())
     }

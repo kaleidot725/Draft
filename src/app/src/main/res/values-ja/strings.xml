@@ -23,6 +23,11 @@
     <string name="delete_notebook_ok">削除する</string>
     <string name="delete_notebook_cancel">キャンセル</string>
 
+    <string name="rename_notebook_title">ノートの名称を変更する</string>
+    <string name="rename_notebook_ok">変更する</string>
+    <string name="rename_notebook_cancel">キャンセル</string>
+    <string name="rename_notebook_field_title">タイトル</string>
+
     <string name="navigation_drawer_notebook_title">ノート</string>
     <string name="navigation_drawer_action_title">編集</string>
 

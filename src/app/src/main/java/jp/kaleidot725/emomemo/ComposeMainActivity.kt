@@ -114,7 +114,10 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
 
 private fun NavGraphBuilder.addEditNotebookDialog(navController: NavController) {
     dialog(route = Destination.EditNotebook.route) {
-        EditNotebookDialog()
+        EditNotebookDialog(
+            viewModel = getNavComposeViewModel { parametersOf(Destination.EditNotebook.getArgumentId(it)) },
+            onClose = { navController.popBackStack() }
+        )
     }
 }
 
