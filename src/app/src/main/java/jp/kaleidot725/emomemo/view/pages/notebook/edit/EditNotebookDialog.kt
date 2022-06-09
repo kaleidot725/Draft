@@ -51,6 +51,7 @@ fun EditNotebookDialog(viewModel: EditNotebookViewModel, onClose: () -> Unit) {
             OutlinedTextField(
                 value = uiState.notebookTitle,
                 onValueChange = { viewModel.updateNotebookTitle(it) },
+                singleLine = true,
                 label = {
                     Texts.BodyMedium(text = stringResource(id = R.string.rename_notebook_title))
                 }

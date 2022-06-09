@@ -52,6 +52,7 @@ fun AddNotebookDialog(viewModel: AddNotebookViewModel, onClose: () -> Unit) {
             OutlinedTextField(
                 value = uiState.memoTitle,
                 onValueChange = { viewModel.updateNotebookTitle(it) },
+                singleLine = true,
                 label = {
                     Texts.BodyMedium(text = stringResource(id = R.string.add_notebook_field_title))
                 }

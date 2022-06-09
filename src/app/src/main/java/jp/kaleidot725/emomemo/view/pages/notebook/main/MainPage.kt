@@ -54,7 +54,7 @@ fun MainPage(
         viewModel.container.sideEffectFlow.collectLatest {
             when (it) {
                 MainSideEffect.NavigateAddNotebook -> onNavigateAddNotebook()
-                is MainSideEffect.NavigateDeleteNotebook -> onNavigateNotebookBottomSheet(it.notebookId)
+                is MainSideEffect.NavigateBottomSheet -> onNavigateNotebookBottomSheet(it.notebookId)
                 is MainSideEffect.NavigateAddMemo -> onNavigateAddMemo(it.notebookId)
                 is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoId)
             }

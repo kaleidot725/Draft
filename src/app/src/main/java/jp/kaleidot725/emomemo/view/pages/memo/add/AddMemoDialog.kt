@@ -52,6 +52,7 @@ fun AddMemoDialog(viewModel: AddMemoViewModel, onNavigateMemo: (Long) -> Unit, o
             OutlinedTextField(
                 value = uiState.memoTitle,
                 onValueChange = { viewModel.updateMemoTitle(it) },
+                singleLine = true,
                 label = { Texts.BodyMedium(text = stringResource(id = R.string.add_memo_field_title)) }
             )
 

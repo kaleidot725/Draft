@@ -69,7 +69,10 @@ private fun NavGraphBuilder.addMainPage(navController: NavController) {
         MainPage(
             viewModel = getNavComposeViewModel(),
             onNavigateAddNotebook = { navController.navigate(Destination.AddNoteBook.route) },
-            onNavigateNotebookBottomSheet = { navController.navigate(Destination.NotebookBottom.createRoute(it)) },
+            onNavigateNotebookBottomSheet = {
+                val route = Destination.NotebookBottom.createRoute(it)
+                navController.navigate(route)
+            },
             onNavigateAddMemo = { navController.navigate(Destination.AddMemo.createRoute(it)) },
             onNavigateMemoDetails = { navController.navigate(Destination.Memo.createRoute(it)) }
         )
