@@ -68,7 +68,7 @@ class MainViewModel(
         notebooksJob = viewModelScope.launch {
             getNotebooksUseCase.execute().collectLatest {
                 intent {
-                    val selectedNotebook = if (it.contains(state.selectedNotebook)) state.selectedNotebook else it.firstOrNull()
+                    val selectedNotebook = if (it.any { it.id == state.selectedNotebook?.id }) state.selectedNotebook else it.firstOrNull()
                     reduce { state.copy(initialized = true, notebooks = it, selectedNotebook = selectedNotebook) }
                     if (selectedNotebook != null) observeMemos(selectedNotebook)
                 }
