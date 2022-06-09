@@ -1,8 +1,12 @@
 package jp.kaleidot725.emomemo.view.pages.memo.detail
 
 import androidx.lifecycle.ViewModel
-import jp.kaleidot725.emomemo.domain.usecase.get.GetMemoUseCase
+import androidx.lifecycle.viewModelScope
+import jp.kaleidot725.emomemo.domain.usecase.get.GetFilteredMemoFlow
 import jp.kaleidot725.emomemo.domain.usecase.update.UpdateMemoUseCase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -12,17 +16,14 @@ import org.orbitmvi.orbit.viewmodel.container
 
 class MemoDetailViewModel(
     private val memoId: Long,
-    private val getMemoUseCase: GetMemoUseCase,
+    private val getFilteredMemoFlow: GetFilteredMemoFlow,
     private val updateMemoUseCase: UpdateMemoUseCase
 ) : ViewModel(),
     ContainerHost<MemoDetailState, MemoDetailSideEffect> {
     override val container: Container<MemoDetailState, MemoDetailSideEffect> = container(MemoDetailState())
 
     init {
-        intent {
-            val memo = getMemoUseCase.execute(memoId)
-            reduce { MemoDetailState(memo) }
-        }
+        observeMemo()
     }
 
     fun updateContent(content: String) {
@@ -45,6 +46,18 @@ class MemoDetailViewModel(
         intent {
             val id = state.memoEntity?.id ?: return@intent
             postSideEffect(MemoDetailSideEffect.DeleteMemo(id))
+        }
+    }
+
+    private var memoJob: Job? = null
+    private fun observeMemo() {
+        memoJob?.cancel()
+        memoJob = viewModelScope.launch {
+            getFilteredMemoFlow.execute(memoId).collectLatest {
+                intent {
+                    reduce { state.copy(memoEntity = it.firstOrNull()) }
+                }
+            }
         }
     }
 }

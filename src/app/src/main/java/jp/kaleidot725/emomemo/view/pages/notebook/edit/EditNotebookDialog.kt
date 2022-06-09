@@ -53,7 +53,7 @@ fun EditNotebookDialog(viewModel: EditNotebookViewModel, onClose: () -> Unit) {
                 onValueChange = { viewModel.updateNotebookTitle(it) },
                 singleLine = true,
                 label = {
-                    Texts.BodyMedium(text = stringResource(id = R.string.rename_notebook_title))
+                    Texts.BodyMedium(text = stringResource(id = R.string.rename_notebook_field_title))
                 }
             )
 

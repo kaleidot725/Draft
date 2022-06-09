@@ -38,6 +38,11 @@
     <string name="delete_memo_ok">Delete</string>
     <string name="delete_memo_cancel">Cancel</string>
 
+    <string name="rename_memo_title">Rename memo</string>
+    <string name="rename_memo_ok">Rename</string>
+    <string name="rename_memo_cancel">Cancel</string>
+    <string name="rename_memo_field_title">Title</string>
+
     <string name="navigation_drawer_notebook_title">NOTEBOOKS</string>
     <string name="navigation_drawer_action_title">Edit</string>
 

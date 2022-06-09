@@ -129,8 +129,14 @@ private fun NavGraphBuilder.addMemoBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.MemoBottom.route) {
         MemoBottomSheet(
             viewModel = getNavComposeViewModel { parametersOf(Destination.MemoBottom.getArgumentId(it)) },
-            onDeleteNotebook = { navController.navigate(Destination.DeleteMemo.createRoute(it)) },
-            onEditMemo = { navController.navigate(Destination.EditMemo.createRoute(it)) }
+            onDeleteNotebook = {
+                navController.popBackStack()
+                navController.navigate(Destination.DeleteMemo.createRoute(it))
+            },
+            onEditMemo = {
+                navController.popBackStack()
+                navController.navigate(Destination.EditMemo.createRoute(it))
+            }
         )
     }
 }
@@ -167,6 +173,9 @@ private fun NavGraphBuilder.addDeleteMemoDialog(navController: NavController) {
 
 private fun NavGraphBuilder.addEditMemoDialog(navController: NavController) {
     dialog(route = Destination.EditMemo.route) {
-        EditMemoDialog()
+        EditMemoDialog(
+            viewModel = getNavComposeViewModel { parametersOf(Destination.EditMemo.getArgumentId(it)) },
+            onClose = { navController.popBackStack() }
+        )
     }
 }

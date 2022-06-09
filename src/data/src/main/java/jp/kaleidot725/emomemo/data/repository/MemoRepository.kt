@@ -29,7 +29,11 @@ class MemoRepository(private val dao: MemoDao) {
         return dao.getMemos(notebookId)
     }
 
-    suspend fun getMemosFlow(notebookId: Long): Flow<List<MemoEntity>> {
-        return dao.getMemosFlow(notebookId)
+    fun getMemosFlow(notebookId: Long): Flow<List<MemoEntity>> {
+        return dao.getFilteredMemoFlow(notebookId)
+    }
+
+    fun getFilteredMemoFlow(notebookId: Long, filterId: Long): Flow<List<MemoEntity>> {
+        return dao.getFilteredMemoFlow(notebookId)
     }
 }

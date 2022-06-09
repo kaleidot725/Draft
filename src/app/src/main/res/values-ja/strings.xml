@@ -41,6 +41,11 @@
     <string name="delete_memo_ok">削除する</string>
     <string name="delete_memo_cancel">キャンセル</string>
 
+    <string name="rename_memo_title">メモの名称を変更する</string>
+    <string name="rename_memo_ok">変更する</string>
+    <string name="rename_memo_cancel">キャンセル</string>
+    <string name="rename_memo_field_title">タイトル</string>
+
     <string name="main_not_found_notebook_message">ノートを作成してください</string>
     <string name="main_not_found_memo_message">メモを作成してください</string>
 

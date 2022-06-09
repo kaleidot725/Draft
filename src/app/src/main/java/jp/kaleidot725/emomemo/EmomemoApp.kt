@@ -7,6 +7,7 @@ import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.bottom.MemoBottomSheetViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailViewModel
+import jp.kaleidot725.emomemo.view.pages.memo.edit.EditMemoViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.bottom.NotebookBottomSheetViewModel
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookViewModel
@@ -59,7 +60,7 @@ val appModule = module {
     viewModel { (notebookId: Long) ->
         EditNotebookViewModel(notebookId, get(), get())
     }
-    
+
     viewModel { (notebookId: Long) ->
         AddMemoViewModel(notebookId, get())
     }
@@ -70,6 +71,10 @@ val appModule = module {
 
     viewModel { (memoId: Long) ->
         DeleteMemoViewModel(memoId, get(), get())
+    }
+
+    viewModel { (memoId: Long) ->
+        EditMemoViewModel(memoId, get(), get())
     }
 
     viewModel { (memoId: Long) ->

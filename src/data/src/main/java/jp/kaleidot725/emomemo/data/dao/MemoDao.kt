@@ -29,5 +29,8 @@ interface MemoDao {
     suspend fun getMemos(notebookId: Long): List<MemoEntity>
 
     @Query("select * from memo where notebookId = :notebookId")
-    fun getMemosFlow(notebookId: Long): Flow<List<MemoEntity>>
+    fun getFilteredMemoFlow(notebookId: Long): Flow<List<MemoEntity>>
+
+    @Query("select * from memo where notebookId = :notebookId AND memo.id = :memoId")
+    fun getFilteredMemoFlow(notebookId: Long, memoId: Long): Flow<List<MemoEntity>>
 }
