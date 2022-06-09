@@ -21,19 +21,19 @@ class MemoRepository(private val dao: MemoDao) {
         dao.delete(memoIds)
     }
 
-    suspend fun getMemo(id: Long): MemoEntity {
-        return dao.getMemo(id)
+    suspend fun getMemoByMemoId(id: Long): MemoEntity {
+        return dao.getMemoByMemoId(id)
     }
 
-    suspend fun getMemos(notebookId: Long): List<MemoEntity> {
-        return dao.getMemos(notebookId)
+    fun getMemosFlowByMemoId(memoId: Long): Flow<List<MemoEntity>> {
+        return dao.getMemosFlowByMemoId(memoId)
     }
 
-    fun getMemosFlow(notebookId: Long): Flow<List<MemoEntity>> {
-        return dao.getFilteredMemoFlow(notebookId)
+    suspend fun getMemosByNotebookId(notebookId: Long): List<MemoEntity> {
+        return dao.getMemosByNotebookId(notebookId)
     }
 
-    fun getFilteredMemoFlow(notebookId: Long, filterId: Long): Flow<List<MemoEntity>> {
-        return dao.getFilteredMemoFlow(notebookId)
+    fun getMemosFlowByNotebookId(notebookId: Long): Flow<List<MemoEntity>> {
+        return dao.getMemosFlowByNotebookId(notebookId)
     }
 }

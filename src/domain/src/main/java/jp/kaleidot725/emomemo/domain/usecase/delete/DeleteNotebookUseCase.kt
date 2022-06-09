@@ -8,7 +8,7 @@ class DeleteNotebookUseCase(
     private val notebookRepository: NotebookRepository
 ) {
     suspend fun execute(notebookId: Long) {
-        memoRepository.delete(memoRepository.getMemos(notebookId).map { it.id })
+        memoRepository.delete(memoRepository.getMemosByNotebookId(notebookId).map { it.id })
         notebookRepository.delete(listOf(notebookId))
     }
 }

@@ -5,7 +5,7 @@ import jp.kaleidot725.emomemo.data.repository.MemoRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetFilteredMemoFlow(private val memoRepository: MemoRepository) {
-    fun execute(notebookId: Long): Flow<List<MemoEntity>> {
-        return memoRepository.getFilteredMemoFlow(notebookId, notebookId)
+    fun execute(memoId: Long): Flow<List<MemoEntity>> {
+        return memoRepository.getMemosFlowByMemoId(memoId)
     }
 }

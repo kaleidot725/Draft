@@ -6,7 +6,6 @@ import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
 import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosFlowUseCase
 import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksFlowUseCase
-import jp.kaleidot725.emomemo.domain.usecase.update.UpdateNotebookUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,8 +18,7 @@ import org.orbitmvi.orbit.viewmodel.container
 
 class MainViewModel(
     private val getNotebooksUseCase: GetNotebooksFlowUseCase,
-    private val getMemosFlowUseCase: GetMemosFlowUseCase,
-    private val updateNotebookUseCase: UpdateNotebookUseCase
+    private val getMemosFlowUseCase: GetMemosFlowUseCase
 ) : ViewModel(), ContainerHost<MainState, MainSideEffect> {
     override val container: Container<MainState, MainSideEffect> = container(MainState())
 
@@ -68,7 +66,7 @@ class MainViewModel(
         notebooksJob = viewModelScope.launch {
             getNotebooksUseCase.execute().collectLatest {
                 intent {
-                    val selectedNotebook = if (it.any { it.id == state.selectedNotebook?.id }) state.selectedNotebook else it.firstOrNull()
+                    val selectedNotebook = it.firstOrNull { it.id == state.selectedNotebook?.id } ?: it.firstOrNull()
                     reduce { state.copy(initialized = true, notebooks = it, selectedNotebook = selectedNotebook) }
                     if (selectedNotebook != null) observeMemos(selectedNotebook)
                 }

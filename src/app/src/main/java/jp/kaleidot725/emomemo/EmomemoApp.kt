@@ -42,7 +42,7 @@ class EmomemoApp : Application() {
 
 val appModule = module {
     viewModel {
-        MainViewModel(get(), get(), get())
+        MainViewModel(get(), get())
     }
 
     viewModel { (notebookId: Long) ->

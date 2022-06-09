@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 class GetMemosFlowUseCase(private val memoRepository: MemoRepository) {
     suspend fun execute(notebookId: Long): Flow<List<MemoEntity>> {
-        return memoRepository.getMemosFlow(notebookId)
+        return memoRepository.getMemosFlowByNotebookId(notebookId)
     }
 }

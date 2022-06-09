@@ -66,7 +66,6 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigat
             if (uiState.memoEntity != null) {
                 var value by remember { mutableStateOf(uiState.memoEntity?.content ?: "") }
                 val focusRequester = remember { FocusRequester() }
-
                 Box(
                     modifier = Modifier
                         .padding(4.dp)
