@@ -14,6 +14,13 @@ sealed class Destination(val route: String) {
         }
     }
 
+    object EditNotebook : Destination(route = "notebook/edit/{notebookId}") {
+        fun createRoute(notebookId: Long) = "notebook/edit/$notebookId"
+        fun getArgumentId(entry: NavBackStackEntry): Long {
+            return entry.arguments?.getString("notebookId")?.toLong() ?: 0L
+        }
+    }
+
     object NotebookBottom : Destination(route = "notebook/bottom/{notebookId}") {
         fun createRoute(notebookId: Long) = "notebook/bottom/$notebookId"
         fun getArgumentId(entry: NavBackStackEntry): Long {
@@ -37,6 +44,13 @@ sealed class Destination(val route: String) {
 
     object DeleteMemo : Destination(route = "memo/delete/{memoId}") {
         fun createRoute(memoId: Long) = "memo/delete/$memoId"
+        fun getArgumentId(entry: NavBackStackEntry): Long {
+            return entry.arguments?.getString("memoId")?.toLong() ?: 0L
+        }
+    }
+
+    object EditMemo : Destination(route = "memo/edit/{memoId}") {
+        fun createRoute(memoId: Long) = "memo/edit/$memoId"
         fun getArgumentId(entry: NavBackStackEntry): Long {
             return entry.arguments?.getString("memoId")?.toLong() ?: 0L
         }

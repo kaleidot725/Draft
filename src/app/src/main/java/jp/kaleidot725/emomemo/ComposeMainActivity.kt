@@ -23,9 +23,11 @@ import jp.kaleidot725.emomemo.view.pages.memo.add.AddMemoDialog
 import jp.kaleidot725.emomemo.view.pages.memo.bottom.MemoBottomSheet
 import jp.kaleidot725.emomemo.view.pages.memo.delete.DeleteMemoDialog
 import jp.kaleidot725.emomemo.view.pages.memo.detail.MemoDetailPage
+import jp.kaleidot725.emomemo.view.pages.memo.edit.EditMemoDialog
 import jp.kaleidot725.emomemo.view.pages.notebook.add.AddNotebookDialog
 import jp.kaleidot725.emomemo.view.pages.notebook.bottom.NotebookBottomSheet
 import jp.kaleidot725.emomemo.view.pages.notebook.delete.DeleteNotebookDialog
+import jp.kaleidot725.emomemo.view.pages.notebook.edit.EditNotebookDialog
 import jp.kaleidot725.emomemo.view.pages.notebook.main.MainPage
 import org.koin.core.parameter.parametersOf
 
@@ -48,10 +50,12 @@ class ComposeMainActivity : ComponentActivity() {
                             addNotebookBottomSheet(navController)
                             addAddNotebookPage(navController)
                             addDeleteNotebookDialog(navController)
+                            addEditNotebookDialog(navController)
                             addMemoBottomSheet(navController)
                             addAddMemoPage(navController)
                             addMemoPage(navController)
                             addDeleteMemoDialog(navController)
+                            addEditMemoDialog(navController)
                         }
                     }
                 }
@@ -83,7 +87,7 @@ private fun NavGraphBuilder.addNotebookBottomSheet(navController: NavController)
             },
             onEditNotebook = {
                 navController.popBackStack()
-                navController.navigate(Destination.DeleteNotebook.createRoute(it))
+                navController.navigate(Destination.EditNotebook.createRoute(it))
             }
         )
     }
@@ -108,13 +112,19 @@ private fun NavGraphBuilder.addDeleteNotebookDialog(navController: NavController
     }
 }
 
+private fun NavGraphBuilder.addEditNotebookDialog(navController: NavController) {
+    dialog(route = Destination.EditNotebook.route) {
+        EditNotebookDialog()
+    }
+}
+
 @OptIn(ExperimentalMaterialNavigationApi::class)
 private fun NavGraphBuilder.addMemoBottomSheet(navController: NavController) {
     bottomSheet(route = Destination.MemoBottom.route) {
         MemoBottomSheet(
             viewModel = getNavComposeViewModel { parametersOf(Destination.MemoBottom.getArgumentId(it)) },
             onDeleteNotebook = { navController.navigate(Destination.DeleteMemo.createRoute(it)) },
-            onEditMemo = { navController.navigate(Destination.DeleteMemo.createRoute(it)) }
+            onEditMemo = { navController.navigate(Destination.EditMemo.createRoute(it)) }
         )
     }
 }
@@ -146,5 +156,11 @@ private fun NavGraphBuilder.addDeleteMemoDialog(navController: NavController) {
             onBackHome = { navController.popBackStack(Destination.Notebook.route, inclusive = false) },
             onClose = { navController.popBackStack() }
         )
+    }
+}
+
+private fun NavGraphBuilder.addEditMemoDialog(navController: NavController) {
+    dialog(route = Destination.EditMemo.route) {
+        EditMemoDialog()
     }
 }
