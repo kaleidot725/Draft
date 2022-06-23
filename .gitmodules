@@ -1,0 +1,3 @@
+[submodule "src/text-editor-compose"]
+	path = src/text-editor-compose
+	url = https://github.com/kaleidot725/text-editor-compose

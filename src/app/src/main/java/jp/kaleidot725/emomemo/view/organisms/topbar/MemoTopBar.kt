@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.TopAppBarScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,13 +43,13 @@ fun MemoTopBar(
         },
         actions = {
             IconButton(onClick = { onDeleteMemo?.invoke() }) {
-                Icon(FeatherIcons.MoreVertical, contentDescription = "Delete text")
+                Icon(FeatherIcons.MoreVertical, contentDescription = "MoreVertical")
             }
         },
         navigationIcon = {
             Icon(
                 imageVector = FeatherIcons.ArrowLeft,
-                contentDescription = "ArrowBack",
+                contentDescription = "ArrowLeft",
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .clickable { onClickNavigationIcon?.invoke() }
@@ -63,7 +64,7 @@ fun MemoTopBar(
 @Preview
 @Composable
 private fun MemoTopBar_Preview() {
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior() }
+    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior(TopAppBarScrollState(0f, 0f, 0f)) }
     MemoTopBar(
         title = "お買い物",
         modifier = Modifier,

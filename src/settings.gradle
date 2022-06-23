@@ -16,7 +16,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
-            library("kotlin-stdlib", "org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
+            library("kotlin-stdlib", "org.jetbrains.kotlin:kotlin-stdlib:1.6.21")
             library("kotlin-datetime", "org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
 
             library("corektx", "androidx.core:core-ktx:1.7.0")
@@ -40,23 +40,19 @@ dependencyResolutionManagement {
             bundle("room", ["room-runtime", "room-ktx"])
 
             library("activity-compose", "androidx.activity:activity-compose:1.4.0")
-            library("compose-ui", "androidx.compose.ui:ui:1.1.0")
-            library("compose-ui-tooling", "androidx.compose.ui:ui-tooling:1.1.0")
-            library("compose-foundation", "androidx.compose.foundation:foundation:1.1.0")
-            library("compose-material", "androidx.compose.material:material:1.2.0-beta02")
-            library("compose-material3", "androidx.compose.material3:material3:1.0.0-alpha12")
+            library("compose-ui", "androidx.compose.ui:ui:1.2.0-beta03")
+            library("compose-ui-tooling", "androidx.compose.ui:ui-tooling:1.2.0-beta03")
+            library("compose-foundation", "androidx.compose.foundation:foundation:1.2.0-beta03")
+            library("compose-material", "androidx.compose.material:material:1.2.0-beta03")
+            library("compose-material3", "androidx.compose.material3:material3:1.0.0-alpha13")
             bundle("compose", ["activity-compose", "compose-ui", "compose-ui-tooling", "compose-foundation", "compose-material", "compose-material3"])
 
-            library("accompanist-insets", "com.google.accompanist:accompanist-insets:0.23.1")
-            library("accompanist-insets-ui", "com.google.accompanist:accompanist-insets-ui:0.23.1")
             library("accompanist-systemuicontroller", "com.google.accompanist:accompanist-systemuicontroller:0.23.1")
             library("accompanist-navigation-material", "com.google.accompanist:accompanist-navigation-material:0.23.1")
             library("accompanist-navigation-animation", "com.google.accompanist:accompanist-navigation-animation:0.23.1")
             bundle(
                     "accompanist",
                     [
-                            "accompanist-insets",
-                            "accompanist-insets-ui",
                             "accompanist-systemuicontroller",
                             "accompanist-navigation-material",
                             "accompanist-navigation-animation"
@@ -65,8 +61,6 @@ dependencyResolutionManagement {
 
             library("compose-icon-feather", "br.com.devsrsouza.compose.icons.android:feather:1.0.0")
 
-            library("richtext", "com.github.pChochura:richtext-compose:1.2.0")
-            
             library("junit", "junit:junit:4.13.2")
             library("junit-ext", "androidx.test.ext:junit:1.1.3")
 
@@ -82,3 +76,4 @@ rootProject.name = 'Emomemo'
 include ':app'
 include ':data'
 include ':domain'
+include ':text-editor-compose:texteditor'

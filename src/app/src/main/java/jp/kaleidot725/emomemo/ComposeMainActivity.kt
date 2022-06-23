@@ -5,11 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.MaterialTheme
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.dialog
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -36,27 +34,22 @@ class ComposeMainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialNavigationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         setContent {
             MaterialTheme {
-                ProvideWindowInsets {
-                    val bottomSheetNavigator = rememberBottomSheetNavigator()
-                    val navController = rememberAnimatedNavController(bottomSheetNavigator)
-                    ModalBottomSheetLayout(bottomSheetNavigator) {
-                        AnimatedNavHost(navController = navController, startDestination = Destination.Notebook.route) {
-                            addMainPage(navController)
-                            addNotebookBottomSheet(navController)
-                            addAddNotebookPage(navController)
-                            addDeleteNotebookDialog(navController)
-                            addEditNotebookDialog(navController)
-                            addMemoBottomSheet(navController)
-                            addAddMemoPage(navController)
-                            addMemoPage(navController)
-                            addDeleteMemoDialog(navController)
-                            addEditMemoDialog(navController)
-                        }
+                val bottomSheetNavigator = rememberBottomSheetNavigator()
+                val navController = rememberAnimatedNavController(bottomSheetNavigator)
+                ModalBottomSheetLayout(bottomSheetNavigator) {
+                    AnimatedNavHost(navController = navController, startDestination = Destination.Notebook.route) {
+                        addMainPage(navController)
+                        addNotebookBottomSheet(navController)
+                        addAddNotebookPage(navController)
+                        addDeleteNotebookDialog(navController)
+                        addEditNotebookDialog(navController)
+                        addMemoBottomSheet(navController)
+                        addAddMemoPage(navController)
+                        addMemoPage(navController)
+                        addDeleteMemoDialog(navController)
+                        addEditMemoDialog(navController)
                     }
                 }
             }

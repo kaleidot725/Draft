@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.systemBarsPadding
 import jp.kaleidot725.emomemo.R
 import jp.kaleidot725.emomemo.view.atoms.Texts
 import jp.kaleidot725.emomemo.view.molecules.OkAndCancelButton
@@ -39,8 +38,7 @@ fun DeleteNotebookDialog(
     }
 
     Surface(
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier.systemBarsPadding()
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier = Modifier

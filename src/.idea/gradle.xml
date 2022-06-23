@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/text-editor-compose" />
+            <option value="$PROJECT_DIR$/text-editor-compose/texteditor" />
           </set>
         </option>
       </GradleProjectSettings>
