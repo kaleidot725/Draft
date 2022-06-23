@@ -10,7 +10,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -27,7 +26,6 @@ import jp.kaleidot725.emomemo.view.atoms.Texts
 fun MemoTopBar(
     title: String,
     modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
     onDeleteMemo: (() -> Unit)? = null
 ) {
@@ -55,7 +53,6 @@ fun MemoTopBar(
                     .clickable { onClickNavigationIcon?.invoke() }
             )
         },
-        scrollBehavior = scrollBehavior,
         modifier = modifier
     )
 }
@@ -68,6 +65,5 @@ private fun MemoTopBar_Preview() {
     MemoTopBar(
         title = "お買い物",
         modifier = Modifier,
-        scrollBehavior = scrollBehavior
     )
 }

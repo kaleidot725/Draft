@@ -10,7 +10,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -28,7 +27,6 @@ fun MainTopAppBar(
     title: String,
     enabledAction: Boolean,
     modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
     onClickNavigationIcon: (() -> Unit)? = null,
     onDeleteNotebook: (() -> Unit)? = null
 ) {
@@ -58,7 +56,6 @@ fun MainTopAppBar(
                     .clickable { onClickNavigationIcon?.invoke() }
             )
         },
-        scrollBehavior = scrollBehavior,
         modifier = modifier
     )
 }
@@ -69,6 +66,6 @@ fun MainTopAppBar(
 private fun MainTopAppBar_Preview() {
     val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior(TopAppBarScrollState(0f, 0f, 0f)) }
     MainTopAppBar(
-        title = "お買い物", enabledAction = true, modifier = Modifier, scrollBehavior = scrollBehavior
+        title = "お買い物", enabledAction = true, modifier = Modifier,
     )
 }
