@@ -12,8 +12,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -74,10 +72,9 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigat
         content = { contentPadding ->
             if (uiState.memoEntity != null) {
                 val editorState by rememberTextEditorState(text = uiState.memoEntity?.content ?: "")
-                val onSave by remember { mutableStateOf({ viewModel.saveMemo(uiState.editorState!!.createText()) }) }
                 TextEditor(
                     textEditorState = editorState,
-                    onUpdatedState = onSave,
+                    onUpdatedState = { viewModel.saveMemo(editorState.createText()) },
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(contentPadding)
