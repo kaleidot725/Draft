@@ -28,9 +28,9 @@ fun MemoList(
         modifier = modifier,
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(memos) { memo ->
+        items(items = memos, key = { item -> item.id }) { memo ->
             GridMemoCard(
                 memo = memo,
                 modifier = Modifier

@@ -48,6 +48,7 @@
 
     <string name="main_not_found_notebook_message">ノートを作成してください</string>
     <string name="main_not_found_memo_message">メモを作成してください</string>
+    <string name="main_unknown_error">エラーが発生しました</string>
 
     <string name="notebook_bottom_edit">ノートの名称を変更する</string>
     <string name="notebook_bottom_delete">ノートを削除する</string>

@@ -1,14 +1,10 @@
 package jp.kaleidot725.emomemo.view.pages.notebook.main
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import jp.kaleidot725.emomemo.data.entity.MemoEntity
 import jp.kaleidot725.emomemo.data.entity.NotebookEntity
-import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosFlowUseCase
-import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksFlowUseCase
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import jp.kaleidot725.emomemo.domain.usecase.get.GetMemosUseCase
+import jp.kaleidot725.emomemo.domain.usecase.get.GetNotebooksUseCase
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -17,13 +13,23 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class MainViewModel(
-    private val getNotebooksUseCase: GetNotebooksFlowUseCase,
-    private val getMemosFlowUseCase: GetMemosFlowUseCase
+    private val getNotebooksUseCase: GetNotebooksUseCase,
+    private val getMemosFlowUseCase: GetMemosUseCase
 ) : ViewModel(), ContainerHost<MainState, MainSideEffect> {
     override val container: Container<MainState, MainSideEffect> = container(MainState())
 
     init {
-        observeNotebooks()
+        refresh()
+    }
+
+    fun refresh() {
+        intent {
+            reduce { state.copy(isLoading = false) }
+            val notebooks = getNotebooksUseCase.execute()
+            val selectedNotebook = notebooks.firstOrNull { it.id == state.selectedNotebook?.id } ?: notebooks.firstOrNull()
+            val memos = selectedNotebook?.let { getMemosFlowUseCase.execute(it.id) } ?: emptyList()
+            reduce { state.copy(isLoading = false, notebooks = notebooks, selectedNotebook = selectedNotebook, memos = memos) }
+        }
     }
 
     fun createNotebook() {
@@ -42,8 +48,8 @@ class MainViewModel(
     fun selectNotebook(notebook: NotebookEntity) {
         intent {
             reduce { state.copy(selectedNotebook = notebook) }
-            observeMemos(notebook)
         }
+        refresh()
     }
 
     fun createMemo() {
@@ -57,30 +63,6 @@ class MainViewModel(
     fun selectMemo(memo: MemoEntity) {
         intent {
             postSideEffect(MainSideEffect.NavigateMemoDetails(memo.id))
-        }
-    }
-
-    private var notebooksJob: Job? = null
-    private fun observeNotebooks() {
-        notebooksJob?.cancel()
-        notebooksJob = viewModelScope.launch {
-            getNotebooksUseCase.execute().collectLatest {
-                intent {
-                    val selectedNotebook = it.firstOrNull { it.id == state.selectedNotebook?.id } ?: it.firstOrNull()
-                    reduce { state.copy(initialized = true, notebooks = it, selectedNotebook = selectedNotebook) }
-                    if (selectedNotebook != null) observeMemos(selectedNotebook)
-                }
-            }
-        }
-    }
-
-    private var memosJob: Job? = null
-    private fun observeMemos(notebook: NotebookEntity) {
-        memosJob?.cancel()
-        memosJob = viewModelScope.launch {
-            getMemosFlowUseCase.execute(notebook.id).collectLatest {
-                intent { reduce { state.copy(initialized = true, memos = it) } }
-            }
         }
     }
 }

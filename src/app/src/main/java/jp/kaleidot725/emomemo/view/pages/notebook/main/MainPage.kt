@@ -11,20 +11,20 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.Edit2
 import jp.kaleidot725.emomemo.R
@@ -46,9 +46,9 @@ fun MainPage(
     onNavigateMemoDetails: (Long) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val scrollBehavior = remember { TopAppBarDefaults.pinnedScrollBehavior(TopAppBarScrollState(0f, 0f, 0f)) }
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val uiState by viewModel.container.stateFlow.collectAsState()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
@@ -58,6 +58,18 @@ fun MainPage(
                 is MainSideEffect.NavigateAddMemo -> onNavigateAddMemo(it.notebookId)
                 is MainSideEffect.NavigateMemoDetails -> onNavigateMemoDetails(it.memoId)
             }
+        }
+    }
+
+    DisposableEffect(key1 = lifecycleOwner) {
+        val lifecycleEventObserver = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.refresh()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(lifecycleEventObserver)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(lifecycleEventObserver)
         }
     }
 
@@ -84,7 +96,6 @@ fun MainPage(
                         MainTopAppBar(
                             title = uiState.selectedNotebook?.title ?: "",
                             enabledAction = uiState.selectedNotebook != null,
-                            scrollBehavior = scrollBehavior,
                             onClickNavigationIcon = { coroutineScope.launch { drawerState.open() } },
                             onDeleteNotebook = { viewModel.deleteNotebook() }
                         )
@@ -112,18 +123,24 @@ fun MainPage(
                             }
                             MainState.Result.NOT_FOUND_NOTEBOOK -> {
                                 Box(Modifier.fillMaxSize()) {
-                                    Box(Modifier.fillMaxSize()) {
-                                        Texts.BodyLarge(
-                                            text = stringResource(id = R.string.main_not_found_notebook_message),
-                                            modifier = Modifier.align(Alignment.Center)
-                                        )
-                                    }
+                                    Texts.BodyLarge(
+                                        text = stringResource(id = R.string.main_not_found_notebook_message),
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
                                 }
                             }
                             MainState.Result.NOT_FOUND_MEMO -> {
                                 Box(Modifier.fillMaxSize()) {
                                     Texts.BodyLarge(
                                         text = stringResource(id = R.string.main_not_found_memo_message),
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
+                            }
+                            MainState.Result.UNKNOWN -> {
+                                Box(Modifier.fillMaxSize()) {
+                                    Texts.BodyLarge(
+                                        text = stringResource(id = R.string.main_unknown_error),
                                         modifier = Modifier.align(Alignment.Center)
                                     )
                                 }
@@ -152,9 +169,7 @@ fun MainPage(
                         else -> {}
                     }
                 },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                modifier = Modifier.fillMaxSize()
             )
         }
     )

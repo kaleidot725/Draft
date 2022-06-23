@@ -48,6 +48,7 @@
 
     <string name="main_not_found_notebook_message">Please create notebook</string>
     <string name="main_not_found_memo_message">Please create memo</string>
+    <string name="main_unknown_error">Unknown error</string>
 
     <string name="notebook_bottom_edit">Rename notebook</string>
     <string name="notebook_bottom_delete">Delete notebook</string>
