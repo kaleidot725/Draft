@@ -1,4 +1,4 @@
-# EmoMemo 
+# Draft
 
 This repository contains a note-taking application that is implemented MVI architecture using Koin, Jetpack Compose, Navigation Compose, Orbit MVI.
 
