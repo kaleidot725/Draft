@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace 'jp.kaleidot725.emomemo'
+    namespace 'jp.kaleidot725.draft'
 
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "jp.kaleidot725.emomemo"
+        applicationId "jp.kaleidot725.draft"
         minSdkVersion 24
         targetSdkVersion 32
         versionCode 4
