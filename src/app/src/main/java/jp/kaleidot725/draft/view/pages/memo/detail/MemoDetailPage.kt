@@ -16,9 +16,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -29,11 +31,12 @@ import jp.kaleidot725.texteditor.extension.rememberTextEditorState
 import jp.kaleidot725.texteditor.view.TextEditor
 import kotlinx.coroutines.flow.collectLatest
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigateMemoBottomSheet: (memoId: Long) -> Unit) {
     val uiState by viewModel.container.stateFlow.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(viewModel) {
         viewModel.container.sideEffectFlow.collectLatest {
@@ -92,6 +95,7 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigat
                         .clickableNoRipple {
                             if (!isMultipleSelectionMode && isSelected) {
                                 editorState.enableMultipleSelectionMode(true)
+                                keyboardController?.hide()
                             }
                         }
                     ) {
