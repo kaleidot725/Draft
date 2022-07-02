@@ -3,7 +3,6 @@ package jp.kaleidot725.draft.view.pages.memo.detail
 import androidx.lifecycle.ViewModel
 import jp.kaleidot725.draft.domain.usecase.get.GetMemoUseCase
 import jp.kaleidot725.draft.domain.usecase.update.UpdateMemoUseCase
-import jp.kaleidot725.texteditor.factory.TextEditorStateFactory
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -23,7 +22,7 @@ class MemoDetailViewModel(
         intent {
             val newEntity = getMemoUseCase.execute(memoId)
             reduce {
-                state.copy(memoEntity = newEntity, editorState = TextEditorStateFactory.create(newEntity.content))
+                state.copy(memoEntity = newEntity)
             }
         }
     }

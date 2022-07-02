@@ -91,6 +91,7 @@
         <entry key="..\:/Users/81906/Documents/Github/emomemo/src/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3861538461538462" />
         <entry key="app/src/debug/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/java/jp/kaleidot725/draft/view/organisms/editor/EditorMenu.kt" value="2.0" />
+        <entry key="app/src/main/java/jp/kaleidot725/draft/view/organisms/editor/EditorMenus.kt" value="0.3008438818565401" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/atoms/BasicTextFields.kt" value="0.1" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/atoms/TextFields.kt" value="0.25" />
         <entry key="app/src/main/java/jp/kaleidot725/emomemo/view/atoms/Texts.kt" value="0.500561167227834" />

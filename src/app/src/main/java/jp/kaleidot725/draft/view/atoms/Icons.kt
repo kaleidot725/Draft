@@ -47,7 +47,7 @@ fun TrashIcon(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CloseIcon(modifier: Modifier = Modifier) {
+fun CancelIcon(modifier: Modifier = Modifier) {
     Icon(
         imageVector = FeatherIcons.X,
         contentDescription = "Close",

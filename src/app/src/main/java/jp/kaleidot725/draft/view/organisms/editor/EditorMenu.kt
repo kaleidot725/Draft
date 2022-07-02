@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import jp.kaleidot725.draft.view.atoms.CloseIcon
+import jp.kaleidot725.draft.view.atoms.CancelIcon
 
 @Composable
 fun EditorMenu(
@@ -31,7 +31,7 @@ fun EditorMenu(
 @Composable
 private fun EditorMenu_Preview() {
     EditorMenu(
-        icon = { CloseIcon() },
+        icon = { CancelIcon() },
         label = { Text(text = "Cancel") }
     )
 }
