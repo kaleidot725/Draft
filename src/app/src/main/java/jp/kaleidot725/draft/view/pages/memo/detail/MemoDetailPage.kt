@@ -2,6 +2,7 @@ package jp.kaleidot725.draft.view.pages.memo.detail
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -103,14 +104,16 @@ fun MemoDetailPage(viewModel: MemoDetailViewModel, onBack: () -> Unit, onNavigat
                             .fillMaxSize()
                             .padding(contentPadding)
                     ) { index, isSelected, innerTextField ->
-                        Row(modifier = Modifier
-                            .background(if (isSelected) MaterialTheme.colorScheme.primaryContainer else Color.White)
-                            .clickableNoRipple {
-                                if (!isMultipleSelectionMode && isSelected) {
-                                    editorController.setMultipleSelectionMode(true)
-                                    keyboardController?.hide()
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            modifier = Modifier
+                                .background(if (isSelected) MaterialTheme.colorScheme.primaryContainer else Color.White)
+                                .clickableNoRipple {
+                                    if (!isMultipleSelectionMode && isSelected) {
+                                        editorController.setMultipleSelectionMode(true)
+                                        keyboardController?.hide()
+                                    }
                                 }
-                            }
                         ) {
                             Text(
                                 text = (index + 1).toString().padStart(3, '0'),
