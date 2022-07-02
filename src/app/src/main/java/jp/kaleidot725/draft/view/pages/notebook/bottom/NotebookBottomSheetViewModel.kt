@@ -22,15 +22,11 @@ class NotebookBottomSheetViewModel(
         }
     }
 
-    fun deleteNotebook() {
-        intent {
-            postSideEffect(NotebookBottomSheetSideEffect.NavigateDeleteNotebook(notebookId))
-        }
+    fun deleteNotebook() = intent {
+        postSideEffect(NotebookBottomSheetSideEffect.NavigateDeleteNotebook(notebookId))
     }
 
-    fun editNotebook() {
-        intent {
-            postSideEffect(NotebookBottomSheetSideEffect.NavigateEditNotebook(notebookId))
-        }
+    fun editNotebook() = intent {
+        postSideEffect(NotebookBottomSheetSideEffect.NavigateEditNotebook(notebookId))
     }
 }

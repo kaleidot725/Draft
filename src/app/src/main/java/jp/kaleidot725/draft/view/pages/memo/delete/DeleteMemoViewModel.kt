@@ -11,9 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class DeleteMemoViewModel(
-    private val memoId: Long,
-    private val getMemoUseCase: GetMemoUseCase,
-    private val deleteMemoUseCase: DeleteMemoUseCase
+    private val memoId: Long, private val getMemoUseCase: GetMemoUseCase, private val deleteMemoUseCase: DeleteMemoUseCase
 ) : ViewModel(), ContainerHost<DeleteMemoState, DeleteMemoSideEffect> {
     override val container: Container<DeleteMemoState, DeleteMemoSideEffect> = container(DeleteMemoState())
 
@@ -24,16 +22,12 @@ class DeleteMemoViewModel(
         }
     }
 
-    fun ok() {
-        intent {
-            deleteMemoUseCase.execute(memoId)
-            postSideEffect(DeleteMemoSideEffect.BackHome)
-        }
+    fun ok() = intent {
+        deleteMemoUseCase.execute(memoId)
+        postSideEffect(DeleteMemoSideEffect.BackHome)
     }
 
-    fun cancel() {
-        intent {
-            postSideEffect(DeleteMemoSideEffect.Close)
-        }
+    fun cancel() = intent {
+        postSideEffect(DeleteMemoSideEffect.Close)
     }
 }

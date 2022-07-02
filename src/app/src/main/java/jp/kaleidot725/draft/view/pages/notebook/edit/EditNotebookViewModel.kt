@@ -24,26 +24,20 @@ class EditNotebookViewModel(
         }
     }
 
-    fun ok() {
-        intent {
-            state.notebook?.let { notebook ->
-                updateNotebookUseCase.execute(notebook.copy(title = state.notebookTitle))
-                postSideEffect(EditNotebookSideEffect.Close)
-            }
-        }
-    }
-
-    fun cancel() {
-        intent {
+    fun ok() = intent {
+        state.notebook?.let { notebook ->
+            updateNotebookUseCase.execute(notebook.copy(title = state.notebookTitle))
             postSideEffect(EditNotebookSideEffect.Close)
         }
     }
 
-    fun updateNotebookTitle(notebookTitle: String) {
-        intent {
-            reduce {
-                state.copy(notebookTitle = notebookTitle)
-            }
+    fun cancel() = intent {
+        postSideEffect(EditNotebookSideEffect.Close)
+    }
+
+    fun updateNotebookTitle(notebookTitle: String) = intent {
+        reduce {
+            state.copy(notebookTitle = notebookTitle)
         }
     }
 }

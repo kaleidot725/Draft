@@ -11,9 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class EditMemoViewModel(
-    private val memoId: Long,
-    private val getMemoUseCase: GetMemoUseCase,
-    private val updateMemoUseCase: UpdateMemoUseCase
+    private val memoId: Long, private val getMemoUseCase: GetMemoUseCase, private val updateMemoUseCase: UpdateMemoUseCase
 ) : ViewModel(), ContainerHost<EditMemoState, EditMemoSideEffect> {
     override val container: Container<EditMemoState, EditMemoSideEffect> = container(EditMemoState())
 
@@ -24,26 +22,20 @@ class EditMemoViewModel(
         }
     }
 
-    fun ok() {
-        intent {
-            state.memo?.let { memo ->
-                updateMemoUseCase.execute(memo.copy(title = state.memoTitle))
-                postSideEffect(EditMemoSideEffect.Close)
-            }
-        }
-    }
-
-    fun cancel() {
-        intent {
+    fun ok() = intent {
+        state.memo?.let { memo ->
+            updateMemoUseCase.execute(memo.copy(title = state.memoTitle))
             postSideEffect(EditMemoSideEffect.Close)
         }
     }
 
-    fun updateMemoTitle(memoTitle: String) {
-        intent {
-            reduce {
-                state.copy(memoTitle = memoTitle)
-            }
+    fun cancel() = intent {
+        postSideEffect(EditMemoSideEffect.Close)
+    }
+
+    fun updateMemoTitle(memoTitle: String) = intent {
+        reduce {
+            state.copy(memoTitle = memoTitle)
         }
     }
 }

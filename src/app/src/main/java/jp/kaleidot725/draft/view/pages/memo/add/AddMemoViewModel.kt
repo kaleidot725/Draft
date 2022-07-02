@@ -15,24 +15,18 @@ class AddMemoViewModel(
 ) : ViewModel(), ContainerHost<AddMemoState, AddMemoSideEffect> {
     override val container: Container<AddMemoState, AddMemoSideEffect> = container(AddMemoState())
 
-    fun updateMemoTitle(memoTitle: String) {
-        intent {
-            reduce {
-                state.copy(memoTitle = memoTitle)
-            }
+    fun updateMemoTitle(memoTitle: String) = intent {
+        reduce {
+            state.copy(memoTitle = memoTitle)
         }
     }
 
-    fun ok() {
-        intent {
-            val newMemoId = createMemoUseCase.execute(notebookId, state.memoTitle) ?: return@intent
-            postSideEffect(AddMemoSideEffect.NavigateMemo(newMemoId))
-        }
+    fun ok() = intent {
+        val newMemoId = createMemoUseCase.execute(notebookId, state.memoTitle) ?: return@intent
+        postSideEffect(AddMemoSideEffect.NavigateMemo(newMemoId))
     }
 
-    fun cancel() {
-        intent {
-            postSideEffect(AddMemoSideEffect.Close)
-        }
+    fun cancel() = intent {
+        postSideEffect(AddMemoSideEffect.Close)
     }
 }

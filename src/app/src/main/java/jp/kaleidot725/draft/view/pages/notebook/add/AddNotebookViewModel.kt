@@ -16,24 +16,18 @@ class AddNotebookViewModel(
 ) : ViewModel(), ContainerHost<AddMemoState, AddMemoSideEffect> {
     override val container: Container<AddMemoState, AddMemoSideEffect> = container(AddMemoState())
 
-    fun updateNotebookTitle(notebookTitle: String) {
-        intent {
-            reduce {
-                state.copy(memoTitle = notebookTitle)
-            }
+    fun updateNotebookTitle(notebookTitle: String) = intent {
+        reduce {
+            state.copy(memoTitle = notebookTitle)
         }
     }
 
-    fun ok() {
-        intent {
-            createNotebookUseCase.execute(state.memoTitle)
-            postSideEffect(AddMemoSideEffect.Close)
-        }
+    fun ok() = intent {
+        createNotebookUseCase.execute(state.memoTitle)
+        postSideEffect(AddMemoSideEffect.Close)
     }
 
-    fun cancel() {
-        intent {
-            postSideEffect(AddMemoSideEffect.Close)
-        }
+    fun cancel() = intent {
+        postSideEffect(AddMemoSideEffect.Close)
     }
 }

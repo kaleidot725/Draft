@@ -24,16 +24,12 @@ class DeleteNotebookViewModel(
         }
     }
 
-    fun ok() {
-        intent {
-            deleteNotebookUseCase.execute(notebookId)
-            postSideEffect(DeleteNotebookSideEffect.BackHome)
-        }
+    fun ok() = intent {
+        deleteNotebookUseCase.execute(notebookId)
+        postSideEffect(DeleteNotebookSideEffect.BackHome)
     }
 
-    fun cancel() {
-        intent {
-            postSideEffect(DeleteNotebookSideEffect.Close)
-        }
+    fun cancel() = intent {
+        postSideEffect(DeleteNotebookSideEffect.Close)
     }
 }

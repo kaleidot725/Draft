@@ -22,15 +22,11 @@ class MemoBottomSheetViewModel(
         }
     }
 
-    fun deleteMemo() {
-        intent {
-            postSideEffect(MemoBottomSheetSideEffect.NavigateDeleteMemo(memoId))
-        }
+    fun deleteMemo() = intent {
+        postSideEffect(MemoBottomSheetSideEffect.NavigateDeleteMemo(memoId))
     }
 
-    fun editMemo() {
-        intent {
-            postSideEffect(MemoBottomSheetSideEffect.NavigateEditMemo(memoId))
-        }
+    fun editMemo() = intent {
+        postSideEffect(MemoBottomSheetSideEffect.NavigateEditMemo(memoId))
     }
 }
